@@ -163,9 +163,7 @@ class TextSprite
     public void Draw(SpriteBatch sb, SpriteFont font)
     {
         sb.Begin();
-        sb.DrawString(font, "Credits:", new Vector2(100, 360), Color.Black);
-        sb.DrawString(font, "Program Made by: Jack Webb", new Vector2(100, 380), Color.Black);
-        sb.DrawString(font, "Sprites from: https://www.mariouniverse.com/sprites/", new Vector2(100, 400), Color.Black);
+        sb.DrawString(font, "Nothing Here Yet, Time to Work on Sprint 2 :(", new Vector2(100, 360), Color.Black);
         sb.End();
     }
 }
