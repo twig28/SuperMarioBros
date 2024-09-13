@@ -2,4 +2,4 @@
 Currently on Sprint2
 
 Jira: https://csegroup5.atlassian.net
-Or we casn use githubs boards
+Or we can use githubs boards
