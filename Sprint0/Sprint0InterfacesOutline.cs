@@ -26,12 +26,7 @@ namespace Sprint0
         }
         public void HandleInputs()
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.D0)) { game.Exit(); }
-            if (Keyboard.GetState().IsKeyDown(Keys.D1)) { game.CurrentSprite = 1; }
-            if (Keyboard.GetState().IsKeyDown(Keys.D2)) { game.CurrentSprite = 2; }
-            if (Keyboard.GetState().IsKeyDown(Keys.D3)) { game.CurrentSprite = 3; }
-            if (Keyboard.GetState().IsKeyDown(Keys.D4)) { game.CurrentSprite = 4; }
-
+            //Do Stuff
         }
     }
 }
