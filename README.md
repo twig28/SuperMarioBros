@@ -1,2 +1,2 @@
-# Zelda-Game
+# Mario-Game
 Currently on Sprint2
