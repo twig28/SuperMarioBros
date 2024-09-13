@@ -50,11 +50,6 @@ class MouseController : IController
     }
 }
 
-public interface ISprite
-    {
-        void Draw(SpriteBatch sb, Texture2D texture, Boolean changeFrame);
-    }
-
 class TextSprite
 {
     public void Draw(SpriteBatch sb, SpriteFont font)
@@ -64,3 +59,5 @@ class TextSprite
         sb.End();
     }
 }
+
+//TODO IPlayer, IEnemy, IObject, etc.
