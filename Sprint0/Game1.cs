@@ -9,23 +9,10 @@ namespace Sprint0
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        IController keyControl;
-        IController mouseControl;
-        ISprite staticS;
-        ISprite staticM;
-        ISprite animS;
-        ISprite animM;
         TextSprite textS;
         private SpriteFont font;
         Texture2D marioTexture;
-        private int currentSprite = 1;
-        public int CurrentSprite   // Allows controllers to change current sprite
-        {
-            get { return currentSprite; }
-            set { currentSprite = value; }
-        }
-
-        private double intervalDuration = 0.5; // Time interval in seconds
+        
         private double elapsedTime = 0.0;
 
         public Game1()
@@ -35,16 +22,11 @@ namespace Sprint0
             IsMouseVisible = true;
         }
 
-        public void SetSprite(int num)
-        {
-            currentSprite = num;
-        }
-
         protected override void Initialize()
         {
             base.Initialize();
-            keyControl = new KeyboardController(this);
-            mouseControl = new MouseController(this);
+            //keyControl = new KeyboardController(this);
+            //mouseControl = new MouseController(this);
         }
 
         protected override void LoadContent()
@@ -52,11 +34,7 @@ namespace Sprint0
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("File");
             marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
-
-            staticS = new StaticStationSprite();
-            staticM = new StaticMovingSprite();
-            animS = new AnimatedStationSprite();
-            animM = new AnimatedMovingSprite();
+            
             textS = new TextSprite();
         }
 
@@ -74,41 +52,6 @@ namespace Sprint0
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            if (currentSprite == 1)
-            {
-                staticS.Draw(_spriteBatch, marioTexture, false);
-            }
-            else if (currentSprite == 2)
-            {
-                if (elapsedTime >= intervalDuration)
-                {
-                    animS.Draw(_spriteBatch, marioTexture, true);
-                    elapsedTime -= elapsedTime;
-                }
-                else
-                {
-                    animS.Draw(_spriteBatch, marioTexture, false);
-                }
-            }
-            else if (currentSprite == 3)
-            {
-               staticM.Draw(_spriteBatch, marioTexture, false);
-            }
-            else if(currentSprite == 4)
-            {
-                if (elapsedTime >= intervalDuration)
-                {
-                    animM.Draw(_spriteBatch, marioTexture, true);
-                    elapsedTime -= elapsedTime;
-                }
-                else
-                {
-                    animM.Draw(_spriteBatch, marioTexture, false);
-                }
-            }
-
-            //Draw text no matter what
             textS.Draw(_spriteBatch, font);
 
             base.Draw(gameTime);
