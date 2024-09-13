@@ -48,31 +48,9 @@ class MouseController : IController
 
     public void HandleInputs()
     {
-        //Mouse
         if (Mouse.GetState().RightButton == ButtonState.Pressed)
         {
             game.Exit();
-        }
-        if (Mouse.GetState().LeftButton == ButtonState.Pressed)
-        {
-            int mouseX = Mouse.GetState().X;
-            int mouseY = Mouse.GetState().Y;
-            if(mouseX < 400 && mouseY < 300)
-            {
-                game.CurrentSprite = 1;
-            }
-            else if (mouseX > 400 && mouseY < 300)
-            {
-                game.CurrentSprite = 2;
-            }
-            else if (mouseX < 400 && mouseY > 300)
-            {
-                game.CurrentSprite = 3;
-            }
-            else
-            {
-                game.CurrentSprite = 4;
-            }
         }
     }
 }
