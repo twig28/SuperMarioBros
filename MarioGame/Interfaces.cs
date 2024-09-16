@@ -11,52 +11,35 @@ using System.Threading.Tasks;
 
 namespace MarioGame
 {
+    //(most likely) need to use ICommand Structure
     public interface IController
     {
         void HandleInputs();
     }
 
-    class KeyboardController : IController
+    //would have texture, position, state, and more properties
+    public interface IPlayer
     {
-        public Game1 game;
-
-        public KeyboardController(Game1 gameName)
-        {
-            game = gameName;
-        }
-        public void HandleInputs()
-        {
-            //Do Stuff
-        }
-    }
-}
-
-class MouseController : IController
-{
-
-    public Game1 game;
-
-    public MouseController(Game1 gameName)
-    {
-        game = gameName;
+        void ChangeState();
+        void Update();
+        void Draw();
     }
 
-    public void HandleInputs()
+    //would have texture and position properties
+    public interface IBlock
     {
-        if (Mouse.GetState().RightButton == ButtonState.Pressed)
-        {
-            game.Exit();
-        }
+        void Draw();
+        void ChangeState();
     }
-}
 
-class TextSprite
-{
-    public void Draw(SpriteBatch sb, SpriteFont font)
+    class TextSprite
     {
-        sb.Begin();
-        sb.DrawString(font, "Nothing Here Yet, Time to Work on Sprint 2 :(", new Vector2(100, 360), Color.Black);
-        sb.End();
+        public void Draw(SpriteBatch sb, SpriteFont font)
+        {
+            sb.Begin();
+            sb.DrawString(font, "Nothing Here Yet, Time to Work on Sprint 2 :(", new Vector2(100, 360), Color.Black);
+            sb.End();
+        }
     }
 }
 

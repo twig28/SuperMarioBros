@@ -15,7 +15,6 @@ namespace MarioGame
         IController keyControl;
         IController mouseControl;
 
-
         private double elapsedTime = 0.0;
 
         public Game1()
