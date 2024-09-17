@@ -1,0 +1,6 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/jacwe/Downloads/MarioGame/MarioGame/Content/blocks.png","C:/Users/jacwe/Downloads/MarioGame/MarioGame/Content/bin/DesktopGL/Content/blocks.xnb","TextureProcessor","Texture2DContent",13083,458837,0.0820838
+"C:/Users/jacwe/Downloads/MarioGame/MarioGame/Content/GroundBlock.png","C:/Users/jacwe/Downloads/MarioGame/MarioGame/Content/bin/DesktopGL/Content/GroundBlock.xnb","TextureProcessor","Texture2DContent",332,5760085,0.0929262
+"C:/Users/jacwe/Downloads/MarioGame/MarioGame/Content/smb_enemies_sheet.png","C:/Users/jacwe/Downloads/MarioGame/MarioGame/Content/bin/DesktopGL/Content/smb_enemies_sheet.xnb","TextureProcessor","Texture2DContent",8295,455269,0.0077234
+"C:/Users/jacwe/Downloads/MarioGame/MarioGame/Content/smb_items_sheet.png","C:/Users/jacwe/Downloads/MarioGame/MarioGame/Content/bin/DesktopGL/Content/smb_items_sheet.xnb","TextureProcessor","Texture2DContent",1882,118645,0.0020265
+"C:/Users/jacwe/Downloads/MarioGame/MarioGame/Content/smb1_scenery_sprites.gif","C:/Users/jacwe/Downloads/MarioGame/MarioGame/Content/bin/DesktopGL/Content/smb1_scenery_sprites.xnb","TextureProcessor","Texture2DContent",14122,1560241,0.0251182

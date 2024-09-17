@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using MarioGame;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Xml.Linq;
@@ -14,6 +15,8 @@ namespace MarioGame
         Texture2D marioTexture;
         IController keyControl;
         IController mouseControl;
+
+        IEnemy[] enemies;
 
         private double elapsedTime = 0.0;
 
