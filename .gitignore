@@ -1,0 +1,4 @@
+﻿#The following files do not need to be commit.
+.vs
+bin/
+obj/
