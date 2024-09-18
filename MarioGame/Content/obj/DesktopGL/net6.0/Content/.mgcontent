@@ -4,11 +4,11 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/jacwe/Downloads/MarioGame/MarioGame/Content/blocks.png</File>
-    <File>C:/Users/jacwe/Downloads/MarioGame/MarioGame/Content/GroundBlock.png</File>
-    <File>C:/Users/jacwe/Downloads/MarioGame/MarioGame/Content/smb_enemies_sheet.png</File>
-    <File>C:/Users/jacwe/Downloads/MarioGame/MarioGame/Content/smb_items_sheet.png</File>
-    <File>C:/Users/jacwe/Downloads/MarioGame/MarioGame/Content/smb1_scenery_sprites.gif</File>
+    <File>C:/Users/jacwe/Downloads/PROJECT/Mario-Game/MarioGame/Content/blocks.png</File>
+    <File>C:/Users/jacwe/Downloads/PROJECT/Mario-Game/MarioGame/Content/GroundBlock.png</File>
+    <File>C:/Users/jacwe/Downloads/PROJECT/Mario-Game/MarioGame/Content/smb_enemies_sheet.png</File>
+    <File>C:/Users/jacwe/Downloads/PROJECT/Mario-Game/MarioGame/Content/smb_items_sheet.png</File>
+    <File>C:/Users/jacwe/Downloads/PROJECT/Mario-Game/MarioGame/Content/smb1_scenery_sprites.gif</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

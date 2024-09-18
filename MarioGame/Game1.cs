@@ -13,6 +13,11 @@ namespace MarioGame
         TextSprite textS;
         private SpriteFont font;
         Texture2D marioTexture;
+        Texture2D enemyTextures;
+        Texture2D itemTextures;
+        Texture2D sceneryTextures;
+        Texture2D groundBlockTexture;
+        Texture2D blockTextures;
         IController keyControl;
         IController mouseControl;
 
@@ -39,7 +44,11 @@ namespace MarioGame
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("File");
             marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
-            
+            enemyTextures = Content.Load<Texture2D>("smb_enemies_sheet");
+            itemTextures = Content.Load<Texture2D>("smb_items_sheet");
+            groundBlockTexture = Content.Load<Texture2D>("GroundBlock");
+            blockTextures = Content.Load<Texture2D>("blocks");
+
             textS = new TextSprite();
         }
 

@@ -1,18 +1,22 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\jacwe\\Downloads\\MarioGame\\",
+  "WorkspaceRootPath": "C:\\Users\\jacwe\\Downloads\\PROJECT\\Mario-Game\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CC70AC85-0E21-4E59-994A-143C3F2900C2}|MarioGame\\MarioGame.csproj|c:\\users\\jacwe\\downloads\\mariogame\\mariogame\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{CC70AC85-0E21-4E59-994A-143C3F2900C2}|MarioGame\\MarioGame.csproj|c:\\users\\jacwe\\downloads\\project\\mario-game\\mariogame\\interfaces\\ienemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC70AC85-0E21-4E59-994A-143C3F2900C2}|MarioGame\\MarioGame.csproj|solutionrelative:mariogame\\interfaces\\ienemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC70AC85-0E21-4E59-994A-143C3F2900C2}|MarioGame\\MarioGame.csproj|c:\\users\\jacwe\\downloads\\project\\mario-game\\mariogame\\interfaces\\icontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC70AC85-0E21-4E59-994A-143C3F2900C2}|MarioGame\\MarioGame.csproj|solutionrelative:mariogame\\interfaces\\icontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC70AC85-0E21-4E59-994A-143C3F2900C2}|MarioGame\\MarioGame.csproj|c:\\users\\jacwe\\downloads\\project\\mario-game\\mariogame\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CC70AC85-0E21-4E59-994A-143C3F2900C2}|MarioGame\\MarioGame.csproj|solutionrelative:mariogame\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CC70AC85-0E21-4E59-994A-143C3F2900C2}|MarioGame\\MarioGame.csproj|c:\\users\\jacwe\\downloads\\mariogame\\mariogame\\classes\\goomba.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{CC70AC85-0E21-4E59-994A-143C3F2900C2}|MarioGame\\MarioGame.csproj|c:\\users\\jacwe\\downloads\\project\\mario-game\\mariogame\\classes\\goomba.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CC70AC85-0E21-4E59-994A-143C3F2900C2}|MarioGame\\MarioGame.csproj|solutionrelative:mariogame\\classes\\goomba.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CC70AC85-0E21-4E59-994A-143C3F2900C2}|MarioGame\\MarioGame.csproj|c:\\users\\jacwe\\downloads\\mariogame\\mariogame\\classes\\controllerclasses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CC70AC85-0E21-4E59-994A-143C3F2900C2}|MarioGame\\MarioGame.csproj|solutionrelative:mariogame\\classes\\controllerclasses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,15 +26,41 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "IEnemy.cs",
+              "DocumentMoniker": "C:\\Users\\jacwe\\Downloads\\PROJECT\\Mario-Game\\MarioGame\\Interfaces\\IEnemy.cs",
+              "RelativeDocumentMoniker": "MarioGame\\Interfaces\\IEnemy.cs",
+              "ToolTip": "C:\\Users\\jacwe\\Downloads\\PROJECT\\Mario-Game\\MarioGame\\Interfaces\\IEnemy.cs",
+              "RelativeToolTip": "MarioGame\\Interfaces\\IEnemy.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-18T17:57:07.367Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "IController.cs",
+              "DocumentMoniker": "C:\\Users\\jacwe\\Downloads\\PROJECT\\Mario-Game\\MarioGame\\Interfaces\\IController.cs",
+              "RelativeDocumentMoniker": "MarioGame\\Interfaces\\IController.cs",
+              "ToolTip": "C:\\Users\\jacwe\\Downloads\\PROJECT\\Mario-Game\\MarioGame\\Interfaces\\IController.cs",
+              "RelativeToolTip": "MarioGame\\Interfaces\\IController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-18T17:57:05.029Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Goomba.cs",
-              "DocumentMoniker": "C:\\Users\\jacwe\\Downloads\\MarioGame\\MarioGame\\Classes\\Goomba.cs",
+              "DocumentMoniker": "C:\\Users\\jacwe\\Downloads\\PROJECT\\Mario-Game\\MarioGame\\Classes\\Goomba.cs",
               "RelativeDocumentMoniker": "MarioGame\\Classes\\Goomba.cs",
-              "ToolTip": "C:\\Users\\jacwe\\Downloads\\MarioGame\\MarioGame\\Classes\\Goomba.cs",
+              "ToolTip": "C:\\Users\\jacwe\\Downloads\\PROJECT\\Mario-Game\\MarioGame\\Classes\\Goomba.cs",
               "RelativeToolTip": "MarioGame\\Classes\\Goomba.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -39,24 +69,12 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "ControllerClasses.cs",
-              "DocumentMoniker": "C:\\Users\\jacwe\\Downloads\\MarioGame\\MarioGame\\Classes\\ControllerClasses.cs",
-              "RelativeDocumentMoniker": "MarioGame\\Classes\\ControllerClasses.cs",
-              "ToolTip": "C:\\Users\\jacwe\\Downloads\\MarioGame\\MarioGame\\Classes\\ControllerClasses.cs",
-              "RelativeToolTip": "MarioGame\\Classes\\ControllerClasses.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-17T20:52:47.165Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "Game1.cs",
-              "DocumentMoniker": "C:\\Users\\jacwe\\Downloads\\MarioGame\\MarioGame\\Game1.cs",
+              "DocumentMoniker": "C:\\Users\\jacwe\\Downloads\\PROJECT\\Mario-Game\\MarioGame\\Game1.cs",
               "RelativeDocumentMoniker": "MarioGame\\Game1.cs",
-              "ToolTip": "C:\\Users\\jacwe\\Downloads\\MarioGame\\MarioGame\\Game1.cs",
+              "ToolTip": "C:\\Users\\jacwe\\Downloads\\PROJECT\\Mario-Game\\MarioGame\\Game1.cs",
               "RelativeToolTip": "MarioGame\\Game1.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAAwDsAAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAABwAAAAAAAAAAAAQwCwAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-17T20:51:44.883Z",
               "EditorCaption": ""

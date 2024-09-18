@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/jacwe/Downloads/MarioGame/MarioGame/Content/smb1_scenery_sprites.gif</SourceFile>
-  <SourceTime>2024-09-16T16:30:35.3810065-04:00</SourceTime>
-  <DestFile>C:/Users/jacwe/Downloads/MarioGame/MarioGame/Content/bin/DesktopGL/Content/smb1_scenery_sprites.xnb</DestFile>
-  <DestTime>2024-09-17T17:16:01.8563149-04:00</DestTime>
+  <SourceFile>C:/Users/jacwe/Downloads/PROJECT/Mario-Game/MarioGame/Content/smb1_scenery_sprites.gif</SourceFile>
+  <SourceTime>2024-09-17T17:30:30.795718-04:00</SourceTime>
+  <DestFile>C:/Users/jacwe/Downloads/PROJECT/Mario-Game/MarioGame/Content/bin/DesktopGL/Content/smb1_scenery_sprites.xnb</DestFile>
+  <DestTime>2024-09-17T17:30:45.6059388-04:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T07:44:56-04:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

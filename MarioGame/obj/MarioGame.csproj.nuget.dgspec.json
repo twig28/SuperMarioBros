@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jacwe\\Downloads\\MarioGame\\MarioGame\\MarioGame.csproj": {}
+    "C:\\Users\\jacwe\\Downloads\\PROJECT\\Mario-Game\\MarioGame\\MarioGame.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jacwe\\Downloads\\MarioGame\\MarioGame\\MarioGame.csproj": {
+    "C:\\Users\\jacwe\\Downloads\\PROJECT\\Mario-Game\\MarioGame\\MarioGame.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jacwe\\Downloads\\MarioGame\\MarioGame\\MarioGame.csproj",
+        "projectUniqueName": "C:\\Users\\jacwe\\Downloads\\PROJECT\\Mario-Game\\MarioGame\\MarioGame.csproj",
         "projectName": "MarioGame",
-        "projectPath": "C:\\Users\\jacwe\\Downloads\\MarioGame\\MarioGame\\MarioGame.csproj",
+        "projectPath": "C:\\Users\\jacwe\\Downloads\\PROJECT\\Mario-Game\\MarioGame\\MarioGame.csproj",
         "packagesPath": "C:\\Users\\jacwe\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jacwe\\Downloads\\MarioGame\\MarioGame\\obj\\",
+        "outputPath": "C:\\Users\\jacwe\\Downloads\\PROJECT\\Mario-Game\\MarioGame\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
