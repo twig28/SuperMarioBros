@@ -1,5 +1,5 @@
 
-namespace MarioGame.Classes;
+namespace MarioGame.Controllers;
 
 public class KeyboardController : IController
 {

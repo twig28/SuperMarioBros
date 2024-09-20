@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework.Input;
 
-namespace MarioGame.Classes;
+namespace MarioGame.Controllers;
 
 public class MouseController : IController
 {
