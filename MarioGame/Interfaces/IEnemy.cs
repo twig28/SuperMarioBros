@@ -11,6 +11,6 @@ namespace MarioGame
     {
         void Draw();
         void ChangeState();
-        void Death();
+        void Update();
     }
 }

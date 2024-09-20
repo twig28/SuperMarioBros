@@ -18,8 +18,9 @@ namespace MarioGame
 
         }
 
-        public void Death() 
+        public void Update() 
         { 
+
         }
     }
 }
