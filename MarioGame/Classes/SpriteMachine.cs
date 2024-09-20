@@ -1,13 +1,5 @@
-﻿using MarioGame;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MarioGame
-{
-    internal class SpriteMachine
+﻿namespace MarioGame.Classes;
+    public class SpriteMachine
     {
         public void LoadAllTextures()
         {
@@ -16,4 +8,3 @@ namespace MarioGame
 
 
     }
-}

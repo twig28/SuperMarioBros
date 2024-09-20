@@ -1,8 +1,6 @@
-﻿using MarioGame;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System.Xml.Linq;
+using MarioGame.Controllers;
 
 namespace MarioGame
 {
