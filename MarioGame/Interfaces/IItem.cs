@@ -1,5 +1,7 @@
 ﻿namespace MarioGame.Interfaces;
 
+namespace MarioGame.Interfaces
+{
     public interface IItem
     {
         void Draw();
