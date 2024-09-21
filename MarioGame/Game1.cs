@@ -47,11 +47,11 @@ namespace MarioGame
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("File");
             //To Be Implemented in ISprite
-            //marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
-            //enemyTextures = Content.Load<Texture2D>("smb_enemies_sheet");
-            //itemTextures = Content.Load<Texture2D>("smb_items_sheet");
-            //groundBlockTexture = Content.Load<Texture2D>("GroundBlock");
-            //blockTextures = Content.Load<Texture2D>("blocks");
+            marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
+            enemyTextures = Content.Load<Texture2D>("smb_enemies_sheet");
+            itemTextures = Content.Load<Texture2D>("smb_items_sheet");
+            groundBlockTexture = Content.Load<Texture2D>("GroundBlock");
+            blockTextures = Content.Load<Texture2D>("blocks");
 
             textS = new TextSprite();
         }

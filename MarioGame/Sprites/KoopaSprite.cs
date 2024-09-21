@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace MarioGame
 {
-    internal class GoombaSprite : ISprite
+    internal class KoopaSprite : ISprite
     {
         private double posX;
         private double posY;
         private SpriteBatch sb;
         private Texture2D Texture;
         Rectangle DestinationRecrangle;
-        public GoombaSprite(SpriteBatch SpriteBatch, double X, double Y)
+        public KoopaSprite(SpriteBatch SpriteBatch, double X, double Y)
         {
             //make ISprite
             sb = SpriteBatch;

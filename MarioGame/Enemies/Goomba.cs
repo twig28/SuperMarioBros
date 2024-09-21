@@ -13,7 +13,6 @@ namespace MarioGame
     {
         private int recStartPos = 0;
         private int animInterval;
-        private Texture2D texture;
         private SpriteBatch sb;
         private ISprite sprite;
         //get and set
@@ -22,16 +21,17 @@ namespace MarioGame
 
 
         //constructor with initial position and texture/spritebatch
-        public Goomba(Texture2D Texture, SpriteBatch SpriteBatch, double X, double Y)
+        public Goomba(SpriteBatch SpriteBatch, double X, double Y)
         {
             //make ISprite
             sb = SpriteBatch;
             posX = X; posY = Y;
+            sprite = new GoombaSprite(sb, posX, posY);
         }
 
         public void Draw()
         {
-            //draw using ISprite
+            sprite.Draw();
         }
 
         public void ChangeState()
