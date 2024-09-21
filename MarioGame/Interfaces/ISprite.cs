@@ -12,8 +12,11 @@ namespace MarioGame
     internal interface ISprite
     {
         Texture2D Texture { get; set; }
+        SpriteBatch sb { get; set; }
         Rectangle DestinationRectangle { get; set;}
         void Update();
         void Draw();
+
+        void LoadTexture();
     }
 }

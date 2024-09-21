@@ -25,7 +25,6 @@ namespace MarioGame
         public Goomba(Texture2D Texture, SpriteBatch SpriteBatch, double X, double Y)
         {
             //make ISprite
-            texture = Texture;
             sb = SpriteBatch;
             posX = X; posY = Y;
         }
