@@ -11,12 +11,11 @@ namespace MarioGame
     //states include dead, movingLeft, movingRight
     internal class Goomba : IEnemy
     {
-        private int recStartPos = 0;
-        private int animInterval;
+        private double animInterval;
+        private int animSpacing = 20;
         private SpriteBatch sb;
         private Texture2D texture;
         private ISprite sprite;
-        //get and set
         private double posX;
         private double posY;
 
@@ -34,11 +33,6 @@ namespace MarioGame
         public void Draw()
         {
             sprite.Draw();
-        }
-
-        public void ChangeState()
-        {
-
         }
 
         public void Update()

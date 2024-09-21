@@ -19,6 +19,8 @@ namespace MarioGame
         IController mouseControl;
 
         IEnemy[] enemies = new IEnemy[2];
+        //Temp for sprint 2
+        IEnemy currEnemy;
 
         private double elapsedTime = 0.0;
 
@@ -54,6 +56,7 @@ namespace MarioGame
 
             enemies[0] = new Goomba(enemyTextures, _spriteBatch, 600, 800);
             enemies[1] = new Koopa(enemyTextures, _spriteBatch, 600, 800);
+            currEnemy = enemies[0];
         }
 
         protected override void Update(GameTime gameTime)
@@ -63,6 +66,15 @@ namespace MarioGame
             mouseControl.HandleInputs();
 
             elapsedTime += gameTime.ElapsedGameTime.TotalSeconds;
+
+            foreach (IEnemy enemy in enemies)
+            {
+                if(currEnemy == enemy)
+                {
+                    enemy.Update();
+                    enemy.Draw();
+                }
+            }
 
             base.Update(gameTime);
         }

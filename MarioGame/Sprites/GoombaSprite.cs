@@ -15,7 +15,8 @@ namespace MarioGame
         private double posY;
         private SpriteBatch sb;
         private Texture2D texture;
-        Rectangle DestinationRecrangle;
+        Rectangle DestinationRectangle;
+        Rectangle SourceRectangle;
         private int spacingInterval = 20;
         public GoombaSprite(Texture2D Texture, SpriteBatch SpriteBatch, double X, double Y)
         {

@@ -10,14 +10,13 @@ namespace MarioGame
     //states include dead, shell, movingRight, movingLeft
     internal class Koopa : IEnemy
     {
-        private int recStartPos = 0;
-        private int animInterval;
+        private double animInterval;
         private SpriteBatch sb;
         private Texture2D texture;
         private ISprite sprite;
-        //get and set
         private double posX;
         private double posY;
+
         public bool Alive { get; set; }
         public bool MovingRight { get; set; }
 
