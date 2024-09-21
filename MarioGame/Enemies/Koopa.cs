@@ -25,12 +25,12 @@ namespace MarioGame
         {
             sb = SpriteBatch;
             posX = X; posY = Y;
-            sprite = new GoombaSprite(texture, sb, posX, posY);
+            sprite = new KoopaSprite(texture, sb, posX, posY);
         }
 
         public void Draw()
         {
-
+            sprite.Draw();
         }
 
         public void Update() 

@@ -52,8 +52,8 @@ namespace MarioGame
             groundBlockTexture = Content.Load<Texture2D>("GroundBlock");
             blockTextures = Content.Load<Texture2D>("blocks");
 
-            enemies[0] = new Goomba(enemyTextures, _spriteBatch, 300, 400);
-            enemies[1] = new Koopa(enemyTextures, _spriteBatch, 300, 400);
+            enemies[0] = new Goomba(enemyTextures, _spriteBatch, 600, 800);
+            enemies[1] = new Koopa(enemyTextures, _spriteBatch, 600, 800);
         }
 
         protected override void Update(GameTime gameTime)
