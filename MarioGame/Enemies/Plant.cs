@@ -6,7 +6,22 @@ using System.Threading.Tasks;
 
 namespace MarioGame
 {
-    internal class Plant
+    internal class Plant : IEnemy
     {
+        public bool Alive { get; set; }
+        public bool MovingRight { get; set; }
+        public void ChangeState()
+        {
+
+        }
+        public void Draw()
+        {
+
+        }
+
+        public void Update()
+        {
+
+        }
     }
 }

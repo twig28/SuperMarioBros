@@ -8,7 +8,6 @@ namespace MarioGame
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        TextSprite textS;
         private SpriteFont font;
         Texture2D marioTexture;
         Texture2D enemyTextures;
@@ -19,7 +18,7 @@ namespace MarioGame
         IController keyControl;
         IController mouseControl;
 
-        IEnemy[] enemies;
+        IEnemy[] enemies = new IEnemy[2];
 
         private double elapsedTime = 0.0;
 
@@ -46,14 +45,15 @@ namespace MarioGame
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("File");
-            //To Be Implemented in ISprite
+            //To Be Implemented in its own class (maybe)
             marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
             enemyTextures = Content.Load<Texture2D>("smb_enemies_sheet");
             itemTextures = Content.Load<Texture2D>("smb_items_sheet");
             groundBlockTexture = Content.Load<Texture2D>("GroundBlock");
             blockTextures = Content.Load<Texture2D>("blocks");
 
-            textS = new TextSprite();
+            enemies[0] = new Goomba(enemyTextures, _spriteBatch, 300, 400);
+            enemies[1] = new Koopa(enemyTextures, _spriteBatch, 300, 400);
         }
 
         protected override void Update(GameTime gameTime)
@@ -70,7 +70,6 @@ namespace MarioGame
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            textS.Draw(_spriteBatch, font);
 
             base.Draw(gameTime);
         }

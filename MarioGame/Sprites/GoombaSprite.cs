@@ -14,13 +14,14 @@ namespace MarioGame
         private double posX;
         private double posY;
         private SpriteBatch sb;
-        private Texture2D Texture;
+        private Texture2D texture;
         Rectangle DestinationRecrangle;
-        public GoombaSprite(SpriteBatch SpriteBatch, double X, double Y)
+        private int spacingInterval = 20;
+        public GoombaSprite(Texture2D Texture, SpriteBatch SpriteBatch, double X, double Y)
         {
-            //make ISprite
             sb = SpriteBatch;
             posX = X; posY = Y;
+            texture = Texture;
         }
 
         public void Draw()

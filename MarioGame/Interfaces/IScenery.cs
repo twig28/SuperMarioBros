@@ -15,17 +15,6 @@ namespace MarioGame
     {
         void Draw();
     }
-
-    //temp
-    class TextSprite
-    {
-        public void Draw(SpriteBatch sb, SpriteFont font)
-        {
-            sb.Begin();
-            sb.DrawString(font, "Nothing Here Yet, Time to Work on Sprint 2 :(", new Vector2(100, 360), Color.Black);
-            sb.End();
-        }
-    }
 }
 
 //TODO IPlayer, IEnemy, IObject, etc.

@@ -14,19 +14,21 @@ namespace MarioGame
         private int recStartPos = 0;
         private int animInterval;
         private SpriteBatch sb;
+        private Texture2D texture;
         private ISprite sprite;
         //get and set
         private double posX;
         private double posY;
 
+        public bool Alive { get; set; }
+        public bool MovingRight { get; set; }
 
         //constructor with initial position and texture/spritebatch
-        public Goomba(SpriteBatch SpriteBatch, double X, double Y)
+        public Goomba(Texture2D Texture, SpriteBatch SpriteBatch, double X, double Y)
         {
-            //make ISprite
             sb = SpriteBatch;
             posX = X; posY = Y;
-            sprite = new GoombaSprite(sb, posX, posY);
+            sprite = new GoombaSprite(texture, sb, posX, posY);
         }
 
         public void Draw()
