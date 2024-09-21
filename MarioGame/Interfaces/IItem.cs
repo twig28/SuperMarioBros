@@ -1,10 +1,8 @@
 ﻿namespace MarioGame.Interfaces;
 
-namespace MarioGame.Interfaces
+public interface IItem
 {
-    public interface IItem
-    {
-        void Draw();
-        void Update();
-    }
+    void Draw();
+    void Update();
+}
 
