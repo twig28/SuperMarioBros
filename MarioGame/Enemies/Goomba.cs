@@ -15,6 +15,7 @@ namespace MarioGame
         private int animInterval;
         private Texture2D texture;
         private SpriteBatch sb;
+        private ISprite sprite;
         //get and set
         private double posX;
         private double posY;
@@ -23,6 +24,7 @@ namespace MarioGame
         //constructor with initial position and texture/spritebatch
         public Goomba(Texture2D Texture, SpriteBatch SpriteBatch, double X, double Y)
         {
+            //make ISprite
             texture = Texture;
             sb = SpriteBatch;
             posX = X; posY = Y;
@@ -30,7 +32,7 @@ namespace MarioGame
 
         public void Draw()
         {
-
+            //draw using ISprite
         }
 
         public void ChangeState()
@@ -38,7 +40,7 @@ namespace MarioGame
 
         }
 
-        public void Death()
+        public void Update()
         {
 
         }
