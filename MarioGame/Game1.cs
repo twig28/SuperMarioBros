@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MarioGame.Controllers;
+using MarioGame.Interfaces;
+using MarioGame.Items;
 
 namespace MarioGame
 {
@@ -18,6 +20,7 @@ namespace MarioGame
         Texture2D blockTextures;
         IController keyControl;
         IController mouseControl;
+        Item items;
 
         IEnemy[] enemies;
 
@@ -35,6 +38,7 @@ namespace MarioGame
             base.Initialize();
             keyControl = new KeyboardController(this);
             mouseControl = new MouseController(this);
+            items = new Item(itemTextures);
         }
 
         protected override void LoadContent()
@@ -58,14 +62,22 @@ namespace MarioGame
 
             elapsedTime += gameTime.ElapsedGameTime.TotalSeconds;
 
+            items.Update(gameTime);
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            textS.Draw(_spriteBatch, font);
+            _spriteBatch.Begin();
 
+            textS.Draw(_spriteBatch, font);
+             
+            Vector2 itemLocation = new Vector2(200, 200);
+            items.Draw(_spriteBatch, itemLocation);
+
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
 

@@ -1,9 +1,16 @@
 
+using System.Threading;
+using System.Threading.Tasks;
+using MarioGame.Items;
+using Microsoft.Xna.Framework.Input;
+
 namespace MarioGame.Controllers;
 
 public class KeyboardController : IController
 {
     public Game1 Game;
+    private KeyboardState ks;
+
 
     public KeyboardController(Game1 gameName)
     {
@@ -12,5 +19,20 @@ public class KeyboardController : IController
     public void HandleInputs()
     {
         //Do Stuff
+        ks = Keyboard.GetState();
+        if (ks.IsKeyDown(Keys.Escape))
+        {
+            Game.Exit();
+        }
+        if (ks.IsKeyDown(Keys.U))
+        {
+            Item.lastItem();
+            Thread.Sleep(100);
+        }
+        if (ks.IsKeyDown(Keys.I))
+        { 
+            Item.nextItem();
+            Thread.Sleep(100);
+        }
     }
 }
