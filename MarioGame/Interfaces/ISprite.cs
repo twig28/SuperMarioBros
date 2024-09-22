@@ -5,15 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MarioGame;
-using System.Drawing;
+using Microsoft.Xna.Framework;
 
 namespace MarioGame
 {
     internal interface ISprite
     {
-        Texture2D Texture { get; set; }
-        Rectangle DestinationRectangle { get; set;}
-        void Update();
+        void Update(GameTime gm);
         void Draw();
     }
 }

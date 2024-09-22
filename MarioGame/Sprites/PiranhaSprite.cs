@@ -1,5 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +7,16 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MarioGame
+namespace MarioGame.Sprites
 {
-    internal class GoombaSprite : ISprite
+    internal class PiranhaSprite : ISprite
     {
         private const int SpriteWidth = 75;
         private const int SpriteHeight = 115;
-        private int SourceX = 0;
-        private int SourceY = 4;
+        private int SourceX = 390;
+        private int SourceY = 30;
         private const int SourceWidth = 16;
-        private const int SourceHeight = 20;
+        private const int SourceHeight = 24;
         private SpriteBatch sb;
         private Texture2D texture;
         Rectangle DestinationRectangle;
@@ -27,8 +27,7 @@ namespace MarioGame
         public bool ChangeDirection { get; set; }
         public int posX { get; set; }
         public int posY { get; set; }
-
-        public GoombaSprite(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
+        public PiranhaSprite(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
         {
             sb = SpriteBatch;
             posX = X; posY = Y;
@@ -48,6 +47,11 @@ namespace MarioGame
 
         public void Update(GameTime gm)
         {
+            if (ChangeDirection)
+            {
+                currSprite = 0;
+                ChangeDirection = false;
+            }
             if (currSprite == 0)
             {
                 SourceRectangle.X += spacingInterval;
@@ -58,7 +62,6 @@ namespace MarioGame
                 SourceRectangle.X -= spacingInterval;
                 currSprite = 0;
             }
-
         }
     }
 }

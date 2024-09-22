@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace MarioGame
 {
-    internal class GoombaSprite : ISprite
+    internal class KoopaSprite : ISprite
     {
         private const int SpriteWidth = 75;
         private const int SpriteHeight = 115;
-        private int SourceX = 0;
-        private int SourceY = 4;
+        private int SourceX = 210;
+        private int SourceY = 0;
         private const int SourceWidth = 16;
-        private const int SourceHeight = 20;
+        private const int SourceHeight = 24;
         private SpriteBatch sb;
         private Texture2D texture;
         Rectangle DestinationRectangle;
@@ -24,11 +24,7 @@ namespace MarioGame
         private const int spacingInterval = 30;
         int currSprite = 0;
 
-        public bool ChangeDirection { get; set; }
-        public int posX { get; set; }
-        public int posY { get; set; }
-
-        public GoombaSprite(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
+        public KoopaSprite(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
         {
             sb = SpriteBatch;
             posX = X; posY = Y;
@@ -37,6 +33,10 @@ namespace MarioGame
             SourceRectangle = new Rectangle(SourceX, SourceY, SourceWidth, SourceHeight);
             ChangeDirection = false;
         }
+
+        public bool ChangeDirection { get; set; }
+        public int posX { get; set; }
+        public int posY { get; set; }
 
         public void Draw()
         {
@@ -48,15 +48,32 @@ namespace MarioGame
 
         public void Update(GameTime gm)
         {
-            if (currSprite == 0)
+
+            if (ChangeDirection)
+            {
+                //Going Right Now
+                if (SourceRectangle.X >= 220)
+                {
+                    SourceRectangle.X = 200;
+                    currSprite = 0;
+                }
+                //Going Left Now
+                else
+                {
+                    SourceRectangle.X = 150;
+                    currSprite = 0;
+                }
+                ChangeDirection = false;
+            }
+            if (currSprite == 0) 
             {
                 SourceRectangle.X += spacingInterval;
-                currSprite = 1;
+                currSprite = 1; 
             }
-            else
+            else 
             {
                 SourceRectangle.X -= spacingInterval;
-                currSprite = 0;
+                currSprite = 0; 
             }
 
         }

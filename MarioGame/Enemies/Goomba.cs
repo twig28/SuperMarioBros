@@ -1,5 +1,6 @@
 ﻿using MarioGame;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,38 +12,67 @@ namespace MarioGame
     //states include dead, movingLeft, movingRight
     internal class Goomba : IEnemy
     {
-        private int recStartPos = 0;
-        private int animInterval;
-        private Texture2D texture;
-        private SpriteBatch sb;
-        private ISprite sprite;
-        //get and set
-        private double posX;
-        private double posY;
+        private double animInterval;
+        private GoombaSprite sprite;
+        private int posX;
+        private int posY;
+        private int width;
+        private int height;
+        private double timeElapsed = 0;
+        private double timeElapsedSinceUpdate = 0;
 
-
-        //constructor with initial position and texture/spritebatch
-        public Goomba(Texture2D Texture, SpriteBatch SpriteBatch, double X, double Y)
+        private bool alive = true;
+        public bool Alive
         {
-            //make ISprite
-            texture = Texture;
-            sb = SpriteBatch;
+            get { return alive; }
+            set { alive = value; }
+        }
+
+        private bool _movingRight = true;
+        public bool MovingRight
+        {
+            get { return _movingRight; }
+            set { _movingRight = value;}
+        }
+
+        public Goomba(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
+        {
             posX = X; posY = Y;
+            sprite = new GoombaSprite(Texture, SpriteBatch, posX, posY);
         }
 
         public void Draw()
         {
-            //draw using ISprite
+            if (alive) sprite.Draw();
         }
 
-        public void ChangeState()
+        public void Update(GameTime gm)
         {
-
+            if (alive)
+            {
+                timeElapsed = gm.TotalGameTime.TotalSeconds;
+                if (_movingRight)
+                {
+                    posX++;
+                }
+                else
+                {
+                    posX--;
+                }
+                sprite.posX = posX;
+                sprite.posY = posY;
+                if (timeElapsed - timeElapsedSinceUpdate > 0.2)
+                {
+                    timeElapsedSinceUpdate = timeElapsed;
+                    sprite.Update(gm);
+                }
+            }
         }
 
-        public void Update()
+        public void TriggerDeath(GameTime gm, bool stomped)
         {
-
+            alive = false;
+            sprite.Update(gm);
         }
 
     }
