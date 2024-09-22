@@ -12,8 +12,6 @@ namespace MarioGame
     internal class Koopa : IEnemy
     {
         private double animInterval;
-        private SpriteBatch sb;
-        private Texture2D texture;
         private KoopaSprite sprite;
         private int posX;
         private int posY;
@@ -39,9 +37,8 @@ namespace MarioGame
 
         public Koopa(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
         {
-            sb = SpriteBatch;
             posX = X; posY = Y;
-            sprite = new KoopaSprite(Texture, sb, posX, posY);
+            sprite = new KoopaSprite(Texture, SpriteBatch, posX, posY);
         }
 
         public void Draw()
@@ -80,6 +77,8 @@ namespace MarioGame
         public void TriggerDeath(GameTime gm, bool stomped)
         {
             alive = false;
+            sprite.Update(gm);
+            //handle using sprite
         }
     }
 }

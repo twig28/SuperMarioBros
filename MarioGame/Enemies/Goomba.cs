@@ -13,37 +13,66 @@ namespace MarioGame
     internal class Goomba : IEnemy
     {
         private double animInterval;
-        private SpriteBatch sb;
-        private Texture2D texture;
-        private ISprite sprite;
+        private GoombaSprite sprite;
         private int posX;
         private int posY;
         private int width;
         private int height;
+        private double timeElapsed = 0;
+        private double timeElapsedSinceUpdate = 0;
 
-        public bool Alive { get; set; }
-        public bool MovingRight { get; set; }
+        private bool alive = true;
+        public bool Alive
+        {
+            get { return alive; }
+            set { alive = value; }
+        }
+
+        private bool _movingRight = true;
+        public bool MovingRight
+        {
+            get { return _movingRight; }
+            set { _movingRight = value;}
+        }
 
         public Goomba(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
         {
-            sb = SpriteBatch;
             posX = X; posY = Y;
-            sprite = new GoombaSprite(texture, sb, posX, posY);
+            sprite = new GoombaSprite(Texture, SpriteBatch, posX, posY);
         }
 
         public void Draw()
         {
-            sprite.Draw();
+            if (alive) sprite.Draw();
         }
 
         public void Update(GameTime gm)
         {
-
+            if (alive)
+            {
+                timeElapsed = gm.TotalGameTime.TotalSeconds;
+                if (_movingRight)
+                {
+                    posX++;
+                }
+                else
+                {
+                    posX--;
+                }
+                sprite.posX = posX;
+                sprite.posY = posY;
+                if (timeElapsed - timeElapsedSinceUpdate > 0.2)
+                {
+                    timeElapsedSinceUpdate = timeElapsed;
+                    sprite.Update(gm);
+                }
+            }
         }
 
         public void TriggerDeath(GameTime gm, bool stomped)
         {
-            
+            alive = false;
+            sprite.Update(gm);
         }
 
     }

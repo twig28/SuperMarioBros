@@ -18,7 +18,7 @@ namespace MarioGame
         IController keyControl;
         IController mouseControl;
 
-        IEnemy[] enemies = new IEnemy[2];
+        IEnemy[] enemies = new IEnemy[3];
         //Temp for sprint 2
         IEnemy currEnemy;
 
@@ -56,7 +56,7 @@ namespace MarioGame
 
             enemies[0] = new Goomba(enemyTextures, _spriteBatch, 500, 500);
             enemies[1] = new Koopa(enemyTextures, _spriteBatch, 500, 500);
-            currEnemy = enemies[1];
+            currEnemy = enemies[0];
         }
 
         protected override void Update(GameTime gameTime)

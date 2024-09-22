@@ -21,7 +21,7 @@ namespace MarioGame
         private Texture2D texture;
         Rectangle DestinationRectangle;
         Rectangle SourceRectangle;
-        private int spacingInterval = 30;
+        private const int spacingInterval = 30;
         int currSprite = 0;
 
         public KoopaSprite(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
@@ -51,19 +51,18 @@ namespace MarioGame
 
             if (ChangeDirection)
             {
-                //Going Right
+                //Going Right Now
                 if (SourceRectangle.X >= 220)
                 {
                     SourceRectangle.X = 200;
                     currSprite = 0;
                 }
-                //Going Left
+                //Going Left Now
                 else
                 {
                     SourceRectangle.X = 150;
                     currSprite = 0;
                 }
-                //SourceRectangle = new Rectangle(50, 0, SpriteWidth, SpriteHeight);
                 ChangeDirection = false;
             }
             if (currSprite == 0) 
