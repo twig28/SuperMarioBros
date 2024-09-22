@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MarioGame
@@ -13,18 +14,27 @@ namespace MarioGame
         private double animInterval;
         private SpriteBatch sb;
         private Texture2D texture;
-        private ISprite sprite;
-        private double posX;
-        private double posY;
+        private KoopaSprite sprite;
+        private int posX;
+        private int posY;
+        private int width;
+        private int height;
+        private bool changeSpriteDirection = false;
 
         public bool Alive { get; set; }
-        public bool MovingRight { get; set; }
 
-        public Koopa(Texture2D Texture, SpriteBatch SpriteBatch, double X, double Y)
+        private bool _movingRight = true;
+        public bool MovingRight
+        {
+            get { return _movingRight;}
+            set { _movingRight = value; changeSpriteDirection = true; }
+        }
+
+        public Koopa(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
         {
             sb = SpriteBatch;
             posX = X; posY = Y;
-            sprite = new KoopaSprite(texture, sb, posX, posY);
+            sprite = new KoopaSprite(Texture, sb, posX, posY);
         }
 
         public void Draw()
@@ -33,8 +43,23 @@ namespace MarioGame
         }
 
         public void Update() 
-        { 
-
+        {
+            if (_movingRight)
+            {
+                posX += 1;
+            }
+            else
+            {
+                posX -= 1;
+            }
+            sprite.posX = posX;
+            sprite.posY = posY;
+            if (changeSpriteDirection) 
+            { 
+                changeSpriteDirection = false; 
+                sprite.ChangeDirection = true;
+            }
+            sprite.Update();
         }
     }
 }

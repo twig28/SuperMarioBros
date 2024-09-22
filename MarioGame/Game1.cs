@@ -54,9 +54,9 @@ namespace MarioGame
             groundBlockTexture = Content.Load<Texture2D>("GroundBlock");
             blockTextures = Content.Load<Texture2D>("blocks");
 
-            enemies[0] = new Goomba(enemyTextures, _spriteBatch, 600, 800);
-            enemies[1] = new Koopa(enemyTextures, _spriteBatch, 600, 800);
-            currEnemy = enemies[0];
+            enemies[0] = new Goomba(enemyTextures, _spriteBatch, 500, 500);
+            enemies[1] = new Koopa(enemyTextures, _spriteBatch, 500, 500);
+            currEnemy = enemies[1];
         }
 
         protected override void Update(GameTime gameTime)
@@ -67,21 +67,21 @@ namespace MarioGame
 
             elapsedTime += gameTime.ElapsedGameTime.TotalSeconds;
 
-            foreach (IEnemy enemy in enemies)
-            {
-                if(currEnemy == enemy)
-                {
-                    enemy.Update();
-                    enemy.Draw();
-                }
-            }
-
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            foreach (IEnemy enemy in enemies)
+            {
+                if (currEnemy == enemy)
+                {
+                    enemy.Update();
+                    enemy.Draw();
+                }
+            }
 
             base.Draw(gameTime);
         }

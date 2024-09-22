@@ -12,18 +12,18 @@ namespace MarioGame
     internal class Goomba : IEnemy
     {
         private double animInterval;
-        private int animSpacing = 20;
         private SpriteBatch sb;
         private Texture2D texture;
         private ISprite sprite;
-        private double posX;
-        private double posY;
+        private int posX;
+        private int posY;
+        private int width;
+        private int height;
 
         public bool Alive { get; set; }
         public bool MovingRight { get; set; }
 
-        //constructor with initial position and texture/spritebatch
-        public Goomba(Texture2D Texture, SpriteBatch SpriteBatch, double X, double Y)
+        public Goomba(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
         {
             sb = SpriteBatch;
             posX = X; posY = Y;

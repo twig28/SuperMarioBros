@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
@@ -11,28 +11,57 @@ namespace MarioGame
 {
     internal class KoopaSprite : ISprite
     {
-        private double posX;
-        private double posY;
+        private int SpriteWidth = 75;
+        private int SpriteHeight = 115;
+        private int SourceX = 209;
+        private int SourceY = 0;
+        private int SourceWidth = 16;
+        private int SourceHeight = 24;
         private SpriteBatch sb;
         private Texture2D texture;
-        Rectangle DestinationRecrangle;
+        Rectangle DestinationRectangle;
         Rectangle SourceRectangle;
-        private int spacingInterval = 20;
-        public KoopaSprite(Texture2D Texture, SpriteBatch SpriteBatch, double X, double Y)
+        private int spacingInterval = 14;
+        public KoopaSprite(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
         {
             sb = SpriteBatch;
             posX = X; posY = Y;
             texture = Texture;
+            DestinationRectangle = new Rectangle(posX, posY, SpriteWidth, SpriteHeight);
+            SourceRectangle = new Rectangle(SourceX, SourceY, SourceWidth, SourceHeight);
         }
+
+        public bool ChangeDirection { get; set; }
+        public int posX { get; set; }
+        public int posY { get; set; }
 
         public void Draw()
         {
-            //Draw, incorporate state and timing and change Pos accordingly
+            sb.Begin();
+            sb.Draw(texture, DestinationRectangle, SourceRectangle, Color.White);
+            sb.End();
         }
 
         public void Update()
         {
-            //Destination Rectangle is Pos
+            //TODO account for timing of animation
+            DestinationRectangle = new Rectangle(posX, posY, SpriteWidth, SpriteHeight);
+
+            if (ChangeDirection)
+            {
+                //Going Right
+                if (SourceRectangle.X >= 220)
+                {
+                    SourceRectangle.X = 200;
+                }
+                //Going Left
+                else
+                {
+                    SourceRectangle.X = 400;
+                }
+                //SourceRectangle = new Rectangle(50, 0, SpriteWidth, SpriteHeight);
+                ChangeDirection = false;
+            }
         }
     }
 }

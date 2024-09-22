@@ -1,15 +1,15 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MarioGame
+namespace MarioGame.Sprites
 {
-    internal class GoombaSprite : ISprite
+    internal class PlantSprite : ISprite
     {
         private int posX;
         private int posY;
@@ -18,21 +18,22 @@ namespace MarioGame
         Rectangle DestinationRectangle;
         Rectangle SourceRectangle;
         private int spacingInterval = 20;
-        public GoombaSprite(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
+        public PlantSprite(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
         {
             sb = SpriteBatch;
             posX = X; posY = Y;
             texture = Texture;
+            DestinationRectangle = new Rectangle(posX, posY, 150, 150);
         }
 
         public void Draw()
         {
-
+            //Draw, incorporate state and timing and change Pos accordingly
         }
 
         public void Update()
         {
-
+            DestinationRectangle = new Rectangle(posX, posY, 150, 150);
         }
     }
 }
