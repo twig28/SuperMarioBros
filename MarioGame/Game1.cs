@@ -56,7 +56,8 @@ namespace MarioGame
 
             enemies[0] = new Goomba(enemyTextures, _spriteBatch, 500, 500);
             enemies[1] = new Koopa(enemyTextures, _spriteBatch, 500, 500);
-            currEnemy = enemies[0];
+            enemies[2] = new Piranha(enemyTextures, _spriteBatch, 500, 500);
+            currEnemy = enemies[2];
         }
 
         protected override void Update(GameTime gameTime)
