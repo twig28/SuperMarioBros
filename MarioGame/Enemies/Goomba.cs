@@ -41,5 +41,10 @@ namespace MarioGame
 
         }
 
+        public void TriggerDeath(GameTime gm, bool stomped)
+        {
+            
+        }
+
     }
 }

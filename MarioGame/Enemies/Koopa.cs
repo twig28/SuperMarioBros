@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace MarioGame
 {
-    //states include dead, shell, movingRight, movingLeft
     internal class Koopa : IEnemy
     {
         private double animInterval;
@@ -22,9 +21,14 @@ namespace MarioGame
         private int height;
         private bool changeSpriteDirection = false;
         private double timeElapsed = 0;
-        private double timeElapsedNew = 0;
+        private double timeElapsedSinceUpdate = 0;
 
-        public bool Alive { get; set; }
+        private bool alive = true;
+        public bool Alive 
+        {
+            get { return alive; }
+            set { alive = value; }
+        }
 
         private bool _movingRight = true;
         public bool MovingRight
@@ -42,33 +46,40 @@ namespace MarioGame
 
         public void Draw()
         {
-            sprite.Draw();
+            if(alive) sprite.Draw();
         }
 
-        public void Update(GameTime gm) 
+        public void Update(GameTime gm)
         {
-            timeElapsed = gm.TotalGameTime.TotalSeconds;
-            Console.WriteLine(timeElapsed);
-            if (_movingRight)
-            {
-                posX++;
+            if (alive) { 
+                timeElapsed = gm.TotalGameTime.TotalSeconds;
+                if (_movingRight)
+                {
+                    posX++;
+                }
+                else
+                {
+                    posX--;
+                }
+                sprite.posX = posX;
+                sprite.posY = posY;
+                if (changeSpriteDirection)
+                {
+                    changeSpriteDirection = false;
+                    //signals change direction to sprite class
+                    sprite.ChangeDirection = true;
+                }
+                if (timeElapsed - timeElapsedSinceUpdate > 0.2)
+                {
+                    timeElapsedSinceUpdate = timeElapsed;
+                    sprite.Update(gm);
+                }
             }
-            else
-            {
-                posX--;
-            }
-            sprite.posX = posX;
-            sprite.posY = posY;
-            if (changeSpriteDirection) 
-            { 
-                changeSpriteDirection = false; 
-                sprite.ChangeDirection = true;
-            }
-            if (timeElapsed - timeElapsedNew > 0.2)
-            {
-                timeElapsedNew = timeElapsed;
-                sprite.Update(gm);
-            }
+        }
+
+        public void TriggerDeath(GameTime gm, bool stomped)
+        {
+            alive = false;
         }
     }
 }
