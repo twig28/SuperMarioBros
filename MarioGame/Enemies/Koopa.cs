@@ -21,6 +21,8 @@ namespace MarioGame
         private int width;
         private int height;
         private bool changeSpriteDirection = false;
+        private double timeElapsed = 0;
+        private double timeElapsedNew = 0;
 
         public bool Alive { get; set; }
 
@@ -45,6 +47,8 @@ namespace MarioGame
 
         public void Update(GameTime gm) 
         {
+            timeElapsed = gm.TotalGameTime.TotalSeconds;
+            Console.WriteLine(timeElapsed);
             if (_movingRight)
             {
                 posX++;
@@ -60,7 +64,11 @@ namespace MarioGame
                 changeSpriteDirection = false; 
                 sprite.ChangeDirection = true;
             }
-            sprite.Update(gm);
+            if (timeElapsed - timeElapsedNew > 0.2)
+            {
+                timeElapsedNew = timeElapsed;
+                sprite.Update(gm);
+            }
         }
     }
 }

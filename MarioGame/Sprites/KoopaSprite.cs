@@ -40,6 +40,7 @@ namespace MarioGame
 
         public void Draw()
         {
+            DestinationRectangle = new Rectangle(posX, posY, SpriteWidth, SpriteHeight);
             sb.Begin();
             sb.Draw(texture, DestinationRectangle, SourceRectangle, Color.White);
             sb.End();
@@ -47,8 +48,6 @@ namespace MarioGame
 
         public void Update(GameTime gm)
         {
-            //TODO account for timing of animation
-            DestinationRectangle = new Rectangle(posX, posY, SpriteWidth, SpriteHeight);
 
             if (ChangeDirection)
             {
