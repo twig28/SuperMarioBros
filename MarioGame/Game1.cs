@@ -65,8 +65,6 @@ namespace MarioGame
             keyControl.HandleInputs();
             mouseControl.HandleInputs();
 
-            elapsedTime += gameTime.ElapsedGameTime.TotalSeconds;
-
             base.Update(gameTime);
         }
 
@@ -78,7 +76,7 @@ namespace MarioGame
             {
                 if (currEnemy == enemy)
                 {
-                    enemy.Update();
+                    enemy.Update(gameTime);
                     enemy.Draw();
                 }
             }

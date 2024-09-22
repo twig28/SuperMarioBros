@@ -11,12 +11,12 @@ namespace MarioGame
 {
     internal class KoopaSprite : ISprite
     {
-        private int SpriteWidth = 75;
-        private int SpriteHeight = 115;
+        private const int SpriteWidth = 75;
+        private const int SpriteHeight = 115;
         private int SourceX = 210;
         private int SourceY = 0;
-        private int SourceWidth = 16;
-        private int SourceHeight = 24;
+        private const int SourceWidth = 16;
+        private const int SourceHeight = 24;
         private SpriteBatch sb;
         private Texture2D texture;
         Rectangle DestinationRectangle;
@@ -45,7 +45,7 @@ namespace MarioGame
             sb.End();
         }
 
-        public void Update()
+        public void Update(GameTime gm)
         {
             //TODO account for timing of animation
             DestinationRectangle = new Rectangle(posX, posY, SpriteWidth, SpriteHeight);
@@ -61,7 +61,7 @@ namespace MarioGame
                 //Going Left
                 else
                 {
-                    SourceRectangle.X = 400;
+                    SourceRectangle.X = 150;
                     currSprite = 0;
                 }
                 //SourceRectangle = new Rectangle(50, 0, SpriteWidth, SpriteHeight);

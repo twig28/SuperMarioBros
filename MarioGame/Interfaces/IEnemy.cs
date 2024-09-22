@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,6 @@ namespace MarioGame
         bool Alive { get; set; }
         bool MovingRight { get; set; }
         void Draw();
-        void Update();
+        void Update(GameTime gm);
     }
 }

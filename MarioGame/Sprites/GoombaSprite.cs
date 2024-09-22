@@ -30,7 +30,7 @@ namespace MarioGame
 
         }
 
-        public void Update()
+        public void Update(GameTime gm)
         {
 
         }

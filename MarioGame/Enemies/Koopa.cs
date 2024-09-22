@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,15 +43,15 @@ namespace MarioGame
             sprite.Draw();
         }
 
-        public void Update() 
+        public void Update(GameTime gm) 
         {
             if (_movingRight)
             {
-                posX += 1;
+                posX++;
             }
             else
             {
-                posX -= 1;
+                posX--;
             }
             sprite.posX = posX;
             sprite.posY = posY;
@@ -59,7 +60,7 @@ namespace MarioGame
                 changeSpriteDirection = false; 
                 sprite.ChangeDirection = true;
             }
-            sprite.Update();
+            sprite.Update(gm);
         }
     }
 }
