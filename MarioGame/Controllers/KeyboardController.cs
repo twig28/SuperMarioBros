@@ -27,12 +27,10 @@ public class KeyboardController : IController
         if (ks.IsKeyDown(Keys.U))
         {
             Item.lastItem();
-            Thread.Sleep(100);
         }
         if (ks.IsKeyDown(Keys.I))
         { 
             Item.nextItem();
-            Thread.Sleep(100);
         }
     }
 }

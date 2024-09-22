@@ -78,8 +78,6 @@ namespace MarioGame
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
 
-            textS.Draw(_spriteBatch, font);
-             
             Vector2 itemLocation = new Vector2(200, 200);
             items.Draw(_spriteBatch, itemLocation);
 
