@@ -13,7 +13,7 @@ namespace MarioGame
     {
         private int SpriteWidth = 75;
         private int SpriteHeight = 115;
-        private int SourceX = 209;
+        private int SourceX = 210;
         private int SourceY = 0;
         private int SourceWidth = 16;
         private int SourceHeight = 24;
@@ -21,7 +21,9 @@ namespace MarioGame
         private Texture2D texture;
         Rectangle DestinationRectangle;
         Rectangle SourceRectangle;
-        private int spacingInterval = 14;
+        private int spacingInterval = 30;
+        int currSprite = 0;
+
         public KoopaSprite(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
         {
             sb = SpriteBatch;
@@ -29,6 +31,7 @@ namespace MarioGame
             texture = Texture;
             DestinationRectangle = new Rectangle(posX, posY, SpriteWidth, SpriteHeight);
             SourceRectangle = new Rectangle(SourceX, SourceY, SourceWidth, SourceHeight);
+            ChangeDirection = false;
         }
 
         public bool ChangeDirection { get; set; }
@@ -53,15 +56,28 @@ namespace MarioGame
                 if (SourceRectangle.X >= 220)
                 {
                     SourceRectangle.X = 200;
+                    currSprite = 0;
                 }
                 //Going Left
                 else
                 {
                     SourceRectangle.X = 400;
+                    currSprite = 0;
                 }
                 //SourceRectangle = new Rectangle(50, 0, SpriteWidth, SpriteHeight);
                 ChangeDirection = false;
             }
+            if (currSprite == 0) 
+            {
+                SourceRectangle.X += spacingInterval;
+                currSprite = 1; 
+            }
+            else 
+            {
+                SourceRectangle.X -= spacingInterval;
+                currSprite = 0; 
+            }
+
         }
     }
 }
