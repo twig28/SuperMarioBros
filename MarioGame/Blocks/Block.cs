@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace MarioGame.Blocks;
 
-public class Block : IBlock
+public class Block
 {
     public Vector2 Position { get; set; }
     private Texture2D texture;
