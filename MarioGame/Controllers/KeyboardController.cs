@@ -18,6 +18,7 @@ public class KeyboardController : IController
     }
     public void HandleInputs()
     {
+        Game.current = Game1.SpriteType.Static;
         //Do Stuff
         ks = Keyboard.GetState();
         if (ks.IsKeyDown(Keys.Escape))
@@ -40,5 +41,20 @@ public class KeyboardController : IController
         {
             Game.changeEnemy(true);
         }
+        
+            if (ks.IsKeyDown(Keys.Right))
+            {
+                Game.current = Game1.SpriteType.Motion;
+
+            }
+
+            if (ks.IsKeyDown(Keys.Left))
+            {
+                Game.current = Game1.SpriteType.MotionL;
+
+            }
+           
+        
+       
     }
 }

@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 using MarioGame;
 using Microsoft.Xna.Framework;
 
-namespace MarioGame.Interfaces;
+namespace MarioGame
+{
 
     //would have texture, position, state, and more properties
     public interface IPlayer
@@ -15,4 +16,5 @@ namespace MarioGame.Interfaces;
         void Update(GameTime gm);
         void Draw(SpriteBatch spriteBatch);
     }
+}
 

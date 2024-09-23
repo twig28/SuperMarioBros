@@ -6,9 +6,18 @@ using MarioGame.Items;
 using System;
 
 namespace MarioGame
+
+
 {
+    
     public class Game1 : Game
     {
+        public enum SpriteType
+        {
+            Static,   // Static sprite
+            Motion,    // moving sprite
+            MotionL,    // moving sprite
+        }
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private SpriteFont font;
@@ -18,6 +27,16 @@ namespace MarioGame
         Texture2D sceneryTextures;
         Texture2D groundBlockTexture;
         Texture2D blockTextures;
+        Texture2D MRTexture;
+        Vector2 PlayerPosition;
+        public Vector2 UPlayerPosition;
+        float PlayerSpeed;
+        public MotionPlayer MRplayer;
+        Texture2D MLTexture;
+        public MotionPlayerLeft MLplayer;
+        Texture2D StaTexture;
+        public Static Staplayer;
+        public SpriteType current = SpriteType.Static;
         IController keyControl;
         IController mouseControl;
         Item items;
@@ -69,10 +88,15 @@ namespace MarioGame
 
         protected override void Initialize()
         {
-            base.Initialize();
+           
             keyControl = new KeyboardController(this);
             mouseControl = new MouseController(this);
             items = new Item(itemTextures);
+            PlayerPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2,
+                     _graphics.PreferredBackBufferHeight / 2);
+            UPlayerPosition = PlayerPosition;
+            PlayerSpeed = 100f;
+            base.Initialize();
         }
 
         protected override void LoadContent()
@@ -90,6 +114,12 @@ namespace MarioGame
             enemies[1] = new Koopa(enemyTextures, _spriteBatch, 500, 500);
             enemies[2] = new Piranha(enemyTextures, _spriteBatch, 500, 500);
             currEnemy = enemies[2];
+            MRTexture = Content.Load<Texture2D>("MA");
+            StaTexture = Content.Load<Texture2D>("standing");
+            MLTexture = Content.Load<Texture2D>("MAl");
+            MRplayer = new MotionPlayer(MRTexture, PlayerPosition, PlayerSpeed, _graphics, 2, 3);
+            Staplayer = new Static(StaTexture, PlayerPosition);
+            MLplayer = new MotionPlayerLeft(MLTexture, PlayerPosition, PlayerSpeed, _graphics, 2, 3);
         }
 
         protected override void Update(GameTime gameTime)
@@ -97,7 +127,26 @@ namespace MarioGame
 
             keyControl.HandleInputs();
             mouseControl.HandleInputs();
-
+            // update based on current sprite type
+           
+            if (current == SpriteType.Motion)
+            {
+                MRplayer.Position = UPlayerPosition;
+                MRplayer.Update(gameTime);
+                UPlayerPosition = MRplayer.Position;
+            }
+            else if (current == SpriteType.MotionL)
+            {
+                MLplayer.Position = UPlayerPosition;
+                MLplayer.Update(gameTime);
+                UPlayerPosition = MLplayer.Position;
+            }
+            else
+            {
+                Staplayer.Position = UPlayerPosition;
+                current = SpriteType.Static;
+            }
+  
             base.Update(gameTime);
         }
 
@@ -107,7 +156,19 @@ namespace MarioGame
             _spriteBatch.Begin();
 
             Vector2 itemLocation = new Vector2(200, 200);
-            items.Draw(_spriteBatch, itemLocation);
+            //items.Draw(_spriteBatch, itemLocation);
+            if (current == SpriteType.Static)
+            {
+                Staplayer.Draw(_spriteBatch);
+            }
+            if (current == SpriteType.Motion)
+            {
+                MRplayer.Draw(_spriteBatch);
+            }
+            if (current == SpriteType.MotionL)
+            {
+                MLplayer.Draw(_spriteBatch);
+            }
 
             _spriteBatch.End();
 

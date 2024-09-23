@@ -5,7 +5,7 @@ using System.ComponentModel;
 using static System.Formats.Asn1.AsnWriter;
 
 namespace MarioGame { 
-public class MotionPlayer : ISprite
+public class MotionPlayer : IPlayer
     {
     public Texture2D Texture { get; set; }
     public Vector2 Position;
