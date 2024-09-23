@@ -22,6 +22,8 @@ namespace MarioGame
         private double timeElapsedSinceUpdate = 0;
 
         private bool alive = true;
+        private bool isShell = false;
+
         public bool Alive 
         {
             get { return alive; }
@@ -43,12 +45,13 @@ namespace MarioGame
 
         public void Draw()
         {
-            if(alive) sprite.Draw();
+            if(alive && !isShell) sprite.Draw();
         }
 
         public void Update(GameTime gm)
         {
-            if (alive) { 
+            if (alive)
+            {
                 timeElapsed = gm.TotalGameTime.TotalSeconds;
                 if (_movingRight)
                 {
@@ -72,13 +75,36 @@ namespace MarioGame
                     sprite.Update(gm);
                 }
             }
+            else if (isShell)
+            {
+                timeElapsed = gm.TotalGameTime.TotalSeconds;
+                if (_movingRight)
+                {
+                    posX = posX + 3;
+                }
+                else
+                {
+                    posX = posX - 3;
+                }
+                sprite.posX = posX;
+                sprite.posY = posY;
+                if (changeSpriteDirection)
+                {
+                    changeSpriteDirection = false;
+                }
+            }
         }
 
         public void TriggerDeath(GameTime gm, bool stomped)
         {
             alive = false;
-            sprite.Update(gm);
             //handle using sprite
+            if (stomped)
+            {
+                isShell = true;
+                sprite.ChangeToShell();
+            }
+            sprite.Update(gm);
         }
     }
 }
