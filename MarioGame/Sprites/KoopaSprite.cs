@@ -11,8 +11,8 @@ namespace MarioGame
 {
     internal class KoopaSprite : ISprite
     {
-        private const int SpriteWidth = 75;
-        private const int SpriteHeight = 115;
+        private int SpriteWidth = 75;
+        private int SpriteHeight = 115;
         private int SourceX = 210;
         private int SourceY = 0;
         private const int SourceWidth = 16;
@@ -23,6 +23,7 @@ namespace MarioGame
         Rectangle SourceRectangle;
         private const int spacingInterval = 30;
         int currSprite = 0;
+        private bool hasChangedToShellAnim = false;
 
         public KoopaSprite(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
         {
@@ -44,6 +45,20 @@ namespace MarioGame
             sb.Begin();
             sb.Draw(texture, DestinationRectangle, SourceRectangle, Color.White);
             sb.End();
+        }
+
+        public void ChangeToShell()
+        {
+            if (hasChangedToShellAnim)
+            {
+                SourceX = 360;
+            }
+            else
+            {
+                SpriteWidth = 75;
+                SpriteHeight = 75;
+                SourceX = 330;
+            }
         }
 
         public void Update(GameTime gm)

@@ -6,11 +6,19 @@ using System.Threading.Tasks;
 
 namespace MarioGame
 {
-    //would have texture and position properties
+    // Would have texture and position properties
     public interface IBlock
     {
-        void Draw();
-        void Update();
-        void ChangeState();
+        vector2 Position { get; set; } // Block position
+
+        void Update(GameTime gameTime);
+
+        void Draw(SpriteBatch spriteBatch);
+
+        void OnCollide(IPlayer player);
+
+        bool IsBreakable(); // Is block breakable
+
+        void Trigger(); // Trigger block
     }
 }
