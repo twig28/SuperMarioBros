@@ -20,6 +20,7 @@ namespace MarioGame
         private int height;
         private double timeElapsed = 0;
         private double timeElapsedSinceUpdate = 0;
+        private double timeElapsedSinceUpdateAnim = 0;
         private bool alive = true;
         public bool Alive
         {
@@ -62,12 +63,13 @@ namespace MarioGame
                     sprite.posX = posX;
                     sprite.posY = posY;
                 }
-                else if(timeElapsed - timeElapsedSinceUpdate > animInterval)
+                else if (timeElapsed - timeElapsedSinceUpdateAnim > animInterval)
                 {
+                    timeElapsedSinceUpdateAnim = timeElapsed;
                     sprite.Update(gm);
                 }
                 if (timeElapsed - timeElapsedSinceUpdate > movingInterval)
-                { 
+                {
                     timeElapsedSinceUpdate = timeElapsed;
                     //Going Up and Down -> Active
                     if (movingInterval == 2)
@@ -91,7 +93,7 @@ namespace MarioGame
                 }
                 //Active -> Going Up and Down
             }
-            }
+        }
 
         public void TriggerDeath(GameTime gm, bool stomped)
         {

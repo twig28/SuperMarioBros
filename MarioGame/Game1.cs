@@ -46,33 +46,31 @@ namespace MarioGame
         IEnemy currEnemy;
         public void changeEnemy(bool forward)
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i <= 2; i++)
             {
-                if (currEnemy == enemies[i])
+                if (currEnemy.Equals(enemies[i]))
                 {
                     //loop forward
-                    if (forward && i + 1 > enemies.Length)
+                    if (forward && i==2)
                     {
                         currEnemy = enemies[0];
-                    }
-                    //loop backward
-                    else if (!forward && i - 1 < 0)
-                    {
-                        currEnemy = enemies[enemies.Length];
                     }
                     else if (forward)
                     {
                         currEnemy = enemies[i + 1];
                     }
+                    else if (i == 0)
+                    {
+                        currEnemy = enemies[2];
+                    }
                     else
                     {
                         currEnemy = enemies[i - 1];
                     }
+                    break;
                 }
             }
         }
-
-        private double elapsedTime = 0.0;
 
         public Game1()
         {
