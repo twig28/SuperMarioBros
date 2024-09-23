@@ -32,5 +32,13 @@ public class KeyboardController : IController
         { 
             Item.nextItem();
         }
+        if (ks.IsKeyDown(Keys.O))
+        {
+            Game.changeEnemy(false);
+        }
+        if (ks.IsKeyDown(Keys.P))
+        {
+            Game.changeEnemy(true);
+        }
     }
 }

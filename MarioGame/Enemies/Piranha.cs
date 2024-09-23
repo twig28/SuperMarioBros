@@ -62,11 +62,11 @@ namespace MarioGame
                     sprite.posX = posX;
                     sprite.posY = posY;
                 }
-                else if(timeElapsed - timeElapsedSinceUpdate > movingInterval)
+                else if(timeElapsed - timeElapsedSinceUpdate > animInterval)
                 {
                     sprite.Update(gm);
                 }
-                if (timeElapsed - timeElapsedSinceUpdate > animInterval)
+                if (timeElapsed - timeElapsedSinceUpdate > movingInterval)
                 { 
                     timeElapsedSinceUpdate = timeElapsed;
                     //Going Up and Down -> Active
