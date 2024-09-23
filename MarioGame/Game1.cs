@@ -104,6 +104,7 @@ namespace MarioGame
             marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
             enemyTextures = Content.Load<Texture2D>("smb_enemies_sheet");
             itemTextures = Content.Load<Texture2D>("smb_items_sheet");
+            items = new Item(itemTextures);
             groundBlockTexture = Content.Load<Texture2D>("GroundBlock");
             blockTextures = Content.Load<Texture2D>("blocks");
 
@@ -143,7 +144,8 @@ namespace MarioGame
                 Staplayer.Position = UPlayerPosition;
                 current = SpriteType.Static;
             }
-  
+
+            items.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -151,7 +153,7 @@ namespace MarioGame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
-            items = new Item(itemTextures);
+            
             Vector2 itemLocation = new Vector2(200, 200);
             items.Draw(_spriteBatch, itemLocation);
             if (current == SpriteType.Static)
