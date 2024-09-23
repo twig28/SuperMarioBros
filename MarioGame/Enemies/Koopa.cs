@@ -11,7 +11,7 @@ namespace MarioGame
 {
     internal class Koopa : IEnemy
     {
-        private double animInterval;
+        private const double animInterval = 0.2;
         private KoopaSprite sprite;
         private int posX;
         private int posY;
@@ -66,7 +66,7 @@ namespace MarioGame
                     //signals change direction to sprite class
                     sprite.ChangeDirection = true;
                 }
-                if (timeElapsed - timeElapsedSinceUpdate > 0.2)
+                if (timeElapsed - timeElapsedSinceUpdate > animInterval)
                 {
                     timeElapsedSinceUpdate = timeElapsed;
                     sprite.Update(gm);

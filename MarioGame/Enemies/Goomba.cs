@@ -12,7 +12,7 @@ namespace MarioGame
     //states include dead, movingLeft, movingRight
     internal class Goomba : IEnemy
     {
-        private double animInterval;
+        private double animInterval = 0.2;
         private GoombaSprite sprite;
         private int posX;
         private int posY;
@@ -61,7 +61,7 @@ namespace MarioGame
                 }
                 sprite.posX = posX;
                 sprite.posY = posY;
-                if (timeElapsed - timeElapsedSinceUpdate > 0.2)
+                if (timeElapsed - timeElapsedSinceUpdate > animInterval)
                 {
                     timeElapsedSinceUpdate = timeElapsed;
                     sprite.Update(gm);

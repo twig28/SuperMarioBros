@@ -9,7 +9,6 @@ namespace MarioGame
     //would have texture, position, state, and more properties
     public interface IPlayer
     {
-        void ChangeState();
         void Update();
         void Draw();
     }
