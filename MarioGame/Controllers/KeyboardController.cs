@@ -53,8 +53,12 @@ public class KeyboardController : IController
                 Game.current = Game1.SpriteType.MotionL;
 
             }
-           
-        
-       
+        if (ks.IsKeyDown(Keys.R))
+        {
+            Game.ResetGame();
+        }
+
+
+
     }
 }

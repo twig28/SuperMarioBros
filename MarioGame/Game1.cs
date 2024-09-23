@@ -72,6 +72,12 @@ namespace MarioGame
             }
         }
 
+        public void ResetGame()
+        {
+            this.Initialize();
+            this.LoadContent();
+        }
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
