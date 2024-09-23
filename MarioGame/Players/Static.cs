@@ -6,7 +6,7 @@ using static System.Formats.Asn1.AsnWriter;
 namespace MarioGame
 {
     //would have texture, position, state, and more properties
-    public class IPlayer : ISprite
+    public class Static: ISprite
     {
 
 
@@ -14,7 +14,7 @@ namespace MarioGame
         public Vector2 Position;
         public float Scale = 0.2f;
 
-        public IPlayer(Texture2D texture, Vector2 position)
+        public Static(Texture2D texture, Vector2 position)
         {
             Texture = texture;
             Position = position;
