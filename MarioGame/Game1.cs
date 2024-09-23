@@ -91,7 +91,6 @@ namespace MarioGame
            
             keyControl = new KeyboardController(this);
             mouseControl = new MouseController(this);
-            items = new Item(itemTextures);
             PlayerPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2,
                      _graphics.PreferredBackBufferHeight / 2);
             UPlayerPosition = PlayerPosition;
@@ -154,9 +153,9 @@ namespace MarioGame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
-
+            items = new Item(itemTextures);
             Vector2 itemLocation = new Vector2(200, 200);
-            //items.Draw(_spriteBatch, itemLocation);
+            items.Draw(_spriteBatch, itemLocation);
             if (current == SpriteType.Static)
             {
                 Staplayer.Draw(_spriteBatch);
