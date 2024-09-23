@@ -1,15 +1,17 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MarioGame;
+using Microsoft.Xna.Framework;
 
 namespace MarioGame
 {
-    //would have texture, position, state, and more properties
-    public interface IPlayer
+    internal interface IPlayer
     {
-        void Update();
-        void Draw();
+        void Update(GameTime gm);
+        void Draw(SpriteBatch spriteBatch);
     }
 }
