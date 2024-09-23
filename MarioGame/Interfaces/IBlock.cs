@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MarioGame.Interfaces;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MarioGame
 {
     // Would have texture and position properties
     public interface IBlock
     {
-        vector2 Position { get; set; } // Block position
+        Vector2 Position { get; set; } // Block position
 
         void Update(GameTime gameTime);
 
