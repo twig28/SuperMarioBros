@@ -11,7 +11,8 @@ namespace MarioGame
 {
     internal class Piranha : IEnemy
     {
-        private double animInterval = 2;
+        private double movingInterval = 2;
+        private double animInterval = 0.4;
         private PiranhaSprite sprite;
         private int posX;
         private int posY;
@@ -48,7 +49,7 @@ namespace MarioGame
             if (alive)
             {
                 timeElapsed = gm.TotalGameTime.TotalSeconds;
-                if (animInterval == 2)
+                if (movingInterval == 2)
                 {
                     if (_movingRight)
                     {
@@ -61,7 +62,7 @@ namespace MarioGame
                     sprite.posX = posX;
                     sprite.posY = posY;
                 }
-                else
+                else if(timeElapsed - timeElapsedSinceUpdate > movingInterval)
                 {
                     sprite.Update(gm);
                 }
@@ -69,15 +70,15 @@ namespace MarioGame
                 { 
                     timeElapsedSinceUpdate = timeElapsed;
                     //Going Up and Down -> Active
-                    if (animInterval == 2)
+                    if (movingInterval == 2)
                     {
-                        animInterval = 8;
+                        movingInterval = 8;
                         //Send change direction to Sprite
                         sprite.ChangeDirection = true;
                     }
                     else
                     {
-                        animInterval = 2;
+                        movingInterval = 2;
                         if (_movingRight)
                         {
                             _movingRight = false;

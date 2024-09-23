@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MarioGame.Controllers;
 using MarioGame.Interfaces;
 using MarioGame.Items;
+using System;
 
 namespace MarioGame
 {
@@ -21,9 +22,36 @@ namespace MarioGame
         IController mouseControl;
         Item items;
 
+        //Temporary for sprint 2
         IEnemy[] enemies = new IEnemy[3];
-        //Temp for sprint 2
         IEnemy currEnemy;
+        public void changeEnemy(bool forward)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (currEnemy == enemies[i])
+                {
+                    //loop forward
+                    if (forward && i + 1 > enemies.Length)
+                    {
+                        currEnemy = enemies[0];
+                    }
+                    //loop backward
+                    else if (!forward && i - 1 < 0)
+                    {
+                        currEnemy = enemies[enemies.Length];
+                    }
+                    else if (forward)
+                    {
+                        currEnemy = enemies[i + 1];
+                    }
+                    else
+                    {
+                        currEnemy = enemies[i - 1];
+                    }
+                }
+            }
+        }
 
         private double elapsedTime = 0.0;
 
