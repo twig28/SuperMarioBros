@@ -1,6 +1,6 @@
 namespace MarioGame.Blocks;
 
-public class Block
+public class Block : IBlock
 {
     
 }
