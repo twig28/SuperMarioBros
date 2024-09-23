@@ -12,6 +12,6 @@ namespace MarioGame
     internal interface ISprite
     {
         void Update(GameTime gm);
-        void Draw();
+        void Draw(SpriteBatch spriteBatch);
     }
 }
