@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MarioGame
+namespace MarioGame.Interfaces
 {
     // Would have texture and position properties
     public interface IBlock
