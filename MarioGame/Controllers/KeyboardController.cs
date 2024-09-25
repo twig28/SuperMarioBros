@@ -42,15 +42,15 @@ public class KeyboardController : IController
         {
             Item.lastItem();
         }
-        if (currentKeyState.IsKeyDown(Keys.I))
+        if (IsKeyHitted(Keys.I))
         { 
             Item.nextItem();
         }
-        if (currentKeyState.IsKeyDown(Keys.O))
+        if (IsKeyHitted(Keys.O))
         {
             Game.changeEnemy(false);
         }
-        if (currentKeyState.IsKeyDown(Keys.P))
+        if (IsKeyHitted(Keys.P))
         {
             Game.changeEnemy(true);
         }
