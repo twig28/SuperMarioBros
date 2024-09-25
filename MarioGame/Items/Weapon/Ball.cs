@@ -82,5 +82,10 @@ namespace MarioGame
                 spriteBatch.Draw(Texture, Position, sourceRectangle, Color.White);
             }
         }
+
+        public void Update(object gameTime, int width)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

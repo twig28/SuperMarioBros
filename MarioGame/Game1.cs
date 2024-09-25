@@ -4,6 +4,8 @@ using MarioGame.Controllers;
 using MarioGame.Interfaces;
 using MarioGame.Items;
 using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework.Input;
 
 namespace MarioGame
 
@@ -18,6 +20,7 @@ namespace MarioGame
             Motion,    // moving sprite
             MotionL,    // moving sprite
         }
+
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private SpriteFont font;
@@ -29,6 +32,16 @@ namespace MarioGame
         Texture2D blockTextures;
         Texture2D MRTexture;
         Vector2 PlayerPosition;
+        private Texture2D ballTextureRight;  // fireball to the right
+        private Texture2D ballTextureLeft;  // fireball to the left
+        private List<IBall> balls = new List<IBall>();  // list of ball
+        private float ballSpeed = 300f;  // ball speed
+        public bool qPressed = false;  //status of q
+        public bool ePressed = false;  // status of e
+        public bool keyboardPermitQ=false;
+        public bool keyboardPermitE=false;
+
+
         public Vector2 UPlayerPosition;
         float PlayerSpeed;
         public MotionPlayer MRplayer;
@@ -124,6 +137,8 @@ namespace MarioGame
             MRplayer = new MotionPlayer(MRTexture, PlayerPosition, PlayerSpeed, _graphics, 2, 3);
             Staplayer = new Static(StaTexture, PlayerPosition);
             MLplayer = new MotionPlayerLeft(MLTexture, PlayerPosition, PlayerSpeed, _graphics, 2, 3);
+            ballTextureRight = Content.Load<Texture2D>("fireballRight");  //load the ball texture to the left
+            ballTextureLeft = Content.Load<Texture2D>("fireballLeft");//load the ball texture to the left
         }
 
         protected override void Update(GameTime gameTime)
@@ -151,6 +166,28 @@ namespace MarioGame
                 current = SpriteType.Static;
             }
 
+           if (keyboardPermitQ)  // only released when q is pressed
+                {
+                    balls.Add(new Ball(ballTextureLeft, UPlayerPosition, ballSpeed, true));  // add new ball to left
+                    keyboardPermitQ= false;  
+                }
+          
+            // ball to right
+            
+                if (keyboardPermitE)  // released when pressed
+                {
+                    balls.Add(new BallLeft(ballTextureRight, UPlayerPosition, ballSpeed, false));  // add ball to right
+                    keyboardPermitE = false;  
+                }
+           
+
+            foreach (var ball in balls)
+            {
+                ball.Update(gameTime, GraphicsDevice.Viewport.Width); 
+            }
+
+            
+            balls.RemoveAll(b => !b.IsVisible);
             items.Update(gameTime);
             base.Update(gameTime);
         }
@@ -158,8 +195,9 @@ namespace MarioGame
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            _spriteBatch.Begin();
+
             
+            _spriteBatch.Begin();
             Vector2 itemLocation = new Vector2(200, 200);
             items.Draw(_spriteBatch, itemLocation);
             if (current == SpriteType.Static)
@@ -174,20 +212,23 @@ namespace MarioGame
             {
                 MLplayer.Draw(_spriteBatch);
             }
-
-            _spriteBatch.End();
-
+            for (int i = 0; i < balls.Count; i++)
+            {
+                balls[i].Draw(_spriteBatch);  
+            }
+          _spriteBatch.End();
             foreach (IEnemy enemy in enemies)
             {
                 if (currEnemy == enemy)
                 {
                     enemy.Update(gameTime);
-                    enemy.Draw();
+                    enemy.Draw();  
                 }
             }
 
             base.Draw(gameTime);
         }
+
 
     }
 }
