@@ -166,20 +166,19 @@ namespace MarioGame
                 current = SpriteType.Static;
             }
 
-           if (keyboardPermitQ)  // only released when q is pressed
-                {
-                    balls.Add(new Ball(ballTextureLeft, UPlayerPosition, ballSpeed, true));  // add new ball to left
-                    keyboardPermitQ= false;  
-                }
-          
-            // ball to right
+           if (keyboardPermitQ)
+            {
+                balls.Add(new Ball(ballTextureLeft, UPlayerPosition, ballSpeed, true));  
+                keyboardPermitQ = false;  
+            }
+
             
-                if (keyboardPermitE)  // released when pressed
+            if (keyboardPermitE)
                 {
-                    balls.Add(new BallLeft(ballTextureRight, UPlayerPosition, ballSpeed, false));  // add ball to right
-                    keyboardPermitE = false;  
+                    balls.Add(new BallLeft(ballTextureRight, UPlayerPosition, ballSpeed, false));  
+                    keyboardPermitE = false; 
                 }
-           
+            
 
             foreach (var ball in balls)
             {
