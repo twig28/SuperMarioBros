@@ -10,7 +10,7 @@ public class KeyboardController : IController
 {
     public Game1 Game;
     private KeyboardState ks;
-
+     private KeyboardState previousState;
 
     public KeyboardController(Game1 gameName)
     {
@@ -58,7 +58,34 @@ public class KeyboardController : IController
             Game.ResetGame();
         }
 
+           
+        if (ks.IsKeyDown(Keys.Q) && previousState.IsKeyUp(Keys.Q)) 
+        {
+            Game.keyboardPermitQ = true;
+            Game.qPressed = true;
+        }
 
+        
+        if (ks.IsKeyUp(Keys.Q))
+        {
+            Game.qPressed = false;
+        }
+
+        
+        if (ks.IsKeyDown(Keys.E) && previousState.IsKeyUp(Keys.E))  
+        {
+            Game.keyboardPermitE = true;
+            Game.ePressed = true;
+        }
+
+        
+        if (ks.IsKeyUp(Keys.E))
+        {
+            Game.ePressed = false;
+        }
+
+     
+        previousState = ks;
 
     }
 }
