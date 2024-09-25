@@ -55,16 +55,16 @@ namespace MarioGame
         Item items;
 
         //Temporary for sprint 2
-        IEnemy[] enemies = new IEnemy[3];
+        IEnemy[] enemies = new IEnemy[4];
         IEnemy currEnemy;
         public void changeEnemy(bool forward)
         {
-            for (int i = 0; i <= 2; i++)
+            for (int i = 0; i <= 3; i++)
             {
                 if (currEnemy.Equals(enemies[i]))
                 {
                     //loop forward
-                    if (forward && i==2)
+                    if (forward && i == 3)
                     {
                         currEnemy = enemies[0];
                     }
@@ -74,7 +74,7 @@ namespace MarioGame
                     }
                     else if (i == 0)
                     {
-                        currEnemy = enemies[2];
+                        currEnemy = enemies[3];
                     }
                     else
                     {
@@ -130,7 +130,9 @@ namespace MarioGame
             enemies[0] = new Goomba(enemyTextures, _spriteBatch, 500, 500);
             enemies[1] = new Koopa(enemyTextures, _spriteBatch, 500, 500);
             enemies[2] = new Piranha(enemyTextures, _spriteBatch, 500, 500);
-            currEnemy = enemies[2];
+            //this koopa will get killed and turned into shell
+            enemies[3] = new Koopa(enemyTextures, _spriteBatch, 500, 500);
+            currEnemy = enemies[3];
             MRTexture = Content.Load<Texture2D>("MA");
             StaTexture = Content.Load<Texture2D>("standing");
             MLTexture = Content.Load<Texture2D>("MAl");
@@ -185,7 +187,12 @@ namespace MarioGame
                 ball.Update(gameTime, GraphicsDevice.Viewport.Width); 
             }
 
-            
+            //kill and turn koopa into shell
+            if (enemies[3].Alive && gameTime.TotalGameTime.TotalSeconds > 3)
+            {
+                enemies[3].TriggerDeath(gameTime, true);
+            }
+
             balls.RemoveAll(b => !b.IsVisible);
             items.Update(gameTime);
             base.Update(gameTime);
