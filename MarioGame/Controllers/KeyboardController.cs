@@ -10,50 +10,63 @@ public class KeyboardController : IController
 {
     public Game1 Game;
     private KeyboardState ks;
+    private KeyboardState previousKeyState;
+    private KeyboardState currentKeyState;
+    public KeyboardState GetState()
+    {
+        previousKeyState = currentKeyState;
+        currentKeyState = Keyboard.GetState();
+        return currentKeyState;
+    }
 
 
     public KeyboardController(Game1 gameName)
     {
         Game = gameName;
     }
+
+    public bool IsKeyHitted(Keys key)
+    {
+        return currentKeyState.IsKeyDown(key) && !previousKeyState.IsKeyDown(key);
+    }
     public void HandleInputs()
     {
         Game.current = Game1.SpriteType.Static;
         //Do Stuff
-        ks = Keyboard.GetState();
-        if (ks.IsKeyDown(Keys.Escape))
+        GetState();
+        if (currentKeyState.IsKeyDown(Keys.Escape))
         {
             Game.Exit();
         }
-        if (ks.IsKeyDown(Keys.U))
+        if (IsKeyHitted(Keys.U))
         {
             Item.lastItem();
         }
-        if (ks.IsKeyDown(Keys.I))
+        if (currentKeyState.IsKeyDown(Keys.I))
         { 
             Item.nextItem();
         }
-        if (ks.IsKeyDown(Keys.O))
+        if (currentKeyState.IsKeyDown(Keys.O))
         {
             Game.changeEnemy(false);
         }
-        if (ks.IsKeyDown(Keys.P))
+        if (currentKeyState.IsKeyDown(Keys.P))
         {
             Game.changeEnemy(true);
         }
         
-            if (ks.IsKeyDown(Keys.Right))
+            if (currentKeyState.IsKeyDown(Keys.Right))
             {
                 Game.current = Game1.SpriteType.Motion;
 
             }
 
-            if (ks.IsKeyDown(Keys.Left))
+            if (currentKeyState.IsKeyDown(Keys.Left))
             {
                 Game.current = Game1.SpriteType.MotionL;
 
             }
-        if (ks.IsKeyDown(Keys.R))
+        if (currentKeyState.IsKeyDown(Keys.R))
         {
             Game.ResetGame();
         }
