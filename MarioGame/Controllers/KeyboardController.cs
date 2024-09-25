@@ -19,7 +19,6 @@ public class KeyboardController : IController
         return currentKeyState;
     }
 
-
     public KeyboardController(Game1 gameName)
     {
         Game = gameName;
