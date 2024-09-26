@@ -10,6 +10,7 @@ public class KeyboardController : IController
 {
     public Game1 Game;
     private KeyboardState ks;
+    private KeyboardState previousState;
     private KeyboardState previousKeyState;
     private KeyboardState currentKeyState;
     public KeyboardState GetState()
@@ -70,7 +71,19 @@ public class KeyboardController : IController
             Game.ResetGame();
         }
 
+       
+        if (IsKeyHitted(Keys.Q))
+        {
+            Game.keyboardPermitQ = true;
+            Game.qPressed = true;
+        }
 
-
+       
+        if (IsKeyHitted(Keys.E))
+        {
+            Game.keyboardPermitE = true;
+            Game.ePressed = true;
+        }
+        previousKeyState = currentKeyState;
     }
 }

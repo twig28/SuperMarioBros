@@ -24,7 +24,7 @@ namespace MarioGame
         private bool alive = true;
         private bool isShell = false;
 
-        public bool Alive 
+        public bool Alive
         {
             get { return alive; }
             set { alive = value; }
@@ -33,7 +33,7 @@ namespace MarioGame
         private bool _movingRight = true;
         public bool MovingRight
         {
-            get { return _movingRight;}
+            get { return _movingRight; }
             set { _movingRight = value; changeSpriteDirection = true; }
         }
 
@@ -45,7 +45,7 @@ namespace MarioGame
 
         public void Draw()
         {
-            if(alive && !isShell) sprite.Draw();
+            if (alive || isShell) sprite.Draw();
         }
 
         public void Update(GameTime gm)
@@ -92,6 +92,7 @@ namespace MarioGame
                 {
                     changeSpriteDirection = false;
                 }
+                sprite.Update(gm);
             }
         }
 
@@ -102,8 +103,15 @@ namespace MarioGame
             if (stomped)
             {
                 isShell = true;
-                sprite.ChangeToShell();
+                //because of animation of changing to shell
+                sprite.ChangeToShell(gm);
+                bool changed = false;
+                while (!changed)
+                {
+                    changed = sprite.ChangeToShell(gm); ;
+                }
             }
+
             sprite.Update(gm);
         }
     }
