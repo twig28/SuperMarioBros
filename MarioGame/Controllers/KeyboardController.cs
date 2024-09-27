@@ -100,6 +100,8 @@ public class KeyboardController : IController
             Game.StaLplayer.Big = true;
             Game.MRplayer.Big = true;
             Game.MLplayer.Big = true;
+            Game.JumpLplayer.Big = true;
+            Game.Jumpplayer.Big = true;
         }
         if (currentKeyState.IsKeyDown(Keys.M))
         {
@@ -107,6 +109,8 @@ public class KeyboardController : IController
             Game.StaLplayer.Big = false;
             Game.MRplayer.Big = false;
             Game.MLplayer.Big = false;
+            Game.Jumpplayer.Big = false;
+            Game.JumpLplayer.Big = false;
 
         }
 

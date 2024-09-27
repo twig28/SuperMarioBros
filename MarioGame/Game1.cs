@@ -32,7 +32,7 @@ namespace MarioGame
         Texture2D sceneryTextures;
         Texture2D groundBlockTexture;
         Texture2D blockTextures;
-        Texture2D MRTexture;
+        //FOR PLAYER VAR
         public Vector2 PlayerPosition;
         public Vector2 UPlayerPosition;
         float PlayerSpeed;
@@ -44,10 +44,12 @@ namespace MarioGame
         public Damaged Damagedplayer;
         public JumpL JumpLplayer;
         public SpriteType current = SpriteType.Static;
+        //FOR CONTROLLER
         IController keyControl;
         IController mouseControl;
+        //FOR ITEM
         Item items;
-
+        //FOR WEAPON
         private Texture2D ballTextureRight;  // fireball to the right
         private Texture2D ballTextureLeft;  // fireball to the left
         private Texture2D fireBoltTextureRight;  // firebolt to the right
@@ -56,7 +58,6 @@ namespace MarioGame
         private float ballSpeed = 300f;  // ball speed
         public bool zPressed = false;  //status of z
         public bool nPressed = false;  // status of n
-        //public WeaponType currentWeapon = WeaponType.Fireball; // Default is  fireball
         public bool keyboardPermitZ = false;
         public bool keyboardPermitN = false;
 
@@ -128,24 +129,31 @@ namespace MarioGame
             //To Be Implemented in its own class (maybe)
             marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
             enemyTextures = Content.Load<Texture2D>("smb_enemies_sheet");
+            //ITEM intialize
             itemTextures = Content.Load<Texture2D>("smb_items_sheet");
             items = new Item(itemTextures);
+            //block intialize
             groundBlockTexture = Content.Load<Texture2D>("GroundBlock");
             blockTextures = Content.Load<Texture2D>("blocks");
 
+            //enemy intialize
             enemies[0] = new Goomba(enemyTextures, _spriteBatch, 500, 500);
             enemies[1] = new Koopa(enemyTextures, _spriteBatch, 500, 500);
             //This Koopa is different in that it gets killed in update after 3 secs
             enemies[3] = new Koopa(enemyTextures, _spriteBatch, 500, 500);
             enemies[2] = new Piranha(enemyTextures, _spriteBatch, 500, 500);
             currEnemy = enemies[3];
+
+            //Player initialize
+
             MRplayer = new MotionPlayer(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
             Staplayer = new Static(marioTexture, PlayerPosition);
             StaLplayer = new StaticL(marioTexture, PlayerPosition);
             MLplayer = new MotionPlayerLeft(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
-            Jumpplayer = new Jump(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
-            JumpLplayer = new JumpL(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
+            Jumpplayer = new Jump(marioTexture, PlayerPosition, PlayerSpeed, _graphics,this);
+            JumpLplayer = new JumpL(marioTexture, PlayerPosition, PlayerSpeed, _graphics,this);
             Damagedplayer = new Damaged(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
+            //weapon intialize
             ballTextureRight = Content.Load<Texture2D>("fireballRight");  //load the ball texture to the left
             ballTextureLeft = Content.Load<Texture2D>("fireballLeft");//load the ball texture to the left
             //fireBoltTextureRight = Content.Load<Texture2D>("fireBoltRight");  //load the firebolt texture to the left
@@ -159,7 +167,7 @@ namespace MarioGame
             keyControl.HandleInputs();
             mouseControl.HandleInputs();
             // update based on current sprite type
-
+            //below for checking current state of mario
             if (current == SpriteType.Motion)
             {
                 MRplayer.Position = UPlayerPosition; //U means upated
@@ -204,6 +212,8 @@ namespace MarioGame
                 }
 
             }
+
+            //check whether mario attack
             if (keyboardPermitZ)
             {
                 balls.Add(new Ball(ballTextureLeft, UPlayerPosition, ballSpeed, true));
@@ -217,7 +227,6 @@ namespace MarioGame
                 keyboardPermitN = false;
             }
 
-
             foreach (var ball in balls)
             {
                 ball.Update(gameTime, GraphicsDevice.Viewport.Width);
@@ -230,6 +239,7 @@ namespace MarioGame
             }
             
             balls.RemoveAll(b => !b.IsVisible);
+            //update items
             items.Update(gameTime);
             base.Update(gameTime);
         }

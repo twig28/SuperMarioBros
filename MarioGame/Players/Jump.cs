@@ -13,6 +13,7 @@ namespace MarioGame
         public Texture2D Texture { get; set; }
         public Vector2 Position;
         public float Speed;
+        public Game1 Game;
         public GraphicsDeviceManager graphics;
         public float Scale = 5f;
         private const int width = 17;
@@ -24,42 +25,51 @@ namespace MarioGame
         private const int bigSX = 358;
         private const int bigSY = 52;
         public bool Big = false;
-        private bool jumporfall = true;
-        public Jump(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics)
+        //for jump
+        float jumpSpeed = -10f;   
+        float gravity = 0.5f;     
+        float velocity = 0f;     
+        bool isJumping = false;  
+        bool isGrounded = true;  
+        float groundLevel; 
+        public Jump(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics, Game1 game)
         {
             Texture = texture;
             Position = position;
             Speed = speed;
             graphics = Graphics;
+            groundLevel = Graphics.PreferredBackBufferHeight / 2;
+            Game = game;
         }
 
         public void Update(GameTime gameTime)
         {
-            Vector2 JumpPosition = Position;
+
             float updatedSpeed = Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            JumpPosition.Y = JumpPosition.Y - height;
-
-            if (jumporfall)
+            if (isGrounded)
             {
-                Position.Y -= updatedSpeed;
-
-                if (Position.Y < height * Scale / 2 || Position.Y < JumpPosition.Y) //check if reach to the top edge
-                {
-
-                    jumporfall = false; // Change direction to move down
-
-                }
-
+                isJumping = true;
+                isGrounded = false;
+                velocity = jumpSpeed;
             }
-            else
+
+
+            if (isJumping)
             {
-                Position.Y += updatedSpeed;
-                if (Position.Y > graphics.PreferredBackBufferHeight - (height * Scale / 2))//check if reach to the bottom edge
-                {
-                    jumporfall = true;// Change direction to move up
+                velocity += gravity;
+                Position.Y += velocity;
 
+
+                if (Position.Y >= groundLevel)
+                {
+                    Position.Y = groundLevel;
+                    Game.current = Game1.SpriteType.Static;
+                    isGrounded = true;
+                    isJumping = false;
+                    velocity = 0f;
                 }
             }
+
         }
 
         public void Draw(SpriteBatch spriteBatch)
