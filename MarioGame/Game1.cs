@@ -135,8 +135,10 @@ namespace MarioGame
 
             enemies[0] = new Goomba(enemyTextures, _spriteBatch, 500, 500);
             enemies[1] = new Koopa(enemyTextures, _spriteBatch, 500, 500);
+            //This Koopa is different in that it gets killed in update after 3 secs
+            enemies[3] = new Koopa(enemyTextures, _spriteBatch, 500, 500);
             enemies[2] = new Piranha(enemyTextures, _spriteBatch, 500, 500);
-            currEnemy = enemies[2];
+            currEnemy = enemies[3];
             MRplayer = new MotionPlayer(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
             Staplayer = new Static(marioTexture, PlayerPosition);
             StaLplayer = new StaticL(marioTexture, PlayerPosition);
@@ -221,12 +223,12 @@ namespace MarioGame
                 ball.Update(gameTime, GraphicsDevice.Viewport.Width);
             }
 
-            /*
+            
             if (enemies[3].Alive && gameTime.TotalGameTime.TotalSeconds > 3)
             {
                 enemies[3].TriggerDeath(gameTime, true);
             }
-            */
+            
             balls.RemoveAll(b => !b.IsVisible);
             items.Update(gameTime);
             base.Update(gameTime);
