@@ -71,18 +71,18 @@ public class KeyboardController : IController
             Game.ResetGame();
         }
 
-       
-        if (IsKeyHitted(Keys.Q))
+       //keyboard control for fireballs 
+        if (IsKeyHitted(Keys.Z))//push to attack enemy in the left
         {
-            Game.keyboardPermitQ = true;
-            Game.qPressed = true;
+            Game.keyboardPermitZ = true;
+            Game.zPressed = true;
         }
 
        
-        if (IsKeyHitted(Keys.E))
+        if (IsKeyHitted(Keys.N))//push to attack enemy in the right
         {
-            Game.keyboardPermitE = true;
-            Game.ePressed = true;
+            Game.keyboardPermitN = true;
+            Game.nPressed = true;
         }
         previousKeyState = currentKeyState;
     }

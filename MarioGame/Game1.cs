@@ -36,10 +36,10 @@ namespace MarioGame
         private Texture2D ballTextureLeft;  // fireball to the left
         private List<IBall> balls = new List<IBall>();  // list of ball
         private float ballSpeed = 300f;  // ball speed
-        public bool qPressed = false;  //status of q
-        public bool ePressed = false;  // status of e
-        public bool keyboardPermitQ=false;
-        public bool keyboardPermitE=false;
+        public bool zPressed = false;  //status of z
+        public bool nPressed = false;  // status of n
+        public bool keyboardPermitZ=false;
+        public bool keyboardPermitN=false;
 
 
         public Vector2 UPlayerPosition;
@@ -166,17 +166,17 @@ namespace MarioGame
                 current = SpriteType.Static;
             }
 
-           if (keyboardPermitQ)
+           if (keyboardPermitZ)
             {
                 balls.Add(new Ball(ballTextureLeft, UPlayerPosition, ballSpeed, true));  
-                keyboardPermitQ = false;  
+                keyboardPermitZ = false;  
             }
 
             
-            if (keyboardPermitE)
+            if (keyboardPermitN)
                 {
                     balls.Add(new BallLeft(ballTextureRight, UPlayerPosition, ballSpeed, false));  
-                    keyboardPermitE = false; 
+                    keyboardPermitN = false; 
                 }
             
 
