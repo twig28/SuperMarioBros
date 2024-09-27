@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using static System.Formats.Asn1.AsnWriter;
 
 namespace MarioGame { 
@@ -9,7 +11,7 @@ public class MotionPlayer : IPlayer
     {
     public Texture2D Texture { get; set; }
     public Vector2 Position;
-    public float Scale = 0.2f;
+    public float Scale = 5f;
     public float Speed;
     public GraphicsDeviceManager graphics;
     public int Rows { get; set; }
@@ -18,17 +20,30 @@ public class MotionPlayer : IPlayer
     private int totalFrames;
     private float timePerFrame = 0.2f; // Time per frame in seconds
     private float timeCounter = 0f;
-        public MotionPlayer(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics, int rows, int columns)
+    private const int width = 14;
+    private const int height = 16;
+    private List<Rectangle> sourceRectangle = new List<Rectangle>();
+    private const int bigwidth = 18;
+    private const int bigheight = 32;
+    private List<Rectangle> bigsourceRectangle = new List<Rectangle>();
+    public bool Big = false;
+    public MotionPlayer(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics)
 	{
         Texture = texture;
         Position = position;
         Speed = speed;
         graphics = Graphics;
-        Rows = rows;
-        Columns = columns;
         currentFrame = 0;
-        totalFrames = Rows * Columns;
-    }
+        totalFrames = 3;
+        sourceRectangle.Add(new Rectangle(240, 0, width, height));
+        sourceRectangle.Add(new Rectangle(270, 0, width, height));
+        sourceRectangle.Add(new Rectangle(300, 0, width, height));
+        bigsourceRectangle.Add(new Rectangle(238,52, bigwidth, bigheight));
+        bigsourceRectangle.Add(new Rectangle(270, 52, bigwidth, bigheight));
+        bigsourceRectangle.Add(new Rectangle(299, 52, bigwidth, bigheight));
+
+
+        }
 
         public void Update(GameTime gm)
         {
@@ -44,25 +59,30 @@ public class MotionPlayer : IPlayer
 
                 timeCounter -= timePerFrame;
             }
-            //move
-           
 
+            if (Position.X < graphics.PreferredBackBufferWidth - (width * Scale / 2))//check if reach to the bottom edge
+            {
                 Position.X += updatedSpeed;
-              
+
             }
+            
+              
+        }
 
 
         
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            int width = Texture.Width / Columns;
-            int height = Texture.Height / Rows;
-            int row = currentFrame / Columns;
-            int column = currentFrame % Columns;
+            if (!Big)
+            {
+                spriteBatch.Draw(Texture, Position, sourceRectangle[currentFrame], Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
+            }
+            else
+            {
+                spriteBatch.Draw(Texture, Position, bigsourceRectangle[currentFrame], Color.White, 0f, new Vector2(bigwidth / 2, bigheight / 2), Scale, SpriteEffects.None, 0f);
 
-            Rectangle sourceRectangle = new Rectangle(width * column, height * row, width, height);
-            spriteBatch.Draw(Texture, Position, sourceRectangle, Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
+            }
         }
     }
 }

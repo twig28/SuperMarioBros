@@ -14,9 +14,12 @@ namespace MarioGame
     {
         public enum SpriteType
         {
-            Static,   // Static sprite
+            Static,
+            StaticL,// Static sprite
             Motion,    // moving sprite
-            MotionL,    // moving sprite
+            MotionL,  
+            Jump,
+            Damaged// moving sprite
         }
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -27,15 +30,15 @@ namespace MarioGame
         Texture2D sceneryTextures;
         Texture2D groundBlockTexture;
         Texture2D blockTextures;
-        Texture2D MRTexture;
-        Vector2 PlayerPosition;
+        public Vector2 PlayerPosition;
         public Vector2 UPlayerPosition;
         float PlayerSpeed;
         public MotionPlayer MRplayer;
-        Texture2D MLTexture;
         public MotionPlayerLeft MLplayer;
-        Texture2D StaTexture;
         public Static Staplayer;
+        public StaticL StaLplayer;
+        public Jump Jumpplayer;
+        public Damaged Damagedplayer;
         public SpriteType current = SpriteType.Static;
         IController keyControl;
         IController mouseControl;
@@ -118,12 +121,12 @@ namespace MarioGame
             enemies[1] = new Koopa(enemyTextures, _spriteBatch, 500, 500);
             enemies[2] = new Piranha(enemyTextures, _spriteBatch, 500, 500);
             currEnemy = enemies[2];
-            MRTexture = Content.Load<Texture2D>("MA");
-            StaTexture = Content.Load<Texture2D>("standing");
-            MLTexture = Content.Load<Texture2D>("MAl");
-            MRplayer = new MotionPlayer(MRTexture, PlayerPosition, PlayerSpeed, _graphics, 2, 3);
-            Staplayer = new Static(StaTexture, PlayerPosition);
-            MLplayer = new MotionPlayerLeft(MLTexture, PlayerPosition, PlayerSpeed, _graphics, 2, 3);
+            MRplayer = new MotionPlayer(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
+            Staplayer = new Static(marioTexture, PlayerPosition);
+            StaLplayer = new StaticL(marioTexture, PlayerPosition);
+            MLplayer = new MotionPlayerLeft(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
+            Jumpplayer = new Jump(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
+            Damagedplayer = new Damaged(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
         }
 
         protected override void Update(GameTime gameTime)
@@ -135,7 +138,7 @@ namespace MarioGame
            
             if (current == SpriteType.Motion)
             {
-                MRplayer.Position = UPlayerPosition;
+                MRplayer.Position = UPlayerPosition; //U means upated
                 MRplayer.Update(gameTime);
                 UPlayerPosition = MRplayer.Position;
             }
@@ -145,10 +148,31 @@ namespace MarioGame
                 MLplayer.Update(gameTime);
                 UPlayerPosition = MLplayer.Position;
             }
+            else if (current == SpriteType.Jump)
+            {
+                Jumpplayer.Position = UPlayerPosition;
+                Jumpplayer.Update(gameTime);
+                UPlayerPosition = Jumpplayer.Position;
+            }
+            else if (current == SpriteType.Damaged)
+            {
+                Damagedplayer.Position = UPlayerPosition;
+                Damagedplayer.Update(gameTime);
+                UPlayerPosition = Damagedplayer.Position;
+
+            }
+
             else
             {
-                Staplayer.Position = UPlayerPosition;
-                current = SpriteType.Static;
+                if (current == SpriteType.StaticL)
+                {
+                    StaLplayer.Position = UPlayerPosition;
+                }
+                else if(current == SpriteType.Static) 
+                {
+                    Staplayer.Position = UPlayerPosition;
+                }
+               
             }
 
             items.Update(gameTime);
@@ -166,6 +190,10 @@ namespace MarioGame
             {
                 Staplayer.Draw(_spriteBatch);
             }
+            if (current == SpriteType.StaticL)
+            {
+                StaLplayer.Draw(_spriteBatch);
+            }
             if (current == SpriteType.Motion)
             {
                 MRplayer.Draw(_spriteBatch);
@@ -173,6 +201,14 @@ namespace MarioGame
             if (current == SpriteType.MotionL)
             {
                 MLplayer.Draw(_spriteBatch);
+            }
+            if (current == SpriteType.Jump)
+            {
+                Jumpplayer.Draw(_spriteBatch);
+            }
+            if (current == SpriteType.Damaged)
+            {
+                Damagedplayer.Draw(_spriteBatch);
             }
 
             _spriteBatch.End();

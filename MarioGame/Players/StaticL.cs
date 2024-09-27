@@ -6,7 +6,7 @@ using static System.Formats.Asn1.AsnWriter;
 namespace MarioGame
 {
     //would have texture, position, state, and more properties
-    public class Static: IPlayer
+    public class StaticL : IPlayer
     {
 
 
@@ -15,14 +15,14 @@ namespace MarioGame
         public float Scale = 5f;
         private const int width = 14;
         private const int height = 16;
-        private const int SX = 210;
+        private const int SX = 180;
         private const int SY = 0;
+        public bool Big = false;
         private const int bigwidth = 18;
         private const int bigheight = 32;
-        private const int bigSX = 208;
+        private const int bigSX = 179;
         private const int bigSY = 52;
-        public bool Big = false;
-        public Static(Texture2D texture, Vector2 position)
+        public StaticL(Texture2D texture, Vector2 position)
         {
             Texture = texture;
             Position = position;
@@ -42,7 +42,6 @@ namespace MarioGame
                 spriteBatch.Draw(Texture, Position, bigsourceRectangle, Color.White, 0f, new Vector2(bigwidth / 2, bigheight / 2), Scale, SpriteEffects.None, 0f);
             }
 
-                    
         }
 
         public void Update(GameTime gameTime)
