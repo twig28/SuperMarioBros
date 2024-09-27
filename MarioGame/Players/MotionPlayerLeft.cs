@@ -27,6 +27,11 @@ namespace MarioGame
         private const int bigheight = 32;
         private List<Rectangle> bigsourceRectangle = new List<Rectangle>();
         public bool Big = false;
+
+        private const int firewidth = 18;
+        private const int fireheight = 32;
+        private List<Rectangle> firesourceRectangle = new List<Rectangle>();
+        public bool Fire = false;
         public MotionPlayerLeft(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics)
         {
             Texture = texture;
@@ -41,6 +46,10 @@ namespace MarioGame
             bigsourceRectangle.Add(new Rectangle(150, 52, bigwidth, bigheight));
             bigsourceRectangle.Add(new Rectangle(120, 52, bigwidth, bigheight));
             bigsourceRectangle.Add(new Rectangle(89, 52, bigwidth, bigheight));
+            firesourceRectangle.Add(new Rectangle(151, 122, firewidth, fireheight));
+            firesourceRectangle.Add(new Rectangle(128, 122, firewidth, fireheight));
+            firesourceRectangle.Add(new Rectangle(102, 122, firewidth, fireheight));
+
         }
 
         public void Update(GameTime gm)
@@ -58,17 +67,40 @@ namespace MarioGame
                 timeCounter -= timePerFrame;
             }
             //move
-
-            if (Position.X > width * Scale / 2) //check if reach to the top edge
+            if (!Big && !Fire)
             {
+                if (Position.X > width * Scale / 2) //check if reach to the top edge
+                {
 
-                Position.X -= updatedSpeed;
+                    Position.X -= updatedSpeed;
 
 
+                }
             }
-            
+            else if (Fire)
+            {
+                if (Position.X > firewidth * Scale / 2) //check if reach to the top edge
+                {
 
-              
+                    Position.X -= updatedSpeed;
+
+
+                }
+            }
+            else if (!Fire && Big)
+            {
+                if (Position.X > bigwidth * Scale / 2) //check if reach to the top edge
+                {
+
+                    Position.X -= updatedSpeed;
+
+
+                }
+            }
+
+
+
+
 
 
         }
@@ -77,11 +109,16 @@ namespace MarioGame
         {
 
 
-            if (!Big)
+            if (!Big && !Fire)
             {
                 spriteBatch.Draw(Texture, Position, sourceRectangle[currentFrame], Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
             }
-            else
+            else if (Fire)
+            {
+
+                spriteBatch.Draw(Texture, Position, firesourceRectangle[currentFrame], Color.White, 0f, new Vector2(firewidth / 2, fireheight / 2), Scale, SpriteEffects.None, 0f);
+            }
+            else if (!Fire && Big)
             {
                 spriteBatch.Draw(Texture, Position, bigsourceRectangle[currentFrame], Color.White, 0f, new Vector2(bigwidth / 2, bigheight / 2), Scale, SpriteEffects.None, 0f);
 

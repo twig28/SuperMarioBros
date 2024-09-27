@@ -27,7 +27,11 @@ public class MotionPlayer : IPlayer
     private const int bigheight = 32;
     private List<Rectangle> bigsourceRectangle = new List<Rectangle>();
     public bool Big = false;
-    public MotionPlayer(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics)
+        private const int firewidth = 18;
+        private const int fireheight = 32;
+        private List<Rectangle> firesourceRectangle = new List<Rectangle>();
+        public bool Fire = false;
+        public MotionPlayer(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics)
 	{
         Texture = texture;
         Position = position;
@@ -41,6 +45,10 @@ public class MotionPlayer : IPlayer
         bigsourceRectangle.Add(new Rectangle(238,52, bigwidth, bigheight));
         bigsourceRectangle.Add(new Rectangle(270, 52, bigwidth, bigheight));
         bigsourceRectangle.Add(new Rectangle(299, 52, bigwidth, bigheight));
+        firesourceRectangle.Add(new Rectangle(237, 122, firewidth, fireheight));
+        firesourceRectangle.Add(new Rectangle(263, 122, firewidth, fireheight));
+        firesourceRectangle.Add(new Rectangle(287, 122, firewidth, fireheight));
+
 
 
         }
@@ -59,14 +67,32 @@ public class MotionPlayer : IPlayer
 
                 timeCounter -= timePerFrame;
             }
-
-            if (Position.X < graphics.PreferredBackBufferWidth - (width * Scale / 2))//check if reach to the bottom edge
+            if (!Big && !Fire)
             {
-                Position.X += updatedSpeed;
+                if (Position.X < graphics.PreferredBackBufferWidth - (width * Scale / 2))//check if reach to the bottom edge
+                {
+                    Position.X += updatedSpeed;
 
+                }
             }
-            
-              
+            else if (Fire)
+            {
+                if (Position.X < graphics.PreferredBackBufferWidth - (firewidth * Scale / 2))//check if reach to the bottom edge
+                {
+                    Position.X += updatedSpeed;
+
+                }
+            }
+            else if (!Fire && Big)
+            {
+                if (Position.X < graphics.PreferredBackBufferWidth - (bigwidth * Scale / 2))//check if reach to the bottom edge
+                {
+                    Position.X += updatedSpeed;
+
+                }
+            }
+
+
         }
 
 
@@ -74,11 +100,16 @@ public class MotionPlayer : IPlayer
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (!Big)
+            if (!Big && !Fire)
             {
                 spriteBatch.Draw(Texture, Position, sourceRectangle[currentFrame], Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
             }
-            else
+            else if (Fire)
+            {
+                
+                spriteBatch.Draw(Texture, Position, firesourceRectangle[currentFrame], Color.White, 0f, new Vector2(firewidth / 2, fireheight / 2), Scale, SpriteEffects.None, 0f);
+            }
+            else if (!Fire && Big)
             {
                 spriteBatch.Draw(Texture, Position, bigsourceRectangle[currentFrame], Color.White, 0f, new Vector2(bigwidth / 2, bigheight / 2), Scale, SpriteEffects.None, 0f);
 

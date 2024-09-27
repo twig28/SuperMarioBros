@@ -118,6 +118,36 @@ public class KeyboardController : IController
 
         }
 
+        if (currentKeyState.IsKeyDown(Keys.J))
+        {
+            Game.Staplayer.Fire = true;
+            Game.StaLplayer.Fire = true;
+            Game.MRplayer.Fire = true;
+            Game.MLplayer.Fire = true;
+            Game.Jumpplayer.Fire = true;
+            Game.JumpLplayer.Fire = true;
+            Game.Fire = true;
+        }
+
+        if (currentKeyState.IsKeyDown(Keys.K))
+        {
+            Game.Staplayer.Fire = false;
+            Game.StaLplayer.Fire = false;
+            Game.MRplayer.Fire = false;
+            Game.MLplayer.Fire = false;
+            Game.Jumpplayer.Fire = false;
+            Game.JumpLplayer.Fire = false;
+            Game.Staplayer.Big = false;
+            Game.StaLplayer.Big = false;
+            Game.MRplayer.Big = false;
+            Game.MLplayer.Big = false;
+            Game.Jumpplayer.Big = false;
+            Game.JumpLplayer.Big = false;
+            Game.Fire = false;
+
+        }
+
+
         if (currentKeyState.IsKeyDown(Keys.R))
         {
             Game.ResetGame();
@@ -126,14 +156,14 @@ public class KeyboardController : IController
         }
 
         //keyboard control for fireballs 
-        if (IsKeyHitted(Keys.Z))//push to attack enemy in the left
+        if (IsKeyHitted(Keys.Z) && Game.Fire == true)//push to attack enemy in the left
         {
             Game.keyboardPermitZ = true;
             Game.zPressed = true;
         }
 
 
-        if (IsKeyHitted(Keys.N))//push to attack enemy in the right
+        if (IsKeyHitted(Keys.N)  && Game.Fire == true)//push to attack enemy in the right
         {
             Game.keyboardPermitN = true;
             Game.nPressed = true;

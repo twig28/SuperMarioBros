@@ -6,6 +6,7 @@ using MarioGame.Items;
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
+using System.Net;
 
 namespace MarioGame
 {
@@ -60,7 +61,7 @@ namespace MarioGame
         public bool nPressed = false;  // status of n
         public bool keyboardPermitZ = false;
         public bool keyboardPermitN = false;
-
+        public bool Fire = false;
         //Temporary for sprint 2
         IEnemy[] enemies = new IEnemy[4];
         IEnemy currEnemy;
