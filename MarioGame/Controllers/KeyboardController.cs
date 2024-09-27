@@ -48,6 +48,10 @@ public class KeyboardController : IController
         {
             Game.Exit();
         }
+        if (currentKeyState.IsKeyDown(Keys.Q))
+        {
+            Game.Exit();
+        }
         if (IsKeyHitted(Keys.U))
         {
             Item.lastItem();
