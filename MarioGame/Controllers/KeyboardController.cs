@@ -10,11 +10,24 @@ public class KeyboardController : IController
 {
     public Game1 Game;
     private KeyboardState ks;
-
+    private KeyboardState previousState;
+    private KeyboardState previousKeyState;
+    private KeyboardState currentKeyState;
+    public KeyboardState GetState()
+    {
+        previousKeyState = currentKeyState;
+        currentKeyState = Keyboard.GetState();
+        return currentKeyState;
+    }
 
     public KeyboardController(Game1 gameName)
     {
         Game = gameName;
+    }
+
+    public bool IsKeyHitted(Keys key)
+    {
+        return currentKeyState.IsKeyDown(key) && !previousKeyState.IsKeyDown(key);
     }
     public void HandleInputs()
     {
@@ -32,24 +45,24 @@ public class KeyboardController : IController
 
 
         //Do Stuff
-        ks = Keyboard.GetState();
-        if (ks.IsKeyDown(Keys.Escape))
+        GetState();
+        if (currentKeyState.IsKeyDown(Keys.Escape))
         {
             Game.Exit();
         }
-        if (ks.IsKeyDown(Keys.U))
+        if (IsKeyHitted(Keys.U))
         {
             Item.lastItem();
         }
-        if (ks.IsKeyDown(Keys.I))
+        if (IsKeyHitted(Keys.I))
         { 
             Item.nextItem();
         }
-        if (ks.IsKeyDown(Keys.O))
+        if (IsKeyHitted(Keys.O))
         {
             Game.changeEnemy(false);
         }
-        if (ks.IsKeyDown(Keys.P))
+        if (IsKeyHitted(Keys.P))
         {
             Game.changeEnemy(true);
         }
@@ -102,7 +115,19 @@ public class KeyboardController : IController
             Game.UPlayerPosition = Game.PlayerPosition;
         }
 
+       //keyboard control for fireballs 
+        if (IsKeyHitted(Keys.Z))//push to attack enemy in the left
+        {
+            Game.keyboardPermitZ = true;
+            Game.zPressed = true;
+        }
 
-
+       
+        if (IsKeyHitted(Keys.N))//push to attack enemy in the right
+        {
+            Game.keyboardPermitN = true;
+            Game.nPressed = true;
+        }
+        previousKeyState = currentKeyState;
     }
 }

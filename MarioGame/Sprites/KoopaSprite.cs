@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using MarioGame.Items;
 
 namespace MarioGame
 {
@@ -24,6 +25,9 @@ namespace MarioGame
         private const int spacingInterval = 30;
         int currSprite = 0;
         private bool hasChangedToShellAnim = false;
+        private double timeElapsed = 0;
+        private double timeElapsedSinceLastUpdate = 0;
+        private double elapsedTimeForShellAnim = 0.7;
 
         public KoopaSprite(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
         {
@@ -47,17 +51,22 @@ namespace MarioGame
             sb.End();
         }
 
-        public void ChangeToShell()
+        public bool ChangeToShell(GameTime gm)
         {
-            if (hasChangedToShellAnim)
+            timeElapsed = gm.TotalGameTime.TotalSeconds;
+            if (hasChangedToShellAnim && timeElapsed - timeElapsedSinceLastUpdate > elapsedTimeForShellAnim)
             {
-                SourceX = 360;
+                timeElapsedSinceLastUpdate = timeElapsed;
+                SourceRectangle.X = 360;
+                return true;
             }
             else
             {
                 SpriteWidth = 75;
                 SpriteHeight = 75;
-                SourceX = 330;
+                SourceRectangle.X = 330;
+                hasChangedToShellAnim = true;
+                return false;
             }
         }
 
@@ -80,15 +89,18 @@ namespace MarioGame
                 }
                 ChangeDirection = false;
             }
-            if (currSprite == 0) 
+            if (!hasChangedToShellAnim)
             {
-                SourceRectangle.X += spacingInterval;
-                currSprite = 1; 
-            }
-            else 
-            {
-                SourceRectangle.X -= spacingInterval;
-                currSprite = 0; 
+                if (currSprite == 0)
+                {
+                    SourceRectangle.X += spacingInterval;
+                    currSprite = 1;
+                }
+                else
+                {
+                    SourceRectangle.X -= spacingInterval;
+                    currSprite = 0;
+                }
             }
 
         }
