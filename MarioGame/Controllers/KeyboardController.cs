@@ -78,7 +78,14 @@ public class KeyboardController : IController
         }
         if (currentKeyState.IsKeyDown(Keys.W) || currentKeyState.IsKeyDown(Keys.Up))
         {
-            Game.current = Game1.SpriteType.Jump;
+            if (Game.current == Game1.SpriteType.MotionL || Game.current == Game1.SpriteType.StaticL)
+            {
+                Game.current = Game1.SpriteType.JumpL;
+            }
+            else if(Game.current == Game1.SpriteType.Motion || Game.current == Game1.SpriteType.Static)
+            {
+                Game.current = Game1.SpriteType.Jump;
+            }
 
         }
 

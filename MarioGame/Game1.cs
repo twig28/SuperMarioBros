@@ -19,6 +19,7 @@ namespace MarioGame
             Motion,    // moving sprite
             MotionL,
             Jump,
+            JumpL,
             Damaged// moving sprite
         }
 
@@ -41,6 +42,7 @@ namespace MarioGame
         public StaticL StaLplayer;
         public Jump Jumpplayer;
         public Damaged Damagedplayer;
+        public JumpL JumpLplayer;
         public SpriteType current = SpriteType.Static;
         IController keyControl;
         IController mouseControl;
@@ -140,6 +142,7 @@ namespace MarioGame
             StaLplayer = new StaticL(marioTexture, PlayerPosition);
             MLplayer = new MotionPlayerLeft(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
             Jumpplayer = new Jump(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
+            JumpLplayer = new JumpL(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
             Damagedplayer = new Damaged(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
             ballTextureRight = Content.Load<Texture2D>("fireballRight");  //load the ball texture to the left
             ballTextureLeft = Content.Load<Texture2D>("fireballLeft");//load the ball texture to the left
@@ -172,6 +175,12 @@ namespace MarioGame
                 Jumpplayer.Position = UPlayerPosition;
                 Jumpplayer.Update(gameTime);
                 UPlayerPosition = Jumpplayer.Position;
+            }
+            else if (current == SpriteType.JumpL)
+            {
+                JumpLplayer.Position = UPlayerPosition;
+                JumpLplayer.Update(gameTime);
+                UPlayerPosition = JumpLplayer.Position;
             }
             else if (current == SpriteType.Damaged)
             {
@@ -250,6 +259,10 @@ namespace MarioGame
             if (current == SpriteType.Jump)
             {
                 Jumpplayer.Draw(_spriteBatch);
+            }
+            if (current == SpriteType.JumpL)
+            {
+                JumpLplayer.Draw(_spriteBatch);
             }
             if (current == SpriteType.Damaged)
             {

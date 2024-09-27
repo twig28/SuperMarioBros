@@ -33,7 +33,7 @@ namespace MarioGame
             float updatedSpeed = Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
  
 
-                    Position.Y += updatedSpeed;
+                    Position.Y += 5*updatedSpeed;
 
                 
             
