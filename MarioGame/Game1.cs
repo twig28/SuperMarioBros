@@ -8,10 +8,8 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 
 namespace MarioGame
-
-
 {
-    
+
     public class Game1 : Game
     {
         public enum SpriteType
@@ -19,7 +17,7 @@ namespace MarioGame
             Static,
             StaticL,// Static sprite
             Motion,    // moving sprite
-            MotionL,  
+            MotionL,
             Jump,
             Damaged// moving sprite
         }
@@ -34,7 +32,7 @@ namespace MarioGame
         Texture2D groundBlockTexture;
         Texture2D blockTextures;
         Texture2D MRTexture;
-        Vector2 PlayerPosition;
+        public Vector2 PlayerPosition;
         public Vector2 UPlayerPosition;
         float PlayerSpeed;
         public MotionPlayer MRplayer;
@@ -47,6 +45,18 @@ namespace MarioGame
         IController keyControl;
         IController mouseControl;
         Item items;
+
+        private Texture2D ballTextureRight;  // fireball to the right
+        private Texture2D ballTextureLeft;  // fireball to the left
+        private Texture2D fireBoltTextureRight;  // firebolt to the right
+        private Texture2D fireBoltTextureLeft;  // firebolt to the left
+        private List<IBall> balls = new List<IBall>();  // list of ball
+        private float ballSpeed = 300f;  // ball speed
+        public bool zPressed = false;  //status of z
+        public bool nPressed = false;  // status of n
+        //public WeaponType currentWeapon = WeaponType.Fireball; // Default is  fireball
+        public bool keyboardPermitZ = false;
+        public bool keyboardPermitN = false;
 
         //Temporary for sprint 2
         IEnemy[] enemies = new IEnemy[4];
@@ -99,7 +109,7 @@ namespace MarioGame
 
         protected override void Initialize()
         {
-           
+
             keyControl = new KeyboardController(this);
             mouseControl = new MouseController(this);
             PlayerPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2,
@@ -125,13 +135,18 @@ namespace MarioGame
             enemies[1] = new Koopa(enemyTextures, _spriteBatch, 500, 500);
             enemies[2] = new Piranha(enemyTextures, _spriteBatch, 500, 500);
             currEnemy = enemies[2];
-            MRTexture = Content.Load<Texture2D>("MA");
-            StaTexture = Content.Load<Texture2D>("standing");
-            MLTexture = Content.Load<Texture2D>("MAl");
-            MRplayer = new MotionPlayer(MRTexture, PlayerPosition, PlayerSpeed, _graphics, 2, 3);
-            Staplayer = new Static(StaTexture, PlayerPosition);
-            MLplayer = new MotionPlayerLeft(MLTexture, PlayerPosition, PlayerSpeed, _graphics, 2, 3);
+            MRplayer = new MotionPlayer(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
+            Staplayer = new Static(marioTexture, PlayerPosition);
+            StaLplayer = new StaticL(marioTexture, PlayerPosition);
+            MLplayer = new MotionPlayerLeft(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
+            Jumpplayer = new Jump(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
+            Damagedplayer = new Damaged(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
+            ballTextureRight = Content.Load<Texture2D>("fireballRight");  //load the ball texture to the left
+            ballTextureLeft = Content.Load<Texture2D>("fireballLeft");//load the ball texture to the left
+            //fireBoltTextureRight = Content.Load<Texture2D>("fireBoltRight");  //load the firebolt texture to the left
+            //fireBoltTextureLeft = Content.Load<Texture2D>("fireBoltLeft");//load the firebolt texture to the left
         }
+
 
         protected override void Update(GameTime gameTime)
         {
@@ -139,7 +154,7 @@ namespace MarioGame
             keyControl.HandleInputs();
             mouseControl.HandleInputs();
             // update based on current sprite type
-           
+
             if (current == SpriteType.Motion)
             {
                 MRplayer.Position = UPlayerPosition; //U means upated
@@ -168,10 +183,42 @@ namespace MarioGame
 
             else
             {
-                Staplayer.Position = UPlayerPosition;
-                current = SpriteType.Static;
+                if (current == SpriteType.StaticL)
+                {
+                    StaLplayer.Position = UPlayerPosition;
+                }
+                else if (current == SpriteType.Static)
+                {
+                    Staplayer.Position = UPlayerPosition;
+                }
+
+            }
+            if (keyboardPermitZ)
+            {
+                balls.Add(new Ball(ballTextureLeft, UPlayerPosition, ballSpeed, true));
+                keyboardPermitZ = false;
             }
 
+
+            if (keyboardPermitN)
+            {
+                balls.Add(new BallLeft(ballTextureRight, UPlayerPosition, ballSpeed, false));
+                keyboardPermitN = false;
+            }
+
+
+            foreach (var ball in balls)
+            {
+                ball.Update(gameTime, GraphicsDevice.Viewport.Width);
+            }
+
+            /*
+            if (enemies[3].Alive && gameTime.TotalGameTime.TotalSeconds > 3)
+            {
+                enemies[3].TriggerDeath(gameTime, true);
+            }
+            */
+            balls.RemoveAll(b => !b.IsVisible);
             items.Update(gameTime);
             base.Update(gameTime);
         }
@@ -180,7 +227,7 @@ namespace MarioGame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            
+
             _spriteBatch.Begin();
             Vector2 itemLocation = new Vector2(200, 200);
             items.Draw(_spriteBatch, itemLocation);
@@ -200,7 +247,18 @@ namespace MarioGame
             {
                 MLplayer.Draw(_spriteBatch);
             }
-
+            if (current == SpriteType.Jump)
+            {
+                Jumpplayer.Draw(_spriteBatch);
+            }
+            if (current == SpriteType.Damaged)
+            {
+                Damagedplayer.Draw(_spriteBatch);
+            }
+            for (int i = 0; i < balls.Count; i++)
+            {
+                balls[i].Draw(_spriteBatch);
+            }
             _spriteBatch.End();
 
             foreach (IEnemy enemy in enemies)
@@ -208,13 +266,13 @@ namespace MarioGame
                 if (currEnemy == enemy)
                 {
                     enemy.Update(gameTime);
-                    enemy.Draw();  
+                    enemy.Draw();
                 }
             }
 
             base.Draw(gameTime);
         }
-
-
     }
 }
+
+
