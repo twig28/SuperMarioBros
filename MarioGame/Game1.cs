@@ -68,8 +68,10 @@ namespace MarioGame
 
         // List to store and manage blocks
         private List<IBlock> blocks;
+        private int currentBlockIndex = 0;  // Track the current block index
+        private KeyboardState previousKeyboardState;  // To track key press events
 
-        // Textures
+        // Block textures
         private Texture2D groundBlockTexture;
         private Texture2D blockTexture;
 
@@ -144,13 +146,13 @@ namespace MarioGame
 
             // Load block textures
             groundBlockTexture = Content.Load<Texture2D>("resizedGroundBlock");
-            blockTexture = Content.Load<Texture2D>("blocks");
+            blockTexture = Content.Load<Texture2D>("InitialBrickBlock");
 
             // Initialize blocks
             blocks = new List<IBlock>
             {
-                new GroundBlock(new Vector2(500, 350), groundBlockTexture, new Rectangle(0, 0, 50, 50))
-                //new blockTexture(new Vector2(200, 200), blockTexture, new Rectangle(0, 0, 32, 32))
+                new GroundBlock(new Vector2(500, 350), groundBlockTexture, new Rectangle(0, 0, 50, 50)),
+                new Block(new Vector2(500, 200), blockTexture, new Rectangle(0, 0, 50, 50))
             };
 
             //enemy intialize
@@ -177,6 +179,11 @@ namespace MarioGame
             //fireBoltTextureLeft = Content.Load<Texture2D>("fireBoltLeft");//load the firebolt texture to the left
         }
 
+        // Helper method to check if a key was just pressed (single press detection)
+        private bool IsKeyPressed(Keys key, KeyboardState currentKeyboardState)
+        {
+            return currentKeyboardState.IsKeyDown(key) && previousKeyboardState.IsKeyUp(key);
+        }
 
         protected override void Update(GameTime gameTime)
         {
@@ -188,6 +195,27 @@ namespace MarioGame
             {
                 block.Update(gameTime);
             }
+
+            // Remove destroyed blocks from the list
+            blocks.RemoveAll(block => block is Block b && b.IsDestroyed);
+
+            // Get the current keyboard state
+            KeyboardState currentKeyboardState = Keyboard.GetState();
+
+            // Handle block switching using 't' and 'y'
+            if (IsKeyPressed(Keys.T, currentKeyboardState))
+            {
+                // Switch to the previous block
+                currentBlockIndex = (currentBlockIndex - 1 + blocks.Count) % blocks.Count;
+            }
+            else if (IsKeyPressed(Keys.Y, currentKeyboardState))
+            {
+                // Switch to the next block
+                currentBlockIndex = (currentBlockIndex + 1) % blocks.Count;
+            }
+
+            // Update the previous keyboard state
+            previousKeyboardState = currentKeyboardState;
 
             // update based on current sprite type
             //below for checking current state of mario
@@ -274,10 +302,13 @@ namespace MarioGame
 
             _spriteBatch.Begin();
 
-            foreach (var block in blocks)
-            {
-                block.Draw(_spriteBatch);
-            }
+            //foreach (var block in blocks)
+            //{
+            //    block.Draw(_spriteBatch);
+            //}
+
+            // Draw only the current block
+            blocks[currentBlockIndex].Draw(_spriteBatch);
 
             Vector2 itemLocation = new Vector2(200, 200);
             items.Draw(_spriteBatch, itemLocation);

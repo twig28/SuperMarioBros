@@ -28,7 +28,7 @@ namespace MarioGame.Blocks
 			// Base update logic
 		}
 
-		public void Draw(SpriteBatch spriteBatch)
+		public virtual void Draw(SpriteBatch spriteBatch)
 		{
 			spriteBatch.Draw(Texture, Position, SourceRectangle, Color.White);
 		}
