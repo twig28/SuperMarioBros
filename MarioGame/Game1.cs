@@ -143,13 +143,13 @@ namespace MarioGame
             items = new Item(itemTextures);
 
             // Load block textures
-            groundBlockTexture = Content.Load<Texture2D>("groundBlock");
+            groundBlockTexture = Content.Load<Texture2D>("resizedGroundBlock");
             blockTexture = Content.Load<Texture2D>("blocks");
 
             // Initialize blocks
             blocks = new List<IBlock>
             {
-                new GroundBlock(new Vector2(100, 200), groundBlockTexture, new Rectangle(0, 0, 32, 32))
+                new GroundBlock(new Vector2(500, 350), groundBlockTexture, new Rectangle(0, 0, 50, 50))
                 //new blockTexture(new Vector2(200, 200), blockTexture, new Rectangle(0, 0, 32, 32))
             };
 
