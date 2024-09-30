@@ -10,14 +10,15 @@ namespace MarioGame.Blocks
         public bool IsSolid { get; }
         public bool IsBreakable { get; }
 
-        public const double animInterval = 0.2;
-        public const int spriteInterval = 15;
+        public const double animInterval = 0.5;
+        public const int spriteInterval = 16;
         public int currSprite = 0;
         private double timeElapsed = 0;
         private double timeElapsedSinceUpdate = 0;
 
         protected Texture2D Texture { get; set; }
         protected Rectangle SourceRectangle;
+        protected Rectangle DestinationRectangle;
         // private ISprite sprite;
 
         public MysteryBlock(Vector2 position, Texture2D texture, Rectangle sourceRectangle)
@@ -25,29 +26,33 @@ namespace MarioGame.Blocks
             Position = position;
             Texture = texture;
             SourceRectangle = sourceRectangle;
+            DestinationRectangle = new Rectangle((int)position.X, (int)position.Y, 60, 60);
         }
 
         public void OnCollide() { }
 
         public virtual void Update(GameTime gameTime)
         {
+            timeElapsed = gameTime.TotalGameTime.TotalSeconds;
             if (timeElapsed - timeElapsedSinceUpdate > animInterval)
             {
                 timeElapsedSinceUpdate = timeElapsed;
-                if (currSprite == 3)
+                if (currSprite == 2)
                 {
-                    SourceRectangle.X -= (spriteInterval * 3);
+                    SourceRectangle.X -= (spriteInterval * 2);
+                    currSprite = 0;
                 }
                 else
                 {
                     SourceRectangle.X += spriteInterval;
+                    currSprite += 1;
                 }
             }
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Position, SourceRectangle, Color.White);
+            spriteBatch.Draw(Texture, DestinationRectangle, SourceRectangle, Color.White);
         }
     }
 }
