@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MarioGame.Controllers;
 using MarioGame.Interfaces;
 using MarioGame.Items;
+using MarioGame.Blocks;
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
@@ -31,8 +32,7 @@ namespace MarioGame
         Texture2D enemyTextures;
         Texture2D itemTextures;
         Texture2D sceneryTextures;
-        Texture2D groundBlockTexture;
-        Texture2D blockTextures;
+
         //FOR PLAYER VAR
         public Vector2 PlayerPosition;
         public Vector2 UPlayerPosition;
@@ -65,6 +65,16 @@ namespace MarioGame
         //Temporary for sprint 2
         IEnemy[] enemies = new IEnemy[4];
         IEnemy currEnemy;
+
+        // List to store and manage blocks
+        private List<IBlock> blocks;
+        private int currentBlockIndex = 0;  // Track the current block index
+        private KeyboardState previousKeyboardState;  // To track key press events
+
+        // Block textures
+        private Texture2D groundBlockTexture;
+        private Texture2D blockTexture;
+
         public void changeEnemy(bool forward)
         {
             for (int i = 0; i <= 3; i++)
@@ -97,6 +107,7 @@ namespace MarioGame
         {
             this.Initialize();
             this.LoadContent();
+            currentBlockIndex = 0;
         }
 
         public Game1()
@@ -113,7 +124,7 @@ namespace MarioGame
 
         protected override void Initialize()
         {
-
+            Item.Initialize();
             keyControl = new KeyboardController(this);
             mouseControl = new MouseController(this);
             PlayerPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2,
@@ -133,9 +144,17 @@ namespace MarioGame
             //ITEM intialize
             itemTextures = Content.Load<Texture2D>("smb_items_sheet");
             items = new Item(itemTextures);
-            //block intialize
-            groundBlockTexture = Content.Load<Texture2D>("GroundBlock");
-            blockTextures = Content.Load<Texture2D>("blocks");
+
+            // Load block textures
+            groundBlockTexture = Content.Load<Texture2D>("resizedGroundBlock");
+            blockTexture = Content.Load<Texture2D>("InitialBrickBlock");
+
+            // Initialize blocks
+            blocks = new List<IBlock>
+            {
+                new GroundBlock(new Vector2(500, 350), groundBlockTexture, new Rectangle(0, 0, 50, 50)),
+                new Block(new Vector2(500, 200), blockTexture, new Rectangle(0, 0, 50, 50))
+            };
 
             //enemy intialize
             enemies[0] = new Goomba(enemyTextures, _spriteBatch, 500, 500);
@@ -157,16 +176,46 @@ namespace MarioGame
             //weapon intialize
             ballTextureRight = Content.Load<Texture2D>("fireballRight");  //load the ball texture to the left
             ballTextureLeft = Content.Load<Texture2D>("fireballLeft");//load the ball texture to the left
-            //fireBoltTextureRight = Content.Load<Texture2D>("fireBoltRight");  //load the firebolt texture to the left
-            //fireBoltTextureLeft = Content.Load<Texture2D>("fireBoltLeft");//load the firebolt texture to the left
         }
 
+        // Helper method to check if a key was just pressed (single press detection)
+        private bool IsKeyPressed(Keys key, KeyboardState currentKeyboardState)
+        {
+            return currentKeyboardState.IsKeyDown(key) && previousKeyboardState.IsKeyUp(key);
+        }
 
         protected override void Update(GameTime gameTime)
         {
 
             keyControl.HandleInputs();
             mouseControl.HandleInputs();
+
+            foreach (var block in blocks)
+            {
+                block.Update(gameTime);
+            }
+
+            // Remove destroyed blocks from the list
+            blocks.RemoveAll(block => block is Block b && b.IsDestroyed);
+
+            // Get the current keyboard state
+            KeyboardState currentKeyboardState = Keyboard.GetState();
+
+            // Handle block switching using 't' and 'y'
+            if (IsKeyPressed(Keys.T, currentKeyboardState))
+            {
+                // Switch to the previous block
+                currentBlockIndex = (currentBlockIndex - 1 + blocks.Count) % blocks.Count;
+            }
+            else if (IsKeyPressed(Keys.Y, currentKeyboardState))
+            {
+                // Switch to the next block
+                currentBlockIndex = (currentBlockIndex + 1) % blocks.Count;
+            }
+
+            // Update the previous keyboard state
+            previousKeyboardState = currentKeyboardState;
+
             // update based on current sprite type
             //below for checking current state of mario
             if (current == SpriteType.Motion)
@@ -251,6 +300,15 @@ namespace MarioGame
 
 
             _spriteBatch.Begin();
+
+            //foreach (var block in blocks)
+            //{
+            //    block.Draw(_spriteBatch);
+            //}
+
+            // Draw only the current block
+            blocks[currentBlockIndex].Draw(_spriteBatch);
+
             Vector2 itemLocation = new Vector2(200, 200);
             items.Draw(_spriteBatch, itemLocation);
             //check sprint type for draw
