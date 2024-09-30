@@ -253,6 +253,7 @@ namespace MarioGame
             _spriteBatch.Begin();
             Vector2 itemLocation = new Vector2(200, 200);
             items.Draw(_spriteBatch, itemLocation);
+            //check sprint type for draw
             if (current == SpriteType.Static)
             {
                 Staplayer.Draw(_spriteBatch);
