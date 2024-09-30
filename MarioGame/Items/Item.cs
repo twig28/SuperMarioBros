@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using MarioGame.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -19,6 +20,10 @@ public class Item
         items.Add(new Star(texture));
     }
 
+    public static void Initialize()
+    {
+        index = 0;
+    }
     public static void nextItem()
     {
         index++;

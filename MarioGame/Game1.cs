@@ -123,7 +123,7 @@ namespace MarioGame
 
         protected override void Initialize()
         {
-
+            Item.Initialize();
             keyControl = new KeyboardController(this);
             mouseControl = new MouseController(this);
             PlayerPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2,
