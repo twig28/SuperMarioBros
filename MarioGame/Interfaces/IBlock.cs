@@ -9,14 +9,14 @@ namespace MarioGame.Interfaces
     {
         Vector2 Position { get; set; } // Block position
 
+        bool IsSolid { get; } // Is block solid
+
+        bool IsBreakable { get; } // Is block breakable
+
         void Update(GameTime gameTime);
 
         void Draw(SpriteBatch spriteBatch);
 
-        void OnCollide(IPlayer player);
-
-        bool IsBreakable(); // Is block breakable
-
-        void Trigger(); // Trigger block
+        void OnCollide(); // Handle block being hit by the player
     }
 }

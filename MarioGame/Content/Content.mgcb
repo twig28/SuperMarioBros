@@ -68,7 +68,7 @@
 /processorParam:TextureFormat=Color
 /build:Resource/GroundBlock.png
 
-#begin Resource/MA.png
+#begin Resource/InitialBrickBlock.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -78,9 +78,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Resource/MA.png
+/build:Resource/InitialBrickBlock.png
 
-#begin Resource/MAl.png
+#begin Resource/marioStatic.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -90,7 +90,19 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Resource/MAl.png
+/build:Resource/marioStatic.png
+
+#begin Resource/resizedGroundBlock.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Resource/resizedGroundBlock.png
 
 #begin Resource/smb_enemies_sheet.png
 /importer:TextureImporter
