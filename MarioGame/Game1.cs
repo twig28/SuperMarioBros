@@ -107,6 +107,7 @@ namespace MarioGame
         {
             this.Initialize();
             this.LoadContent();
+            currentBlockIndex = 0;
         }
 
         public Game1()
@@ -175,8 +176,6 @@ namespace MarioGame
             //weapon intialize
             ballTextureRight = Content.Load<Texture2D>("fireballRight");  //load the ball texture to the left
             ballTextureLeft = Content.Load<Texture2D>("fireballLeft");//load the ball texture to the left
-            //fireBoltTextureRight = Content.Load<Texture2D>("fireBoltRight");  //load the firebolt texture to the left
-            //fireBoltTextureLeft = Content.Load<Texture2D>("fireBoltLeft");//load the firebolt texture to the left
         }
 
         // Helper method to check if a key was just pressed (single press detection)
