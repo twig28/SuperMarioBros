@@ -129,6 +129,7 @@ namespace MarioGame
             mouseControl = new MouseController(this);
             PlayerPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2,
                      _graphics.PreferredBackBufferHeight / 2);
+            //everytime update player's position
             UPlayerPosition = PlayerPosition;
             PlayerSpeed = 100f;
             base.Initialize();
@@ -165,13 +166,19 @@ namespace MarioGame
             currEnemy = enemies[3];
 
             //Player initialize
-
+            //move toward right
             MRplayer = new MotionPlayer(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
+            //standing toward right
             Staplayer = new Static(marioTexture, PlayerPosition);
+            //standing toward left
             StaLplayer = new StaticL(marioTexture, PlayerPosition);
+            //moving toward left
             MLplayer = new MotionPlayerLeft(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
+            //juming toward right
             Jumpplayer = new Jump(marioTexture, PlayerPosition, PlayerSpeed, _graphics,this);
+            //juming toward left
             JumpLplayer = new JumpL(marioTexture, PlayerPosition, PlayerSpeed, _graphics,this);
+            //damaged
             Damagedplayer = new Damaged(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
             //weapon intialize
             ballTextureRight = Content.Load<Texture2D>("fireballRight");  //load the ball texture to the left

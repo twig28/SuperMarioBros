@@ -54,6 +54,7 @@ namespace MarioGame
 
         public void Update(GameTime gm)
         {
+
             //make spirte animated with a fixed period
             float updatedSpeed = Speed * (float)gm.ElapsedGameTime.TotalSeconds;
             timeCounter += (float)gm.ElapsedGameTime.TotalSeconds;
@@ -66,7 +67,7 @@ namespace MarioGame
 
                 timeCounter -= timePerFrame;
             }
-            //move
+            //move for differnet status
             if (!Big && !Fire)
             {
                 if (Position.X > width * Scale / 2) //check if reach to the top edge
@@ -108,7 +109,7 @@ namespace MarioGame
         public void Draw(SpriteBatch spriteBatch)
         {
 
-
+            //check status
             if (!Big && !Fire)
             {
                 spriteBatch.Draw(Texture, Position, sourceRectangle[currentFrame], Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);

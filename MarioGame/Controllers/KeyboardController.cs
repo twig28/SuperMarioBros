@@ -107,18 +107,10 @@ public class KeyboardController : IController
             Game.JumpLplayer.Big = true;
             Game.Jumpplayer.Big = true;
         }
+       
+        
+
         if (currentKeyState.IsKeyDown(Keys.M))
-        {
-            Game.Staplayer.Big = false;
-            Game.StaLplayer.Big = false;
-            Game.MRplayer.Big = false;
-            Game.MLplayer.Big = false;
-            Game.Jumpplayer.Big = false;
-            Game.JumpLplayer.Big = false;
-
-        }
-
-        if (currentKeyState.IsKeyDown(Keys.J))
         {
             Game.Staplayer.Fire = true;
             Game.StaLplayer.Fire = true;
@@ -129,7 +121,7 @@ public class KeyboardController : IController
             Game.Fire = true;
         }
 
-        if (currentKeyState.IsKeyDown(Keys.K))
+        if (currentKeyState.IsKeyDown(Keys.J))
         {
             Game.Staplayer.Fire = false;
             Game.StaLplayer.Fire = false;

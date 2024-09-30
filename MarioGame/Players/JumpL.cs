@@ -52,6 +52,7 @@ namespace MarioGame
         {
 
             float updatedSpeed = Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //for action jumping
             if (isGrounded)
             {
                 isJumping = true;
@@ -81,6 +82,7 @@ namespace MarioGame
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            //check status
 
             if (!Big && !Fire)
             {

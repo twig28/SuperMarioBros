@@ -67,6 +67,7 @@ public class MotionPlayer : IPlayer
 
                 timeCounter -= timePerFrame;
             }
+            //for running with different status
             if (!Big && !Fire)
             {
                 if (Position.X < graphics.PreferredBackBufferWidth - (width * Scale / 2))//check if reach to the bottom edge
@@ -100,6 +101,7 @@ public class MotionPlayer : IPlayer
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            //first check state of mario
             if (!Big && !Fire)
             {
                 spriteBatch.Draw(Texture, Position, sourceRectangle[currentFrame], Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);

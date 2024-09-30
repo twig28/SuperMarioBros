@@ -80,6 +80,7 @@ namespace MarioGame
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            //check status
             if (!Big && !Fire)
             {
                 Rectangle sourceRectangle = new Rectangle(SX, SY, width, height);
