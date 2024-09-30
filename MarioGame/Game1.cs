@@ -55,6 +55,7 @@ namespace MarioGame
         private Texture2D ballTextureLeft;  // fireball to the left
         private Texture2D fireBoltTextureRight;  // firebolt to the right
         private Texture2D fireBoltTextureLeft;  // firebolt to the left
+        private Texture2D multipleBlockTextures;  // firebolt to the left
         private List<IBall> balls = new List<IBall>();  // list of ball
         private float ballSpeed = 300f;  // ball speed
         public bool zPressed = false;  //status of z
@@ -149,12 +150,14 @@ namespace MarioGame
             // Load block textures
             groundBlockTexture = Content.Load<Texture2D>("resizedGroundBlock");
             blockTexture = Content.Load<Texture2D>("InitialBrickBlock");
+            multipleBlockTextures = Content.Load<Texture2D>("blocks");
 
             // Initialize blocks
             blocks = new List<IBlock>
             {
                 new GroundBlock(new Vector2(500, 350), groundBlockTexture, new Rectangle(0, 0, 50, 50)),
-                new Block(new Vector2(500, 200), blockTexture, new Rectangle(0, 0, 50, 50))
+                new Block(new Vector2(500, 200), blockTexture, new Rectangle(0, 0, 50, 50)),
+                new MysteryBlock(new Vector2(500, 200), multipleBlockTextures, new Rectangle(80, 112, 15, 15))
             };
 
             //enemy intialize
