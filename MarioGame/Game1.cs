@@ -55,6 +55,7 @@ namespace MarioGame
         private Texture2D ballTextureLeft;  // fireball to the left
         private Texture2D fireBoltTextureRight;  // firebolt to the right
         private Texture2D fireBoltTextureLeft;  // firebolt to the left
+        private Texture2D multipleBlockTextures;  // firebolt to the left
         private List<IBall> balls = new List<IBall>();  // list of ball
         private float ballSpeed = 300f;  // ball speed
         public bool zPressed = false;  //status of z
@@ -129,6 +130,7 @@ namespace MarioGame
             mouseControl = new MouseController(this);
             PlayerPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2,
                      _graphics.PreferredBackBufferHeight / 2);
+            //everytime update player's position
             UPlayerPosition = PlayerPosition;
             PlayerSpeed = 100f;
             base.Initialize();
@@ -148,12 +150,14 @@ namespace MarioGame
             // Load block textures
             groundBlockTexture = Content.Load<Texture2D>("resizedGroundBlock");
             blockTexture = Content.Load<Texture2D>("InitialBrickBlock");
+            multipleBlockTextures = Content.Load<Texture2D>("blocks");
 
             // Initialize blocks
             blocks = new List<IBlock>
             {
                 new GroundBlock(new Vector2(500, 350), groundBlockTexture, new Rectangle(0, 0, 50, 50)),
-                new Block(new Vector2(500, 200), blockTexture, new Rectangle(0, 0, 50, 50))
+                new Block(new Vector2(500, 200), blockTexture, new Rectangle(0, 0, 50, 50)),
+                new MysteryBlock(new Vector2(500, 200), multipleBlockTextures, new Rectangle(80, 112, 15, 15))
             };
 
             //enemy intialize
@@ -165,13 +169,19 @@ namespace MarioGame
             currEnemy = enemies[3];
 
             //Player initialize
-
+            //move toward right
             MRplayer = new MotionPlayer(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
+            //standing toward right
             Staplayer = new Static(marioTexture, PlayerPosition);
+            //standing toward left
             StaLplayer = new StaticL(marioTexture, PlayerPosition);
+            //moving toward left
             MLplayer = new MotionPlayerLeft(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
+            //juming toward right
             Jumpplayer = new Jump(marioTexture, PlayerPosition, PlayerSpeed, _graphics,this);
+            //juming toward left
             JumpLplayer = new JumpL(marioTexture, PlayerPosition, PlayerSpeed, _graphics,this);
+            //damaged
             Damagedplayer = new Damaged(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
             //weapon intialize
             ballTextureRight = Content.Load<Texture2D>("fireballRight");  //load the ball texture to the left
@@ -311,6 +321,7 @@ namespace MarioGame
 
             Vector2 itemLocation = new Vector2(200, 200);
             items.Draw(_spriteBatch, itemLocation);
+            //check sprint type for draw
             if (current == SpriteType.Static)
             {
                 Staplayer.Draw(_spriteBatch);
