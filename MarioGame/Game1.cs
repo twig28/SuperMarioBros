@@ -70,7 +70,6 @@ namespace MarioGame
         // List to store and manage blocks
         private List<IBlock> blocks;
         private int currentBlockIndex = 0;  // Track the current block index
-        private KeyboardState previousKeyboardState;  // To track key press events
 
         // Block textures
         private Texture2D groundBlockTexture;
@@ -188,12 +187,6 @@ namespace MarioGame
             ballTextureLeft = Content.Load<Texture2D>("fireballLeft");//load the ball texture to the left
         }
 
-        // Helper method to check if a key was just pressed (single press detection)
-        private bool IsKeyPressed(Keys key, KeyboardState currentKeyboardState)
-        {
-            return currentKeyboardState.IsKeyDown(key) && previousKeyboardState.IsKeyUp(key);
-        }
-
         protected override void Update(GameTime gameTime)
         {
 
@@ -212,19 +205,16 @@ namespace MarioGame
             KeyboardState currentKeyboardState = Keyboard.GetState();
 
             // Handle block switching using 't' and 'y'
-            if (IsKeyPressed(Keys.T, currentKeyboardState))
+            if (keyControl.IsKeyPressed(Keys.T, currentKeyboardState))
             {
                 // Switch to the previous block
                 currentBlockIndex = (currentBlockIndex - 1 + blocks.Count) % blocks.Count;
             }
-            else if (IsKeyPressed(Keys.Y, currentKeyboardState))
+            else if (keyControl.IsKeyPressed(Keys.Y, currentKeyboardState))
             {
                 // Switch to the next block
                 currentBlockIndex = (currentBlockIndex + 1) % blocks.Count;
             }
-
-            // Update the previous keyboard state
-            previousKeyboardState = currentKeyboardState;
 
             // update based on current sprite type
             //below for checking current state of mario

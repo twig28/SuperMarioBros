@@ -19,4 +19,9 @@ public class MouseController : IController
                 Game.Exit();
             }
         }
+
+    public bool IsKeyPressed(Keys key, KeyboardState currentKeyboardState)
+    {
+        return false;
+    }
 }

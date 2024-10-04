@@ -25,25 +25,26 @@ public class KeyboardController : IController
         Game = gameName;
     }
 
-    public bool IsKeyHitted(Keys key)
+    public bool IsKeyPressed(Keys key, KeyboardState currentKeyboardState)
     {
-        return currentKeyState.IsKeyDown(key) && !previousKeyState.IsKeyDown(key);
+        return currentKeyboardState.IsKeyDown(key) && previousKeyState.IsKeyUp(key);
     }
+
     public void HandleInputs()
     {
+        previousKeyState = currentKeyState;
+
+        currentKeyState = Keyboard.GetState();
+
         if (Game.current == Game1.SpriteType.MotionL)
         {
             Game.current = Game1.SpriteType.StaticL;
-
         }
         else if (Game.current == Game1.SpriteType.Motion)
         {
             Game.current = Game1.SpriteType.Static;
-
         }
 
-        //Do Stuff
-        GetState();
         if (currentKeyState.IsKeyDown(Keys.Escape))
         {
             Game.Exit();
@@ -52,19 +53,19 @@ public class KeyboardController : IController
         {
             Game.Exit();
         }
-        if (IsKeyHitted(Keys.U))
+        if (IsKeyPressed(Keys.U, currentKeyState))
         {
             Item.lastItem();
         }
-        if (IsKeyHitted(Keys.I))
+        if (IsKeyPressed(Keys.I, currentKeyState))
         {
             Item.nextItem();
         }
-        if (IsKeyHitted(Keys.O))
+        if (IsKeyPressed(Keys.O, currentKeyState))
         {
             Game.changeEnemy(false);
         }
-        if (IsKeyHitted(Keys.P))
+        if (IsKeyPressed(Keys.P, currentKeyState))
         {
             Game.changeEnemy(true);
         }
@@ -72,13 +73,11 @@ public class KeyboardController : IController
         if (currentKeyState.IsKeyDown(Keys.Right) || currentKeyState.IsKeyDown(Keys.D))
         {
             Game.current = Game1.SpriteType.Motion;
-
         }
 
         if (currentKeyState.IsKeyDown(Keys.Left) || currentKeyState.IsKeyDown(Keys.A))
         {
             Game.current = Game1.SpriteType.MotionL;
-
         }
         if (currentKeyState.IsKeyDown(Keys.W) || currentKeyState.IsKeyDown(Keys.Up))
         {
@@ -86,17 +85,15 @@ public class KeyboardController : IController
             {
                 Game.current = Game1.SpriteType.JumpL;
             }
-            else if(Game.current == Game1.SpriteType.Motion || Game.current == Game1.SpriteType.Static)
+            else if (Game.current == Game1.SpriteType.Motion || Game.current == Game1.SpriteType.Static)
             {
                 Game.current = Game1.SpriteType.Jump;
             }
-
         }
 
         if (currentKeyState.IsKeyDown(Keys.E) || currentKeyState.IsKeyDown(Keys.S) || currentKeyState.IsKeyDown(Keys.Down))
         {
             Game.current = Game1.SpriteType.Damaged;
-
         }
         if (currentKeyState.IsKeyDown(Keys.X))
         {
@@ -107,8 +104,6 @@ public class KeyboardController : IController
             Game.JumpLplayer.Big = true;
             Game.Jumpplayer.Big = true;
         }
-       
-        
 
         if (currentKeyState.IsKeyDown(Keys.M))
         {
@@ -136,9 +131,7 @@ public class KeyboardController : IController
             Game.Jumpplayer.Big = false;
             Game.JumpLplayer.Big = false;
             Game.Fire = false;
-
         }
-
 
         if (currentKeyState.IsKeyDown(Keys.R))
         {
@@ -148,18 +141,17 @@ public class KeyboardController : IController
         }
 
         //keyboard control for fireballs 
-        if (IsKeyHitted(Keys.Z) && Game.Fire == true)//push to attack enemy in the left
+        if (IsKeyPressed(Keys.Z, currentKeyState) && Game.Fire == true) // push to attack enemy on the left
         {
             Game.keyboardPermitZ = true;
             Game.zPressed = true;
         }
 
-
-        if (IsKeyHitted(Keys.N)  && Game.Fire == true)//push to attack enemy in the right
+        if (IsKeyPressed(Keys.N, currentKeyState) && Game.Fire == true) // push to attack enemy on the right
         {
             Game.keyboardPermitN = true;
             Game.nPressed = true;
         }
-        previousKeyState = currentKeyState;
     }
+
 }
