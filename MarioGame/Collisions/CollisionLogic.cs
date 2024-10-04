@@ -10,7 +10,6 @@ namespace MarioGame
 {
     internal class CollisionLogic
     {
-        //this will call the different collision classes
 
         //0 = no collision, 1 = above, 2 = below, 3 = from the side, will use enum
         int collisionDirection(Rectangle r1, Rectangle r2)
