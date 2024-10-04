@@ -26,18 +26,10 @@ namespace MarioGame
             get { return alive; }
             set { alive = value; }
         }
+        public int setPosX { set { posX = value; } }
+        public int setPosY { set { posY = value; } }
 
-        public int getPosX
-        {
-            get { return posX; }
-            set { posX = value; }
-        }
-
-        public int getPosY
-        {
-            get { return posY; }
-            set { posY = value; }
-        }
+        public Rectangle GetDestinationRectangle() { return sprite.GetDestinationRectangle(); }
 
         private bool _movingRight = true;
         public bool MovingRight
@@ -70,6 +62,8 @@ namespace MarioGame
                 {
                     posX--;
                 }
+                //gravity
+                //posY = posY + ;
                 sprite.posX = posX;
                 sprite.posY = posY;
                 if (timeElapsed - timeElapsedSinceUpdate > animInterval)

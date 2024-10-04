@@ -27,6 +27,8 @@ namespace MarioGame.Sprites
         public bool ChangeDirection { get; set; }
         public int posX { get; set; }
         public int posY { get; set; }
+
+        public Rectangle GetDestinationRectangle() { return DestinationRectangle; }
         public PiranhaSprite(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
         {
             sb = SpriteBatch;

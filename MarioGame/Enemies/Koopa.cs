@@ -23,17 +23,9 @@ namespace MarioGame
 
         private bool alive = true;
         private bool isShell = false;
-        public int getPosX
-        {
-            get { return posX; }
-            set { posX = value; }
-        }
-
-        public int getPosY
-        {
-            get { return posY; }
-            set { posY = value; }
-        }
+        public int setPosX { set { posX = value; } }
+        public int setPosY { set { posY = value; } }
+        public Rectangle GetDestinationRectangle() { return sprite.GetDestinationRectangle(); }
         public bool Alive
         {
             get { return alive; }

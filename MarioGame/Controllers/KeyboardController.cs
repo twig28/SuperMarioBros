@@ -9,8 +9,6 @@ namespace MarioGame.Controllers;
 public class KeyboardController : IController
 {
     public Game1 Game;
-    private KeyboardState ks;
-    private KeyboardState previousState;
     private KeyboardState previousKeyState;
     private KeyboardState currentKeyState;
     public KeyboardState GetState()

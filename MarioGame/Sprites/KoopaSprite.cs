@@ -29,6 +29,7 @@ namespace MarioGame
         private double timeElapsedSinceLastUpdate = 0;
         private double elapsedTimeForShellAnim = 0.7;
 
+        public Rectangle GetDestinationRectangle() { return DestinationRectangle; }
         public KoopaSprite(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
         {
             sb = SpriteBatch;
