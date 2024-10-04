@@ -34,6 +34,17 @@ namespace MarioGame
             get { return _movingRight; }
             set { _movingRight = value; }
         }
+        public int getPosX
+        {
+            get { return posX; }
+            set { posX = value; }
+        }
+
+        public int getPosY
+        {
+            get { return posY; }
+            set { posY = value; }
+        }
 
         public Piranha(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
         {

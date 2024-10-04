@@ -12,6 +12,8 @@ namespace MarioGame
     {    
         bool Alive { get; set; }
         bool MovingRight { get; set; }
+        int getPosX { get; set; }
+        int getPosY { get; set; }
         void Draw();
         void Update(GameTime gm);
         void TriggerDeath(GameTime gm, bool stomped);

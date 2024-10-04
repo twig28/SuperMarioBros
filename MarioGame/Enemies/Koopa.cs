@@ -23,7 +23,17 @@ namespace MarioGame
 
         private bool alive = true;
         private bool isShell = false;
+        public int getPosX
+        {
+            get { return posX; }
+            set { posX = value; }
+        }
 
+        public int getPosY
+        {
+            get { return posY; }
+            set { posY = value; }
+        }
         public bool Alive
         {
             get { return alive; }
