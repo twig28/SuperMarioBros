@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MarioGame.Collisions
+namespace MarioGame
 {
     internal class CollisionLogic
     {
@@ -19,13 +19,22 @@ namespace MarioGame.Collisions
         }
 
         //function that has a for each between enemies and blocks/obstacles
-        void checkEnemyBlock(List<IEnemy> enemies, List<IBlock> blocks)
+        void checkEnemyBlockCollisions(List<IEnemy> enemies, List<IBlock> blocks)
         {
-
+            foreach (IEnemy enemy in enemies)
+            {
+                foreach (IBlock block in blocks)
+                {
+                    //if (collisionDirection(enemy.GetDestinationRectangle(), block.getDestinationRectangle()))
+                    {
+                        enemy.setPosY = (int)block.Position.Y;
+                    }
+                }
+            }
+            //function that has a for each between mario and blocks/obstacles
+            //function that has a for each between enemies and other enemies
+            //function that has a for each between mario and enemies
+            //function that has a for each between mario and items
         }
-        //function that has a for each between mario and blocks/obstacles
-        //function that has a for each between enemies and enemies
-        //function that has a for each between mario and enemies
-        //function that has a for each between mario and items
     }
 }
