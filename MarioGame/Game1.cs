@@ -106,15 +106,15 @@ namespace MarioGame
             blocks = new List<IBlock>
             {
                 new GroundBlock(new Vector2(500, 350), groundBlockTexture, new Rectangle(0, 0, 50, 50)),
-                new Block(new Vector2(500, 200), blockTexture, new Rectangle(0, 0, 50, 50)),
-                new MysteryBlock(new Vector2(500, 200), multipleBlockTextures, new Rectangle(80, 112, 15, 15))
+                new Block(new Vector2(500, 600), blockTexture, new Rectangle(0, 0, 50, 50)),
+                new MysteryBlock(new Vector2(560, 600), multipleBlockTextures, new Rectangle(80, 112, 15, 15))
             };
 
             //enemy intialize
             enemies = new List<IEnemy>
             {
                 new Goomba(enemyTextures, _spriteBatch, 500, 200),
-                new Koopa(enemyTextures, _spriteBatch, 500, 500),
+                new Koopa(enemyTextures, _spriteBatch, 600, 500),
                 new Piranha(enemyTextures, _spriteBatch, 500, 500),
             };
             //For intialize all player

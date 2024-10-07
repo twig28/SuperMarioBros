@@ -52,9 +52,13 @@ namespace MarioGame
                 {
                     foreach (IBlock block in blocks)
                     {
-                        if (GetCollisionDirection(enemy.GetDestinationRectangle(), block.GetDestinationRectangle()) == CollisionDirection.Above)
+                        if (GetCollisionDirection(block.GetDestinationRectangle(), enemy.GetDestinationRectangle()) == CollisionDirection.Above)
                         {
-                            enemy.setPosY = (int)block.Position.Y;
+                            enemy.setPosY = (int)block.Position.Y - enemy.GetDestinationRectangle().Height;
+                        }
+                        else if (GetCollisionDirection(enemy.GetDestinationRectangle(), block.GetDestinationRectangle()) == CollisionDirection.Side)
+                        {
+                            enemy.MovingRight = !enemy.MovingRight;
                         }
                     }
                 }
