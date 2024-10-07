@@ -10,14 +10,14 @@ namespace MarioGame
 {
     internal class CollisionLogic
     {
-        enum CollisionDirection
+        public enum CollisionDirection
         {
             None = 0,
             Above = 1,
             Below = 2,
             Side = 3
         }
-        CollisionDirection getCollisionDirection(Rectangle r1, Rectangle r2) //Comparing r1 to r2, i.e. r1 is below r2
+        static public CollisionDirection GetCollisionDirection(Rectangle r1, Rectangle r2) //Comparing r1 to r2, i.e. r1 is below r2
         {
             if (!r1.Intersects(r2))
             {
@@ -43,7 +43,7 @@ namespace MarioGame
                 return CollisionDirection.Side;
             }
         }
-        void checkEnemyBlockCollisions(List<IEnemy> enemies, List<IBlock> blocks)
+        static public void CheckEnemyBlockCollisions(List<IEnemy> enemies, List<IBlock> blocks)
         {
             foreach (IEnemy enemy in enemies)
             {
@@ -52,23 +52,29 @@ namespace MarioGame
                 {
                     foreach (IBlock block in blocks)
                     {
-                        //if (getCollisionDirection(enemy.GetDestinationRectangle(), block.getDestinationRectangle()) == CollisionDirection.Above)
+                        if (GetCollisionDirection(enemy.GetDestinationRectangle(), block.GetDestinationRectangle()) == CollisionDirection.Above)
                         {
                             enemy.setPosY = (int)block.Position.Y;
                         }
                     }
                 }
             }
-            //function that has a for each between mario and blocks/obstacles
-            //function that has a for each between enemies and other enemies
-            //function that has a for each between mario and enemies
-            //function that has a for each between mario and items
-            //function taht has a for each between fireballs and enemies
 
-            void checkFireballEnemyCollision(List<Ball> fireballs, List<IEnemy> enemies, GameTime gt)
+            //THESE ARE TODO BUT DONT HAVE TO BE IN THIS FILE
+            //function that has a for each between mario and blocks/obstacles
+            void CheckMarioBlockCollision(PlayerSprite mario, List<IBlock> blocks) { }
+            //function that has a for each between enemies and other enemies
+            void CheckEnemyEnemyCollision(List<IEnemy> enemies, GameTime gt) { }
+
+            void CheckMarioEnemyCollision(PlayerSprite mario, List<IEnemy> enemies, GameTime gt) { }
+
+            void CheckMarioItemCollision(PlayerSprite mario, List<IItem> items, GameTime gt) { }
+
+            void CheckFireballEnemyCollision(List<Ball> fireballs, List<IEnemy> enemies, GameTime gt)
             {
-                //TODO
-                //ememy.TriggerKill(gt, false)
+                //if(){
+                //enemy.TriggerKill(gt, false)
+                //}
             }
         }
     }

@@ -23,6 +23,8 @@ namespace MarioGame.Blocks
 
         public abstract void OnCollide();
 
+		public Rectangle GetDestinationRectangle() { return new Rectangle((int)Position.X, (int)Position.Y, 60, 60); }
+
         public virtual void Update(GameTime gameTime)
 		{
 			// Base update logic

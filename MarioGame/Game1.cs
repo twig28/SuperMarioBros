@@ -91,7 +91,6 @@ namespace MarioGame
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("File");
-            //To Be Implemented in its own class (maybe)
             marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
             enemyTextures = Content.Load<Texture2D>("smb_enemies_sheet");
             //ITEM intialize
@@ -114,7 +113,7 @@ namespace MarioGame
             //enemy intialize
             enemies = new List<IEnemy>
             {
-                new Goomba(enemyTextures, _spriteBatch, 500, 500),
+                new Goomba(enemyTextures, _spriteBatch, 500, 200),
                 new Koopa(enemyTextures, _spriteBatch, 500, 500),
                 new Piranha(enemyTextures, _spriteBatch, 500, 500),
             };
@@ -137,6 +136,8 @@ namespace MarioGame
             {
                 block.Update(gameTime);
             }
+
+            CollisionLogic.CheckEnemyBlockCollisions(enemies, blocks);
 
             // Remove destroyed blocks from the list
             blocks.RemoveAll(block => block is Block b && b.IsDestroyed);

@@ -29,6 +29,7 @@ namespace MarioGame.Blocks
             //System.Diagnostics.Debug.WriteLine("Block destroyed at position: " + Position);
         }
 
+
         // Optional method to draw only if the block is not destroyed
         public override void Draw(SpriteBatch spriteBatch)
         {

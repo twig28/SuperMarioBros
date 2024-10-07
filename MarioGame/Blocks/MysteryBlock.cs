@@ -50,6 +50,8 @@ namespace MarioGame.Blocks
             }
         }
 
+        public Rectangle GetDestinationRectangle() { return new Rectangle((int)Position.X, (int)Position.Y, 60, 60); }
+
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Texture, DestinationRectangle, SourceRectangle, Color.White);
