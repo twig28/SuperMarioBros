@@ -69,7 +69,7 @@ namespace MarioGame
                 if (Position.Y >= groundLevel)
                 {
                     Position.Y = groundLevel;
-                    Game.current = Game1.SpriteType.Static;
+                    Game.player_sprite.current = PlayerSprite.SpriteType.Static;
                     isGrounded = true;
                     isJumping = false;
                     velocity = 0f;

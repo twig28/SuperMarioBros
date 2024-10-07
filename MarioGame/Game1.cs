@@ -14,17 +14,6 @@ namespace MarioGame
 
     public class Game1 : Game
     {
-        public enum SpriteType
-        {
-            Static,
-            StaticL,// Static sprite
-            Motion,    // moving sprite
-            MotionL,
-            Jump,
-            JumpL,
-            Damaged// moving sprite
-        }
-
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private SpriteFont font;
@@ -38,7 +27,6 @@ namespace MarioGame
         public Vector2 UPlayerPosition;
         float PlayerSpeed;
         public PlayerSprite player_sprite;
-        public SpriteType current = SpriteType.Static;
         //FOR CONTROLLER
         IController keyControl;
         IController mouseControl;
@@ -124,7 +112,6 @@ namespace MarioGame
             PlayerPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2,
                      _graphics.PreferredBackBufferHeight / 2);
             //everytime update player's position
-            UPlayerPosition = PlayerPosition;
             PlayerSpeed = 100f;
             base.Initialize();
         }
@@ -198,64 +185,20 @@ namespace MarioGame
                 currentBlockIndex = (currentBlockIndex + 1) % blocks.Count;
             }
 
-            // update based on current sprite type
-            //below for checking current state of mario
-            if (current == SpriteType.Motion)
-            {
-                player_sprite.MRplayer.Position = UPlayerPosition; //U means upated
-                player_sprite.MRplayer.Update(gameTime);
-                UPlayerPosition = player_sprite.MRplayer.Position;
-            }
-            else if (current == SpriteType.MotionL)
-            {
-                player_sprite.MLplayer.Position = UPlayerPosition;
-                player_sprite.MLplayer.Update(gameTime);
-                UPlayerPosition = player_sprite.MLplayer.Position;
-            }
-            else if (current == SpriteType.Jump)
-            {
-                player_sprite.Jumpplayer.Position = UPlayerPosition;
-                player_sprite.Jumpplayer.Update(gameTime);
-                UPlayerPosition = player_sprite.Jumpplayer.Position;
-            }
-            else if (current == SpriteType.JumpL)
-            {
-                player_sprite.JumpLplayer.Position = UPlayerPosition;
-                player_sprite.JumpLplayer.Update(gameTime);
-                UPlayerPosition = player_sprite.JumpLplayer.Position;
-            }
-            else if (current == SpriteType.Damaged)
-            {
-                player_sprite.Damagedplayer.Position = UPlayerPosition;
-                player_sprite.Damagedplayer.Update(gameTime);
-                UPlayerPosition = player_sprite.Damagedplayer.Position;
-
-            }
-
-            else
-            {
-                if (current == SpriteType.StaticL)
-                {
-                    player_sprite.StaLplayer.Position = UPlayerPosition;
-                }
-                else if (current == SpriteType.Static)
-                {
-                    player_sprite.Staplayer.Position = UPlayerPosition;
-                }
-
-            }
-
+            //PLAYER UPDATE
+            player_sprite.Update(gameTime);
+            
             //check whether mario attack
             if (keyboardPermitZ)
             {
-                balls.Add(new Ball(ballTextureLeft, UPlayerPosition, ballSpeed, true));
+                balls.Add(new Ball(ballTextureLeft, player_sprite.UPlayerPosition, ballSpeed, true));
                 keyboardPermitZ = false;
             }
 
 
             if (keyboardPermitN)
             {
-                balls.Add(new BallLeft(ballTextureRight, UPlayerPosition, ballSpeed, false));
+                balls.Add(new BallLeft(ballTextureRight, player_sprite.UPlayerPosition, ballSpeed, false));
                 keyboardPermitN = false;
             }
 
@@ -287,35 +230,9 @@ namespace MarioGame
 
             Vector2 itemLocation = new Vector2(200, 200);
             items.Draw(_spriteBatch, itemLocation);
-            //check sprint type for draw
-            if (current == SpriteType.Static)
-            {
-                player_sprite.Staplayer.Draw(_spriteBatch);
-            }
-            if (current == SpriteType.StaticL)
-            {
-                player_sprite.StaLplayer.Draw(_spriteBatch);
-            }
-            if (current == SpriteType.Motion)
-            {
-                player_sprite.MRplayer.Draw(_spriteBatch);
-            }
-            if (current == SpriteType.MotionL)
-            {
-                player_sprite.MLplayer.Draw(_spriteBatch);
-            }
-            if (current == SpriteType.Jump)
-            {
-                player_sprite.Jumpplayer.Draw(_spriteBatch);
-            }
-            if (current == SpriteType.JumpL)
-            {
-                player_sprite.JumpLplayer.Draw(_spriteBatch);
-            }
-            if (current == SpriteType.Damaged)
-            {
-                player_sprite.Damagedplayer.Draw(_spriteBatch);
-            }
+            //Player draw
+            player_sprite.Draw(_spriteBatch);
+            //weapon drae
             for (int i = 0; i < balls.Count; i++)
             {
                 balls[i].Draw(_spriteBatch);

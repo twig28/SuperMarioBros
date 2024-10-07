@@ -34,13 +34,13 @@ public class KeyboardController : IController
 
         currentKeyState = Keyboard.GetState();
 
-        if (Game.current == Game1.SpriteType.MotionL)
+        if (Game.player_sprite.current == PlayerSprite.SpriteType.MotionL)
         {
-            Game.current = Game1.SpriteType.StaticL;
+            Game.player_sprite.current = PlayerSprite.SpriteType.StaticL;
         }
-        else if (Game.current == Game1.SpriteType.Motion)
+        else if (Game.player_sprite.current == PlayerSprite.SpriteType.Motion)
         {
-            Game.current = Game1.SpriteType.Static;
+            Game.player_sprite.current = PlayerSprite.SpriteType.Static;
         }
 
         if (currentKeyState.IsKeyDown(Keys.Escape))
@@ -70,28 +70,28 @@ public class KeyboardController : IController
 
         if (currentKeyState.IsKeyDown(Keys.Right) || currentKeyState.IsKeyDown(Keys.D))
         {
-            Game.current = Game1.SpriteType.Motion;
+            Game.player_sprite.current = PlayerSprite.SpriteType.Motion;
         }
 
         if (currentKeyState.IsKeyDown(Keys.Left) || currentKeyState.IsKeyDown(Keys.A))
         {
-            Game.current = Game1.SpriteType.MotionL;
+            Game.player_sprite.current = PlayerSprite.SpriteType.MotionL;
         }
         if (currentKeyState.IsKeyDown(Keys.W) || currentKeyState.IsKeyDown(Keys.Up))
         {
-            if (Game.current == Game1.SpriteType.MotionL || Game.current == Game1.SpriteType.StaticL)
+            if (Game.player_sprite.current == PlayerSprite.SpriteType.MotionL || Game.player_sprite.current == PlayerSprite.SpriteType.StaticL)
             {
-                Game.current = Game1.SpriteType.JumpL;
+                Game.player_sprite.current = PlayerSprite.SpriteType.JumpL;
             }
-            else if (Game.current == Game1.SpriteType.Motion || Game.current == Game1.SpriteType.Static)
+            else if (Game.player_sprite.current == PlayerSprite.SpriteType.Motion || Game.player_sprite.current == PlayerSprite.SpriteType.Static)
             {
-                Game.current = Game1.SpriteType.Jump;
+                Game.player_sprite.current = PlayerSprite.SpriteType.Jump;
             }
         }
 
         if (currentKeyState.IsKeyDown(Keys.E) || currentKeyState.IsKeyDown(Keys.S) || currentKeyState.IsKeyDown(Keys.Down))
         {
-            Game.current = Game1.SpriteType.Damaged;
+            Game.player_sprite.current = PlayerSprite.SpriteType.Damaged;
         }
         if (currentKeyState.IsKeyDown(Keys.X))
         {
@@ -133,8 +133,8 @@ public class KeyboardController : IController
         if (currentKeyState.IsKeyDown(Keys.R))
         {
             Game.ResetGame();
-            Game.current = Game1.SpriteType.Static;
-            Game.UPlayerPosition = Game.PlayerPosition;
+            Game.player_sprite.current = PlayerSprite.SpriteType.Static;
+            Game.player_sprite.UPlayerPosition = Game.player_sprite.PlayerPosition;
         }
 
         //keyboard control for fireballs 
