@@ -1,7 +1,7 @@
 ﻿using MarioGame.Interfaces;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +19,7 @@ namespace MarioGame
         }
         CollisionDirection getCollisionDirection(Rectangle r1, Rectangle r2) //Comparing r1 to r2, i.e. r1 is below r2
         {
-            if (!r1.IntersectsWith(r2))
+            if (!r1.Intersects(r2))
             {
                 return CollisionDirection.None;
             }
@@ -63,6 +63,13 @@ namespace MarioGame
             //function that has a for each between enemies and other enemies
             //function that has a for each between mario and enemies
             //function that has a for each between mario and items
+            //function taht has a for each between fireballs and enemies
+
+            void checkFireballEnemyCollision(List<Ball> fireballs, List<IEnemy> enemies, GameTime gt)
+            {
+                //TODO
+                //ememy.TriggerKill(gt, false)
+            }
         }
     }
 }
