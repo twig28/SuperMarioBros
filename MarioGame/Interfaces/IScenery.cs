@@ -13,10 +13,10 @@ namespace MarioGame
     //would have texture, position, state, and more properties
     public interface IScenery
     {
-        void Update(GameTime gameTime);
+        //void Update(GameTime gameTime);
 
-        void Draw(SpriteBatch spriteBatch);
+        //void Draw(SpriteBatch spriteBatch);
 
-        Rectangle GetDestinationRectangle();
+        //Rectangle GetDestinationRectangle();
     }
 }
