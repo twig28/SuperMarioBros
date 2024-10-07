@@ -9,8 +9,7 @@ namespace MarioGame
 {
     //would have texture and position properties
     public interface IEnemy
-    {    
-        bool Alive { get; set; }
+    {
         bool MovingRight { get; set; }
         Rectangle GetDestinationRectangle();
         int setPosX { set; }

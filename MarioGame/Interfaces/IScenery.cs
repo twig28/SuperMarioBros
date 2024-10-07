@@ -13,17 +13,10 @@ namespace MarioGame
     //would have texture, position, state, and more properties
     public interface IScenery
     {
-        void Draw();
-    }
+        //void Update(GameTime gameTime);
 
-    //temp
-    class TextSprite
-    {
-        public void Draw(SpriteBatch sb, SpriteFont font)
-        {
-            sb.DrawString(font, "Nothing Here Yet, Time to Work on Sprint 2 :(", new Vector2(100, 360), Color.Black);
-        }
+        //void Draw(SpriteBatch spriteBatch);
+
+        //Rectangle GetDestinationRectangle();
     }
 }
-
-//TODO IPlayer, IEnemy, IObject, etc.

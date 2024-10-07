@@ -26,11 +26,6 @@ namespace MarioGame
         public int setPosX { set { posX = value; } }
         public int setPosY { set { posY = value; } }
         public Rectangle GetDestinationRectangle() { return sprite.GetDestinationRectangle(); }
-        public bool Alive
-        {
-            get { return alive; }
-            set { alive = value; }
-        }
 
         private bool _movingRight = true;
         public bool MovingRight
