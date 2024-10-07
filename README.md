@@ -10,8 +10,8 @@ O/P: Change Displayed Enemy
 WASD: Change Mario Position
 U/I: Change Displayed Item
 T/Y: Change Displayed Block
-X/M: Change Mario Big/Small
-J: Make Mario Fire Flower State
+X/M: Change Mario Big/Fire
+J: Make Mario origin state
 Q: Quit Game
 R: Reset Game
-Z/N: Throw Fireball
+Z/N: Throw Fireball (first change mario to fire by pressing M)

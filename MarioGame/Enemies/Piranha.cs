@@ -22,11 +22,6 @@ namespace MarioGame
         private double timeElapsedSinceUpdate = 0;
         private double timeElapsedSinceUpdateAnim = 0;
         private bool alive = true;
-        public bool Alive
-        {
-            get { return alive; }
-            set { alive = value; }
-        }
 
         private bool _movingRight = false;
         public bool MovingRight
@@ -34,6 +29,11 @@ namespace MarioGame
             get { return _movingRight; }
             set { _movingRight = value; }
         }
+        public int setPosX{set { posX = value; }}
+
+        public int setPosY { set { posY = value; }}
+
+        public Rectangle GetDestinationRectangle() { return sprite.GetDestinationRectangle(); }
 
         public Piranha(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
         {

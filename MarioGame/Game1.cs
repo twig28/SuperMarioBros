@@ -37,13 +37,7 @@ namespace MarioGame
         public Vector2 PlayerPosition;
         public Vector2 UPlayerPosition;
         float PlayerSpeed;
-        public MotionPlayer MRplayer;
-        public MotionPlayerLeft MLplayer;
-        public Static Staplayer;
-        public StaticL StaLplayer;
-        public Jump Jumpplayer;
-        public Damaged Damagedplayer;
-        public JumpL JumpLplayer;
+        public PlayerSprite player_sprite;
         public SpriteType current = SpriteType.Static;
         //FOR CONTROLLER
         IController keyControl;
@@ -70,7 +64,6 @@ namespace MarioGame
         // List to store and manage blocks
         private List<IBlock> blocks;
         private int currentBlockIndex = 0;  // Track the current block index
-        private KeyboardState previousKeyboardState;  // To track key press events
 
         // Block textures
         private Texture2D groundBlockTexture;
@@ -167,31 +160,13 @@ namespace MarioGame
             enemies[3] = new Koopa(enemyTextures, _spriteBatch, 500, 500);
             enemies[2] = new Piranha(enemyTextures, _spriteBatch, 500, 500);
             currEnemy = enemies[3];
-
-            //Player initialize
-            //move toward right
-            MRplayer = new MotionPlayer(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
-            //standing toward right
-            Staplayer = new Static(marioTexture, PlayerPosition);
-            //standing toward left
-            StaLplayer = new StaticL(marioTexture, PlayerPosition);
-            //moving toward left
-            MLplayer = new MotionPlayerLeft(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
-            //juming toward right
-            Jumpplayer = new Jump(marioTexture, PlayerPosition, PlayerSpeed, _graphics,this);
-            //juming toward left
-            JumpLplayer = new JumpL(marioTexture, PlayerPosition, PlayerSpeed, _graphics,this);
-            //damaged
-            Damagedplayer = new Damaged(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
+            //For intialize all player
+            player_sprite = new PlayerSprite(marioTexture, PlayerPosition, PlayerSpeed, _graphics, this);
+            player_sprite.intialize_player();
+            
             //weapon intialize
             ballTextureRight = Content.Load<Texture2D>("fireballRight");  //load the ball texture to the left
             ballTextureLeft = Content.Load<Texture2D>("fireballLeft");//load the ball texture to the left
-        }
-
-        // Helper method to check if a key was just pressed (single press detection)
-        private bool IsKeyPressed(Keys key, KeyboardState currentKeyboardState)
-        {
-            return currentKeyboardState.IsKeyDown(key) && previousKeyboardState.IsKeyUp(key);
         }
 
         protected override void Update(GameTime gameTime)
@@ -212,51 +187,48 @@ namespace MarioGame
             KeyboardState currentKeyboardState = Keyboard.GetState();
 
             // Handle block switching using 't' and 'y'
-            if (IsKeyPressed(Keys.T, currentKeyboardState))
+            if (keyControl.IsKeyPressed(Keys.T, currentKeyboardState))
             {
                 // Switch to the previous block
                 currentBlockIndex = (currentBlockIndex - 1 + blocks.Count) % blocks.Count;
             }
-            else if (IsKeyPressed(Keys.Y, currentKeyboardState))
+            else if (keyControl.IsKeyPressed(Keys.Y, currentKeyboardState))
             {
                 // Switch to the next block
                 currentBlockIndex = (currentBlockIndex + 1) % blocks.Count;
             }
 
-            // Update the previous keyboard state
-            previousKeyboardState = currentKeyboardState;
-
             // update based on current sprite type
             //below for checking current state of mario
             if (current == SpriteType.Motion)
             {
-                MRplayer.Position = UPlayerPosition; //U means upated
-                MRplayer.Update(gameTime);
-                UPlayerPosition = MRplayer.Position;
+                player_sprite.MRplayer.Position = UPlayerPosition; //U means upated
+                player_sprite.MRplayer.Update(gameTime);
+                UPlayerPosition = player_sprite.MRplayer.Position;
             }
             else if (current == SpriteType.MotionL)
             {
-                MLplayer.Position = UPlayerPosition;
-                MLplayer.Update(gameTime);
-                UPlayerPosition = MLplayer.Position;
+                player_sprite.MLplayer.Position = UPlayerPosition;
+                player_sprite.MLplayer.Update(gameTime);
+                UPlayerPosition = player_sprite.MLplayer.Position;
             }
             else if (current == SpriteType.Jump)
             {
-                Jumpplayer.Position = UPlayerPosition;
-                Jumpplayer.Update(gameTime);
-                UPlayerPosition = Jumpplayer.Position;
+                player_sprite.Jumpplayer.Position = UPlayerPosition;
+                player_sprite.Jumpplayer.Update(gameTime);
+                UPlayerPosition = player_sprite.Jumpplayer.Position;
             }
             else if (current == SpriteType.JumpL)
             {
-                JumpLplayer.Position = UPlayerPosition;
-                JumpLplayer.Update(gameTime);
-                UPlayerPosition = JumpLplayer.Position;
+                player_sprite.JumpLplayer.Position = UPlayerPosition;
+                player_sprite.JumpLplayer.Update(gameTime);
+                UPlayerPosition = player_sprite.JumpLplayer.Position;
             }
             else if (current == SpriteType.Damaged)
             {
-                Damagedplayer.Position = UPlayerPosition;
-                Damagedplayer.Update(gameTime);
-                UPlayerPosition = Damagedplayer.Position;
+                player_sprite.Damagedplayer.Position = UPlayerPosition;
+                player_sprite.Damagedplayer.Update(gameTime);
+                UPlayerPosition = player_sprite.Damagedplayer.Position;
 
             }
 
@@ -264,11 +236,11 @@ namespace MarioGame
             {
                 if (current == SpriteType.StaticL)
                 {
-                    StaLplayer.Position = UPlayerPosition;
+                    player_sprite.StaLplayer.Position = UPlayerPosition;
                 }
                 else if (current == SpriteType.Static)
                 {
-                    Staplayer.Position = UPlayerPosition;
+                    player_sprite.Staplayer.Position = UPlayerPosition;
                 }
 
             }
@@ -290,12 +262,6 @@ namespace MarioGame
             foreach (var ball in balls)
             {
                 ball.Update(gameTime, GraphicsDevice.Viewport.Width);
-            }
-
-            
-            if (enemies[3].Alive && gameTime.TotalGameTime.TotalSeconds > 3)
-            {
-                enemies[3].TriggerDeath(gameTime, true);
             }
             
             balls.RemoveAll(b => !b.IsVisible);
@@ -324,31 +290,31 @@ namespace MarioGame
             //check sprint type for draw
             if (current == SpriteType.Static)
             {
-                Staplayer.Draw(_spriteBatch);
+                player_sprite.Staplayer.Draw(_spriteBatch);
             }
             if (current == SpriteType.StaticL)
             {
-                StaLplayer.Draw(_spriteBatch);
+                player_sprite.StaLplayer.Draw(_spriteBatch);
             }
             if (current == SpriteType.Motion)
             {
-                MRplayer.Draw(_spriteBatch);
+                player_sprite.MRplayer.Draw(_spriteBatch);
             }
             if (current == SpriteType.MotionL)
             {
-                MLplayer.Draw(_spriteBatch);
+                player_sprite.MLplayer.Draw(_spriteBatch);
             }
             if (current == SpriteType.Jump)
             {
-                Jumpplayer.Draw(_spriteBatch);
+                player_sprite.Jumpplayer.Draw(_spriteBatch);
             }
             if (current == SpriteType.JumpL)
             {
-                JumpLplayer.Draw(_spriteBatch);
+                player_sprite.JumpLplayer.Draw(_spriteBatch);
             }
             if (current == SpriteType.Damaged)
             {
-                Damagedplayer.Draw(_spriteBatch);
+                player_sprite.Damagedplayer.Draw(_spriteBatch);
             }
             for (int i = 0; i < balls.Count; i++)
             {

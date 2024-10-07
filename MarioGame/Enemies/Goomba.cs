@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace MarioGame
 {
-    //states include dead, movingLeft, movingRight
     internal class Goomba : IEnemy
     {
         private double animInterval = 0.2;
@@ -22,11 +21,10 @@ namespace MarioGame
         private double timeElapsedSinceUpdate = 0;
 
         private bool alive = true;
-        public bool Alive
-        {
-            get { return alive; }
-            set { alive = value; }
-        }
+        public int setPosX { set { posX = value; } }
+        public int setPosY { set { posY = value; } }
+
+        public Rectangle GetDestinationRectangle() { return sprite.GetDestinationRectangle(); }
 
         private bool _movingRight = true;
         public bool MovingRight
@@ -59,6 +57,8 @@ namespace MarioGame
                 {
                     posX--;
                 }
+                //gravity
+                //posY = posY + ;
                 sprite.posX = posX;
                 sprite.posY = posY;
                 if (timeElapsed - timeElapsedSinceUpdate > animInterval)
@@ -68,11 +68,11 @@ namespace MarioGame
                 }
             }
         }
-
         public void TriggerDeath(GameTime gm, bool stomped)
         {
             alive = false;
             sprite.Update(gm);
+            //Add Goomba Death Animation using Timer
         }
 
     }
