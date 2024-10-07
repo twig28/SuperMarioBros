@@ -281,12 +281,6 @@ namespace MarioGame
             {
                 ball.Update(gameTime, GraphicsDevice.Viewport.Width);
             }
-
-            
-            if (enemies[3].Alive && gameTime.TotalGameTime.TotalSeconds > 3)
-            {
-                enemies[3].TriggerDeath(gameTime, true);
-            }
             
             balls.RemoveAll(b => !b.IsVisible);
             //update items
