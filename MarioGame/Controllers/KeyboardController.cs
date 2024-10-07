@@ -95,39 +95,38 @@ public class KeyboardController : IController
         }
         if (currentKeyState.IsKeyDown(Keys.X))
         {
-            Game.Staplayer.Big = true;
-            Game.StaLplayer.Big = true;
-            Game.MRplayer.Big = true;
-            Game.MLplayer.Big = true;
-            Game.JumpLplayer.Big = true;
-            Game.Jumpplayer.Big = true;
+            Game.player_sprite.Staplayer.Big = true;
+            Game.player_sprite.StaLplayer.Big = true;
+            Game.player_sprite.MRplayer.Big = true;
+            Game.player_sprite.MLplayer.Big = true;
+            Game.player_sprite.JumpLplayer.Big = true;
+            Game.player_sprite.Jumpplayer.Big = true;
         }
 
         if (currentKeyState.IsKeyDown(Keys.M))
         {
-            Game.Staplayer.Fire = true;
-            Game.StaLplayer.Fire = true;
-            Game.MRplayer.Fire = true;
-            Game.MLplayer.Fire = true;
-            Game.Jumpplayer.Fire = true;
-            Game.JumpLplayer.Fire = true;
+            Game.player_sprite.Staplayer.Fire = true;
+            Game.player_sprite.StaLplayer.Fire = true;
+            Game.player_sprite.MRplayer.Fire = true;
+            Game.player_sprite.MLplayer.Fire = true;
+            Game.player_sprite.Jumpplayer.Fire = true;
             Game.Fire = true;
         }
 
         if (currentKeyState.IsKeyDown(Keys.J))
         {
-            Game.Staplayer.Fire = false;
-            Game.StaLplayer.Fire = false;
-            Game.MRplayer.Fire = false;
-            Game.MLplayer.Fire = false;
-            Game.Jumpplayer.Fire = false;
-            Game.JumpLplayer.Fire = false;
-            Game.Staplayer.Big = false;
-            Game.StaLplayer.Big = false;
-            Game.MRplayer.Big = false;
-            Game.MLplayer.Big = false;
-            Game.Jumpplayer.Big = false;
-            Game.JumpLplayer.Big = false;
+            Game.player_sprite.Staplayer.Fire = false;
+            Game.player_sprite.StaLplayer.Fire = false;
+            Game.player_sprite.MRplayer.Fire = false;
+            Game.player_sprite.MLplayer.Fire = false;
+            Game.player_sprite.Jumpplayer.Fire = false;
+            Game.player_sprite.JumpLplayer.Fire = false;
+            Game.player_sprite.Staplayer.Big = false;
+            Game.player_sprite.StaLplayer.Big = false;
+            Game.player_sprite.MRplayer.Big = false;
+            Game.player_sprite.MLplayer.Big = false;
+            Game.player_sprite.Jumpplayer.Big = false;
+            Game.player_sprite.JumpLplayer.Big = false;
             Game.Fire = false;
         }
 
