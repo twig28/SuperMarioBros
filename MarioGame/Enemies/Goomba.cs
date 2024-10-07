@@ -21,11 +21,6 @@ namespace MarioGame
         private double timeElapsedSinceUpdate = 0;
 
         private bool alive = true;
-        public bool Alive
-        {
-            get { return alive; }
-            set { alive = value; }
-        }
         public int setPosX { set { posX = value; } }
         public int setPosY { set { posY = value; } }
 
@@ -77,6 +72,7 @@ namespace MarioGame
         {
             alive = false;
             sprite.Update(gm);
+            //Add Goomba Death Animation using Timer
         }
 
     }

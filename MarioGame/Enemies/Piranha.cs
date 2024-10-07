@@ -22,11 +22,6 @@ namespace MarioGame
         private double timeElapsedSinceUpdate = 0;
         private double timeElapsedSinceUpdateAnim = 0;
         private bool alive = true;
-        public bool Alive
-        {
-            get { return alive; }
-            set { alive = value; }
-        }
 
         private bool _movingRight = false;
         public bool MovingRight
