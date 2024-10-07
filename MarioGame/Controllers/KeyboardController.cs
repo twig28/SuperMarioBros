@@ -59,14 +59,6 @@ public class KeyboardController : IController
         {
             Item.nextItem();
         }
-        if (IsKeyPressed(Keys.O, currentKeyState))
-        {
-            Game.changeEnemy(false);
-        }
-        if (IsKeyPressed(Keys.P, currentKeyState))
-        {
-            Game.changeEnemy(true);
-        }
 
         if (currentKeyState.IsKeyDown(Keys.Right) || currentKeyState.IsKeyDown(Keys.D))
         {

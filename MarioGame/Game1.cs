@@ -46,8 +46,7 @@ namespace MarioGame
         public bool keyboardPermitN = false;
         public bool Fire = false;
         //Temporary for sprint 2
-        IEnemy[] enemies = new IEnemy[4];
-        IEnemy currEnemy;
+        private List<IEnemy> enemies;
 
         // List to store and manage blocks
         private List<IBlock> blocks;
@@ -56,34 +55,6 @@ namespace MarioGame
         // Block textures
         private Texture2D groundBlockTexture;
         private Texture2D blockTexture;
-
-        public void changeEnemy(bool forward)
-        {
-            for (int i = 0; i <= 3; i++)
-            {
-                if (currEnemy.Equals(enemies[i]))
-                {
-                    //loop forward
-                    if (forward && i == 3)
-                    {
-                        currEnemy = enemies[0];
-                    }
-                    else if (forward)
-                    {
-                        currEnemy = enemies[i + 1];
-                    }
-                    else if (i == 0)
-                    {
-                        currEnemy = enemies[3];
-                    }
-                    else
-                    {
-                        currEnemy = enemies[i - 1];
-                    }
-                    break;
-                }
-            }
-        }
 
         public void ResetGame()
         {
@@ -141,12 +112,12 @@ namespace MarioGame
             };
 
             //enemy intialize
-            enemies[0] = new Goomba(enemyTextures, _spriteBatch, 500, 500);
-            enemies[1] = new Koopa(enemyTextures, _spriteBatch, 500, 500);
-            //This Koopa is different in that it gets killed in update after 3 secs
-            enemies[3] = new Koopa(enemyTextures, _spriteBatch, 500, 500);
-            enemies[2] = new Piranha(enemyTextures, _spriteBatch, 500, 500);
-            currEnemy = enemies[3];
+            enemies = new List<IEnemy>
+            {
+                new Goomba(enemyTextures, _spriteBatch, 500, 500),
+                new Koopa(enemyTextures, _spriteBatch, 500, 500),
+                new Piranha(enemyTextures, _spriteBatch, 500, 500),
+            };
             //For intialize all player
             player_sprite = new PlayerSprite(marioTexture, PlayerPosition, PlayerSpeed, _graphics, this);
             player_sprite.intialize_player();
@@ -241,11 +212,8 @@ namespace MarioGame
 
             foreach (IEnemy enemy in enemies)
             {
-                if (currEnemy == enemy)
-                {
                     enemy.Update(gameTime);
                     enemy.Draw();
-                }
             }
 
             base.Draw(gameTime);

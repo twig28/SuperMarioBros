@@ -10,23 +10,52 @@ namespace MarioGame
 {
     internal class CollisionLogic
     {
-
-        //0 = no collision, 1 = above, 2 = below, 3 = from the side, will use enum
-        int collisionDirection(Rectangle r1, Rectangle r2)
+        enum CollisionDirection
         {
-            return 0;
+            None = 0,
+            Above = 1,
+            Below = 2,
+            Side = 3
         }
+        CollisionDirection getCollisionDirection(Rectangle r1, Rectangle r2) //Comparing r1 to r2, i.e. r1 is below r2
+        {
+            if (!r1.IntersectsWith(r2))
+            {
+                return CollisionDirection.None;
+            }
 
-        //function that has a for each between enemies and blocks/obstacles
+            int overlapX = Math.Min(r1.Right, r2.Right) - Math.Max(r1.Left, r2.Left);
+            int overlapY = Math.Min(r1.Bottom, r2.Bottom) - Math.Max(r1.Top, r2.Top);
+
+            if (overlapY < overlapX)
+            {
+                if (r1.Top < r2.Top)
+                {
+                    return CollisionDirection.Below;
+                }
+                else
+                {
+                    return CollisionDirection.Above;
+                }
+            }
+            else
+            {
+                return CollisionDirection.Side;
+            }
+        }
         void checkEnemyBlockCollisions(List<IEnemy> enemies, List<IBlock> blocks)
         {
             foreach (IEnemy enemy in enemies)
             {
-                foreach (IBlock block in blocks)
+                //Piranhas have no collision with blocks
+                if (!(enemy is Piranha))
                 {
-                    //if (collisionDirection(enemy.GetDestinationRectangle(), block.getDestinationRectangle()))
+                    foreach (IBlock block in blocks)
                     {
-                        enemy.setPosY = (int)block.Position.Y;
+                        //if (getCollisionDirection(enemy.GetDestinationRectangle(), block.getDestinationRectangle()) == CollisionDirection.Above)
+                        {
+                            enemy.setPosY = (int)block.Position.Y;
+                        }
                     }
                 }
             }
