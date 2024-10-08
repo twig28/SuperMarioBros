@@ -1,5 +1,5 @@
 # Mario-Game
-Currently on Sprint2
+Currently on Sprint3
 
 Jira: https://csegroup5.atlassian.net
 This:
