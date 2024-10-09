@@ -58,6 +58,8 @@ namespace MarioGame
                 {
                     posX--;
                 }
+                //gravity 
+                posY = posY + 5;
                 sprite.posX = posX;
                 sprite.posY = posY;
                 if (changeSpriteDirection)

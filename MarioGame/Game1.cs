@@ -160,7 +160,7 @@ namespace MarioGame
             //PLAYER UPDATE
             player_sprite.Update(gameTime);
             
-            //check whether mario attack
+            //check whether mario attack (this needs to be in it's own class)
             if (keyboardPermitZ)
             {
                 balls.Add(new Ball(ballTextureLeft, player_sprite.UPlayerPosition, ballSpeed, true));
@@ -189,26 +189,23 @@ namespace MarioGame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-
             _spriteBatch.Begin();
 
-            //foreach (var block in blocks)
-            //{
-            //    block.Draw(_spriteBatch);
-            //}
-
-            // Draw only the current block
-            blocks[currentBlockIndex].Draw(_spriteBatch);
+            foreach (var block in blocks)
+            {
+                block.Draw(_spriteBatch);
+            }
 
             Vector2 itemLocation = new Vector2(200, 200);
             items.Draw(_spriteBatch, itemLocation);
-            //Player draw
+
             player_sprite.Draw(_spriteBatch);
-            //weapon drae
-            for (int i = 0; i < balls.Count; i++)
+
+            foreach (Ball ball in balls)
             {
-                balls[i].Draw(_spriteBatch);
+                ball.Draw(_spriteBatch);
             }
+
             _spriteBatch.End();
 
             foreach (IEnemy enemy in enemies)

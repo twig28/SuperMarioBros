@@ -32,7 +32,7 @@ namespace MarioGame.Blocks
 
 		public virtual void Draw(SpriteBatch spriteBatch)
 		{
-			spriteBatch.Draw(Texture, Position, SourceRectangle, Color.White);
+			spriteBatch.Draw(Texture, new Rectangle((int)Position.X, (int)Position.Y, 60, 60), SourceRectangle, Color.White);
 		}
 	}
 }
