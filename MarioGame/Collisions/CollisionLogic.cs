@@ -55,6 +55,7 @@ namespace MarioGame
                         if (GetCollisionDirection(block.GetDestinationRectangle(), enemy.GetDestinationRectangle()) == CollisionDirection.Above)
                         {
                             enemy.setPosY = (int)block.Position.Y - enemy.GetDestinationRectangle().Height;
+                            break;
                         }
                         else if (GetCollisionDirection(enemy.GetDestinationRectangle(), block.GetDestinationRectangle()) == CollisionDirection.Side)
                         {
