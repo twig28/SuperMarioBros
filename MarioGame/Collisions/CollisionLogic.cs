@@ -1,4 +1,5 @@
-﻿using MarioGame.Interfaces;
+﻿using MarioGame.Blocks;
+using MarioGame.Interfaces;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -69,7 +70,18 @@ namespace MarioGame
             //function that has a for each between mario and blocks/obstacles
             void CheckMarioBlockCollision(PlayerSprite mario, List<IBlock> blocks) { }
             //function that has a for each between enemies and other enemies
-            void CheckEnemyEnemyCollision(List<IEnemy> enemies, GameTime gt) { }
+            void CheckEnemyEnemyCollision(List<IEnemy> enemies, GameTime gt) { 
+                foreach (IEnemy enemy in enemies)
+                {
+                    foreach (IEnemy enemy2 in enemies)
+                    {
+                        if(GetCollisionDirection(enemy.GetDestinationRectangle(), enemy2.GetDestinationRectangle()) != CollisionDirection.None)
+                        {
+                            enemy.MovingRight = !enemy.MovingRight;
+                        }
+                    }
+            
+            }
 
             void CheckMarioEnemyCollision(PlayerSprite mario, List<IEnemy> enemies, GameTime gt) { }
 
@@ -77,9 +89,11 @@ namespace MarioGame
 
             void CheckFireballEnemyCollision(List<Ball> fireballs, List<IEnemy> enemies, GameTime gt)
             {
-                //if(){
-                //enemy.TriggerKill(gt, false)
-                //}
+                foreach (Ball fireball in fireballs){
+                    //if(GetCollisionDirection(fireball.GetDestinationRectangle(), enemy.GetDestinationRectangle())){
+                        //enemy.TriggerKill(gt, false)
+                    //}
+                }
             }
         }
     }

@@ -35,8 +35,6 @@ namespace MarioGame
         //FOR WEAPON
         private Texture2D ballTextureRight;  // fireball to the right
         private Texture2D ballTextureLeft;  // fireball to the left
-        private Texture2D fireBoltTextureRight;  // firebolt to the right
-        private Texture2D fireBoltTextureLeft;  // firebolt to the left
         private Texture2D multipleBlockTextures;  // firebolt to the left
         private List<IBall> balls = new List<IBall>();  // list of ball
         private float ballSpeed = 300f;  // ball speed
