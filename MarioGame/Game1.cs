@@ -186,6 +186,7 @@ namespace MarioGame
             }
             
             balls.RemoveAll(b => !b.IsVisible);
+            CollisionLogic.CheckFireballBlockCollision(balls, blocks);
             //update items
             items.Update(gameTime);
             base.Update(gameTime);

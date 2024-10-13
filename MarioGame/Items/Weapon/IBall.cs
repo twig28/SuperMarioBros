@@ -8,4 +8,6 @@ public interface IBall
     void Update(object gameTime, int width);
 
     bool IsVisible { get; set; }
+
+    Rectangle GetDestinationRectangle();
 }
