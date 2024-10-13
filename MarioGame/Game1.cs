@@ -130,10 +130,10 @@ namespace MarioGame
             keyControl.HandleInputs();
             mouseControl.HandleInputs();
 
-            foreach (var block in blocks)
-            {
-                block.Update(gameTime);
-            }
+            //foreach (var block in blocks)
+            //{
+            //    block.Update(gameTime);
+            //}
 
             CollisionLogic.CheckEnemyBlockCollisions(enemies, blocks);
 
@@ -157,7 +157,15 @@ namespace MarioGame
 
             //PLAYER UPDATE
             player_sprite.Update(gameTime);
-            
+
+            // Check for collisions between Mario and blocks
+            CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
+
+            foreach (var block in blocks)
+            {
+                block.Update(gameTime);
+            }
+
             //check whether mario attack (this needs to be in it's own class)
             if (keyboardPermitZ)
             {
@@ -183,26 +191,51 @@ namespace MarioGame
             base.Update(gameTime);
         }
 
+        private void DrawCollisionRectangles(SpriteBatch spriteBatch)
+        {
+            Texture2D rectTexture = new Texture2D(GraphicsDevice, 1, 1);
+            rectTexture.SetData(new[] { Color.White });
+
+            // Draw Mario's collision rectangle
+            Rectangle marioRect = player_sprite.GetDestinationRectangle();
+            spriteBatch.Draw(rectTexture, marioRect, Color.Red * 0.5f);
+
+            // Draw blocks' collision rectangles
+            foreach (IBlock block in blocks)
+            {
+                Rectangle blockRect = block.GetDestinationRectangle();
+                spriteBatch.Draw(rectTexture, blockRect, Color.Blue * 0.5f);
+            }
+        }
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
 
-            foreach (var block in blocks)
-            {
-                block.Draw(_spriteBatch);
-            }
+            //foreach (var block in blocks)
+            //{
+            //    block.Draw(_spriteBatch);
+            //}
 
             Vector2 itemLocation = new Vector2(200, 200);
             items.Draw(_spriteBatch, itemLocation);
 
             player_sprite.Draw(_spriteBatch);
 
+            foreach (var block in blocks)
+            {
+                block.Draw(_spriteBatch);
+            }
+
             foreach (Ball ball in balls)
             {
                 ball.Draw(_spriteBatch);
             }
+
+            // Draw collision rectangles for debugging
+            DrawCollisionRectangles(_spriteBatch);
 
             _spriteBatch.End();
 
