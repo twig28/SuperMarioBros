@@ -230,7 +230,7 @@ namespace MarioGame
                 block.Draw(_spriteBatch);
             }
 
-            foreach (Ball ball in balls)
+            foreach (IBall ball in balls)
             {
                 ball.Draw(_spriteBatch);
             }
