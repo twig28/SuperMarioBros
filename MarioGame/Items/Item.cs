@@ -14,7 +14,7 @@ public class Item
     public Item(Texture2D texture)
     {
         items.Add(new Coin(texture));
-        items.Add(new Flower1(texture));
+        items.Add(new FireFlower(texture));
         items.Add(new Flower2(texture));
         items.Add(new Spring(texture));
         items.Add(new Star(texture));
