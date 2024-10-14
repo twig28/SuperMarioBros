@@ -1,4 +1,3 @@
-
 using System.Threading;
 using System.Threading.Tasks;
 using MarioGame.Items;
@@ -11,6 +10,11 @@ public class KeyboardController : IController
     public Game1 Game;
     private KeyboardState previousKeyState;
     private KeyboardState currentKeyState;
+
+    // Add control variables for firing fireballs
+    public bool keyboardPermitZ = false;
+    public bool keyboardPermitN = false;
+
     public KeyboardState GetState()
     {
         previousKeyState = currentKeyState;
@@ -31,10 +35,9 @@ public class KeyboardController : IController
     public void HandleInputs()
     {
         previousKeyState = currentKeyState;
-
         currentKeyState = Keyboard.GetState();
 
-        //Move this to mario class
+        // Move this to mario class
         if (Game.player_sprite.current == PlayerSprite.SpriteType.MotionL)
         {
             Game.player_sprite.current = PlayerSprite.SpriteType.StaticL;
@@ -54,7 +57,7 @@ public class KeyboardController : IController
         if (currentKeyState.IsKeyDown(Keys.Right) || currentKeyState.IsKeyDown(Keys.D))
         {
             Game.player_sprite.current = PlayerSprite.SpriteType.Motion;
-            Game.player_sprite.left = false ;
+            Game.player_sprite.left = false;
         }
 
         if (currentKeyState.IsKeyDown(Keys.Left) || currentKeyState.IsKeyDown(Keys.A))
@@ -82,21 +85,18 @@ public class KeyboardController : IController
         }
         if (currentKeyState.IsKeyDown(Keys.X))
         {
-           
             Game.player_sprite.Big = true;
         }
 
         if (currentKeyState.IsKeyDown(Keys.M))
         {
-            
             Game.player_sprite.Fire = true;
             Game.Fire = true;
         }
 
         if (currentKeyState.IsKeyDown(Keys.J))
         {
-           
-            Game.player_sprite.Fire=false;
+            Game.player_sprite.Fire = false;
             Game.player_sprite.Big = false;
             Game.Fire = false;
         }
@@ -108,20 +108,17 @@ public class KeyboardController : IController
             Game.player_sprite.UPlayerPosition = Game.player_sprite.PlayerPosition;
         }
 
-        // Controll the fireball
-        //to the left
-        if (IsKeyPressed(Keys.Z, currentKeyState) && Game.Fire == true) 
+        // Control the fireball
+        // To the left
+        if (IsKeyPressed(Keys.Z, currentKeyState) && Game.Fire == true)
         {
-            Game.keyboardPermitZ = true;
-            Game.zPressed = true;
-        }
-        // to the right
-        if (IsKeyPressed(Keys.N, currentKeyState) && Game.Fire == true) 
-        {
-            Game.keyboardPermitN = true;
-            Game.nPressed = true;
+            keyboardPermitZ = true;
         }
 
+        // To the right
+        if (IsKeyPressed(Keys.N, currentKeyState) && Game.Fire == true)
+        {
+            keyboardPermitN = true;
+        }
     }
-
 }

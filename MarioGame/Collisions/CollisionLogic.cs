@@ -151,7 +151,7 @@ namespace MarioGame
 
         public static void CheckMarioItemCollision(PlayerSprite mario, List<IItem> items, GameTime gt) { }
 
-        public static void CheckFireballEnemyCollision(List<IBall> fireballs, List<IEnemy> enemies, GameTime gt)
+        public static void CheckFireballEnemyCollision(List<Ball> fireballs, List<IEnemy> enemies, GameTime gt)
         {
             foreach (IBall fireball in fireballs)
             {
