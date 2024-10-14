@@ -64,9 +64,9 @@ namespace MarioGame
                 sprite.posY = posY;
                 if (changeSpriteDirection)
                 {
-                    changeSpriteDirection = false;
                     //signals change direction to sprite class
                     sprite.ChangeDirection = true;
+                    changeSpriteDirection = false;
                 }
                 if (timeElapsed - timeElapsedSinceUpdate > animInterval)
                 {
@@ -87,10 +87,6 @@ namespace MarioGame
                 }
                 sprite.posX = posX;
                 sprite.posY = posY;
-                if (changeSpriteDirection)
-                {
-                    changeSpriteDirection = false;
-                }
                 sprite.Update(gm);
             }
         }
