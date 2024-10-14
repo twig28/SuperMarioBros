@@ -160,7 +160,7 @@ namespace MarioGame
                     if (GetCollisionDirection(fireball.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None)
                     {
                         enemy.TriggerDeath(gt, false);
-                        enemies.Remove(enemy);
+                        //enemies.Remove(enemy);
                     }
                 }
             }
