@@ -8,7 +8,6 @@ namespace MarioGame.Items;
 public class ItemContainer
 {
     private static readonly List<IItem> items = new List<IItem>();
-    private static int index = 0;
 
     public ItemContainer(Texture2D texture)
     {
@@ -26,7 +25,7 @@ public class ItemContainer
 
     public static void Initialize()
     {
-        index = 0;
+        items.Clear();
     }
     public void Update(GameTime gameTime)
     {
