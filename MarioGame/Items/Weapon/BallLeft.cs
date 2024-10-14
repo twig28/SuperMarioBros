@@ -22,6 +22,7 @@ namespace MarioGame
         {
             Texture = texture;
             Position = position;
+            Position.Y = Position.Y - 40;
             Speed = speed;
             this.direction = direction;
             IsVisible = true; // Initialize to true so the ball is visible
@@ -77,7 +78,6 @@ namespace MarioGame
 
                 // Ensure the correct portion of the sprite sheet is drawn
                 Rectangle sourceRectangle = new Rectangle(column * frameWidth, row * frameHeight, frameWidth, frameHeight);
-
                 // Draw the current frame using the correct sourceRectangle
                 spriteBatch.Draw(Texture, Position, sourceRectangle, Color.White);
             }

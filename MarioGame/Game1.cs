@@ -77,8 +77,7 @@ namespace MarioGame
             Item.Initialize();
             keyControl = new KeyboardController(this);
             mouseControl = new MouseController(this);
-            PlayerPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2,
-                     _graphics.PreferredBackBufferHeight - 95);
+           
             //everytime update player's position
             PlayerSpeed = 100f;
             base.Initialize();
@@ -105,7 +104,8 @@ namespace MarioGame
                 new GroundBlock(new Vector2(900, GraphicsDevice.Viewport.Height - 120), groundBlockTexture, new Rectangle(0, 0, 50, 50)),
                 new MysteryBlock(new Vector2(560, 200), multipleBlockTextures, new Rectangle(80, 112, 15, 15))
             };
-
+            PlayerPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2,
+                   GraphicsDevice.Viewport.Height - 95);
             //create a row of blocks on the bottom, besides leftmost two so mario can fall
             for (int i = 0; i <= GraphicsDevice.Viewport.Width - 120; i += 60)
             {
@@ -152,7 +152,7 @@ namespace MarioGame
             player_sprite.Update(gameTime);
 
             // Check for collisions between Mario and blocks
-            CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
+           // CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
             CollisionLogic.CheckFireballEnemyCollision(balls, enemies, gameTime);
 
             //item collision

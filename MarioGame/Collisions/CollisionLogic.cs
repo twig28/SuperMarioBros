@@ -53,7 +53,7 @@ namespace MarioGame
                     return CollisionDirection.Below;
                 }
 */
-                if (_marioRectangle.Bottom < _blockRectangle.Top)
+                if (_marioRectangle.Bottom <=_blockRectangle.Top)
 
                 {
                     return CollisionDirection.Above;
@@ -131,11 +131,11 @@ namespace MarioGame
                         // Handle side collisions if necessary
                         if (mario.left)
                         {
-                            mario.UPlayerPosition.X = (float)(block.GetDestinationRectangle().Right + mario.halfwidth);
+                            mario.UPlayerPosition.X = (float)(block.GetDestinationRectangle().Right + mario.GetDestinationRectangle().Width /2);
                         }
                         else
                         {
-                            mario.UPlayerPosition.X = (float)(block.GetDestinationRectangle().Left - mario.halfwidth);
+                            mario.UPlayerPosition.X = (float)(block.GetDestinationRectangle().Left - mario.GetDestinationRectangle().Width /2);
                         }
                     }
                 

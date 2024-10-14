@@ -22,6 +22,7 @@ namespace MarioGame
         {
             Texture = texture;
             Position = position;
+            Position.Y = Position.Y - 40;
             Speed = speed;
             this.direction = direction;
             IsVisible = true; // initialize to be true true

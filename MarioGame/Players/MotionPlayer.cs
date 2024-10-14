@@ -95,16 +95,20 @@ public class MotionPlayer : IPlayer
                 sourceRectangle.Add(new Rectangle(287, 122, 18, 32));
                 width = 18;
                 height = 32;
+                Position.Y = Position.Y - 40;
+
 
             }
             else if (!Game.player_sprite.Fire && Game.player_sprite.Big)
             {
                 sourceRectangle.Clear();
-                sourceRectangle.Add(new Rectangle(238, 52, 14, 16));
+                sourceRectangle.Add(new Rectangle(238, 52, 18, 32));
                 sourceRectangle.Add(new Rectangle(270, 52, 18, 32));
                 sourceRectangle.Add(new Rectangle(299, 52, 18, 32));
                 width = 18;
                 height = 32;
+                Position.Y = Position.Y - 40;
+
             }
             else
             {

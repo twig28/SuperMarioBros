@@ -101,6 +101,7 @@ namespace MarioGame
                 sourceRectangle.Add(new Rectangle(151, 122, 18, 32));
                 sourceRectangle.Add(new Rectangle(128, 122, 18, 32));
                 sourceRectangle.Add(new Rectangle(102, 122, 18, 32));
+                Position.Y = Position.Y - 40;
 
 
             }
@@ -112,6 +113,7 @@ namespace MarioGame
                 sourceRectangle.Add(new Rectangle(150, 52, 18, 32));
                 sourceRectangle.Add(new Rectangle(120, 52, 18, 32));
                 sourceRectangle.Add(new Rectangle(89, 52, 18, 32));
+                Position.Y = Position.Y - 40;
             }
             else
             {

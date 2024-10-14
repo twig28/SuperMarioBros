@@ -32,17 +32,17 @@ namespace MarioGame
         float PlayerSpeed;
         public GraphicsDeviceManager _graphics;
         public Game1 Game;
-        public MotionPlayer MRplayer;
-        public MotionPlayerLeft MLplayer;
-        public Static Staplayer;
-        public StaticL StaLplayer;
-        public Jump Jumpplayer;
-        public Damaged Damagedplayer;
-        public JumpL JumpLplayer;
+        private MotionPlayer MRplayer;
+        private MotionPlayerLeft MLplayer;
+        private Static Staplayer;
+        private StaticL StaLplayer;
+        private Jump Jumpplayer;
+        private Damaged Damagedplayer;
+        private JumpL JumpLplayer;
         public bool move = true;
         public SpriteType current = SpriteType.Static;
-        public int halfwidth = 35;
-        public int halfheight = 35;
+        public int halfwidth;
+        public int halfheight;
 
         // Added properties
         public float setPosX
@@ -88,6 +88,7 @@ namespace MarioGame
         {
             // update based on current sprite type
             //below for checking current state of mario
+            /*
             if(onblock == false && UPlayerPosition.Y < _graphics.PreferredBackBufferHeight - 95 && current!= SpriteType.Jump && current!= SpriteType.JumpL)
             {
                 if (left)
@@ -96,6 +97,7 @@ namespace MarioGame
                 }
                 current = SpriteType.Jump;
             }
+            */
             if (current == SpriteType.Motion)
             {
                 MRplayer.Position = UPlayerPosition; //U means upated
@@ -183,8 +185,30 @@ namespace MarioGame
         // Added GetDestinationRectangle method
         public Rectangle GetDestinationRectangle()
         {
+            Rectangle rectangle = new Rectangle();
+            if (Game.player_sprite.Fire)
+            {
+                halfwidth = 45;
+                halfheight = 80;
+                rectangle = new Rectangle((int)(UPlayerPosition.X - halfwidth), (int)(UPlayerPosition.Y - halfheight - 45), 2 * halfwidth, 2 * halfheight);
 
-            return new Rectangle((int)(UPlayerPosition.X - halfwidth), (int)(UPlayerPosition.Y - halfheight), 2 * halfwidth, 2 * halfheight);
+
+            }
+            else if (!Game.player_sprite.Fire && Game.player_sprite.Big)
+            {
+                halfwidth = 40;
+                halfheight = 80;
+                rectangle = new Rectangle((int)(UPlayerPosition.X - halfwidth), (int)(UPlayerPosition.Y - halfheight - 45), 2 * halfwidth, 2 * halfheight);
+
+            }
+            else
+            {
+                halfwidth = 35;
+                halfheight = 35;
+                rectangle = new Rectangle((int)(UPlayerPosition.X - halfwidth), (int)(UPlayerPosition.Y - halfheight), 2 * halfwidth, 2 * halfheight);
+
+            }
+            return rectangle;
         }
 
     }

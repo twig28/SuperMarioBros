@@ -35,12 +35,14 @@ namespace MarioGame
             {
                 width = 18;
                 height = 32;
+                Position.Y = Position.Y - 40;
                 sourceRectangle = new Rectangle(209, 122, 18, 32);
             }
             else if(!Game.player_sprite.Fire && Game.player_sprite.Big) 
             {
                 width = 18;
                 height = 32;
+                Position.Y = Position.Y - 40;
                 sourceRectangle = new Rectangle(208, 52, 18, 32);
             }
            
