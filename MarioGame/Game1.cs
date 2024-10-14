@@ -96,11 +96,10 @@ namespace MarioGame
             
             items = new ItemContainer(itemTextures);
 
-
             // Initialize blocks
             blocks = new List<IBlock>
             {
-                new Block(new Vector2(500, 200), blockTexture, new Rectangle(0, 0, 50, 50)),
+                new Block(new Vector2(500, 200), blockTexture, new Rectangle(4, 4, 40, 40)),
                 new GroundBlock(new Vector2(900, GraphicsDevice.Viewport.Height - 120), groundBlockTexture, new Rectangle(0, 0, 50, 50)),
                 new MysteryBlock(new Vector2(560, 200), multipleBlockTextures, new Rectangle(80, 112, 15, 15))
             };
@@ -119,6 +118,7 @@ namespace MarioGame
                 new Koopa(enemyTextures, _spriteBatch, 600, 500),
                 new Piranha(enemyTextures, _spriteBatch, 1100, 500),
             };
+
             //For intialize all player
             player_sprite = new PlayerSprite(marioTexture, PlayerPosition, PlayerSpeed, _graphics, this);
             player_sprite.intialize_player();
