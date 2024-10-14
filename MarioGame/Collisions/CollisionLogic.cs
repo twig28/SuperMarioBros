@@ -132,11 +132,22 @@ namespace MarioGame
                         enemy.MovingRight = !enemy.MovingRight;
                     }
                 }
-
             }
         }
 
-        public static void CheckMarioEnemyCollision(PlayerSprite mario, List<IEnemy> enemies, GameTime gt) { }
+        public static void CheckMarioEnemyCollision(PlayerSprite mario, List<IEnemy> enemies, GameTime gt) {
+                foreach (IEnemy enemy in enemies)
+                {
+                if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) == CollisionDirection.Below)
+                {
+                    enemy.TriggerDeath(gt, false);
+                    //enemies.Remove(enemy);
+                } else if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None)
+                {
+                    //Kill Mario
+                }
+                }
+            }
 
         public static void CheckMarioItemCollision(PlayerSprite mario, List<IItem> items, GameTime gt) { }
 
@@ -149,6 +160,7 @@ namespace MarioGame
                     if (GetCollisionDirection(fireball.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None)
                     {
                         enemy.TriggerDeath(gt, false);
+                        enemies.Remove(enemy);
                     }
                 }
             }

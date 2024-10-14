@@ -137,6 +137,7 @@ namespace MarioGame
             CollisionLogic.CheckEnemyBlockCollisions(enemies, blocks);
             CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
             CollisionLogic.CheckEnemyEnemyCollision(enemies, gameTime);
+            CollisionLogic.CheckMarioEnemyCollision(player_sprite, enemies, gameTime);
 
             // Remove destroyed blocks from the list
             blocks.RemoveAll(block => block is Block b && b.IsDestroyed);
