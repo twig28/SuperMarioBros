@@ -51,7 +51,7 @@ namespace MarioGame.Blocks
             }
         }
 
-        public Rectangle GetDestinationRectangle() { return new Rectangle((int)Position.X, (int)Position.Y, dimension, dimension); }
+        public Rectangle GetDestinationRectangle() { return DestinationRectangle; }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
