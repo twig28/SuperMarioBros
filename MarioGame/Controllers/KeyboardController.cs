@@ -108,18 +108,20 @@ public class KeyboardController : IController
             Game.player_sprite.UPlayerPosition = Game.player_sprite.PlayerPosition;
         }
 
-        //keyboard control for fireballs 
-        if (IsKeyPressed(Keys.Z, currentKeyState) && Game.Fire == true)
+        // Controll the fireball
+        //to the left
+        if (IsKeyPressed(Keys.Z, currentKeyState) && Game.Fire == true) 
         {
             Game.keyboardPermitZ = true;
             Game.zPressed = true;
         }
-
-        if (IsKeyPressed(Keys.N, currentKeyState) && Game.Fire == true)
+        // to the right
+        if (IsKeyPressed(Keys.N, currentKeyState) && Game.Fire == true) 
         {
             Game.keyboardPermitN = true;
             Game.nPressed = true;
         }
+
     }
 
 }

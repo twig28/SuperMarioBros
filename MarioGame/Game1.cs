@@ -157,19 +157,21 @@ namespace MarioGame
             }
 
             //check whether mario attack (this needs to be in it's own class)
-            if (keyboardPermitZ)
+
+
+            if (keyboardPermitZ) // 向左发射火球
             {
-                balls.Add(new Ball(ballTextureLeft, player_sprite.UPlayerPosition, ballSpeed, true));
+                balls.Add(new Ball(ballTextureLeft, ballTextureRight, player_sprite.UPlayerPosition, ballSpeed, true));
                 keyboardPermitZ = false;
             }
 
-
-            if (keyboardPermitN)
+            if (keyboardPermitN) // 向右发射火球
             {
-                balls.Add(new BallLeft(ballTextureRight, player_sprite.UPlayerPosition, ballSpeed, false));
+                balls.Add(new Ball(ballTextureLeft, ballTextureRight, player_sprite.UPlayerPosition, ballSpeed, false));
                 keyboardPermitN = false;
             }
 
+           
             foreach (var ball in balls)
             {
                 ball.Update(gameTime, GraphicsDevice.Viewport.Width);
