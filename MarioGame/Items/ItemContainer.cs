@@ -14,7 +14,7 @@ public class ItemContainer
     {
         items.Add(new Coin(texture));
         items.Add(new FireFlower(texture));
-        items.Add(new Flower2(texture));
+        items.Add(new Mushroom(texture));
         items.Add(new Spring(texture));
         items.Add(new Star(texture));
     }
