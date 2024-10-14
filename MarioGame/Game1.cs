@@ -18,36 +18,34 @@ namespace MarioGame
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private SpriteFont font;
-        Texture2D marioTexture;
-        Texture2D enemyTextures;
-        Texture2D itemTextures;
-        Texture2D sceneryTextures;
+        private Texture2D marioTexture;
+        private Texture2D enemyTextures;
+        private Texture2D itemTextures;
+        private Texture2D sceneryTextures;
+        private Texture2D ballTextureRight; 
+        private Texture2D ballTextureLeft;
+        private Texture2D multipleBlockTextures;
 
-        //FOR PLAYER VAR
         public Vector2 PlayerPosition;
         public Vector2 UPlayerPosition;
         float PlayerSpeed;
         public PlayerSprite player_sprite;
-        //FOR CONTROLLER
         IController keyControl;
         IController mouseControl;
-        //FOR ITEM
-        Item items;
-        //FOR WEAPON
-        private Texture2D ballTextureRight;  // fireball to the right
-        private Texture2D ballTextureLeft;  // fireball to the left
-        private Texture2D multipleBlockTextures;  
+        Item items; 
         private List<IBall> balls = new List<IBall>();  
         private float ballSpeed = 300f;  
+
+        //to be moved
         public bool zPressed = false;  
         public bool nPressed = false;  
         public bool keyboardPermitZ = false;
         public bool keyboardPermitN = false;
-        public bool Fire = false;
-        //Temporary for sprint 2
-        private List<IEnemy> enemies;
+        //
 
-        // List to store and manage blocks
+        public bool Fire = false;
+
+        private List<IEnemy> enemies;
         private List<IBlock> blocks;
 
         // Block textures
@@ -78,7 +76,6 @@ namespace MarioGame
             keyControl = new KeyboardController(this);
             mouseControl = new MouseController(this);
            
-            //everytime update player's position
             PlayerSpeed = 100f;
             base.Initialize();
         }
@@ -90,12 +87,10 @@ namespace MarioGame
             marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
             enemyTextures = Content.Load<Texture2D>("smb_enemies_sheet");
             itemTextures = Content.Load<Texture2D>("smb_items_sheet");
-            items = new Item(itemTextures);
-
-            // Load block textures
             groundBlockTexture = Content.Load<Texture2D>("resizedGroundBlock");
             blockTexture = Content.Load<Texture2D>("InitialBrickBlock");
             multipleBlockTextures = Content.Load<Texture2D>("blocks");
+            items = new Item(itemTextures);
 
             // Initialize blocks
             blocks = new List<IBlock>
@@ -104,8 +99,11 @@ namespace MarioGame
                 new GroundBlock(new Vector2(900, GraphicsDevice.Viewport.Height - 120), groundBlockTexture, new Rectangle(0, 0, 50, 50)),
                 new MysteryBlock(new Vector2(560, 200), multipleBlockTextures, new Rectangle(80, 112, 15, 15))
             };
+
             PlayerPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2,
                    GraphicsDevice.Viewport.Height - 95);
+
+
             //create a row of blocks on the bottom, besides leftmost two so mario can fall
             for (int i = 0; i <= GraphicsDevice.Viewport.Width - 120; i += 60)
             {
@@ -134,11 +132,6 @@ namespace MarioGame
             keyControl.HandleInputs();
             mouseControl.HandleInputs();
 
-            //foreach (var block in blocks)
-            //{
-            //    block.Update(gameTime);
-            //}
-
             CollisionLogic.CheckEnemyBlockCollisions(enemies, blocks);
             CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
 
@@ -152,7 +145,6 @@ namespace MarioGame
             player_sprite.Update(gameTime);
 
             // Check for collisions between Mario and blocks
-           // CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
             CollisionLogic.CheckFireballEnemyCollision(balls, enemies, gameTime);
 
             //item collision
