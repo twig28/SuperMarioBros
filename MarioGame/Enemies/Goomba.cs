@@ -58,7 +58,7 @@ namespace MarioGame
                     posX--;
                 }
                 //gravity
-                //posY = posY + ;
+                posY = posY + 6;
                 sprite.posX = posX;
                 sprite.posY = posY;
                 if (timeElapsed - timeElapsedSinceUpdate > animInterval)

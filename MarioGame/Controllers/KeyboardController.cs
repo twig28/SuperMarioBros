@@ -34,117 +34,88 @@ public class KeyboardController : IController
 
         currentKeyState = Keyboard.GetState();
 
-        if (Game.current == Game1.SpriteType.MotionL)
+        //Move this to mario class
+        if (Game.player_sprite.current == PlayerSprite.SpriteType.MotionL)
         {
-            Game.current = Game1.SpriteType.StaticL;
+            Game.player_sprite.current = PlayerSprite.SpriteType.StaticL;
+            Game.player_sprite.left = true;
         }
-        else if (Game.current == Game1.SpriteType.Motion)
+        else if (Game.player_sprite.current == PlayerSprite.SpriteType.Motion)
         {
-            Game.current = Game1.SpriteType.Static;
+            Game.player_sprite.current = PlayerSprite.SpriteType.Static;
+            Game.player_sprite.left = false;
         }
 
-        if (currentKeyState.IsKeyDown(Keys.Escape))
-        {
-            Game.Exit();
-        }
         if (currentKeyState.IsKeyDown(Keys.Q))
         {
             Game.Exit();
         }
-        if (IsKeyPressed(Keys.U, currentKeyState))
-        {
-            Item.lastItem();
-        }
-        if (IsKeyPressed(Keys.I, currentKeyState))
-        {
-            Item.nextItem();
-        }
-        if (IsKeyPressed(Keys.O, currentKeyState))
-        {
-            Game.changeEnemy(false);
-        }
-        if (IsKeyPressed(Keys.P, currentKeyState))
-        {
-            Game.changeEnemy(true);
-        }
 
         if (currentKeyState.IsKeyDown(Keys.Right) || currentKeyState.IsKeyDown(Keys.D))
         {
-            Game.current = Game1.SpriteType.Motion;
+            Game.player_sprite.current = PlayerSprite.SpriteType.Motion;
+            Game.player_sprite.left = false ;
         }
 
         if (currentKeyState.IsKeyDown(Keys.Left) || currentKeyState.IsKeyDown(Keys.A))
         {
-            Game.current = Game1.SpriteType.MotionL;
+            Game.player_sprite.current = PlayerSprite.SpriteType.MotionL;
+            Game.player_sprite.left = true;
         }
         if (currentKeyState.IsKeyDown(Keys.W) || currentKeyState.IsKeyDown(Keys.Up))
         {
-            if (Game.current == Game1.SpriteType.MotionL || Game.current == Game1.SpriteType.StaticL)
+            if (Game.player_sprite.current == PlayerSprite.SpriteType.MotionL || Game.player_sprite.current == PlayerSprite.SpriteType.StaticL)
             {
-                Game.current = Game1.SpriteType.JumpL;
+                Game.player_sprite.current = PlayerSprite.SpriteType.JumpL;
+                Game.player_sprite.left = true;
             }
-            else if (Game.current == Game1.SpriteType.Motion || Game.current == Game1.SpriteType.Static)
+            else if (Game.player_sprite.current == PlayerSprite.SpriteType.Motion || Game.player_sprite.current == PlayerSprite.SpriteType.Static)
             {
-                Game.current = Game1.SpriteType.Jump;
+                Game.player_sprite.current = PlayerSprite.SpriteType.Jump;
+                Game.player_sprite.left = false;
             }
         }
 
         if (currentKeyState.IsKeyDown(Keys.E) || currentKeyState.IsKeyDown(Keys.S) || currentKeyState.IsKeyDown(Keys.Down))
         {
-            Game.current = Game1.SpriteType.Damaged;
+            Game.player_sprite.current = PlayerSprite.SpriteType.Damaged;
         }
         if (currentKeyState.IsKeyDown(Keys.X))
         {
-            Game.player_sprite.Staplayer.Big = true;
-            Game.player_sprite.StaLplayer.Big = true;
-            Game.player_sprite.MRplayer.Big = true;
-            Game.player_sprite.MLplayer.Big = true;
-            Game.player_sprite.JumpLplayer.Big = true;
-            Game.player_sprite.Jumpplayer.Big = true;
+           
+            Game.player_sprite.Big = true;
         }
 
         if (currentKeyState.IsKeyDown(Keys.M))
         {
-            Game.player_sprite.Staplayer.Fire = true;
-            Game.player_sprite.StaLplayer.Fire = true;
-            Game.player_sprite.MRplayer.Fire = true;
-            Game.player_sprite.MLplayer.Fire = true;
-            Game.player_sprite.Jumpplayer.Fire = true;
+            
+            Game.player_sprite.Fire = true;
             Game.Fire = true;
         }
 
         if (currentKeyState.IsKeyDown(Keys.J))
         {
-            Game.player_sprite.Staplayer.Fire = false;
-            Game.player_sprite.StaLplayer.Fire = false;
-            Game.player_sprite.MRplayer.Fire = false;
-            Game.player_sprite.MLplayer.Fire = false;
-            Game.player_sprite.Jumpplayer.Fire = false;
-            Game.player_sprite.JumpLplayer.Fire = false;
-            Game.player_sprite.Staplayer.Big = false;
-            Game.player_sprite.StaLplayer.Big = false;
-            Game.player_sprite.MRplayer.Big = false;
-            Game.player_sprite.MLplayer.Big = false;
-            Game.player_sprite.Jumpplayer.Big = false;
-            Game.player_sprite.JumpLplayer.Big = false;
+           
+            Game.player_sprite.Fire=false;
+            Game.player_sprite.Big = false;
             Game.Fire = false;
         }
 
         if (currentKeyState.IsKeyDown(Keys.R))
         {
             Game.ResetGame();
-            Game.current = Game1.SpriteType.Static;
-            Game.UPlayerPosition = Game.PlayerPosition;
+            Game.player_sprite.current = PlayerSprite.SpriteType.Static;
+            Game.player_sprite.UPlayerPosition = Game.player_sprite.PlayerPosition;
         }
 
         //keyboard control for fireballs 
-        if (IsKeyPressed(Keys.Z, currentKeyState) && Game.Fire == true) // push to attack enemy on the left
+        if (IsKeyPressed(Keys.Z, currentKeyState) && Game.Fire == true)
         {
             Game.keyboardPermitZ = true;
             Game.zPressed = true;
         }
 
-        if (IsKeyPressed(Keys.N, currentKeyState) && Game.Fire == true) // push to attack enemy on the right
+        if (IsKeyPressed(Keys.N, currentKeyState) && Game.Fire == true)
         {
             Game.keyboardPermitN = true;
             Game.nPressed = true;

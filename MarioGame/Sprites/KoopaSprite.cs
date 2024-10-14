@@ -79,14 +79,12 @@ namespace MarioGame
                 //Going Right Now
                 if (SourceRectangle.X >= 220)
                 {
-                    SourceRectangle.X = 200;
-                    currSprite = 0;
+                    SourceRectangle.X = 180;
                 }
                 //Going Left Now
                 else
                 {
                     SourceRectangle.X = 150;
-                    currSprite = 0;
                 }
                 ChangeDirection = false;
             }

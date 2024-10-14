@@ -39,5 +39,10 @@ namespace MarioGame.Items
             destinationRectangle = new Rectangle((int)location.X, (int)location.Y, 32, 32);
             spriteBatch.Draw(texture, destinationRectangle, sourceRectangle[currentFrame], Color.White);
         }
+
+        public Rectangle getDestinationRectangle()
+        {
+            return destinationRectangle;
+        }
     }
 }

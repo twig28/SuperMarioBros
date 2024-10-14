@@ -8,23 +8,13 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 using System.Net;
+using MarioGame.Collisions;
 
 namespace MarioGame
 {
 
     public class Game1 : Game
-    {
-        public enum SpriteType
-        {
-            Static,
-            StaticL,// Static sprite
-            Motion,    // moving sprite
-            MotionL,
-            Jump,
-            JumpL,
-            Damaged// moving sprite
-        }
-
+    { 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private SpriteFont font;
@@ -38,7 +28,6 @@ namespace MarioGame
         public Vector2 UPlayerPosition;
         float PlayerSpeed;
         public PlayerSprite player_sprite;
-        public SpriteType current = SpriteType.Static;
         //FOR CONTROLLER
         IController keyControl;
         IController mouseControl;
@@ -47,61 +36,28 @@ namespace MarioGame
         //FOR WEAPON
         private Texture2D ballTextureRight;  // fireball to the right
         private Texture2D ballTextureLeft;  // fireball to the left
-        private Texture2D fireBoltTextureRight;  // firebolt to the right
-        private Texture2D fireBoltTextureLeft;  // firebolt to the left
-        private Texture2D multipleBlockTextures;  // firebolt to the left
-        private List<IBall> balls = new List<IBall>();  // list of ball
-        private float ballSpeed = 300f;  // ball speed
-        public bool zPressed = false;  //status of z
-        public bool nPressed = false;  // status of n
+        private Texture2D multipleBlockTextures;  
+        private List<IBall> balls = new List<IBall>();  
+        private float ballSpeed = 300f;  
+        public bool zPressed = false;  
+        public bool nPressed = false;  
         public bool keyboardPermitZ = false;
         public bool keyboardPermitN = false;
         public bool Fire = false;
         //Temporary for sprint 2
-        IEnemy[] enemies = new IEnemy[4];
-        IEnemy currEnemy;
+        private List<IEnemy> enemies;
 
         // List to store and manage blocks
         private List<IBlock> blocks;
-        private int currentBlockIndex = 0;  // Track the current block index
 
         // Block textures
         private Texture2D groundBlockTexture;
         private Texture2D blockTexture;
 
-        public void changeEnemy(bool forward)
-        {
-            for (int i = 0; i <= 3; i++)
-            {
-                if (currEnemy.Equals(enemies[i]))
-                {
-                    //loop forward
-                    if (forward && i == 3)
-                    {
-                        currEnemy = enemies[0];
-                    }
-                    else if (forward)
-                    {
-                        currEnemy = enemies[i + 1];
-                    }
-                    else if (i == 0)
-                    {
-                        currEnemy = enemies[3];
-                    }
-                    else
-                    {
-                        currEnemy = enemies[i - 1];
-                    }
-                    break;
-                }
-            }
-        }
-
         public void ResetGame()
         {
             this.Initialize();
             this.LoadContent();
-            currentBlockIndex = 0;
         }
 
         public Game1()
@@ -121,10 +77,8 @@ namespace MarioGame
             Item.Initialize();
             keyControl = new KeyboardController(this);
             mouseControl = new MouseController(this);
-            PlayerPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2,
-                     _graphics.PreferredBackBufferHeight / 2);
+           
             //everytime update player's position
-            UPlayerPosition = PlayerPosition;
             PlayerSpeed = 100f;
             base.Initialize();
         }
@@ -133,10 +87,8 @@ namespace MarioGame
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("File");
-            //To Be Implemented in its own class (maybe)
             marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
             enemyTextures = Content.Load<Texture2D>("smb_enemies_sheet");
-            //ITEM intialize
             itemTextures = Content.Load<Texture2D>("smb_items_sheet");
             items = new Item(itemTextures);
 
@@ -148,18 +100,25 @@ namespace MarioGame
             // Initialize blocks
             blocks = new List<IBlock>
             {
-                new GroundBlock(new Vector2(500, 350), groundBlockTexture, new Rectangle(0, 0, 50, 50)),
                 new Block(new Vector2(500, 200), blockTexture, new Rectangle(0, 0, 50, 50)),
-                new MysteryBlock(new Vector2(500, 200), multipleBlockTextures, new Rectangle(80, 112, 15, 15))
+                new GroundBlock(new Vector2(900, GraphicsDevice.Viewport.Height - 120), groundBlockTexture, new Rectangle(0, 0, 50, 50)),
+                new MysteryBlock(new Vector2(560, 200), multipleBlockTextures, new Rectangle(80, 112, 15, 15))
             };
+            PlayerPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2,
+                   GraphicsDevice.Viewport.Height - 95);
+            //create a row of blocks on the bottom, besides leftmost two so mario can fall
+            for (int i = 0; i <= GraphicsDevice.Viewport.Width - 120; i += 60)
+            {
+                blocks.Add(new GroundBlock(new Vector2(i, GraphicsDevice.Viewport.Height - 60), groundBlockTexture, new Rectangle(0, 0, 50, 50)));
+            }
 
             //enemy intialize
-            enemies[0] = new Goomba(enemyTextures, _spriteBatch, 500, 500);
-            enemies[1] = new Koopa(enemyTextures, _spriteBatch, 500, 500);
-            //This Koopa is different in that it gets killed in update after 3 secs
-            enemies[3] = new Koopa(enemyTextures, _spriteBatch, 500, 500);
-            enemies[2] = new Piranha(enemyTextures, _spriteBatch, 500, 500);
-            currEnemy = enemies[3];
+            enemies = new List<IEnemy>
+            {
+                new Goomba(enemyTextures, _spriteBatch, 500, 500),
+                new Koopa(enemyTextures, _spriteBatch, 600, 500),
+                new Piranha(enemyTextures, _spriteBatch, 1100, 500),
+            };
             //For intialize all player
             player_sprite = new PlayerSprite(marioTexture, PlayerPosition, PlayerSpeed, _graphics, this);
             player_sprite.intialize_player();
@@ -175,10 +134,13 @@ namespace MarioGame
             keyControl.HandleInputs();
             mouseControl.HandleInputs();
 
-            foreach (var block in blocks)
-            {
-                block.Update(gameTime);
-            }
+            //foreach (var block in blocks)
+            //{
+            //    block.Update(gameTime);
+            //}
+
+            CollisionLogic.CheckEnemyBlockCollisions(enemies, blocks);
+            CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
 
             // Remove destroyed blocks from the list
             blocks.RemoveAll(block => block is Block b && b.IsDestroyed);
@@ -186,76 +148,33 @@ namespace MarioGame
             // Get the current keyboard state
             KeyboardState currentKeyboardState = Keyboard.GetState();
 
-            // Handle block switching using 't' and 'y'
-            if (keyControl.IsKeyPressed(Keys.T, currentKeyboardState))
+            //PLAYER UPDATE
+            player_sprite.Update(gameTime);
+
+            // Check for collisions between Mario and blocks
+           // CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
+            CollisionLogic.CheckFireballEnemyCollision(balls, enemies, gameTime);
+
+            //item collision
+            ItemCollision itemCollision = new ItemCollision(player_sprite);
+            itemCollision.ItemCollisionHandler(items.getItemList());
+
+            foreach (var block in blocks)
             {
-                // Switch to the previous block
-                currentBlockIndex = (currentBlockIndex - 1 + blocks.Count) % blocks.Count;
-            }
-            else if (keyControl.IsKeyPressed(Keys.Y, currentKeyboardState))
-            {
-                // Switch to the next block
-                currentBlockIndex = (currentBlockIndex + 1) % blocks.Count;
+                block.Update(gameTime);
             }
 
-            // update based on current sprite type
-            //below for checking current state of mario
-            if (current == SpriteType.Motion)
-            {
-                player_sprite.MRplayer.Position = UPlayerPosition; //U means upated
-                player_sprite.MRplayer.Update(gameTime);
-                UPlayerPosition = player_sprite.MRplayer.Position;
-            }
-            else if (current == SpriteType.MotionL)
-            {
-                player_sprite.MLplayer.Position = UPlayerPosition;
-                player_sprite.MLplayer.Update(gameTime);
-                UPlayerPosition = player_sprite.MLplayer.Position;
-            }
-            else if (current == SpriteType.Jump)
-            {
-                player_sprite.Jumpplayer.Position = UPlayerPosition;
-                player_sprite.Jumpplayer.Update(gameTime);
-                UPlayerPosition = player_sprite.Jumpplayer.Position;
-            }
-            else if (current == SpriteType.JumpL)
-            {
-                player_sprite.JumpLplayer.Position = UPlayerPosition;
-                player_sprite.JumpLplayer.Update(gameTime);
-                UPlayerPosition = player_sprite.JumpLplayer.Position;
-            }
-            else if (current == SpriteType.Damaged)
-            {
-                player_sprite.Damagedplayer.Position = UPlayerPosition;
-                player_sprite.Damagedplayer.Update(gameTime);
-                UPlayerPosition = player_sprite.Damagedplayer.Position;
-
-            }
-
-            else
-            {
-                if (current == SpriteType.StaticL)
-                {
-                    player_sprite.StaLplayer.Position = UPlayerPosition;
-                }
-                else if (current == SpriteType.Static)
-                {
-                    player_sprite.Staplayer.Position = UPlayerPosition;
-                }
-
-            }
-
-            //check whether mario attack
+            //check whether mario attack (this needs to be in it's own class)
             if (keyboardPermitZ)
             {
-                balls.Add(new Ball(ballTextureLeft, UPlayerPosition, ballSpeed, true));
+                balls.Add(new Ball(ballTextureLeft, player_sprite.UPlayerPosition, ballSpeed, true));
                 keyboardPermitZ = false;
             }
 
 
             if (keyboardPermitN)
             {
-                balls.Add(new BallLeft(ballTextureRight, UPlayerPosition, ballSpeed, false));
+                balls.Add(new BallLeft(ballTextureRight, player_sprite.UPlayerPosition, ballSpeed, false));
                 keyboardPermitN = false;
             }
 
@@ -265,70 +184,61 @@ namespace MarioGame
             }
             
             balls.RemoveAll(b => !b.IsVisible);
+            CollisionLogic.CheckFireballBlockCollision(balls, blocks);
             //update items
             items.Update(gameTime);
             base.Update(gameTime);
+        }
+
+        //For Sprint 3 Debug Only
+        private void DrawCollisionRectangles(SpriteBatch spriteBatch)
+        {
+            Texture2D rectTexture = new Texture2D(GraphicsDevice, 1, 1);
+            rectTexture.SetData(new[] { Color.White });
+
+            // Draw Mario's collision rectangle
+            Rectangle marioRect = player_sprite.GetDestinationRectangle();
+            spriteBatch.Draw(rectTexture, marioRect, Color.Red * 0.5f);
+
+            // Draw blocks' collision rectangles
+            foreach (IBlock block in blocks)
+            {
+                Rectangle blockRect = block.GetDestinationRectangle();
+                spriteBatch.Draw(rectTexture, blockRect, Color.Blue * 0.5f);
+            }
+            items.DrawCollisionRectangles(spriteBatch);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-
             _spriteBatch.Begin();
-
-            //foreach (var block in blocks)
-            //{
-            //    block.Draw(_spriteBatch);
-            //}
-
-            // Draw only the current block
-            blocks[currentBlockIndex].Draw(_spriteBatch);
 
             Vector2 itemLocation = new Vector2(200, 200);
             items.Draw(_spriteBatch, itemLocation);
-            //check sprint type for draw
-            if (current == SpriteType.Static)
+
+            player_sprite.Draw(_spriteBatch);
+
+            foreach (var block in blocks)
             {
-                player_sprite.Staplayer.Draw(_spriteBatch);
+                block.Draw(_spriteBatch);
             }
-            if (current == SpriteType.StaticL)
+
+            foreach (IBall ball in balls)
             {
-                player_sprite.StaLplayer.Draw(_spriteBatch);
+                ball.Draw(_spriteBatch);
             }
-            if (current == SpriteType.Motion)
-            {
-                player_sprite.MRplayer.Draw(_spriteBatch);
-            }
-            if (current == SpriteType.MotionL)
-            {
-                player_sprite.MLplayer.Draw(_spriteBatch);
-            }
-            if (current == SpriteType.Jump)
-            {
-                player_sprite.Jumpplayer.Draw(_spriteBatch);
-            }
-            if (current == SpriteType.JumpL)
-            {
-                player_sprite.JumpLplayer.Draw(_spriteBatch);
-            }
-            if (current == SpriteType.Damaged)
-            {
-                player_sprite.Damagedplayer.Draw(_spriteBatch);
-            }
-            for (int i = 0; i < balls.Count; i++)
-            {
-                balls[i].Draw(_spriteBatch);
-            }
+
+            // Draw collision rectangles for debugging
+            DrawCollisionRectangles(_spriteBatch);
+
             _spriteBatch.End();
 
             foreach (IEnemy enemy in enemies)
             {
-                if (currEnemy == enemy)
-                {
                     enemy.Update(gameTime);
                     enemy.Draw();
-                }
             }
 
             base.Draw(gameTime);

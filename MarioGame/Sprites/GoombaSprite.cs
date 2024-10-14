@@ -12,11 +12,11 @@ namespace MarioGame
     internal class GoombaSprite : ISprite
     {
         private const int SpriteWidth = 75;
-        private const int SpriteHeight = 115;
+        private const int SpriteHeight = 100;
         private int SourceX = 0;
         private int SourceY = 4;
         private const int SourceWidth = 16;
-        private const int SourceHeight = 20;
+        private const int SourceHeight = 17;
         private SpriteBatch sb;
         private Texture2D texture;
         Rectangle DestinationRectangle;

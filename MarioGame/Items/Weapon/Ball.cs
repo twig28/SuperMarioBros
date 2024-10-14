@@ -22,6 +22,7 @@ namespace MarioGame
         {
             Texture = texture;
             Position = position;
+            Position.Y = Position.Y - 40;
             Speed = speed;
             this.direction = direction;
             IsVisible = true; // initialize to be true true
@@ -86,6 +87,12 @@ namespace MarioGame
         public void Update(object gameTime, int width)
         {
             throw new System.NotImplementedException();
+        }
+         public Rectangle GetDestinationRectangle()
+        {
+            int frameWidth = Texture.Width / columns;
+            int frameHeight = Texture.Height / rows;
+            return new Rectangle((int)Position.X, (int)Position.Y, frameWidth, frameHeight);
         }
     }
 }

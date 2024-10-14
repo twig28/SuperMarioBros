@@ -10,28 +10,16 @@ namespace MarioGame {
 public class MotionPlayer : IPlayer
     {
     public Texture2D Texture { get; set; }
-    public Vector2 Position;
-    public float Scale = 5f;
-    public float Speed;
+        public Game1 Game;
+        public Vector2 Position;
+    private float Scale = 5f;
+    private float Speed;
     public GraphicsDeviceManager graphics;
-    public int Rows { get; set; }
-    public int Columns { get; set; }
     private int currentFrame;
     private int totalFrames;
     private float timePerFrame = 0.2f; // Time per frame in seconds
     private float timeCounter = 0f;
-    private const int width = 14;
-    private const int height = 16;
-    private List<Rectangle> sourceRectangle = new List<Rectangle>();
-    private const int bigwidth = 18;
-    private const int bigheight = 32;
-    private List<Rectangle> bigsourceRectangle = new List<Rectangle>();
-    public bool Big = false;
-        private const int firewidth = 18;
-        private const int fireheight = 32;
-        private List<Rectangle> firesourceRectangle = new List<Rectangle>();
-        public bool Fire = false;
-        public MotionPlayer(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics)
+        public MotionPlayer(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics, Game1 game)
 	{
         Texture = texture;
         Position = position;
@@ -39,15 +27,8 @@ public class MotionPlayer : IPlayer
         graphics = Graphics;
         currentFrame = 0;
         totalFrames = 3;
-        sourceRectangle.Add(new Rectangle(240, 0, width, height));
-        sourceRectangle.Add(new Rectangle(270, 0, width, height));
-        sourceRectangle.Add(new Rectangle(300, 0, width, height));
-        bigsourceRectangle.Add(new Rectangle(238,52, bigwidth, bigheight));
-        bigsourceRectangle.Add(new Rectangle(270, 52, bigwidth, bigheight));
-        bigsourceRectangle.Add(new Rectangle(299, 52, bigwidth, bigheight));
-        firesourceRectangle.Add(new Rectangle(237, 122, firewidth, fireheight));
-        firesourceRectangle.Add(new Rectangle(263, 122, firewidth, fireheight));
-        firesourceRectangle.Add(new Rectangle(287, 122, firewidth, fireheight));
+        Game = game;
+        
 
 
 
@@ -68,25 +49,25 @@ public class MotionPlayer : IPlayer
                 timeCounter -= timePerFrame;
             }
             //for running with different status
-            if (!Big && !Fire)
+            if (!Game.player_sprite.Big && !Game.player_sprite.Fire)
             {
-                if (Position.X < graphics.PreferredBackBufferWidth - (width * Scale / 2))//check if reach to the bottom edge
+                if (Position.X < graphics.PreferredBackBufferWidth - (14 * Scale / 2))//check if reach to the bottom edge
                 {
                     Position.X += updatedSpeed;
 
                 }
             }
-            else if (Fire)
+            else if (Game.player_sprite.Fire)
             {
-                if (Position.X < graphics.PreferredBackBufferWidth - (firewidth * Scale / 2))//check if reach to the bottom edge
+                if (Position.X < graphics.PreferredBackBufferWidth - (18 * Scale / 2))//check if reach to the bottom edge
                 {
                     Position.X += updatedSpeed;
 
                 }
             }
-            else if (!Fire && Big)
+            else if (!Game.player_sprite.Fire && Game.player_sprite.Big)
             {
-                if (Position.X < graphics.PreferredBackBufferWidth - (bigwidth * Scale / 2))//check if reach to the bottom edge
+                if (Position.X < graphics.PreferredBackBufferWidth - (18 * Scale / 2))//check if reach to the bottom edge
                 {
                     Position.X += updatedSpeed;
 
@@ -97,25 +78,51 @@ public class MotionPlayer : IPlayer
         }
 
 
-        
+
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            //first check state of mario
-            if (!Big && !Fire)
+            int width;
+            int height;
+            //check status
+            List<Rectangle> sourceRectangle = new List<Rectangle>();
+
+            if (Game.player_sprite.Fire)
             {
-                spriteBatch.Draw(Texture, Position, sourceRectangle[currentFrame], Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
-            }
-            else if (Fire)
-            {
-                
-                spriteBatch.Draw(Texture, Position, firesourceRectangle[currentFrame], Color.White, 0f, new Vector2(firewidth / 2, fireheight / 2), Scale, SpriteEffects.None, 0f);
-            }
-            else if (!Fire && Big)
-            {
-                spriteBatch.Draw(Texture, Position, bigsourceRectangle[currentFrame], Color.White, 0f, new Vector2(bigwidth / 2, bigheight / 2), Scale, SpriteEffects.None, 0f);
+                sourceRectangle.Clear();
+                sourceRectangle.Add(new Rectangle(237, 122, 18, 32));
+                sourceRectangle.Add(new Rectangle(263, 122, 18, 32));
+                sourceRectangle.Add(new Rectangle(287, 122, 18, 32));
+                width = 18;
+                height = 32;
+                Position.Y = Position.Y - 40;
+
 
             }
+            else if (!Game.player_sprite.Fire && Game.player_sprite.Big)
+            {
+                sourceRectangle.Clear();
+                sourceRectangle.Add(new Rectangle(238, 52, 18, 32));
+                sourceRectangle.Add(new Rectangle(270, 52, 18, 32));
+                sourceRectangle.Add(new Rectangle(299, 52, 18, 32));
+                width = 18;
+                height = 32;
+                Position.Y = Position.Y - 40;
+
+            }
+            else
+            {
+             width = 14;
+             height = 16;
+             sourceRectangle.Clear();
+             sourceRectangle.Add(new Rectangle(240, 0, 14, 16));
+             sourceRectangle.Add(new Rectangle(270, 0, 14, 16));
+             sourceRectangle.Add(new Rectangle(300, 0, 14, 16));
+            }
+        spriteBatch.Draw(Texture, Position, sourceRectangle[currentFrame], Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
+
+            
+
         }
     }
 }

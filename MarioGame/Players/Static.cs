@@ -12,48 +12,43 @@ namespace MarioGame
 
         public Texture2D Texture { get; set; }
         public Vector2 Position;
+        public Game1 Game;
         public float Scale = 5f;
-        private const int width = 14;
-        private const int height = 16;
-        private const int SX = 210;
-        private const int SY = 0;
-        private const int bigwidth = 18;
-        private const int bigheight = 32;
-        private const int bigSX = 208;
-        private const int bigSY = 52;
-        public bool Big = false;
-        private const int firewidth = 16;
-        private const int fireheight = 32;
-        private const int fireSX = 209;
-        private const int fireSY = 122;
-        public bool Fire = false;
-        public Static(Texture2D texture, Vector2 position)
+       
+        public Static(Texture2D texture, Vector2 position,Game1 game)
         {
             Texture = texture;
             Position = position;
+            Game = game;
 
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             //check status
-            if (!Big && !Fire)
-            {
-                Rectangle sourceRectangle = new Rectangle(SX, SY, width, height);
-                spriteBatch.Draw(Texture, Position, sourceRectangle, Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
-            }
-            else if (Fire)
-            {
-                Rectangle firesourceRectangle = new Rectangle(fireSX, fireSY, firewidth, fireheight);
-                spriteBatch.Draw(Texture, Position, firesourceRectangle, Color.White, 0f, new Vector2(firewidth / 2, fireheight / 2), Scale, SpriteEffects.None, 0f);
-            }
-            else if(!Fire && Big) 
-            {
-                Rectangle bigsourceRectangle = new Rectangle(bigSX, bigSY, bigwidth, bigheight);
-                spriteBatch.Draw(Texture, Position, bigsourceRectangle, Color.White, 0f, new Vector2(bigwidth / 2, bigheight / 2), Scale, SpriteEffects.None, 0f);
-            }
 
-                    
+           int width = 14;
+           int height = 16;
+           Rectangle sourceRectangle = new Rectangle(210, 0, 14, 16);
+
+            if (Game.player_sprite.Fire)
+            {
+                width = 18;
+                height = 32;
+                Position.Y = Position.Y - 40;
+                sourceRectangle = new Rectangle(209, 122, 18, 32);
+            }
+            else if(!Game.player_sprite.Fire && Game.player_sprite.Big) 
+            {
+                width = 18;
+                height = 32;
+                Position.Y = Position.Y - 40;
+                sourceRectangle = new Rectangle(208, 52, 18, 32);
+            }
+           
+            spriteBatch.Draw(Texture, Position, sourceRectangle, Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
+
+
         }
 
         public void Update(GameTime gameTime)

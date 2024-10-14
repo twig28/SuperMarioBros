@@ -15,6 +15,7 @@ namespace MarioGame.Blocks
         public int currSprite = 0;
         private double timeElapsed = 0;
         private double timeElapsedSinceUpdate = 0;
+        private const int dimension = 60;
 
         protected Texture2D Texture { get; set; }
         protected Rectangle SourceRectangle;
@@ -26,7 +27,7 @@ namespace MarioGame.Blocks
             Position = position;
             Texture = texture;
             SourceRectangle = sourceRectangle;
-            DestinationRectangle = new Rectangle((int)position.X, (int)position.Y, 60, 60);
+            DestinationRectangle = new Rectangle((int)position.X, (int)position.Y, dimension, dimension);
         }
 
         public void OnCollide() { }
@@ -49,6 +50,8 @@ namespace MarioGame.Blocks
                 }
             }
         }
+
+        public Rectangle GetDestinationRectangle() { return DestinationRectangle; }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {

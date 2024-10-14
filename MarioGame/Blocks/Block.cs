@@ -19,17 +19,15 @@ namespace MarioGame.Blocks
 
         public override void OnCollide()
         {
-            // Add logic to destroy the block or remove it from the game world
-            // For now, we can log or set a flag to indicate it's destroyed
-
             // Set the flag to indicate the block is destroyed
             IsDestroyed = true;
 
-            //// Log message for debugging
-            //System.Diagnostics.Debug.WriteLine("Block destroyed at position: " + Position);
+            // Optionally, play a breaking animation or sound here
+            // For example: PlayBreakingAnimation();
         }
 
-        // Optional method to draw only if the block is not destroyed
+
+        // Draw only if the block is not destroyed
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (!IsDestroyed)

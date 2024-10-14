@@ -17,6 +17,8 @@ namespace MarioGame.Interfaces
 
         void Draw(SpriteBatch spriteBatch);
 
+        public Rectangle GetDestinationRectangle();
+
         void OnCollide(); // Handle block being hit by the player
     }
 }

@@ -16,21 +16,6 @@ namespace MarioGame
         public Game1 Game;
         public GraphicsDeviceManager graphics;
         public float Scale = 5f;
-        private const int width = 17;
-        private const int height = 17;
-        private const int SX = 358;
-        private const int SY = 0;
-        private const int bigwidth = 18;
-        private const int bigheight = 32;
-        private const int bigSX = 358;
-        private const int bigSY = 52;
-        public bool Big = false;
-
-        private const int firewidth = 19;
-        private const int fireheight = 32;
-        private const int fireSX = 361;
-        private const int fireSY = 122;
-        public bool Fire = false;
         //for jump
         float jumpSpeed = -10f;   
         float gravity = 0.5f;     
@@ -44,7 +29,7 @@ namespace MarioGame
             Position = position;
             Speed = speed;
             graphics = Graphics;
-            groundLevel = Graphics.PreferredBackBufferHeight / 2;
+            groundLevel = Graphics.PreferredBackBufferHeight - 95;
             Game = game;
         }
 
@@ -69,7 +54,7 @@ namespace MarioGame
                 if (Position.Y >= groundLevel)
                 {
                     Position.Y = groundLevel;
-                    Game.current = Game1.SpriteType.Static;
+                    Game.player_sprite.current = PlayerSprite.SpriteType.Static;
                     isGrounded = true;
                     isJumping = false;
                     velocity = 0f;
@@ -80,22 +65,25 @@ namespace MarioGame
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            Rectangle sourceRectangle = new Rectangle(358, 0, 17, 17);
+            int width = 17;
+            int height = 17;
             //check status
-            if (!Big && !Fire)
+           
+            if (Game.player_sprite.Fire)
             {
-                Rectangle sourceRectangle = new Rectangle(SX, SY, width, height);
-                spriteBatch.Draw(Texture, Position, sourceRectangle, Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
+                width = 18;
+                height = 32;
+                sourceRectangle = new Rectangle(361, 122, 18, 32);
             }
-            else if (Fire)
+            else if (!Game.player_sprite.Fire && Game.player_sprite.Big)
             {
-                Rectangle firesourceRectangle = new Rectangle(fireSX, fireSY, firewidth, fireheight);
-                spriteBatch.Draw(Texture, Position, firesourceRectangle, Color.White, 0f, new Vector2(firewidth / 2, fireheight / 2), Scale, SpriteEffects.None, 0f);
+                width = 18;
+                height = 32;
+                sourceRectangle = new Rectangle(358, 52, 18, 32);
             }
-            else if (!Fire && Big)
-            {
-                Rectangle bigsourceRectangle = new Rectangle(bigSX, bigSY, bigwidth, bigheight);
-                spriteBatch.Draw(Texture, Position, bigsourceRectangle, Color.White, 0f, new Vector2(bigwidth / 2, bigheight / 2), Scale, SpriteEffects.None, 0f);
-            }
+            spriteBatch.Draw(Texture, Position, sourceRectangle, Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
+
         }
     }
 }

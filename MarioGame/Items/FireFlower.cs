@@ -5,7 +5,7 @@ using MarioGame.Interfaces;
 
 namespace MarioGame.Items
 {
-    internal class Flower1 : IItem
+    internal class FireFlower : IItem
     {
         private List<Rectangle> sourceRectangle = new List<Rectangle>();
         private Rectangle destinationRectangle;
@@ -14,7 +14,7 @@ namespace MarioGame.Items
         private double timer = 0;
         private const int timePerFrame = 100;
 
-        public Flower1(Texture2D texture)
+        public FireFlower(Texture2D texture)
         {
             this.texture = texture;
             sourceRectangle.Add(new Rectangle(4, 64, 16, 16));
@@ -40,5 +40,10 @@ namespace MarioGame.Items
             destinationRectangle = new Rectangle((int)location.X, (int)location.Y, 32, 32);
             spriteBatch.Draw(texture, destinationRectangle, sourceRectangle[currentFrame], Color.White);
         }
+        public Rectangle getDestinationRectangle()
+        {
+            return destinationRectangle;
+        }
+
     }
 }
