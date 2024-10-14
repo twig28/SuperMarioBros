@@ -98,6 +98,7 @@ namespace MarioGame
                 }
             }
         }
+
         //function that has a for each between mario and blocks/obstacles
         public static void CheckMarioBlockCollision(PlayerSprite mario, List<IBlock> blocks)
         {

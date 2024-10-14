@@ -107,7 +107,7 @@ namespace MarioGame
                 bool changed = false;
                 while (!changed)
                 {
-                    changed = sprite.ChangeToShell(gm); ;
+                    changed = sprite.ChangeToShell(gm);
                 }
             }
 

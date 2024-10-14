@@ -120,13 +120,13 @@ public class KeyboardController : IController
         }
 
         //keyboard control for fireballs 
-        if (IsKeyPressed(Keys.Z, currentKeyState) && Game.Fire == true) // push to attack enemy on the left
+        if (IsKeyPressed(Keys.Z, currentKeyState) && Game.Fire == true)
         {
             Game.keyboardPermitZ = true;
             Game.zPressed = true;
         }
 
-        if (IsKeyPressed(Keys.N, currentKeyState) && Game.Fire == true) // push to attack enemy on the right
+        if (IsKeyPressed(Keys.N, currentKeyState) && Game.Fire == true)
         {
             Game.keyboardPermitN = true;
             Game.nPressed = true;
