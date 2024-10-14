@@ -70,55 +70,69 @@ namespace MarioGame
             }
         }
 
+
         //function that has a for each between mario and blocks/obstacles
         public static void CheckMarioBlockCollision(PlayerSprite mario, List<IBlock> blocks)
         {
             List<IBlock> blocksToRemove = new List<IBlock>();
-
+            Rectangle _marioRectangle;
+            Rectangle _blockRectangle;
+            Rectangle intersects;
             foreach (IBlock block in blocks)
             {
-                CollisionDirection collisionDirection = GetCollisionDirection(mario.GetDestinationRectangle(), block.GetDestinationRectangle());
+                _marioRectangle = mario.GetDestinationRectangle();
+                _blockRectangle = block.GetDestinationRectangle();
+                CollisionDirection collisionDirection = GetCollisionDirection(block.GetDestinationRectangle(),mario.GetDestinationRectangle());
 
-                /*
-                    if (collisionDirection == CollisionDirection.Below)
+                //  if (_marioRectangle.Intersects(_blockRectangle))
+                //{
+                // if (_marioRectangle.Bottom >= _blockRectangle.Top && _marioRectangle.Top < _blockRectangle.Top && (mario.Jumpplayer.velocity != 0 || mario.JumpLplayer.velocity != 0))
+                if (collisionDirection == CollisionDirection.Above)
+                {
+                    if (mario.current == PlayerSprite.SpriteType.Jump)
                     {
-                        // Collision from below detected
-                        if (block.IsBreakable)
-                        {
-                            block.OnCollide();
-                            blocksToRemove.Add(block);
-                        }
+                        mario.Jumpplayer.velocity = 0;
+                        mario.Jumpplayer.isGrounded = true;
+                        mario.Jumpplayer.isJumping = false;
+                        mario.current = PlayerSprite.SpriteType.Static;
                     }
-                    */
-                    if (collisionDirection == CollisionDirection.Above)
+                    else if (mario.current == PlayerSprite.SpriteType.JumpL)
                     {
-                    // Handle collision from above if necessary
-                    //mario.UPlayerPosition.Y = (float)(block.GetDestinationRectangle().Top);
-                    mario.onblock = true;
+                        mario.JumpLplayer.velocity = 0;
+                        mario.JumpLplayer.isGrounded = true;
+                        mario.JumpLplayer.isJumping = false;
+                        mario.current = PlayerSprite.SpriteType.StaticL;
                     }
-                    
-                    else if (collisionDirection == CollisionDirection.Side)
+                    if (mario.Big || mario.Fire)
                     {
-                        // Handle side collisions if necessary
-                        if (mario.left)
-                        {
-                            mario.UPlayerPosition.X = (float)(block.GetDestinationRectangle().Right + mario.GetDestinationRectangle().Width /2);
-                        }
-                        else
-                        {
-                            mario.UPlayerPosition.X = (float)(block.GetDestinationRectangle().Left - mario.GetDestinationRectangle().Width /2);
-                        }
+                        mario.UPlayerPosition.Y = _blockRectangle.Top - mario.GetDestinationRectangle().Height / 2 + 40;
                     }
+                    else if (!mario.Big && !mario.Fire)
+                    {
+                        mario.UPlayerPosition.Y = _blockRectangle.Top - mario.GetDestinationRectangle().Height / 2;
+
+                    }
+                }
+                else if (collisionDirection == CollisionDirection.Side) {
+                    if (_marioRectangle.Right >= _blockRectangle.Left && _marioRectangle.Left < _blockRectangle.Left && collisionDirection != CollisionDirection.Above)
+                    {
+                        mario.UPlayerPosition.X = _blockRectangle.Left - mario.GetDestinationRectangle().Width / 2;
+                    }
+                    else if (_marioRectangle.Left <= _blockRectangle.Right && _marioRectangle.Right > _blockRectangle.Right && collisionDirection != CollisionDirection.Above)
+                    {
+                        mario.UPlayerPosition.X = _blockRectangle.Right + mario.GetDestinationRectangle().Width / 2;
+                    }
+                }
+               
+            }
+             
+
+          //  }
+
                 
-            }
-
-            // Remove destroyed blocks from the blocks list
-            foreach (IBlock block in blocksToRemove)
-            {
-                blocks.Remove(block);
-            }
+               
         }
-
+     
         //function that has a for each between enemies and other enemies
         public static void CheckEnemyEnemyCollision(List<IEnemy> enemies, GameTime gt)
         {
@@ -135,21 +149,26 @@ namespace MarioGame
             }
         }
 
-        public static void CheckMarioEnemyCollision(PlayerSprite mario, List<IEnemy> enemies, GameTime gt) {
-                foreach (IEnemy enemy in enemies)
-                {
+        public static void CheckMarioEnemyCollision(PlayerSprite mario, List<IEnemy> enemies, GameTime gt)
+        {
+            foreach (IEnemy enemy in enemies)
+            {
                 if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) == CollisionDirection.Below)
                 {
                     enemy.TriggerDeath(gt, false);
                     //enemies.Remove(enemy);
-                } else if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None)
+                }
+                else if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None)
                 {
                     //Kill Mario
                 }
-                }
             }
+        }
 
-        public static void CheckMarioItemCollision(PlayerSprite mario, List<IItem> items, GameTime gt) { }
+        public static void CheckMarioItemCollision(PlayerSprite mario, List<IItem> items, GameTime gt) { 
+        
+        
+        }
 
         public static void CheckFireballEnemyCollision(List<Ball> fireballs, List<IEnemy> enemies, GameTime gt)
         {
@@ -166,33 +185,33 @@ namespace MarioGame
             }
         }
 
-            public static void CheckFireballBlockCollision(List<IBall> fireballs, List<IBlock> blocks)
+        public static void CheckFireballBlockCollision(List<IBall> fireballs, List<IBlock> blocks)
+        {
+            List<IBall> fireballsToRemove = new List<IBall>();
+
+            foreach (IBall fireball in fireballs)
             {
-                List<IBall> fireballsToRemove = new List<IBall>();
-
-                foreach (IBall fireball in fireballs)
+                foreach (IBlock block in blocks)
                 {
-                    foreach (IBlock block in blocks)
+                    if (GetCollisionDirection(fireball.GetDestinationRectangle(), block.GetDestinationRectangle()) != CollisionDirection.None)
                     {
-                        if (GetCollisionDirection(fireball.GetDestinationRectangle(), block.GetDestinationRectangle()) != CollisionDirection.None)
-                        {
-                            // Fireball hits the block, add fireball to removal list
-                            fireballsToRemove.Add(fireball);
-                            break; // Exit the loop after finding a collision for this fireball
-                        }
+                        // Fireball hits the block, add fireball to removal list
+                        fireballsToRemove.Add(fireball);
+                        break; // Exit the loop after finding a collision for this fireball
                     }
-                }
-
-                // Remove fireballs that have collided with blocks
-                foreach (IBall fireball in fireballsToRemove)
-                {
-                    fireballs.Remove(fireball);
                 }
             }
 
+            // Remove fireballs that have collided with blocks
+            foreach (IBall fireball in fireballsToRemove)
+            {
+                fireballs.Remove(fireball);
+            }
+        }
 
 
-          public static void CheckFireballEnemyCollision(List<IBall> fireballs, List<IEnemy> enemies,GameTime gm, bool stomped)
+
+        public static void CheckFireballEnemyCollision(List<IBall> fireballs, List<IEnemy> enemies, GameTime gm, bool stomped)
         {
             List<IBall> fireballsToRemove = new List<IBall>();
             List<IEnemy> enemyToDie = new List<IEnemy>();
@@ -217,10 +236,12 @@ namespace MarioGame
             }
             foreach (IEnemy enemy in enemyToDie)
             {
-                enemy.TriggerDeath(gm,stomped);
+                enemy.TriggerDeath(gm, stomped);
             }
         }
-
-        
     }
 }
+
+
+
+

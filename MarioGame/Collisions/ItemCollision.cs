@@ -25,6 +25,7 @@ namespace MarioGame.Collisions
                 intersectionRectangle = Rectangle.Intersect(itemRectangle, playerRectangle);
                 if (!intersectionRectangle.IsEmpty)
                 {
+                        
                     itemList.Add(item);
                 }
             }

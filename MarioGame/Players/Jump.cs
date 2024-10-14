@@ -22,14 +22,12 @@ namespace MarioGame
         public float velocity = 0f;     
         public bool isJumping = false;  
         public bool isGrounded = true;  
-        float groundLevel; 
         public Jump(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics, Game1 game)
         {
             Texture = texture;
             Position = position;
             Speed = speed;
             graphics = Graphics;
-            groundLevel = Graphics.PreferredBackBufferHeight - 95;
             Game = game;
         }
 

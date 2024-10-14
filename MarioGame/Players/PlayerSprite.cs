@@ -24,6 +24,7 @@ namespace MarioGame
         public bool left = false;
         public bool Fire = false;
         public bool Big = false;
+        public float groundLevel;
         public Texture2D marioTexture { get; set; }
         public Vector2 PlayerPosition;
         public Vector2 UPlayerPosition;
@@ -40,9 +41,7 @@ namespace MarioGame
         public JumpL JumpLplayer;
         public bool move = true;
         public SpriteType current = SpriteType.Static;
-        public int halfwidth;
-        public int halfheight;
-
+      
         // Added properties
         public float setPosX
         {
@@ -61,6 +60,7 @@ namespace MarioGame
             PlayerSpeed = speed;
             _graphics = Graphics;
             Game = game;
+            groundLevel = Graphics.PreferredBackBufferHeight - 95;
         }
 
         public void intialize_player()
@@ -87,8 +87,7 @@ namespace MarioGame
         {
             // update based on current sprite type
             //below for checking current state of mario
-            
-           
+          
             
             if (current == SpriteType.Motion)
             {
@@ -180,23 +179,20 @@ namespace MarioGame
             Rectangle rectangle = new Rectangle();
             if (Game.player_sprite.Fire)
             {
-                halfwidth = 45;
-                halfheight = 80;
+                
                 rectangle = new Rectangle((int)(UPlayerPosition.X - 45), (int)(UPlayerPosition.Y - 125), 90, 160);
 
 
             }
             else if (!Game.player_sprite.Fire && Game.player_sprite.Big)
             {
-                halfwidth = 40;
-                halfheight = 80;
+               
                 rectangle = new Rectangle((int)(UPlayerPosition.X - 40), (int)(UPlayerPosition.Y - 125), 80, 160);
 
             }
             else
             {
-                halfwidth = 35;
-                halfheight = 36;
+               
                 rectangle = new Rectangle((int)(UPlayerPosition.X - 35), (int)(UPlayerPosition.Y - 35), 70, 70);
 
             }
