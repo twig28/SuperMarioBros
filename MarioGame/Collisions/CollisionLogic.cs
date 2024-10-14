@@ -85,7 +85,6 @@ namespace MarioGame
                         {
                             enemy.setPosY = (int)block.Position.Y - enemy.GetDestinationRectangle().Height;
                         }
-                        // Only reverse direction on side collisions if the enemy is at the same vertical level as the block
                         else if (collisionDirection == CollisionDirection.Side)
                         {
                             // Allow side collision if enemy's bottom is not within a tolerance of the block's top (10)
@@ -164,17 +163,21 @@ namespace MarioGame
             }
         }
 
-        void CheckMarioEnemyCollision(PlayerSprite mario, List<IEnemy> enemies, GameTime gt) { }
+        public static void CheckMarioEnemyCollision(PlayerSprite mario, List<IEnemy> enemies, GameTime gt) { }
 
-        void CheckMarioItemCollision(PlayerSprite mario, List<IItem> items, GameTime gt) { }
+        public static void CheckMarioItemCollision(PlayerSprite mario, List<IItem> items, GameTime gt) { }
 
-        void CheckFireballEnemyCollision(List<Ball> fireballs, List<IEnemy> enemies, GameTime gt)
+        public static void CheckFireballEnemyCollision(List<IBall> fireballs, List<IEnemy> enemies, GameTime gt)
         {
-            foreach (Ball fireball in fireballs)
+            foreach (IBall fireball in fireballs)
             {
-            //if(GetCollisionDirection(fireball.GetDestinationRectangle(), enemy.GetDestinationRectangle())){
-            //enemy.TriggerKill(gt, false)
-            //}
+                foreach (IEnemy enemy in enemies)
+                {
+                    if (GetCollisionDirection(fireball.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None)
+                    {
+                        enemy.TriggerDeath(gt, false);
+                    }
+                }
             }
         }
 

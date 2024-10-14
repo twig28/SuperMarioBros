@@ -36,11 +36,11 @@ namespace MarioGame
         //FOR WEAPON
         private Texture2D ballTextureRight;  // fireball to the right
         private Texture2D ballTextureLeft;  // fireball to the left
-        private Texture2D multipleBlockTextures;  // firebolt to the left
-        private List<IBall> balls = new List<IBall>();  // list of ball
-        private float ballSpeed = 300f;  // ball speed
-        public bool zPressed = false;  //status of z
-        public bool nPressed = false;  // status of n
+        private Texture2D multipleBlockTextures;  
+        private List<IBall> balls = new List<IBall>();  
+        private float ballSpeed = 300f;  
+        public bool zPressed = false;  
+        public bool nPressed = false;  
         public bool keyboardPermitZ = false;
         public bool keyboardPermitN = false;
         public bool Fire = false;
@@ -49,7 +49,6 @@ namespace MarioGame
 
         // List to store and manage blocks
         private List<IBlock> blocks;
-        private int currentBlockIndex = 0;  // Track the current block index
 
         // Block textures
         private Texture2D groundBlockTexture;
@@ -59,7 +58,6 @@ namespace MarioGame
         {
             this.Initialize();
             this.LoadContent();
-            currentBlockIndex = 0;
         }
 
         public Game1()
@@ -150,23 +148,12 @@ namespace MarioGame
             // Get the current keyboard state
             KeyboardState currentKeyboardState = Keyboard.GetState();
 
-            // Handle block switching using 't' and 'y'
-            if (keyControl.IsKeyPressed(Keys.T, currentKeyboardState))
-            {
-                // Switch to the previous block
-                currentBlockIndex = (currentBlockIndex - 1 + blocks.Count) % blocks.Count;
-            }
-            else if (keyControl.IsKeyPressed(Keys.Y, currentKeyboardState))
-            {
-                // Switch to the next block
-                currentBlockIndex = (currentBlockIndex + 1) % blocks.Count;
-            }
-
             //PLAYER UPDATE
             player_sprite.Update(gameTime);
 
             // Check for collisions between Mario and blocks
             CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
+            CollisionLogic.CheckFireballEnemyCollision(balls, enemies, gameTime);
 
             //item collision
             ItemCollision itemCollision = new ItemCollision(player_sprite);
@@ -203,6 +190,7 @@ namespace MarioGame
             base.Update(gameTime);
         }
 
+        //For Sprint 3 Debug Only
         private void DrawCollisionRectangles(SpriteBatch spriteBatch)
         {
             Texture2D rectTexture = new Texture2D(GraphicsDevice, 1, 1);
@@ -226,11 +214,6 @@ namespace MarioGame
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
-
-            //foreach (var block in blocks)
-            //{
-            //    block.Draw(_spriteBatch);
-            //}
 
             Vector2 itemLocation = new Vector2(200, 200);
             items.Draw(_spriteBatch, itemLocation);
