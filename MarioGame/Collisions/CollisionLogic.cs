@@ -44,7 +44,7 @@ namespace MarioGame
                 return CollisionDirection.Side;
             }
         }
-        static public void CheckEnemyBlockCollisions(List<IEnemy> enemies, List<IBlock> blocks)
+        public static void CheckEnemyBlockCollisions(List<IEnemy> enemies, List<IBlock> blocks)
         {
             foreach (IEnemy enemy in enemies)
             {

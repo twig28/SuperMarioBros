@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 using System.Net;
+using MarioGame.Collisions;
 
 namespace MarioGame
 {
@@ -161,6 +162,10 @@ namespace MarioGame
             // Check for collisions between Mario and blocks
             CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
 
+            //item collision
+            ItemCollision itemCollision = new ItemCollision(player_sprite);
+            itemCollision.ItemCollisionHandler(items.getItemList());
+
             foreach (var block in blocks)
             {
                 block.Update(gameTime);
@@ -206,6 +211,7 @@ namespace MarioGame
                 Rectangle blockRect = block.GetDestinationRectangle();
                 spriteBatch.Draw(rectTexture, blockRect, Color.Blue * 0.5f);
             }
+            items.DrawCollisionRectangles(spriteBatch);
         }
 
         protected override void Draw(GameTime gameTime)

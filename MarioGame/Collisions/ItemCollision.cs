@@ -7,15 +7,15 @@ namespace MarioGame.Collisions
 {
     internal class ItemCollision
     {
-        private IPlayer player;
-        public ItemCollision(IPlayer player)
+        private PlayerSprite player;
+        public ItemCollision(PlayerSprite player)
         {
             this.player = player;
         }
 
         public void ItemCollisionHandler(List<IItem> items)
         {
-            Rectangle playerRectangle =
+            Rectangle playerRectangle = player.GetDestinationRectangle();
             Rectangle itemRectangle;
             Rectangle intersectionRectangle;
             List<IItem> itemList = new List<IItem>();
