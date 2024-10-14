@@ -34,6 +34,7 @@ public class KeyboardController : IController
 
         currentKeyState = Keyboard.GetState();
 
+        //Move this to mario class
         if (Game.player_sprite.current == PlayerSprite.SpriteType.MotionL)
         {
             Game.player_sprite.current = PlayerSprite.SpriteType.StaticL;
@@ -45,21 +46,9 @@ public class KeyboardController : IController
             Game.player_sprite.left = false;
         }
 
-        if (currentKeyState.IsKeyDown(Keys.Escape))
-        {
-            Game.Exit();
-        }
         if (currentKeyState.IsKeyDown(Keys.Q))
         {
             Game.Exit();
-        }
-        if (IsKeyPressed(Keys.U, currentKeyState))
-        {
-            Item.lastItem();
-        }
-        if (IsKeyPressed(Keys.I, currentKeyState))
-        {
-            Item.nextItem();
         }
 
         if (currentKeyState.IsKeyDown(Keys.Right) || currentKeyState.IsKeyDown(Keys.D))

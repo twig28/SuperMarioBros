@@ -42,35 +42,6 @@ namespace MarioGame
             return CollisionDirection.Side;
         }
 
-
-        static public CollisionDirection GetMarioCollisionDirection(Rectangle _marioRectangle, Rectangle _blockRectangle) //Comparing r1 to r2, i.e. r1 is below r2
-        {
-            if (_marioRectangle.Intersects(_blockRectangle))
-            {
-/*
-                if (_marioRectangle.Top > _blockRectangle.Bottom && _marioRectangle.Bottom > _blockRectangle.Bottom)
-                {
-                    return CollisionDirection.Below;
-                }
-*/
-                if (_marioRectangle.Bottom < _blockRectangle.Top)
-
-                {
-                    return CollisionDirection.Above;
-                }
-                else
-                {
-                    return CollisionDirection.Side;
-                }
-            }
-            return CollisionDirection.None;
-
-        }
-
-
-
-
-
         static public void CheckEnemyBlockCollisions(List<IEnemy> enemies, List<IBlock> blocks)
         {
             foreach (IEnemy enemy in enemies)
