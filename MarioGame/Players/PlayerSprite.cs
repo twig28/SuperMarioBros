@@ -40,7 +40,16 @@ namespace MarioGame
         public int width = 14;
         public int height = 16;
 
-
+        // Added properties
+        public bool MovingRight { get; set; }
+        public float setPosX
+        {
+            set { UPlayerPosition.X = value; }
+        }
+        public float setPosY
+        {
+            set { UPlayerPosition.Y = value; }
+        }
 
         public PlayerSprite(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics, Game1 game)
         {
@@ -50,7 +59,7 @@ namespace MarioGame
             PlayerSpeed = speed;
             _graphics = Graphics;
             Game = game;
-
+            MovingRight = true; // Default direction
         }
 
         public void intialize_player()
@@ -82,24 +91,28 @@ namespace MarioGame
                 MRplayer.Position = UPlayerPosition; //U means upated
                 MRplayer.Update(gameTime);
                 UPlayerPosition = MRplayer.Position;
+                MovingRight = true;
             }
             else if (current == SpriteType.MotionL)
             {
                 MLplayer.Position = UPlayerPosition;
                 MLplayer.Update(gameTime);
                 UPlayerPosition = MLplayer.Position;
+                MovingRight = false;
             }
             else if (current == SpriteType.Jump)
             {
                 Jumpplayer.Position = UPlayerPosition;
                 Jumpplayer.Update(gameTime);
                 UPlayerPosition = Jumpplayer.Position;
+                MovingRight = true; // Assuming jumping maintains direction
             }
             else if (current == SpriteType.JumpL)
             {
                 JumpLplayer.Position = UPlayerPosition;
                 JumpLplayer.Update(gameTime);
                 UPlayerPosition = JumpLplayer.Position;
+                MovingRight = false;
             }
             else if (current == SpriteType.Damaged)
             {
@@ -114,10 +127,12 @@ namespace MarioGame
                 if (current == SpriteType.StaticL)
                 {
                     StaLplayer.Position = UPlayerPosition;
+                    MovingRight = false;
                 }
                 else if (current == SpriteType.Static)
                 {
                     Staplayer.Position = UPlayerPosition;
+                    MovingRight = true;
                 }
 
             }
@@ -160,6 +175,14 @@ namespace MarioGame
             {
                 Damagedplayer.Draw(_spriteBatch);
             }
+       }
+
+        // Added GetDestinationRectangle method
+        public Rectangle GetDestinationRectangle()
+        {
+            int width = marioTexture.Width;
+            int height = marioTexture.Height;
+            return new Rectangle((int)UPlayerPosition.X, (int)UPlayerPosition.Y, width, height);
         }
 
     }

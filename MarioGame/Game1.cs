@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 using System.Net;
+using MarioGame.Collisions;
 
 namespace MarioGame
 {
@@ -91,7 +92,6 @@ namespace MarioGame
             font = Content.Load<SpriteFont>("File");
             marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
             enemyTextures = Content.Load<Texture2D>("smb_enemies_sheet");
-            //ITEM intialize
             itemTextures = Content.Load<Texture2D>("smb_items_sheet");
             items = new Item(itemTextures);
 
@@ -103,17 +103,23 @@ namespace MarioGame
             // Initialize blocks
             blocks = new List<IBlock>
             {
-                new GroundBlock(new Vector2(500, 350), groundBlockTexture, new Rectangle(0, 0, 50, 50)),
-                new Block(new Vector2(500, 600), blockTexture, new Rectangle(0, 0, 50, 50)),
-                new MysteryBlock(new Vector2(560, 600), multipleBlockTextures, new Rectangle(80, 112, 15, 15))
+                new Block(new Vector2(500, 200), blockTexture, new Rectangle(0, 0, 50, 50)),
+                new GroundBlock(new Vector2(900, GraphicsDevice.Viewport.Height - 120), groundBlockTexture, new Rectangle(0, 0, 50, 50)),
+                new MysteryBlock(new Vector2(560, 200), multipleBlockTextures, new Rectangle(80, 112, 15, 15))
             };
+
+            //create a row of blocks on the bottom, besides leftmost two so mario can fall
+            for (int i = 0; i <= GraphicsDevice.Viewport.Width - 120; i += 60)
+            {
+                blocks.Add(new GroundBlock(new Vector2(i, GraphicsDevice.Viewport.Height - 60), groundBlockTexture, new Rectangle(0, 0, 50, 50)));
+            }
 
             //enemy intialize
             enemies = new List<IEnemy>
             {
-                new Goomba(enemyTextures, _spriteBatch, 500, 200),
+                new Goomba(enemyTextures, _spriteBatch, 500, 500),
                 new Koopa(enemyTextures, _spriteBatch, 600, 500),
-                new Piranha(enemyTextures, _spriteBatch, 500, 500),
+                new Piranha(enemyTextures, _spriteBatch, 1100, 500),
             };
             //For intialize all player
             player_sprite = new PlayerSprite(marioTexture, PlayerPosition, PlayerSpeed, _graphics, this);
@@ -130,10 +136,10 @@ namespace MarioGame
             keyControl.HandleInputs();
             mouseControl.HandleInputs();
 
-            foreach (var block in blocks)
-            {
-                block.Update(gameTime);
-            }
+            //foreach (var block in blocks)
+            //{
+            //    block.Update(gameTime);
+            //}
 
             CollisionLogic.CheckEnemyBlockCollisions(enemies, blocks);
             CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
@@ -158,7 +164,19 @@ namespace MarioGame
 
             //PLAYER UPDATE
             player_sprite.Update(gameTime);
-            
+
+            // Check for collisions between Mario and blocks
+            CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
+
+            //item collision
+            ItemCollision itemCollision = new ItemCollision(player_sprite);
+            itemCollision.ItemCollisionHandler(items.getItemList());
+
+            foreach (var block in blocks)
+            {
+                block.Update(gameTime);
+            }
+
             //check whether mario attack (this needs to be in it's own class)
             if (keyboardPermitZ)
             {
@@ -179,9 +197,28 @@ namespace MarioGame
             }
             
             balls.RemoveAll(b => !b.IsVisible);
+            CollisionLogic.CheckFireballBlockCollision(balls, blocks);
             //update items
             items.Update(gameTime);
             base.Update(gameTime);
+        }
+
+        private void DrawCollisionRectangles(SpriteBatch spriteBatch)
+        {
+            Texture2D rectTexture = new Texture2D(GraphicsDevice, 1, 1);
+            rectTexture.SetData(new[] { Color.White });
+
+            // Draw Mario's collision rectangle
+            Rectangle marioRect = player_sprite.GetDestinationRectangle();
+            spriteBatch.Draw(rectTexture, marioRect, Color.Red * 0.5f);
+
+            // Draw blocks' collision rectangles
+            foreach (IBlock block in blocks)
+            {
+                Rectangle blockRect = block.GetDestinationRectangle();
+                spriteBatch.Draw(rectTexture, blockRect, Color.Blue * 0.5f);
+            }
+            items.DrawCollisionRectangles(spriteBatch);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -190,20 +227,28 @@ namespace MarioGame
 
             _spriteBatch.Begin();
 
-            foreach (var block in blocks)
-            {
-                block.Draw(_spriteBatch);
-            }
+            //foreach (var block in blocks)
+            //{
+            //    block.Draw(_spriteBatch);
+            //}
 
             Vector2 itemLocation = new Vector2(200, 200);
             items.Draw(_spriteBatch, itemLocation);
 
             player_sprite.Draw(_spriteBatch);
 
-            foreach (Ball ball in balls)
+            foreach (var block in blocks)
+            {
+                block.Draw(_spriteBatch);
+            }
+
+            foreach (IBall ball in balls)
             {
                 ball.Draw(_spriteBatch);
             }
+
+            // Draw collision rectangles for debugging
+            DrawCollisionRectangles(_spriteBatch);
 
             _spriteBatch.End();
 
