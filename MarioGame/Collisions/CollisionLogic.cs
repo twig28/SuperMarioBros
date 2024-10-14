@@ -120,7 +120,7 @@ namespace MarioGame
         }
 
         //function that has a for each between enemies and other enemies
-        void CheckEnemyEnemyCollision(List<IEnemy> enemies, GameTime gt)
+        public static void CheckEnemyEnemyCollision(List<IEnemy> enemies, GameTime gt)
         {
             foreach (IEnemy enemy in enemies)
             {
