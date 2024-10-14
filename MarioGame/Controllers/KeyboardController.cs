@@ -93,38 +93,22 @@ public class KeyboardController : IController
         }
         if (currentKeyState.IsKeyDown(Keys.X))
         {
-            Game.player_sprite.Staplayer.Big = true;
-            Game.player_sprite.StaLplayer.Big = true;
-            Game.player_sprite.MRplayer.Big = true;
-            Game.player_sprite.MLplayer.Big = true;
-            Game.player_sprite.JumpLplayer.Big = true;
-            Game.player_sprite.Jumpplayer.Big = true;
+           
+            Game.player_sprite.Big = true;
         }
 
         if (currentKeyState.IsKeyDown(Keys.M))
         {
-            Game.player_sprite.Staplayer.Fire = true;
-            Game.player_sprite.StaLplayer.Fire = true;
-            Game.player_sprite.MRplayer.Fire = true;
-            Game.player_sprite.MLplayer.Fire = true;
-            Game.player_sprite.Jumpplayer.Fire = true;
+            
+            Game.player_sprite.Fire = true;
             Game.Fire = true;
         }
 
         if (currentKeyState.IsKeyDown(Keys.J))
         {
-            Game.player_sprite.Staplayer.Fire = false;
-            Game.player_sprite.StaLplayer.Fire = false;
-            Game.player_sprite.MRplayer.Fire = false;
-            Game.player_sprite.MLplayer.Fire = false;
-            Game.player_sprite.Jumpplayer.Fire = false;
-            Game.player_sprite.JumpLplayer.Fire = false;
-            Game.player_sprite.Staplayer.Big = false;
-            Game.player_sprite.StaLplayer.Big = false;
-            Game.player_sprite.MRplayer.Big = false;
-            Game.player_sprite.MLplayer.Big = false;
-            Game.player_sprite.Jumpplayer.Big = false;
-            Game.player_sprite.JumpLplayer.Big = false;
+           
+            Game.player_sprite.Fire=false;
+            Game.player_sprite.Big = false;
             Game.Fire = false;
         }
 

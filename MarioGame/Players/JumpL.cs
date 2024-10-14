@@ -16,21 +16,6 @@ namespace MarioGame
         public GraphicsDeviceManager graphics;
         public Game1 Game;
         public float Scale = 5f;
-        private const int width = 17;
-        private const int height = 17;
-        private const int SX = 29;
-        private const int SY = 0;
-        private const int bigwidth = 18;
-        private const int bigheight = 32;
-        private const int bigSX = 29;
-        private const int bigSY = 52;
-        public bool Big = false;
-
-        private const int firewidth = 19;
-        private const int fireheight = 32;
-        private const int fireSX = 25;
-        private const int fireSY = 122;
-        public bool Fire = false;
         //for jump
         float jumpSpeed = -10f;
         float gravity = 0.5f;     
@@ -83,22 +68,23 @@ namespace MarioGame
         public void Draw(SpriteBatch spriteBatch)
         {
             //check status
+            Rectangle sourceRectangle = new Rectangle(29, 0, 17, 17);
+            int width = 17;
+            int height = 17;
+            if (Game.player_sprite.Fire)
+            {
+                width = 18;
+                height = 32;
+                sourceRectangle = new Rectangle(25, 122, 18, 32);
+            }
+            else if (!Game.player_sprite.Fire && Game.player_sprite.Big)
+            {
+                width = 18;
+                height = 32;
+                sourceRectangle = new Rectangle(29, 52, 18, 32);
+            }
+            spriteBatch.Draw(Texture, Position, sourceRectangle, Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
 
-            if (!Big && !Fire)
-            {
-                Rectangle sourceRectangle = new Rectangle(SX, SY, width, height);
-                spriteBatch.Draw(Texture, Position, sourceRectangle, Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
-            }
-            else if (Fire)
-            {
-                Rectangle firesourceRectangle = new Rectangle(fireSX, fireSY, firewidth, fireheight);
-                spriteBatch.Draw(Texture, Position, firesourceRectangle, Color.White, 0f, new Vector2(firewidth / 2, fireheight / 2), Scale, SpriteEffects.None, 0f);
-            }
-            else if (!Fire && Big)
-            {
-                Rectangle bigsourceRectangle = new Rectangle(bigSX, bigSY, bigwidth, bigheight);
-                spriteBatch.Draw(Texture, Position, bigsourceRectangle, Color.White, 0f, new Vector2(bigwidth / 2, bigheight / 2), Scale, SpriteEffects.None, 0f);
-            }
         }
     }
 }

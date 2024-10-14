@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.ComponentModel;
+using System.Net;
 using static System.Formats.Asn1.AsnWriter;
 
 namespace MarioGame
@@ -22,6 +23,8 @@ namespace MarioGame
         }
         public bool left = false;
         public bool onblock = false;
+        public bool Fire = false;
+        public bool Big = false;
         public Texture2D marioTexture { get; set; }
         public Vector2 PlayerPosition;
         public Vector2 UPlayerPosition;
@@ -65,13 +68,13 @@ namespace MarioGame
         {
             //Player initialize
             //move toward right
-            MRplayer = new MotionPlayer(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
+            MRplayer = new MotionPlayer(marioTexture, PlayerPosition, PlayerSpeed, _graphics, Game);
             //standing toward right
-            Staplayer = new Static(marioTexture, PlayerPosition);
+            Staplayer = new Static(marioTexture, PlayerPosition,Game);
             //standing toward left
-            StaLplayer = new StaticL(marioTexture, PlayerPosition);
+            StaLplayer = new StaticL(marioTexture, PlayerPosition,Game);
             //moving toward left
-            MLplayer = new MotionPlayerLeft(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
+            MLplayer = new MotionPlayerLeft(marioTexture, PlayerPosition, PlayerSpeed, _graphics,Game);
             //juming toward right
             Jumpplayer = new Jump(marioTexture, PlayerPosition, PlayerSpeed, _graphics, Game);
             //juming toward left

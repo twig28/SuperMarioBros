@@ -47,12 +47,13 @@ namespace MarioGame
         {
             if (_marioRectangle.Intersects(_blockRectangle))
             {
-
+/*
                 if (_marioRectangle.Top > _blockRectangle.Bottom && _marioRectangle.Bottom > _blockRectangle.Bottom)
                 {
                     return CollisionDirection.Below;
                 }
-                else if (_marioRectangle.Bottom < _blockRectangle.Top && _marioRectangle.Top < _blockRectangle.Top)
+*/
+                if (_marioRectangle.Bottom < _blockRectangle.Top)
 
                 {
                     return CollisionDirection.Above;
