@@ -92,7 +92,6 @@ namespace MarioGame
             multipleBlockTextures = Content.Load<Texture2D>("blocks");
             items = new Item(itemTextures);
 
-            // Initialize blocks
             blocks = new List<IBlock>
             {
                 new Block(new Vector2(500, 200), blockTexture, new Rectangle(0, 0, 50, 50)),
@@ -102,7 +101,6 @@ namespace MarioGame
 
             PlayerPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2,
                    GraphicsDevice.Viewport.Height - 95);
-
 
             //create a row of blocks on the bottom, besides leftmost two so mario can fall
             for (int i = 0; i <= GraphicsDevice.Viewport.Width - 120; i += 60)
@@ -141,11 +139,10 @@ namespace MarioGame
             // Get the current keyboard state
             KeyboardState currentKeyboardState = Keyboard.GetState();
 
-            //PLAYER UPDATE
             player_sprite.Update(gameTime);
 
-            // Check for collisions between Mario and blocks
             CollisionLogic.CheckFireballEnemyCollision(balls, enemies, gameTime);
+            CollisionLogic.CheckEnemyEnemyCollision(enemies, gameTime);
 
             //item collision
             ItemCollision itemCollision = new ItemCollision(player_sprite);
@@ -177,7 +174,7 @@ namespace MarioGame
             
             balls.RemoveAll(b => !b.IsVisible);
             CollisionLogic.CheckFireballBlockCollision(balls, blocks);
-            //update items
+
             items.Update(gameTime);
             base.Update(gameTime);
         }
