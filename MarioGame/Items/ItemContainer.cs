@@ -1,17 +1,16 @@
 using System.Collections.Generic;
-using System.ComponentModel;
 using MarioGame.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MarioGame.Items;
 
-public class Item
+public class ItemContainer
 {
     private static readonly List<IItem> items = new List<IItem>();
     private static int index = 0;
 
-    public Item(Texture2D texture)
+    public ItemContainer(Texture2D texture)
     {
         items.Add(new Coin(texture));
         items.Add(new FireFlower(texture));
@@ -29,33 +28,27 @@ public class Item
     {
         index = 0;
     }
-    public static void nextItem()
-    {
-        index++;
-        if (index > items.Count - 1)
-            index = 0;
-    }
-
-    public static void lastItem()
-    {
-        index--;
-        if (index < 0)
-            index = items.Count - 1;
-    }
     public void Update(GameTime gameTime)
     {
-        if (items.Count > 0)
+        foreach (IItem item in items)
         {
-            items[index].Update(gameTime);
+            item.Update(gameTime);
         }
-    
     }
 
-    public void Draw(SpriteBatch spriteBatch, Vector2 location)
+    public void Draw(SpriteBatch spriteBatch)
     {
-        if (items.Count > 0)
+        int xValue = 100;
+        int yValue = 600;
+        Vector2 location = new Vector2(xValue, yValue);
+        foreach (IItem item in items)
         {
-            items[index].Draw(spriteBatch, location);
+            if (items.Count > 0)
+            {
+                item.Draw(spriteBatch, location);
+                xValue += 100;
+                location = new Vector2(xValue, yValue);
+            }
         }
     }
     public void DrawCollisionRectangles(SpriteBatch spriteBatch)
