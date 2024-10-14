@@ -32,7 +32,7 @@ namespace MarioGame
         IController keyControl;
         IController mouseControl;
         //FOR ITEM
-        Item items;
+        ItemContainer items;
         //FOR WEAPON
         private Texture2D ballTextureRight;  // fireball to the right
         private Texture2D ballTextureLeft;  // fireball to the left
@@ -74,7 +74,7 @@ namespace MarioGame
 
         protected override void Initialize()
         {
-            Item.Initialize();
+            ItemContainer.Initialize();
             keyControl = new KeyboardController(this);
             mouseControl = new MouseController(this);
            
@@ -90,7 +90,7 @@ namespace MarioGame
             marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
             enemyTextures = Content.Load<Texture2D>("smb_enemies_sheet");
             itemTextures = Content.Load<Texture2D>("smb_items_sheet");
-            items = new Item(itemTextures);
+            items = new ItemContainer(itemTextures);
 
             // Load block textures
             groundBlockTexture = Content.Load<Texture2D>("resizedGroundBlock");
@@ -215,8 +215,7 @@ namespace MarioGame
 
             _spriteBatch.Begin();
 
-            Vector2 itemLocation = new Vector2(200, 200);
-            items.Draw(_spriteBatch, itemLocation);
+            items.Draw(_spriteBatch);
 
             player_sprite.Draw(_spriteBatch);
 
