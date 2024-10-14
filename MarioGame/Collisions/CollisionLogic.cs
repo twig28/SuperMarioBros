@@ -44,30 +44,34 @@ namespace MarioGame
                 return CollisionDirection.Side;
             }
         }
-        public static void CheckEnemyBlockCollisions(List<IEnemy> enemies, List<IBlock> blocks)
+        static public void CheckEnemyBlockCollisions(List<IEnemy> enemies, List<IBlock> blocks)
         {
             foreach (IEnemy enemy in enemies)
             {
-                //Piranhas have no collision with blocks
+                // Piranhas have no collision with blocks
                 if (!(enemy is Piranha))
                 {
                     foreach (IBlock block in blocks)
                     {
-                        if (GetCollisionDirection(block.GetDestinationRectangle(), enemy.GetDestinationRectangle()) == CollisionDirection.Above)
+                        CollisionDirection collisionDirection = GetCollisionDirection(block.GetDestinationRectangle(), enemy.GetDestinationRectangle());
+
+                        if (collisionDirection == CollisionDirection.Above)
                         {
                             enemy.setPosY = (int)block.Position.Y - enemy.GetDestinationRectangle().Height;
-                            break;
                         }
-                        else if (GetCollisionDirection(enemy.GetDestinationRectangle(), block.GetDestinationRectangle()) == CollisionDirection.Side)
+                        // Only reverse direction on side collisions if the enemy is at the same vertical level as the block
+                        else if (collisionDirection == CollisionDirection.Side)
                         {
-                            enemy.MovingRight = !enemy.MovingRight;
+                            // Allow side collision if enemy's bottom is not within a tolerance of the block's top (10)
+                            if (enemy.GetDestinationRectangle().Bottom > block.GetDestinationRectangle().Top + 10)
+                            {
+                                enemy.MovingRight = !enemy.MovingRight;
+                            }
                         }
                     }
                 }
             }
         }
-
-        //THESE ARE TODO BUT DONT HAVE TO BE IN THIS FILE
         //function that has a for each between mario and blocks/obstacles
         public static void CheckMarioBlockCollision(PlayerSprite mario, List<IBlock> blocks)
         {
@@ -122,6 +126,7 @@ namespace MarioGame
             {
                 foreach (IEnemy enemy2 in enemies)
                 {
+                    if (enemy2 == enemy) { continue; }
                     if (GetCollisionDirection(enemy.GetDestinationRectangle(), enemy2.GetDestinationRectangle()) != CollisionDirection.None)
                     {
                         enemy.MovingRight = !enemy.MovingRight;

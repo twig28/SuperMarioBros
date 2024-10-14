@@ -92,7 +92,6 @@ namespace MarioGame
             font = Content.Load<SpriteFont>("File");
             marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
             enemyTextures = Content.Load<Texture2D>("smb_enemies_sheet");
-            //ITEM intialize
             itemTextures = Content.Load<Texture2D>("smb_items_sheet");
             items = new Item(itemTextures);
 
@@ -104,17 +103,23 @@ namespace MarioGame
             // Initialize blocks
             blocks = new List<IBlock>
             {
-                new GroundBlock(new Vector2(500, 350), groundBlockTexture, new Rectangle(0, 0, 50, 50)),
-                new Block(new Vector2(500, 600), blockTexture, new Rectangle(0, 0, 50, 50)),
-                new MysteryBlock(new Vector2(560, 600), multipleBlockTextures, new Rectangle(80, 112, 15, 15))
+                new Block(new Vector2(500, 200), blockTexture, new Rectangle(0, 0, 50, 50)),
+                new GroundBlock(new Vector2(900, GraphicsDevice.Viewport.Height - 120), groundBlockTexture, new Rectangle(0, 0, 50, 50)),
+                new MysteryBlock(new Vector2(560, 200), multipleBlockTextures, new Rectangle(80, 112, 15, 15))
             };
+
+            //create a row of blocks on the bottom, besides leftmost two so mario can fall
+            for (int i = 0; i <= GraphicsDevice.Viewport.Width - 120; i += 60)
+            {
+                blocks.Add(new GroundBlock(new Vector2(i, GraphicsDevice.Viewport.Height - 60), groundBlockTexture, new Rectangle(0, 0, 50, 50)));
+            }
 
             //enemy intialize
             enemies = new List<IEnemy>
             {
-                new Goomba(enemyTextures, _spriteBatch, 500, 200),
+                new Goomba(enemyTextures, _spriteBatch, 500, 500),
                 new Koopa(enemyTextures, _spriteBatch, 600, 500),
-                new Piranha(enemyTextures, _spriteBatch, 500, 500),
+                new Piranha(enemyTextures, _spriteBatch, 1100, 500),
             };
             //For intialize all player
             player_sprite = new PlayerSprite(marioTexture, PlayerPosition, PlayerSpeed, _graphics, this);
