@@ -22,32 +22,32 @@ namespace MarioGame
         Texture2D enemyTextures;
         Texture2D itemTextures;
         Texture2D sceneryTextures;
+        private Texture2D ballTextureRight;
+        private Texture2D ballTextureLeft;
+        private Texture2D multipleBlockTextures;
 
-        //FOR PLAYER VAR
         public Vector2 PlayerPosition;
         public Vector2 UPlayerPosition;
         float PlayerSpeed;
         public PlayerSprite player_sprite;
-        //FOR CONTROLLER
+
         IController keyControl;
         IController mouseControl;
-        //FOR ITEM
         ItemContainer items;
-        //FOR WEAPON
-        private Texture2D ballTextureRight;  // fireball to the right
-        private Texture2D ballTextureLeft;  // fireball to the left
-        private Texture2D multipleBlockTextures;  
+ 
         private List<IBall> balls = new List<IBall>();  
-        private float ballSpeed = 300f;  
+        private float ballSpeed = 300f; 
+        
+        //Needs to be moved to controller
         public bool zPressed = false;  
         public bool nPressed = false;  
         public bool keyboardPermitZ = false;
         public bool keyboardPermitN = false;
-        public bool Fire = false;
-        //Temporary for sprint 2
-        private List<IEnemy> enemies;
+        //
 
-        // List to store and manage blocks
+        public bool Fire = false;
+
+        private List<IEnemy> enemies;
         private List<IBlock> blocks;
 
         // Block textures
@@ -90,12 +90,12 @@ namespace MarioGame
             marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
             enemyTextures = Content.Load<Texture2D>("smb_enemies_sheet");
             itemTextures = Content.Load<Texture2D>("smb_items_sheet");
-            items = new ItemContainer(itemTextures);
-
-            // Load block textures
             groundBlockTexture = Content.Load<Texture2D>("resizedGroundBlock");
             blockTexture = Content.Load<Texture2D>("InitialBrickBlock");
             multipleBlockTextures = Content.Load<Texture2D>("blocks");
+            
+            items = new ItemContainer(itemTextures);
+
 
             // Initialize blocks
             blocks = new List<IBlock>
@@ -134,13 +134,9 @@ namespace MarioGame
             keyControl.HandleInputs();
             mouseControl.HandleInputs();
 
-            //foreach (var block in blocks)
-            //{
-            //    block.Update(gameTime);
-            //}
-
             CollisionLogic.CheckEnemyBlockCollisions(enemies, blocks);
             CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
+            CollisionLogic.CheckEnemyEnemyCollision(enemies, gameTime);
 
             // Remove destroyed blocks from the list
             blocks.RemoveAll(block => block is Block b && b.IsDestroyed);
@@ -148,14 +144,10 @@ namespace MarioGame
             // Get the current keyboard state
             KeyboardState currentKeyboardState = Keyboard.GetState();
 
-            //PLAYER UPDATE
             player_sprite.Update(gameTime);
 
-            // Check for collisions between Mario and blocks
-           // CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
             CollisionLogic.CheckFireballEnemyCollision(balls, enemies, gameTime);
 
-            //item collision
             ItemCollision itemCollision = new ItemCollision(player_sprite);
             itemCollision.ItemCollisionHandler(items.getItemList());
 
@@ -186,7 +178,6 @@ namespace MarioGame
             balls.RemoveAll(b => !b.IsVisible);
             CollisionLogic.CheckFireballBlockCollision(balls, blocks);
             CollisionLogic.CheckFireballEnemyCollision(balls,enemies,gameTime,false);
-            //update items
             items.Update(gameTime);
             base.Update(gameTime);
         }
