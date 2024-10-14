@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MarioGame.Items;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace MarioGame.Controllers;
@@ -52,15 +53,30 @@ public class KeyboardController : IController
         }
 
         if (currentKeyState.IsKeyDown(Keys.Right) || currentKeyState.IsKeyDown(Keys.D))
-        {
-            Game.player_sprite.current = PlayerSprite.SpriteType.Motion;
+        {  if (Game.player_sprite.current == PlayerSprite.SpriteType.Jump || Game.player_sprite.current == PlayerSprite.SpriteType.JumpL)
+            {
+                Game.player_sprite.UPlayerPosition.X += 5f;
+
+            }
+            else {
+                Game.player_sprite.current = PlayerSprite.SpriteType.Motion;
+            }
             Game.player_sprite.left = false ;
         }
 
         if (currentKeyState.IsKeyDown(Keys.Left) || currentKeyState.IsKeyDown(Keys.A))
         {
-            Game.player_sprite.current = PlayerSprite.SpriteType.MotionL;
-            Game.player_sprite.left = true;
+            if (Game.player_sprite.current == PlayerSprite.SpriteType.Jump || Game.player_sprite.current == PlayerSprite.SpriteType.JumpL)
+            {
+                Game.player_sprite.UPlayerPosition.X -= 5f;
+
+            }
+            else
+            {
+                Game.player_sprite.current = PlayerSprite.SpriteType.MotionL;
+            }
+                Game.player_sprite.left = true;
+            
         }
         if (currentKeyState.IsKeyDown(Keys.W) || currentKeyState.IsKeyDown(Keys.Up))
         {

@@ -18,10 +18,10 @@ namespace MarioGame
         public float Scale = 5f;
         //for jump
         float jumpSpeed = -10f;
-        float gravity = 0.5f;     
-        float velocity = 0f;    
-        bool isJumping = false;   
-        bool isGrounded = true;   
+        float gravity = 0.3f;     
+        public float velocity = 0f;    
+        public bool isJumping = false;   
+        public bool isGrounded = true;   
         float groundLevel;
         public JumpL(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics, Game1 game)
         {
@@ -43,23 +43,16 @@ namespace MarioGame
                 isJumping = true;
                 isGrounded = false;
                 velocity = jumpSpeed;
+                Game.player_sprite.current = PlayerSprite.SpriteType.StaticL;
             }
 
-          
+
             if (isJumping)
             {
                 velocity += gravity;
                 Position.Y += velocity;
 
-                if (Position.Y >= groundLevel)
-                {
-                    Position.Y = groundLevel;
-                    Game.player_sprite.current = PlayerSprite.SpriteType.StaticL;
 
-                    isGrounded = true;
-                    isJumping = false;
-                    velocity = 0f;
-                }
             }
 
 
@@ -69,19 +62,22 @@ namespace MarioGame
         {
             //check status
             Rectangle sourceRectangle = new Rectangle(29, 0, 17, 17);
-            int width = 17;
-            int height = 17;
+            int width = 14;
+            int height = 16;
             if (Game.player_sprite.Fire)
             {
                 width = 18;
                 height = 32;
                 sourceRectangle = new Rectangle(25, 122, 18, 32);
+                Position.Y -= 40;
             }
             else if (!Game.player_sprite.Fire && Game.player_sprite.Big)
             {
                 width = 18;
                 height = 32;
                 sourceRectangle = new Rectangle(29, 52, 18, 32);
+                Position.Y -= 40;
+
             }
             spriteBatch.Draw(Texture, Position, sourceRectangle, Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
 

@@ -22,7 +22,6 @@ namespace MarioGame
             Damaged// moving sprite
         }
         public bool left = false;
-        public bool onblock = false;
         public bool Fire = false;
         public bool Big = false;
         public Texture2D marioTexture { get; set; }
@@ -36,9 +35,9 @@ namespace MarioGame
         private MotionPlayerLeft MLplayer;
         private Static Staplayer;
         private StaticL StaLplayer;
-        private Jump Jumpplayer;
+        public Jump Jumpplayer;
         private Damaged Damagedplayer;
-        private JumpL JumpLplayer;
+        public JumpL JumpLplayer;
         public bool move = true;
         public SpriteType current = SpriteType.Static;
         public int halfwidth;
@@ -88,16 +87,9 @@ namespace MarioGame
         {
             // update based on current sprite type
             //below for checking current state of mario
-            /*
-            if(onblock == false && UPlayerPosition.Y < _graphics.PreferredBackBufferHeight - 95 && current!= SpriteType.Jump && current!= SpriteType.JumpL)
-            {
-                if (left)
-                {
-                    current = SpriteType.JumpL;
-                }
-                current = SpriteType.Jump;
-            }
-            */
+            
+           
+            
             if (current == SpriteType.Motion)
             {
                 MRplayer.Position = UPlayerPosition; //U means upated
@@ -190,7 +182,7 @@ namespace MarioGame
             {
                 halfwidth = 45;
                 halfheight = 80;
-                rectangle = new Rectangle((int)(UPlayerPosition.X - halfwidth), (int)(UPlayerPosition.Y - halfheight - 45), 2 * halfwidth, 2 * halfheight);
+                rectangle = new Rectangle((int)(UPlayerPosition.X - 45), (int)(UPlayerPosition.Y - 125), 90, 160);
 
 
             }
@@ -198,14 +190,14 @@ namespace MarioGame
             {
                 halfwidth = 40;
                 halfheight = 80;
-                rectangle = new Rectangle((int)(UPlayerPosition.X - halfwidth), (int)(UPlayerPosition.Y - halfheight - 45), 2 * halfwidth, 2 * halfheight);
+                rectangle = new Rectangle((int)(UPlayerPosition.X - 40), (int)(UPlayerPosition.Y - 125), 80, 160);
 
             }
             else
             {
                 halfwidth = 35;
-                halfheight = 35;
-                rectangle = new Rectangle((int)(UPlayerPosition.X - halfwidth), (int)(UPlayerPosition.Y - halfheight), 2 * halfwidth, 2 * halfheight);
+                halfheight = 36;
+                rectangle = new Rectangle((int)(UPlayerPosition.X - 35), (int)(UPlayerPosition.Y - 35), 70, 70);
 
             }
             return rectangle;

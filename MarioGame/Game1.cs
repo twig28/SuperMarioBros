@@ -138,7 +138,7 @@ namespace MarioGame
             //{
             //    block.Update(gameTime);
             //}
-
+            
             CollisionLogic.CheckEnemyBlockCollisions(enemies, blocks);
             CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
 
@@ -148,9 +148,9 @@ namespace MarioGame
             // Get the current keyboard state
             KeyboardState currentKeyboardState = Keyboard.GetState();
 
+           
             //PLAYER UPDATE
             player_sprite.Update(gameTime);
-
             // Check for collisions between Mario and blocks
            // CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
             CollisionLogic.CheckFireballEnemyCollision(balls, enemies, gameTime);
