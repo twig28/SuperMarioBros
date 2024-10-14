@@ -178,6 +178,37 @@ namespace MarioGame
             }
         }
 
+
+
+          public static void CheckFireballEnemyCollision(List<IBall> fireballs, List<IEnemy> enemies,GameTime gm, bool stomped)
+        {
+            List<IBall> fireballsToRemove = new List<IBall>();
+            List<IEnemy> enemyToDie = new List<IEnemy>();
+            foreach (IBall fireball in fireballs)
+            {
+                foreach (IEnemy enemy in enemies)
+                {
+                    if (GetCollisionDirection(fireball.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None)
+                    {
+                        // Fireball hits the block, add fireball to removal list
+                        fireballsToRemove.Add(fireball);
+                        enemyToDie.Add(enemy);
+                        break; // Exit the loop after finding a collision for this fireball
+                    }
+                }
+            }
+
+            // Remove fireballs that have collided with blocks
+            foreach (IBall fireball in fireballsToRemove)
+            {
+                fireballs.Remove(fireball);
+            }
+            foreach (IEnemy enemy in enemyToDie)
+            {
+                enemy.TriggerDeath(gm,stomped);
+            }
+        }
+
         
     }
 }

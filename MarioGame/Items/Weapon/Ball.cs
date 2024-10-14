@@ -84,10 +84,7 @@ namespace MarioGame
             }
         }
 
-        public void Update(object gameTime, int width)
-        {
-            throw new System.NotImplementedException();
-        }
+       
          public Rectangle GetDestinationRectangle()
         {
             int frameWidth = Texture.Width / columns;
