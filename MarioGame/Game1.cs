@@ -32,7 +32,7 @@ namespace MarioGame
         IController keyControl;
         IController mouseControl;
         //FOR ITEM
-        ItemContainer _itemsContainer;
+        Item items;
         //FOR WEAPON
         private Texture2D ballTextureRight;  // fireball to the right
         private Texture2D ballTextureLeft;  // fireball to the left
@@ -74,7 +74,7 @@ namespace MarioGame
 
         protected override void Initialize()
         {
-            ItemContainer.Initialize();
+            Item.Initialize();
             keyControl = new KeyboardController(this);
             mouseControl = new MouseController(this);
            
@@ -90,7 +90,7 @@ namespace MarioGame
             marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
             enemyTextures = Content.Load<Texture2D>("smb_enemies_sheet");
             itemTextures = Content.Load<Texture2D>("smb_items_sheet");
-            _itemsContainer = new ItemContainer(itemTextures);
+            items = new Item(itemTextures);
 
             // Load block textures
             groundBlockTexture = Content.Load<Texture2D>("resizedGroundBlock");
@@ -157,7 +157,7 @@ namespace MarioGame
 
             //item collision
             ItemCollision itemCollision = new ItemCollision(player_sprite);
-            itemCollision.ItemCollisionHandler(_itemsContainer.getItemList());
+            itemCollision.ItemCollisionHandler(items.getItemList());
 
             foreach (var block in blocks)
             {
@@ -186,7 +186,7 @@ namespace MarioGame
             balls.RemoveAll(b => !b.IsVisible);
             CollisionLogic.CheckFireballBlockCollision(balls, blocks);
             //update items
-            _itemsContainer.Update(gameTime);
+            items.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -206,7 +206,7 @@ namespace MarioGame
                 Rectangle blockRect = block.GetDestinationRectangle();
                 spriteBatch.Draw(rectTexture, blockRect, Color.Blue * 0.5f);
             }
-            _itemsContainer.DrawCollisionRectangles(spriteBatch);
+            items.DrawCollisionRectangles(spriteBatch);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -215,7 +215,8 @@ namespace MarioGame
 
             _spriteBatch.Begin();
 
-            _itemsContainer.Draw(_spriteBatch);
+            Vector2 itemLocation = new Vector2(200, 200);
+            items.Draw(_spriteBatch, itemLocation);
 
             player_sprite.Draw(_spriteBatch);
 
