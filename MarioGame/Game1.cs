@@ -80,7 +80,7 @@ namespace MarioGame
             keyControl = new KeyboardController(this);
             mouseControl = new MouseController(this);
             PlayerPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2,
-                     _graphics.PreferredBackBufferHeight / 2);
+                     _graphics.PreferredBackBufferHeight - 95);
             //everytime update player's position
             PlayerSpeed = 100f;
             base.Initialize();

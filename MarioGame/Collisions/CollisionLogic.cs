@@ -41,6 +41,35 @@ namespace MarioGame
             }
             return CollisionDirection.Side;
         }
+
+
+        static public CollisionDirection GetMarioCollisionDirection(Rectangle _marioRectangle, Rectangle _blockRectangle) //Comparing r1 to r2, i.e. r1 is below r2
+        {
+            if (_marioRectangle.Intersects(_blockRectangle))
+            {
+
+                if (_marioRectangle.Top > _blockRectangle.Bottom && _marioRectangle.Bottom > _blockRectangle.Bottom)
+                {
+                    return CollisionDirection.Below;
+                }
+                else if (_marioRectangle.Bottom < _blockRectangle.Top && _marioRectangle.Top < _blockRectangle.Top)
+
+                {
+                    return CollisionDirection.Above;
+                }
+                else
+                {
+                    return CollisionDirection.Side;
+                }
+            }
+            return CollisionDirection.None;
+
+        }
+
+
+
+
+
         static public void CheckEnemyBlockCollisions(List<IEnemy> enemies, List<IBlock> blocks)
         {
             foreach (IEnemy enemy in enemies)
@@ -78,8 +107,7 @@ namespace MarioGame
             {
                 CollisionDirection collisionDirection = GetCollisionDirection(mario.GetDestinationRectangle(), block.GetDestinationRectangle());
 
-                if (collisionDirection != CollisionDirection.None)
-                {
+                /*
                     if (collisionDirection == CollisionDirection.Below)
                     {
                         // Collision from below detected
@@ -89,24 +117,27 @@ namespace MarioGame
                             blocksToRemove.Add(block);
                         }
                     }
-                    else if (collisionDirection == CollisionDirection.Above)
+                    */
+                    if (collisionDirection == CollisionDirection.Above)
                     {
-                        // Handle collision from above if necessary
-                        mario.setPosY = (int)block.Position.Y - mario.GetDestinationRectangle().Height;
+                    // Handle collision from above if necessary
+                    //mario.UPlayerPosition.Y = (float)(block.GetDestinationRectangle().Top);
+                    mario.onblock = true;
                     }
+                    
                     else if (collisionDirection == CollisionDirection.Side)
                     {
                         // Handle side collisions if necessary
-                        if (mario.MovingRight)
+                        if (mario.left)
                         {
-                            mario.setPosX = (int)block.Position.X - mario.GetDestinationRectangle().Width;
+                            mario.UPlayerPosition.X = (float)(block.GetDestinationRectangle().Right + mario.halfwidth);
                         }
                         else
                         {
-                            mario.setPosX = (int)block.Position.X + block.GetDestinationRectangle().Width;
+                            mario.UPlayerPosition.X = (float)(block.GetDestinationRectangle().Left - mario.halfwidth);
                         }
                     }
-                }
+                
             }
 
             // Remove destroyed blocks from the blocks list

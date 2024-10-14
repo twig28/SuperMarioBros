@@ -44,7 +44,7 @@ namespace MarioGame
             Position = position;
             Speed = speed;
             graphics = Graphics;
-            groundLevel = Graphics.PreferredBackBufferHeight / 2;
+            groundLevel = Graphics.PreferredBackBufferHeight - 95;
             Game = game;
         }
 
