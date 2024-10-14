@@ -13,7 +13,7 @@ namespace MarioGame
 {
 
     public class Game1 : Game
-    {
+    { 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private SpriteFont font;
@@ -136,6 +136,7 @@ namespace MarioGame
             }
 
             CollisionLogic.CheckEnemyBlockCollisions(enemies, blocks);
+            CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
 
             // Remove destroyed blocks from the list
             blocks.RemoveAll(block => block is Block b && b.IsDestroyed);

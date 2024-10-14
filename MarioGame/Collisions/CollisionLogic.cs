@@ -39,10 +39,7 @@ namespace MarioGame
                     return CollisionDirection.Above;
                 }
             }
-            else
-            {
-                return CollisionDirection.Side;
-            }
+            return CollisionDirection.Side;
         }
         static public void CheckEnemyBlockCollisions(List<IEnemy> enemies, List<IBlock> blocks)
         {
@@ -65,25 +62,51 @@ namespace MarioGame
                     }
                 }
             }
-
-            //THESE ARE TODO BUT DONT HAVE TO BE IN THIS FILE
-            //function that has a for each between mario and blocks/obstacles
-            void CheckMarioBlockCollision(PlayerSprite mario, List<IBlock> blocks) { }
-            //function that has a for each between enemies and other enemies
-            void CheckEnemyEnemyCollision(List<IEnemy> enemies, GameTime gt)
-            {
-                foreach (IEnemy enemy in enemies)
+        }
+        //THESE ARE TODO BUT DONT HAVE TO BE IN THIS FILE
+        //function that has a for each between mario and blocks/obstacles
+        static public void CheckMarioBlockCollision(PlayerSprite mario, List<IBlock> blocks) 
+         {
+                foreach (IBlock block in blocks)
                 {
-                    foreach (IEnemy enemy2 in enemies)
+                    if (GetCollisionDirection(block.GetDestinationRectangle(), mario.GetDestinationRectangle()) == CollisionDirection.Above)
                     {
-                        if (GetCollisionDirection(enemy.GetDestinationRectangle(), enemy2.GetDestinationRectangle()) != CollisionDirection.None)
-                        {
-                            enemy.MovingRight = !enemy.MovingRight;
-                        }
+                        mario.UPlayerPosition.Y = (int)block.Position.Y  + block.GetDestinationRectangle().Height;
+                        break;
+                    }
+                    if (GetCollisionDirection(block.GetDestinationRectangle(), mario.GetDestinationRectangle()) == CollisionDirection.Side)
+                    {
+                    if (mario.left == false)
+                    {
+                        mario.UPlayerPosition.X = (float)(block.GetDestinationRectangle().Left -  mario.width); 
+                        break;
+                    }
+                    else
+                    {
+                        mario.UPlayerPosition.X = (float)(block.GetDestinationRectangle().Right +  mario.width - 25);
+                        break;
+                    }
                     }
 
                 }
 
+        }
+        //function that has a for each between enemies and other enemies
+        void CheckEnemyEnemyCollision(List<IEnemy> enemies, GameTime gt)
+        {
+            foreach (IEnemy enemy in enemies)
+            {
+                foreach (IEnemy enemy2 in enemies)
+                {
+                    if (GetCollisionDirection(enemy.GetDestinationRectangle(), enemy2.GetDestinationRectangle()) != CollisionDirection.None)
+                    {
+                        enemy.MovingRight = !enemy.MovingRight;
+                    }
+                }
+
+            }
+
+        }
                 void CheckMarioEnemyCollision(PlayerSprite mario, List<IEnemy> enemies, GameTime gt) { }
 
                 void CheckMarioItemCollision(PlayerSprite mario, List<IItem> items, GameTime gt) { }
@@ -97,7 +120,7 @@ namespace MarioGame
                         //}
                     }
                 }
-            }
-        }
+            
+        
     }
 }

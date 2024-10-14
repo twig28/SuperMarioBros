@@ -20,9 +20,11 @@ namespace MarioGame
             JumpL,
             Damaged// moving sprite
         }
+        public bool left = false;
         public Texture2D marioTexture { get; set; }
         public Vector2 PlayerPosition;
         public Vector2 UPlayerPosition;
+        public Rectangle Position;
         float PlayerSpeed;
         public GraphicsDeviceManager _graphics;
         public Game1 Game;
@@ -33,7 +35,10 @@ namespace MarioGame
         public Jump Jumpplayer;
         public Damaged Damagedplayer;
         public JumpL JumpLplayer;
+        public bool move = true;
         public SpriteType current = SpriteType.Static;
+        public int width = 14;
+        public int height = 16;
 
 
 
@@ -118,9 +123,13 @@ namespace MarioGame
             }
 
         }
+        public Rectangle GetDestinationRectangle() { return new Rectangle((int)UPlayerPosition.X, (int)UPlayerPosition.Y, 14, 16); }
 
 
-       public void Draw(SpriteBatch _spriteBatch)
+       
+
+
+        public void Draw(SpriteBatch _spriteBatch)
         {
             //check sprint type for draw
             if (current == PlayerSprite.SpriteType.Static)
