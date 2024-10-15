@@ -26,11 +26,11 @@ namespace MarioGame
 
         public Rectangle GetDestinationRectangle() { return sprite.GetDestinationRectangle(); }
 
-        private bool _movingRight = true;
-        public bool MovingRight
+        private bool _DefaultMoveMentDirection = true;
+        public bool DefaultMoveMentDirection
         {
-            get { return _movingRight; }
-            set { _movingRight = value;}
+            get { return _DefaultMoveMentDirection; }
+            set { _DefaultMoveMentDirection = value;}
         }
 
         public Goomba(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
@@ -49,7 +49,7 @@ namespace MarioGame
             if (alive)
             {
                 timeElapsed = gm.TotalGameTime.TotalSeconds;
-                if (_movingRight)
+                if (_DefaultMoveMentDirection)
                 {
                     posX++;
                 }

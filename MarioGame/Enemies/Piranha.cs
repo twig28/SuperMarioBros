@@ -23,11 +23,11 @@ namespace MarioGame
         private double timeElapsedSinceUpdateAnim = 0;
         private bool alive = true;
 
-        private bool _movingRight = false;
-        public bool MovingRight
+        private bool _DefaultMoveMentDirection = false;
+        public bool DefaultMoveMentDirection
         {
-            get { return _movingRight; }
-            set { _movingRight = value; }
+            get { return _DefaultMoveMentDirection; }
+            set { _DefaultMoveMentDirection = value; }
         }
         public int setPosX{set { posX = value; }}
 
@@ -52,7 +52,7 @@ namespace MarioGame
                 timeElapsed = gm.TotalGameTime.TotalSeconds;
                 if (movingInterval == 2)
                 {
-                    if (_movingRight)
+                    if (_DefaultMoveMentDirection)
                     {
                         posY++;
                     }
@@ -81,13 +81,13 @@ namespace MarioGame
                     else
                     {
                         movingInterval = 2;
-                        if (_movingRight)
+                        if (_DefaultMoveMentDirection)
                         {
-                            _movingRight = false;
+                            _DefaultMoveMentDirection = false;
                         }
                         else
                         {
-                            _movingRight = true;
+                            _DefaultMoveMentDirection = true;
                         }
                     }
                 }

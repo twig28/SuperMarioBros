@@ -62,7 +62,7 @@ namespace MarioGame
                             // Allow side collision if enemy's bottom is not within a tolerance of the block's top (10)
                             if (enemy.GetDestinationRectangle().Bottom > block.GetDestinationRectangle().Top + 10)
                             {
-                                enemy.MovingRight = !enemy.MovingRight;
+                                enemy.DefaultMoveMentDirection = !enemy.DefaultMoveMentDirection;
                             }
                         }
                     }
@@ -190,7 +190,7 @@ namespace MarioGame
                     if (enemy2 == enemy) { continue; }
                     if (GetCollisionDirection(enemy.GetDestinationRectangle(), enemy2.GetDestinationRectangle()) != CollisionDirection.None)
                     {
-                        enemy.MovingRight = !enemy.MovingRight;
+                        enemy.DefaultMoveMentDirection = !enemy.DefaultMoveMentDirection;
                     }
                 }
             }

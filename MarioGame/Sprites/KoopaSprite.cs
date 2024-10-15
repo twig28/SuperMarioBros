@@ -12,8 +12,8 @@ namespace MarioGame
 {
     internal class KoopaSprite : ISprite
     {
-        private int SpriteWidth = 75;
-        private int SpriteHeight = 115;
+        private int SpriteWidth = 60;
+        private int SpriteHeight = 85;
         private int SourceX = 210;
         private int SourceY = 0;
         private const int SourceWidth = 16;

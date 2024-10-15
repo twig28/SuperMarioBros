@@ -104,7 +104,7 @@ namespace MarioGame
 
             enemies = new List<IEnemy>
             {
-                new Goomba(enemyTextures, _spriteBatch, 500, 500),
+                new Goomba(enemyTextures, _spriteBatch, 500, 200),
                 new Koopa(enemyTextures, _spriteBatch, 600, 500),
                 new Piranha(enemyTextures, _spriteBatch, 1100, 500),
             };

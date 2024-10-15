@@ -11,8 +11,8 @@ namespace MarioGame
 {
     internal class GoombaSprite : ISprite
     {
-        private const int SpriteWidth = 75;
-        private const int SpriteHeight = 100;
+        private const int SpriteWidth = 60;
+        private const int SpriteHeight = 80;
         private int SourceX = 0;
         private int SourceY = 4;
         private const int SourceWidth = 16;
