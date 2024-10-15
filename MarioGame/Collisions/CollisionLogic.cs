@@ -115,7 +115,20 @@ namespace MarioGame
 
                         }
                     }
-                    
+                    else if(mario.UPlayerPosition.Y > block_rec.Bottom && !mario.isGrounded)               
+                    {
+                        mario.velocity = 0f;
+
+                        if (mario.Big || mario.Fire)
+                        {
+                            mario.UPlayerPosition.Y = block_rec.Bottom + mario_rec.Height / 2 + 22;
+                        }
+                        else if (!mario.Big && !mario.Fire)
+                        {
+                            mario.UPlayerPosition.Y = block_rec.Bottom + mario_rec.Height / 2 + 2;
+
+                        }
+                    }
                 }
                 else
                 {
@@ -144,6 +157,7 @@ namespace MarioGame
 
                 if (!StandingBlock.Contains(block) && mario_rec.Intersects(block_rec)) 
                 {
+                   
                     if (mario_rec.Right >= block_rec.Left && mario_rec.Left < block_rec.Left)
                     {
                         mario.UPlayerPosition.X = block_rec.Left - mario_rec.Width / 2;
@@ -152,6 +166,7 @@ namespace MarioGame
                     {
                         mario.UPlayerPosition.X = block_rec.Right + mario_rec.Width / 2;
                     }
+                    
                 }
                 
                 

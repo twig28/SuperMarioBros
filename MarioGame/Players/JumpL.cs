@@ -23,7 +23,6 @@ namespace MarioGame
         {
             Texture = texture;
             Position = position;
-            Speed = speed;
             graphics = Graphics;
             groundLevel = Graphics.PreferredBackBufferHeight - 95;
             Game = game;
@@ -32,7 +31,6 @@ namespace MarioGame
         public void Update(GameTime gameTime)
         {
 
-            float updatedSpeed = Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             //for action jumping
             if (Game.player_sprite.isGrounded)
             {
