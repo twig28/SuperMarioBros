@@ -45,7 +45,6 @@ namespace MarioGame
         public Fall Fallplayer;
         public JumpL JumpLplayer;
         public float velocity = 0f;
-        public bool move = true;
         public SpriteType current = SpriteType.Static;
       
         // Added properties

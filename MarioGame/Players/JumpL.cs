@@ -12,8 +12,7 @@ namespace MarioGame
 
         public Texture2D Texture { get; set; }
         public Vector2 Position;
-        public float Speed;
-        public GraphicsDeviceManager graphics;
+        private GraphicsDeviceManager graphics;
         public Game1 Game;
         public float Scale = 3f;
         //for jump

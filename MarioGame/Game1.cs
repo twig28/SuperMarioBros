@@ -89,9 +89,9 @@ namespace MarioGame
 
             blocks = new List<IBlock>
             {
-               // new Block(new Vector2(500, 200), blockTexture, new Rectangle(0, 0, 50, 50)),
-                new GroundBlock(new Vector2(900, GraphicsDevice.Viewport.Height - 120), groundBlockTexture, new Rectangle(0, 0, 50, 50)),
-               // new MysteryBlock(new Vector2(560, 200), multipleBlockTextures, new Rectangle(80, 112, 15, 15))
+               new Block(new Vector2(500, 200), blockTexture),
+                new GroundBlock(new Vector2(900, GraphicsDevice.Viewport.Height - 120), groundBlockTexture),
+               new MysteryBlock(new Vector2(560, 200), multipleBlockTextures)
             };
             PlayerPosition = new Vector2(100, GraphicsDevice.Viewport.Height - 83);
             // Create a row of blocks on the bottom, except for the leftmost two so Mario can fall
