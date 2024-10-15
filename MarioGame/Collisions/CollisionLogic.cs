@@ -151,18 +151,20 @@ namespace MarioGame
 
         public static void CheckMarioEnemyCollision(PlayerSprite mario, List<IEnemy> enemies, GameTime gt)
         {
+            IEnemy enemyToRemove = null;
             foreach (IEnemy enemy in enemies)
             {
                 if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) == CollisionDirection.Below)
                 {
                     enemy.TriggerDeath(gt, false);
-                    //enemies.Remove(enemy);
+                    if(enemy is not Koopa) { enemyToRemove = enemy; }
                 }
                 else if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None)
                 {
                     //Kill Mario
                 }
             }
+            enemies.Remove(enemyToRemove);
         }
 
         public static void CheckMarioItemCollision(PlayerSprite mario, List<IItem> items, GameTime gt) { 
@@ -172,6 +174,7 @@ namespace MarioGame
 
         public static void CheckFireballEnemyCollision(List<Ball> fireballs, List<IEnemy> enemies, GameTime gt)
         {
+            IEnemy enemyToRemove = null;
             foreach (IBall fireball in fireballs)
             {
                 foreach (IEnemy enemy in enemies)
@@ -179,10 +182,11 @@ namespace MarioGame
                     if (GetCollisionDirection(fireball.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None)
                     {
                         enemy.TriggerDeath(gt, false);
-                        //enemies.Remove(enemy);
+                        enemyToRemove = enemy;
                     }
                 }
             }
+            enemies.Remove(enemyToRemove);
         }
 
         public static void CheckFireballBlockCollision(List<IBall> fireballs, List<IBlock> blocks)
