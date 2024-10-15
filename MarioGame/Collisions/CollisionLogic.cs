@@ -204,7 +204,8 @@ namespace MarioGame
                 if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) == CollisionDirection.Below)
                 {
                     enemy.TriggerDeath(gt, false);
-                    if(enemy is not Koopa) { enemyToRemove = enemy; }
+                    //if (enemy is not Koopa)
+                    enemyToRemove = enemy; 
                 }
                 else if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None)
                 {

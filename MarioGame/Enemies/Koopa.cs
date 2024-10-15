@@ -27,6 +27,8 @@ namespace MarioGame
         public int setPosY { set { posY = value; } }
         public Rectangle GetDestinationRectangle() { return sprite.GetDestinationRectangle(); }
 
+        public bool getIsShell() { return isShell; }
+
         private bool _DefaultMoveMentDirection = true;
         public bool DefaultMoveMentDirection
         {
