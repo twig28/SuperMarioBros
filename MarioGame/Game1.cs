@@ -123,7 +123,7 @@ namespace MarioGame
             CollisionLogic.CheckEnemyBlockCollisions(enemies, blocks);
             CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
             CollisionLogic.CheckEnemyEnemyCollision(enemies, gameTime);
-            CollisionLogic.CheckMarioEnemyCollision(player_sprite, enemies, gameTime);
+            CollisionLogic.CheckMarioEnemyCollision(player_sprite, ref enemies, gameTime);
 
             blocks.RemoveAll(block => block is Block b && b.IsDestroyed);
 
@@ -142,7 +142,7 @@ namespace MarioGame
 
             Ball.UpdateAll(gameTime, GraphicsDevice.Viewport.Width);
 
-            CollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), enemies, gameTime,false);
+            CollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime,false);
             CollisionLogic.CheckFireballBlockCollision(Ball.GetBalls(), blocks);
 
             items.Update(gameTime);
