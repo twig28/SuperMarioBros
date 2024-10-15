@@ -80,6 +80,7 @@ namespace MarioGame
             groundBlockTexture = Content.Load<Texture2D>("resizedGroundBlock");
             blockTexture = Content.Load<Texture2D>("InitialBrickBlock");
             multipleBlockTextures = Content.Load<Texture2D>("blocks");
+            sceneryTextures = Content.Load<Texture2D>("smb1_scenery_sprites");
 
             items = new ItemContainer(itemTextures);
 
@@ -89,9 +90,10 @@ namespace MarioGame
             // Initialize blocks
             blocks = new List<IBlock>
             {
-                new Block(new Vector2(500, 200), blockTexture, new Rectangle(0, 0, 50, 50)),
+                new Block(new Vector2(500, 200), blockTexture, new Rectangle(4, 4, 40, 40)),
                 new GroundBlock(new Vector2(900, GraphicsDevice.Viewport.Height - 120), groundBlockTexture, new Rectangle(0, 0, 50, 50)),
-                new MysteryBlock(new Vector2(560, 200), multipleBlockTextures, new Rectangle(80, 112, 15, 15))
+                new MysteryBlock(new Vector2(560, 200), multipleBlockTextures, new Rectangle(80, 112, 15, 15)),
+                new MediumPipe(new Vector2(1075, 500), sceneryTextures, new Rectangle(230, 385, 30, 65))
             };
             PlayerPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2,
                    GraphicsDevice.Viewport.Height - 95);
@@ -151,6 +153,12 @@ namespace MarioGame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            foreach (IEnemy enemy in enemies)
+            {
+                enemy.Update(gameTime);
+                enemy.Draw();
+            }
+
             _spriteBatch.Begin();
 
             items.Draw(_spriteBatch);
@@ -165,12 +173,6 @@ namespace MarioGame
             Ball.DrawAll(_spriteBatch);
 
             _spriteBatch.End();
-
-            foreach (IEnemy enemy in enemies)
-            {
-                enemy.Update(gameTime);
-                enemy.Draw();
-            }
 
             base.Draw(gameTime);
         }
