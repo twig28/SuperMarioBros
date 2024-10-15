@@ -89,12 +89,11 @@ namespace MarioGame
             // Initialize blocks
             blocks = new List<IBlock>
             {
-                new Block(new Vector2(500, 200), blockTexture, new Rectangle(0, 0, 50, 50)),
+               // new Block(new Vector2(500, 200), blockTexture, new Rectangle(0, 0, 50, 50)),
                 new GroundBlock(new Vector2(900, GraphicsDevice.Viewport.Height - 120), groundBlockTexture, new Rectangle(0, 0, 50, 50)),
-                new MysteryBlock(new Vector2(560, 200), multipleBlockTextures, new Rectangle(80, 112, 15, 15))
+               // new MysteryBlock(new Vector2(560, 200), multipleBlockTextures, new Rectangle(80, 112, 15, 15))
             };
-            PlayerPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2,
-                   GraphicsDevice.Viewport.Height - 95);
+            PlayerPosition = new Vector2(100, GraphicsDevice.Viewport.Height - 83);
             // Create a row of blocks on the bottom, except for the leftmost two so Mario can fall
             for (int i = 0; i <= GraphicsDevice.Viewport.Width - 120; i += 60)
             {
@@ -146,7 +145,16 @@ namespace MarioGame
             items.Update(gameTime);
             base.Update(gameTime);
         }
+        //For Sprint 3 Debug Only
+        private void DrawCollisionRectangles(SpriteBatch spriteBatch)
+        {
+            Texture2D rectTexture = new Texture2D(GraphicsDevice, 1, 1);
+            rectTexture.SetData(new[] { Color.White });
 
+            // Draw Mario's collision rectangle
+            Rectangle marioRect = player_sprite.GetDestinationRectangle();
+            spriteBatch.Draw(rectTexture, marioRect, Color.Red * 0.5f);
+        }
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
@@ -163,6 +171,7 @@ namespace MarioGame
 
             // Use Ball class's static method to draw all balls
             Ball.DrawAll(_spriteBatch);
+            DrawCollisionRectangles(_spriteBatch);
 
             _spriteBatch.End();
 

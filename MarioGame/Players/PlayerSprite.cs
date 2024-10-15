@@ -19,11 +19,15 @@ namespace MarioGame
             MotionL,
             Jump,
             JumpL,
+            Falling,
             Damaged// moving sprite
         }
         public bool left = false;
         public bool Fire = false;
         public bool Big = false;
+        public bool isJumping = false;
+        public bool isGrounded = true;
+        public bool isFalling= false;
         public float groundLevel;
         public Texture2D marioTexture { get; set; }
         public Vector2 PlayerPosition;
@@ -32,13 +36,15 @@ namespace MarioGame
         float PlayerSpeed;
         public GraphicsDeviceManager _graphics;
         public Game1 Game;
-        private MotionPlayer MRplayer;
-        private MotionPlayerLeft MLplayer;
-        private Static Staplayer;
-        private StaticL StaLplayer;
+        public MotionPlayer MRplayer;
+        public MotionPlayerLeft MLplayer;
+        public Static Staplayer;
+        public StaticL StaLplayer;
         public Jump Jumpplayer;
-        private Damaged Damagedplayer;
+        public Damaged Damagedplayer;
+        public Fall Fallplayer;
         public JumpL JumpLplayer;
+        public float velocity = 0f;
         public bool move = true;
         public SpriteType current = SpriteType.Static;
       
@@ -80,6 +86,9 @@ namespace MarioGame
             JumpLplayer = new JumpL(marioTexture, PlayerPosition, PlayerSpeed, _graphics, Game);
             //damaged
             Damagedplayer = new Damaged(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
+            //falling
+            Fallplayer = new Fall(marioTexture, PlayerPosition, PlayerSpeed, _graphics, Game);
+
         }
 
 
@@ -87,8 +96,6 @@ namespace MarioGame
         {
             // update based on current sprite type
             //below for checking current state of mario
-          
-            
             if (current == SpriteType.Motion)
             {
                 MRplayer.Position = UPlayerPosition; //U means upated
@@ -118,6 +125,13 @@ namespace MarioGame
                 Damagedplayer.Position = UPlayerPosition;
                 Damagedplayer.Update(gameTime);
                 UPlayerPosition = Damagedplayer.Position;
+
+            }
+            else if (current == SpriteType.Falling)
+            {
+                Fallplayer.Position = UPlayerPosition;
+                Fallplayer.Update(gameTime);
+                UPlayerPosition = Fallplayer.Position;
 
             }
 
@@ -171,29 +185,33 @@ namespace MarioGame
             {
                 Damagedplayer.Draw(_spriteBatch);
             }
-       }
+            if (current == PlayerSprite.SpriteType.Falling)
+            {
+                Fallplayer.Draw(_spriteBatch);
+            }
+        }
 
         // Added GetDestinationRectangle method
         public Rectangle GetDestinationRectangle()
         {
             Rectangle rectangle = new Rectangle();
-            if (Game.player_sprite.Fire)
+            if (Fire)
             {
                 
-                rectangle = new Rectangle((int)(UPlayerPosition.X - 45), (int)(UPlayerPosition.Y - 125), 90, 160);
+                rectangle = new Rectangle((int)(UPlayerPosition.X - 27), (int)(UPlayerPosition.Y - 71), 54, 96);
 
 
             }
-            else if (!Game.player_sprite.Fire && Game.player_sprite.Big)
+            else if (!Fire && Big)
             {
                
-                rectangle = new Rectangle((int)(UPlayerPosition.X - 40), (int)(UPlayerPosition.Y - 125), 80, 160);
+                rectangle = new Rectangle((int)(UPlayerPosition.X - 27), (int)(UPlayerPosition.Y - 71), 54 , 96);
 
             }
             else
             {
                
-                rectangle = new Rectangle((int)(UPlayerPosition.X - 35), (int)(UPlayerPosition.Y - 35), 70, 70);
+                rectangle = new Rectangle((int)(UPlayerPosition.X - 21), (int)(UPlayerPosition.Y - 24), 42,48);
 
             }
             return rectangle;

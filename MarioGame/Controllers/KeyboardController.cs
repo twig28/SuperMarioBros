@@ -55,9 +55,11 @@ public class KeyboardController : IController
             Game.Exit();
         }
 
-       
 
-            if (currentKeyState.IsKeyDown(Keys.Right) || currentKeyState.IsKeyDown(Keys.D))
+
+        if (currentKeyState.IsKeyDown(Keys.Right) || currentKeyState.IsKeyDown(Keys.D))
+        {
+            if (Game.player_sprite.current != PlayerSprite.SpriteType.Falling) 
             {
                 if (Game.player_sprite.current == PlayerSprite.SpriteType.Jump || Game.player_sprite.current == PlayerSprite.SpriteType.JumpL)
                 {
@@ -68,10 +70,15 @@ public class KeyboardController : IController
                 {
                     Game.player_sprite.current = PlayerSprite.SpriteType.Motion;
                 }
-                Game.player_sprite.left = false;
-            }
+             }
+            Game.player_sprite.left = false;
 
-            if (currentKeyState.IsKeyDown(Keys.Left) || currentKeyState.IsKeyDown(Keys.A))
+
+        }
+
+        if (currentKeyState.IsKeyDown(Keys.Left) || currentKeyState.IsKeyDown(Keys.A))
+        {
+            if (Game.player_sprite.current != PlayerSprite.SpriteType.Falling)
             {
                 if (Game.player_sprite.current == PlayerSprite.SpriteType.Jump || Game.player_sprite.current == PlayerSprite.SpriteType.JumpL)
                 {
@@ -82,10 +89,11 @@ public class KeyboardController : IController
                 {
                     Game.player_sprite.current = PlayerSprite.SpriteType.MotionL;
                 }
-                Game.player_sprite.left = true;
+        }
+            Game.player_sprite.left = true;
 
-            }
-            if (currentKeyState.IsKeyDown(Keys.W) || currentKeyState.IsKeyDown(Keys.Up))
+        }
+        if (currentKeyState.IsKeyDown(Keys.W) || currentKeyState.IsKeyDown(Keys.Up))
             {
                 if (Game.player_sprite.current == PlayerSprite.SpriteType.MotionL || Game.player_sprite.current == PlayerSprite.SpriteType.StaticL)
                 {

@@ -13,7 +13,7 @@ namespace MarioGame
         public Texture2D Texture { get; set; }
         public Game1 Game;
         public Vector2 Position;
-        public float Scale = 5f;
+        public float Scale = 3f;
         public StaticL(Texture2D texture, Vector2 position,Game1 game)
         {
             Texture = texture;
@@ -34,14 +34,14 @@ namespace MarioGame
             {
                 width = 18;
                 height = 32;
-                Position.Y = Position.Y - 40;
+                Position.Y = Position.Y - 22;
                 sourceRectangle = new Rectangle(180, 122, 18, 32);
             }
             else if (!Game.player_sprite.Fire && Game.player_sprite.Big)
             {
                 width = 18;
                 height = 32;
-                Position.Y = Position.Y - 40;
+                Position.Y = Position.Y - 24;
                 sourceRectangle = new Rectangle(179, 52, 18, 32);
             }
            

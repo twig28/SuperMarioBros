@@ -75,62 +75,93 @@ namespace MarioGame
         public static void CheckMarioBlockCollision(PlayerSprite mario, List<IBlock> blocks)
         {
             List<IBlock> blocksToRemove = new List<IBlock>();
-            Rectangle _marioRectangle;
-            Rectangle _blockRectangle;
-            Rectangle intersects;
+            List<IBlock> StandingBlock = new List<IBlock>();
+            List<IBlock> BelowBlock = new List<IBlock>();
+            //Rectangle Intersect_rec = Rectangle.Intersect(mario_rec, block_rec);
             foreach (IBlock block in blocks)
             {
-                _marioRectangle = mario.GetDestinationRectangle();
-                _blockRectangle = block.GetDestinationRectangle();
-                CollisionDirection collisionDirection = GetCollisionDirection(block.GetDestinationRectangle(),mario.GetDestinationRectangle());
-
-                //  if (_marioRectangle.Intersects(_blockRectangle))
-                //{
-                // if (_marioRectangle.Bottom >= _blockRectangle.Top && _marioRectangle.Top < _blockRectangle.Top && (mario.Jumpplayer.velocity != 0 || mario.JumpLplayer.velocity != 0))
-                if (collisionDirection == CollisionDirection.Above)
+                Rectangle block_rec = block.GetDestinationRectangle();
+                Rectangle mario_rec = mario.GetDestinationRectangle();
+                if (mario_rec.Intersects(block_rec)) 
                 {
-                    if (mario.current == PlayerSprite.SpriteType.Jump)
+                    if (mario.UPlayerPosition.Y < block_rec.Top)
                     {
-                        mario.Jumpplayer.velocity = 0;
-                        mario.Jumpplayer.isGrounded = true;
-                        mario.Jumpplayer.isJumping = false;
-                        mario.current = PlayerSprite.SpriteType.Static;
-                    }
-                    else if (mario.current == PlayerSprite.SpriteType.JumpL)
-                    {
-                        mario.JumpLplayer.velocity = 0;
-                        mario.JumpLplayer.isGrounded = true;
-                        mario.JumpLplayer.isJumping = false;
-                        mario.current = PlayerSprite.SpriteType.StaticL;
-                    }
-                    if (mario.Big || mario.Fire)
-                    {
-                        mario.UPlayerPosition.Y = _blockRectangle.Top - mario.GetDestinationRectangle().Height / 2 + 40;
-                    }
-                    else if (!mario.Big && !mario.Fire)
-                    {
-                        mario.UPlayerPosition.Y = _blockRectangle.Top - mario.GetDestinationRectangle().Height / 2;
+                        StandingBlock.Add(block);
+                        if (!mario.isGrounded)
+                        {
+                            mario.isGrounded = true;
+                            mario.isJumping = false;
+                            mario.velocity = 0f;
+                            mario.Fallplayer.Speed = 0f;
+                            if (!mario.left)
+                            {
+                                mario.current = PlayerSprite.SpriteType.Static;
+                            }
+                            else
+                            {
+                                mario.current = PlayerSprite.SpriteType.StaticL;
+                            }
 
+                          
+
+                        }
+                        if (mario.Big || mario.Fire)
+                        {
+                            mario.UPlayerPosition.Y = block_rec.Top - mario_rec.Height / 2 + 26;
+                        }
+                        else if (!mario.Big && !mario.Fire)
+                        {
+                            mario.UPlayerPosition.Y = block_rec.Top - mario_rec.Height / 2 + 2;
+
+                        }
+                    }
+                    
+                }
+                else
+                {
+                    if (StandingBlock.Contains(block))
+                    {
+                        StandingBlock.Remove(block);
                     }
                 }
-                else if (collisionDirection == CollisionDirection.Side) {
-                    if (_marioRectangle.Right >= _blockRectangle.Left && _marioRectangle.Left < _blockRectangle.Left && collisionDirection != CollisionDirection.Above)
-                    {
-                        mario.UPlayerPosition.X = _blockRectangle.Left - mario.GetDestinationRectangle().Width / 2;
-                    }
-                    else if (_marioRectangle.Left <= _blockRectangle.Right && _marioRectangle.Right > _blockRectangle.Right && collisionDirection != CollisionDirection.Above)
-                    {
-                        mario.UPlayerPosition.X = _blockRectangle.Right + mario.GetDestinationRectangle().Width / 2;
-                    }
-                }
-               
+
+
+
             }
-             
 
-          //  }
+            if (StandingBlock.Count == 0 && mario.isGrounded)
+            {
 
+                mario.isGrounded = false;
+                mario.isFalling = true;
+                mario.current = PlayerSprite.SpriteType.Falling;
+            }
+
+            foreach (IBlock block in blocks)
+            {
+                Rectangle block_rec = block.GetDestinationRectangle();
+                Rectangle mario_rec = mario.GetDestinationRectangle();
+
+                if (!StandingBlock.Contains(block) && mario_rec.Intersects(block_rec)) 
+                {
+                    if (mario_rec.Right >= block_rec.Left && mario_rec.Left < block_rec.Left)
+                    {
+                        mario.UPlayerPosition.X = block_rec.Left - mario_rec.Width / 2;
+                    }
+                    else if (mario_rec.Left <= block_rec.Right && mario_rec.Right > block_rec.Right)
+                    {
+                        mario.UPlayerPosition.X = block_rec.Right + mario_rec.Width / 2;
+                    }
+                }
                 
-               
+                
+            }
+
+           
+
+
+
+
         }
      
         //function that has a for each between enemies and other enemies

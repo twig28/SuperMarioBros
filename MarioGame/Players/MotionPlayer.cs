@@ -12,7 +12,7 @@ public class MotionPlayer : IPlayer
     public Texture2D Texture { get; set; }
         public Game1 Game;
         public Vector2 Position;
-    private float Scale = 5f;
+    private float Scale = 3f;
     private float Speed;
     public GraphicsDeviceManager graphics;
     private int currentFrame;
@@ -95,7 +95,7 @@ public class MotionPlayer : IPlayer
                 sourceRectangle.Add(new Rectangle(287, 122, 18, 32));
                 width = 18;
                 height = 32;
-                Position.Y = Position.Y - 40;
+                Position.Y = Position.Y - 22;
 
 
             }
@@ -107,7 +107,7 @@ public class MotionPlayer : IPlayer
                 sourceRectangle.Add(new Rectangle(299, 52, 18, 32));
                 width = 18;
                 height = 32;
-                Position.Y = Position.Y - 40;
+                Position.Y = Position.Y - 24;
 
             }
             else

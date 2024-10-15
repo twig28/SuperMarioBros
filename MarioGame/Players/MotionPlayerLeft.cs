@@ -12,7 +12,7 @@ namespace MarioGame
         public Texture2D Texture { get; set; }
         public Vector2 Position;
         public Game1 Game;
-        private float Scale = 5f;
+        private float Scale = 3f;
         private float Speed;
         public GraphicsDeviceManager graphics;
         private int currentFrame;
@@ -101,7 +101,7 @@ namespace MarioGame
                 sourceRectangle.Add(new Rectangle(151, 122, 18, 32));
                 sourceRectangle.Add(new Rectangle(128, 122, 18, 32));
                 sourceRectangle.Add(new Rectangle(102, 122, 18, 32));
-                Position.Y = Position.Y - 40;
+                Position.Y = Position.Y - 22;
 
 
             }
@@ -113,7 +113,7 @@ namespace MarioGame
                 sourceRectangle.Add(new Rectangle(150, 52, 18, 32));
                 sourceRectangle.Add(new Rectangle(120, 52, 18, 32));
                 sourceRectangle.Add(new Rectangle(89, 52, 18, 32));
-                Position.Y = Position.Y - 40;
+                Position.Y = Position.Y - 24;
             }
             else
             {
