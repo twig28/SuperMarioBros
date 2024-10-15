@@ -18,15 +18,14 @@ namespace MarioGame.Blocks
         private const int dimension = 60;
 
         protected Texture2D Texture { get; set; }
-        protected Rectangle SourceRectangle;
+        Rectangle sourceRectangle = new Rectangle(80, 112, 15, 15);
         protected Rectangle DestinationRectangle;
         // private ISprite sprite;
 
-        public MysteryBlock(Vector2 position, Texture2D texture, Rectangle sourceRectangle)
+        public MysteryBlock(Vector2 position, Texture2D texture)
         {
             Position = position;
             Texture = texture;
-            SourceRectangle = sourceRectangle;
             DestinationRectangle = new Rectangle((int)position.X, (int)position.Y, dimension, dimension);
         }
 
@@ -40,12 +39,12 @@ namespace MarioGame.Blocks
                 timeElapsedSinceUpdate = timeElapsed;
                 if (currSprite == 2)
                 {
-                    SourceRectangle.X -= (spriteInterval * 2);
+                    sourceRectangle.X -= (spriteInterval * 2);
                     currSprite = 0;
                 }
                 else
                 {
-                    SourceRectangle.X += spriteInterval;
+                    sourceRectangle.X += spriteInterval;
                     currSprite += 1;
                 }
             }
@@ -55,7 +54,7 @@ namespace MarioGame.Blocks
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, DestinationRectangle, SourceRectangle, Color.White);
+            spriteBatch.Draw(Texture, DestinationRectangle, sourceRectangle, Color.White);
         }
     }
 }

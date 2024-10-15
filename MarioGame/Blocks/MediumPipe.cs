@@ -14,14 +14,13 @@ namespace MarioGame
         public bool IsBreakable { get; }
 
         protected Texture2D Texture { get; set; }
-        protected Rectangle SourceRectangle;
+        protected Rectangle SourceRectangle = new Rectangle(230, 385, 35, 66);
         protected Rectangle DestinationRectangle;
 
-        public MediumPipe(Vector2 position, Texture2D texture, Rectangle sourceRectangle)
+        public MediumPipe(Vector2 position, Texture2D texture)
         {
             Position = position;
             Texture = texture;
-            SourceRectangle = sourceRectangle;
             DestinationRectangle = new Rectangle((int)Position.X, (int)Position.Y, width, height); ;
         }
 

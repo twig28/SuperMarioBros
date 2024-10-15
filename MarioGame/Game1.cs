@@ -87,30 +87,30 @@ namespace MarioGame
             // Load fireball textures through the Ball class
             Ball.LoadContent(Content);
 
-            // Initialize blocks
             blocks = new List<IBlock>
             {
-                new Block(new Vector2(500, 200), blockTexture, new Rectangle(4, 4, 40, 40)),
-                new GroundBlock(new Vector2(900, GraphicsDevice.Viewport.Height - 120), groundBlockTexture, new Rectangle(0, 0, 50, 50)),
-                new MysteryBlock(new Vector2(560, 200), multipleBlockTextures, new Rectangle(80, 112, 15, 15)),
-                new MediumPipe(new Vector2(1075, 500), sceneryTextures, new Rectangle(230, 385, 30, 65))
+                new Block(new Vector2(500, 200), blockTexture),
+                new GroundBlock(new Vector2(900, GraphicsDevice.Viewport.Height - 120), groundBlockTexture),
+                new MysteryBlock(new Vector2(560, 200), multipleBlockTextures),
+                new MediumPipe(new Vector2(1075, 500), sceneryTextures)
             };
+
             PlayerPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2,
                    GraphicsDevice.Viewport.Height - 95);
+
             // Create a row of blocks on the bottom, except for the leftmost two so Mario can fall
             for (int i = 0; i <= GraphicsDevice.Viewport.Width - 120; i += 60)
             {
-                blocks.Add(new GroundBlock(new Vector2(i, GraphicsDevice.Viewport.Height - 60), groundBlockTexture, new Rectangle(0, 0, 50, 50)));
+                blocks.Add(new GroundBlock(new Vector2(i, GraphicsDevice.Viewport.Height - 60), groundBlockTexture));
             }
 
-            // Initialize enemies
             enemies = new List<IEnemy>
             {
                 new Goomba(enemyTextures, _spriteBatch, 500, 500),
                 new Koopa(enemyTextures, _spriteBatch, 600, 500),
                 new Piranha(enemyTextures, _spriteBatch, 1100, 500),
             };
-            // Initialize player
+
             player_sprite = new PlayerSprite(marioTexture, PlayerPosition, PlayerSpeed, _graphics, this);
             player_sprite.intialize_player();
         }

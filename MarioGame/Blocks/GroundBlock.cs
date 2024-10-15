@@ -9,8 +9,8 @@ namespace MarioGame.Blocks
         public override bool IsSolid => true;
         public override bool IsBreakable => false;
 
-        public GroundBlock(Vector2 position, Texture2D texture, Rectangle sourceRectangle)
-            : base(position, texture, sourceRectangle)
+        public GroundBlock(Vector2 position, Texture2D texture)
+            : base(position, texture, new Rectangle(0, 0, 50, 50))
         {
         }
 

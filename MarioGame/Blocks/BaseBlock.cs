@@ -13,15 +13,15 @@ namespace MarioGame.Blocks
         public abstract bool IsBreakable { get; }
 
         protected Texture2D Texture { get; set; }
-        protected Rectangle SourceRectangle;
         protected Rectangle DestinationRectangle;
+        protected Rectangle SourceRectanlge;
         // private ISprite sprite;
 
         public BaseBlock(Vector2 position, Texture2D texture, Rectangle sourceRectangle)
 		{
 			Position = position;
 			Texture = texture;
-            SourceRectangle = sourceRectangle;
+			SourceRectanlge = sourceRectangle;
 			DestinationRectangle = new Rectangle((int)Position.X, (int)Position.Y, dimension, dimension); ;
         }
 
@@ -36,7 +36,7 @@ namespace MarioGame.Blocks
 
 		public virtual void Draw(SpriteBatch spriteBatch)
 		{
-			spriteBatch.Draw(Texture, DestinationRectangle, SourceRectangle, Color.White);
+			spriteBatch.Draw(Texture, DestinationRectangle, SourceRectanlge, Color.White);
 		}
 	}
 }
