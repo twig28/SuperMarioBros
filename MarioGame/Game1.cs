@@ -122,13 +122,13 @@ namespace MarioGame
             CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
             CollisionLogic.CheckEnemyEnemyCollision(enemies, gameTime);
             CollisionLogic.CheckMarioEnemyCollision(player_sprite, ref enemies, gameTime);
-
+            CollisionLogic.CheckMarioItemCollision(player_sprite, items.getItemList(),gameTime);
             blocks.RemoveAll(block => block is Block b && b.IsDestroyed);
 
             player_sprite.Update(gameTime);
 
-            ItemCollision itemCollision = new ItemCollision(player_sprite);
-            itemCollision.ItemCollisionHandler(items.getItemList());
+         //  ItemCollision itemCollision = new ItemCollision(player_sprite);
+         //  itemCollision.ItemCollisionHandler(items.getItemList());
 
             foreach (var block in blocks)
             {

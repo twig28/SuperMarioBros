@@ -14,12 +14,7 @@ namespace MarioGame
         public Vector2 Position;
         public float Speed;
         public GraphicsDeviceManager graphics;
-        public float Scale = 5f;
-        private const int width = 14;
-        private const int height = 16;
-        private const int SX = 0;
-        private const int SY = 16;
-        private bool movedown;
+        public float Scale = 3f;
         public Damaged(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics)
         {
             Texture = texture;
@@ -41,8 +36,8 @@ namespace MarioGame
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            Rectangle sourceRectangle = new Rectangle(SX, SY, width, height);
-            spriteBatch.Draw(Texture, Position, sourceRectangle, Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
+            Rectangle sourceRectangle = new Rectangle(0, 16, 14, 16);
+            spriteBatch.Draw(Texture, Position, sourceRectangle, Color.White, 0f, new Vector2(14 / 2, 16 / 2), Scale, SpriteEffects.None, 0f);
         }
 
       

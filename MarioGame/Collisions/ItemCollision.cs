@@ -15,23 +15,17 @@ namespace MarioGame.Collisions
 
         public void ItemCollisionHandler(List<IItem> items)
         {
-            Rectangle playerRectangle = player.GetDestinationRectangle();
-            Rectangle itemRectangle;
-            Rectangle intersectionRectangle;
-            List<IItem> itemList = new List<IItem>();
+
+            IItem itemRemove;
             foreach (IItem item in items)
             {
-                itemRectangle = item.getDestinationRectangle();
-                intersectionRectangle = Rectangle.Intersect(itemRectangle, playerRectangle);
-                if (!intersectionRectangle.IsEmpty)
-                {
-                        
-                    itemList.Add(item);
-                }
+                Rectangle itemRectangle = item.getDestinationRectangle();
+                Rectangle playerRectangle = player.GetDestinationRectangle();
+
+               
             }
-            foreach (IItem item in itemList) { 
-                items.Remove(item);
-            }
+           
+            
         }
     }
 }

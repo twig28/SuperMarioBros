@@ -74,15 +74,16 @@ namespace MarioGame
         //function that has a for each between mario and blocks/obstacles
         public static void CheckMarioBlockCollision(PlayerSprite mario, List<IBlock> blocks)
         {
+            if(mario.current != PlayerSprite.SpriteType.Damaged) { 
             List<IBlock> blocksToRemove = new List<IBlock>();
             List<IBlock> StandingBlock = new List<IBlock>();
             List<IBlock> BelowBlock = new List<IBlock>();
-            //Rectangle Intersect_rec = Rectangle.Intersect(mario_rec, block_rec);
+
             foreach (IBlock block in blocks)
             {
                 Rectangle block_rec = block.GetDestinationRectangle();
                 Rectangle mario_rec = mario.GetDestinationRectangle();
-                if (mario_rec.Intersects(block_rec)) 
+                if (mario_rec.Intersects(block_rec))
                 {
                     if (mario.UPlayerPosition.Y < block_rec.Top)
                     {
@@ -102,7 +103,7 @@ namespace MarioGame
                                 mario.current = PlayerSprite.SpriteType.StaticL;
                             }
 
-                          
+
 
                         }
                         if (mario.Big || mario.Fire)
@@ -115,13 +116,13 @@ namespace MarioGame
 
                         }
                     }
-                    else if(mario.UPlayerPosition.Y > block_rec.Bottom && !mario.isGrounded)               
+                    else if (mario.UPlayerPosition.Y > block_rec.Bottom && !mario.isGrounded)
                     {
                         mario.velocity = 0f;
 
                         if (mario.Big || mario.Fire)
                         {
-                            mario.UPlayerPosition.Y = block_rec.Bottom + mario_rec.Height / 2 + 22;
+                            mario.UPlayerPosition.Y = block_rec.Bottom + mario_rec.Height / 2 + 24;
                         }
                         else if (!mario.Big && !mario.Fire)
                         {
@@ -155,9 +156,9 @@ namespace MarioGame
                 Rectangle block_rec = block.GetDestinationRectangle();
                 Rectangle mario_rec = mario.GetDestinationRectangle();
 
-                if (!StandingBlock.Contains(block) && mario_rec.Intersects(block_rec)) 
+                if (!StandingBlock.Contains(block) && mario_rec.Intersects(block_rec))
                 {
-                   
+                    
                     if (mario_rec.Right >= block_rec.Left && mario_rec.Left < block_rec.Left)
                     {
                         mario.UPlayerPosition.X = block_rec.Left - mario_rec.Width / 2;
@@ -166,13 +167,13 @@ namespace MarioGame
                     {
                         mario.UPlayerPosition.X = block_rec.Right + mario_rec.Width / 2;
                     }
-                    
+
                 }
-                
-                
+
+
             }
 
-           
+        }
 
 
 
@@ -194,7 +195,7 @@ namespace MarioGame
                 }
             }
         }
-
+        
         public static void CheckMarioEnemyCollision(PlayerSprite mario, ref List<IEnemy> enemies, GameTime gt)
         {
             IEnemy enemyToRemove = null;
@@ -207,15 +208,38 @@ namespace MarioGame
                 }
                 else if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None)
                 {
-                    //Kill Mario
+                    if(mario.Big)
+                    {
+                        enemyToRemove = enemy;
+                    }
+                    else
+                    {
+                        mario.current = PlayerSprite.SpriteType.Damaged;
+                    }
                 }
             }
             enemies.Remove(enemyToRemove);
         }
 
-        public static void CheckMarioItemCollision(PlayerSprite mario, List<IItem> items, GameTime gt) { 
-        
-        
+
+
+        public static void CheckMarioItemCollision(PlayerSprite mario, List<IItem> items, GameTime gt)
+        {
+            IItem itemRemove = null;
+            String a = "FireFlower";
+            foreach (IItem item in items)
+            {
+                Rectangle mario_rec = mario.GetDestinationRectangle();
+                Rectangle item_rec = item.getDestinationRectangle();
+               
+                if (mario_rec.Intersects(item_rec))
+                {
+                    itemRemove = item;
+                    
+                    
+                }
+            }
+            items.Remove(itemRemove);
         }
 
         public static void CheckFireballBlockCollision(List<IBall> fireballs, List<IBlock> blocks)

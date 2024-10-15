@@ -37,7 +37,7 @@ namespace MarioGame
         {
             Texture = direction ? textureLeft : textureRight; // Choose the correct texture based on direction
             Position = position;
-            Position.Y = Position.Y - 40;
+            Position.Y = Position.Y - 50;
             Speed = speed;
             this.direction = direction;
             IsVisible = true; // Initialize to true so the ball is visible
