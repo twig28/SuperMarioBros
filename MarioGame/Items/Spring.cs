@@ -44,5 +44,10 @@ namespace MarioGame.Items
         {
             return destinationRectangle;
         }
+
+        public string getName()
+        {
+            return "Spring";
+        }
     }
 }

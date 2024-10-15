@@ -180,40 +180,27 @@ namespace MarioGame
             }
         }
 
-        public static void CheckMarioEnemyCollision(PlayerSprite mario, List<IEnemy> enemies, GameTime gt)
+        public static void CheckMarioEnemyCollision(PlayerSprite mario, ref List<IEnemy> enemies, GameTime gt)
         {
+            IEnemy enemyToRemove = null;
             foreach (IEnemy enemy in enemies)
             {
                 if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) == CollisionDirection.Below)
                 {
                     enemy.TriggerDeath(gt, false);
-                    //enemies.Remove(enemy);
+                    if(enemy is not Koopa) { enemyToRemove = enemy; }
                 }
                 else if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None)
                 {
                     //Kill Mario
                 }
             }
+            enemies.Remove(enemyToRemove);
         }
 
         public static void CheckMarioItemCollision(PlayerSprite mario, List<IItem> items, GameTime gt) { 
         
         
-        }
-
-        public static void CheckFireballEnemyCollision(List<Ball> fireballs, List<IEnemy> enemies, GameTime gt)
-        {
-            foreach (IBall fireball in fireballs)
-            {
-                foreach (IEnemy enemy in enemies)
-                {
-                    if (GetCollisionDirection(fireball.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None)
-                    {
-                        enemy.TriggerDeath(gt, false);
-                        //enemies.Remove(enemy);
-                    }
-                }
-            }
         }
 
         public static void CheckFireballBlockCollision(List<IBall> fireballs, List<IBlock> blocks)
@@ -242,7 +229,7 @@ namespace MarioGame
 
 
 
-        public static void CheckFireballEnemyCollision(List<IBall> fireballs, List<IEnemy> enemies, GameTime gm, bool stomped)
+        public static void CheckFireballEnemyCollision(List<IBall> fireballs, ref List<IEnemy> enemies, GameTime gm, bool stomped)
         {
             List<IBall> fireballsToRemove = new List<IBall>();
             List<IEnemy> enemyToDie = new List<IEnemy>();
@@ -268,6 +255,7 @@ namespace MarioGame
             foreach (IEnemy enemy in enemyToDie)
             {
                 enemy.TriggerDeath(gm, stomped);
+                enemies.Remove(enemy);
             }
         }
     }

@@ -8,5 +8,7 @@ public interface IItem
     void Draw(SpriteBatch spriteBatch, Vector2 location);
     void Update(GameTime gameTime);
     public Rectangle getDestinationRectangle();
+
+    public string getName();
 }
 

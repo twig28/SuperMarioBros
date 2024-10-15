@@ -80,13 +80,13 @@ namespace MarioGame
             groundBlockTexture = Content.Load<Texture2D>("resizedGroundBlock");
             blockTexture = Content.Load<Texture2D>("InitialBrickBlock");
             multipleBlockTextures = Content.Load<Texture2D>("blocks");
+            sceneryTextures = Content.Load<Texture2D>("smb1_scenery_sprites");
 
             items = new ItemContainer(itemTextures);
 
             // Load fireball textures through the Ball class
             Ball.LoadContent(Content);
 
-            // Initialize blocks
             blocks = new List<IBlock>
             {
                // new Block(new Vector2(500, 200), blockTexture, new Rectangle(0, 0, 50, 50)),
@@ -97,17 +97,16 @@ namespace MarioGame
             // Create a row of blocks on the bottom, except for the leftmost two so Mario can fall
             for (int i = 0; i <= GraphicsDevice.Viewport.Width - 120; i += 60)
             {
-                blocks.Add(new GroundBlock(new Vector2(i, GraphicsDevice.Viewport.Height - 60), groundBlockTexture, new Rectangle(0, 0, 50, 50)));
+                blocks.Add(new GroundBlock(new Vector2(i, GraphicsDevice.Viewport.Height - 60), groundBlockTexture));
             }
 
-            // Initialize enemies
             enemies = new List<IEnemy>
             {
                 new Goomba(enemyTextures, _spriteBatch, 500, 500),
                 new Koopa(enemyTextures, _spriteBatch, 600, 500),
                 new Piranha(enemyTextures, _spriteBatch, 1100, 500),
             };
-            // Initialize player
+
             player_sprite = new PlayerSprite(marioTexture, PlayerPosition, PlayerSpeed, _graphics, this);
             player_sprite.intialize_player();
         }
@@ -120,7 +119,7 @@ namespace MarioGame
             CollisionLogic.CheckEnemyBlockCollisions(enemies, blocks);
             CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
             CollisionLogic.CheckEnemyEnemyCollision(enemies, gameTime);
-            CollisionLogic.CheckMarioEnemyCollision(player_sprite, enemies, gameTime);
+            CollisionLogic.CheckMarioEnemyCollision(player_sprite, ref enemies, gameTime);
 
             blocks.RemoveAll(block => block is Block b && b.IsDestroyed);
 
@@ -139,7 +138,7 @@ namespace MarioGame
 
             Ball.UpdateAll(gameTime, GraphicsDevice.Viewport.Width);
 
-            CollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), enemies, gameTime,false);
+            CollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime,false);
             CollisionLogic.CheckFireballBlockCollision(Ball.GetBalls(), blocks);
 
             items.Update(gameTime);
@@ -159,6 +158,12 @@ namespace MarioGame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            foreach (IEnemy enemy in enemies)
+            {
+                enemy.Update(gameTime);
+                enemy.Draw();
+            }
+
             _spriteBatch.Begin();
 
             items.Draw(_spriteBatch);
@@ -174,12 +179,6 @@ namespace MarioGame
             DrawCollisionRectangles(_spriteBatch);
 
             _spriteBatch.End();
-
-            foreach (IEnemy enemy in enemies)
-            {
-                enemy.Update(gameTime);
-                enemy.Draw();
-            }
 
             base.Draw(gameTime);
         }

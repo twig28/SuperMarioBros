@@ -12,8 +12,8 @@ namespace MarioGame.Blocks
         // Property to track if the block is destroyed
         public bool IsDestroyed { get; private set; } = false;
 
-        public Block(Vector2 position, Texture2D texture, Rectangle sourceRectangle)
-            : base(position, texture, sourceRectangle)
+        public Block(Vector2 position, Texture2D texture)
+            : base(position, texture, new Rectangle(4, 4, 40, 40))
         {
         }
 
