@@ -216,7 +216,7 @@ namespace MarioGame
                 }
                 else if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None)
                 {
-                    if(mario.Big)
+                    if(mario.Big || mario.Fire)
                     {
                         //demote mario to small mario
                     }

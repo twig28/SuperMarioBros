@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MarioGame.Sprites;
 
@@ -11,94 +6,92 @@ namespace MarioGame
 {
     internal class Piranha : IEnemy
     {
-        private double movingInterval = 2;
-        private double animInterval = 0.4;
+        private const double MovementInterval = 2; 
+        private const double AnimationInterval = 0.4; 
+        private const double DelayInterval = 5; 
+
+        private double movementTimer = 0;
+        private double animationTimer = 0;
+        private double delayTimer = 0;
+        private bool isWaiting = false; 
+
         private PiranhaSprite sprite;
-        private int posX;
-        private int posY;
-        private int width;
-        private int height;
-        private double timeElapsed = 0;
-        private double timeElapsedSinceUpdate = 0;
-        private double timeElapsedSinceUpdateAnim = 0;
+        private bool isMovingUp = true;
         private bool alive = true;
 
-        private bool _DefaultMoveMentDirection = false;
         public bool DefaultMoveMentDirection
         {
-            get { return _DefaultMoveMentDirection; }
-            set { _DefaultMoveMentDirection = value; }
+            get => isMovingUp;
+            set => isMovingUp = value; 
         }
-        public int setPosX{set { posX = value; }}
 
-        public int setPosY { set { posY = value; }}
+        private int posX;
+        public int setPosX { set => posX = value; }
 
-        public Rectangle GetDestinationRectangle() { return sprite.GetDestinationRectangle(); }
+        private int posY;
+        public int setPosY { set => posY = value; }
 
-        public Piranha(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
+        public Rectangle GetDestinationRectangle() => sprite.GetDestinationRectangle();
+
+        public Piranha(Texture2D texture, SpriteBatch spriteBatch, int x, int y)
         {
-            posX = X; posY = Y;
-            sprite = new PiranhaSprite(Texture, SpriteBatch, posX, posY);
+            posX = x;
+            posY = y;
+            sprite = new PiranhaSprite(texture, spriteBatch, posX, posY);
+            DefaultMoveMentDirection = true;  // Initial movement direction
         }
+
         public void Draw()
         {
             if (alive) sprite.Draw();
         }
 
-        public void Update(GameTime gm)
+        public void Update(GameTime gameTime)
         {
-            if (alive)
+            if (!alive) return;
+
+            double elapsed = gameTime.ElapsedGameTime.TotalSeconds;
+
+            // Handle animation updates
+            animationTimer += elapsed;
+            if (animationTimer >= AnimationInterval)
             {
-                timeElapsed = gm.TotalGameTime.TotalSeconds;
-                if (movingInterval == 2)
-                {
-                    if (_DefaultMoveMentDirection)
-                    {
-                        posY++;
-                    }
-                    else
-                    {
-                        posY--;
-                    }
-                    sprite.posX = posX;
-                    sprite.posY = posY;
-                }
-                else if (timeElapsed - timeElapsedSinceUpdateAnim > animInterval)
-                {
-                    timeElapsedSinceUpdateAnim = timeElapsed;
-                    sprite.Update(gm);
-                }
-                if (timeElapsed - timeElapsedSinceUpdate > movingInterval)
-                {
-                    timeElapsedSinceUpdate = timeElapsed;
-                    //Going Up and Down -> Active
-                    if (movingInterval == 2)
-                    {
-                        movingInterval = 8;
-                        //Send change direction to Sprite
-                        sprite.ChangeDirection = true;
-                    }
-                    else
-                    {
-                        movingInterval = 2;
-                        if (_DefaultMoveMentDirection)
-                        {
-                            _DefaultMoveMentDirection = false;
-                        }
-                        else
-                        {
-                            _DefaultMoveMentDirection = true;
-                        }
-                    }
-                }
-                //Active -> Going Up and Down
+                animationTimer = 0;
+                sprite.Update(gameTime);
             }
+
+            if (isWaiting)
+            {
+                delayTimer += elapsed;
+                if (delayTimer >= DelayInterval)
+                {
+                    // End delay and reset the timer
+                    delayTimer = 0;
+                    isWaiting = false;
+                    isMovingUp = !isMovingUp;
+                }
+            }
+            else
+            {
+                movementTimer += elapsed;
+                if (movementTimer >= MovementInterval)
+                {
+                    movementTimer = 0;
+                    isWaiting = true; 
+                }
+
+                // Move the Piranha in the current direction if moving
+                posY += isMovingUp ? -1 : 1;
+            }
+
+            sprite.posX = posX;
+            sprite.posY = posY;
         }
 
-        public void TriggerDeath(GameTime gm, bool stomped)
+        public void TriggerDeath(GameTime gameTime, bool stomped)
         {
             alive = false;
-            sprite.Update(gm);
+            sprite.Update(gameTime);  // Optional: freeze or animate on death
         }
     }
 }
