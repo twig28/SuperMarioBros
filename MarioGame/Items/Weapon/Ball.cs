@@ -13,37 +13,50 @@ namespace MarioGame
         public bool IsVisible { get; set; }
         private bool direction;  // true -> left, false -> right
 
-        private int rows = 1;    // Number of rows in the sprite sheet
-        private int columns = 8; // Number of columns in the sprite sheet
         private int currentFrame;
         private int totalFrames;
         private float timePerFrame = 0.1f; // Time per frame in seconds
         private float timeCounter = 0f;    // Timer for tracking the frame updates
+        private float scale = 2f; // Scale factor to enlarge the fireball
 
         // Static textures for fireball
-        private static Texture2D textureLeft;
-        private static Texture2D textureRight;
+        private static Texture2D spriteSheet;
 
         // Static fireball list, managing all instances of balls
         private static List<IBall> balls = new List<IBall>();
 
+        // Fireball animation frames for left and right directions
+        private static List<Rectangle> leftFrames;
+        private static List<Rectangle> rightFrames;
+
         public static void LoadContent(ContentManager content)
         {
-            textureLeft = content.Load<Texture2D>("fireballLeft");
-            textureRight = content.Load<Texture2D>("fireballRight");
+            spriteSheet = content.Load<Texture2D>("smb_enemies_sheet");
+
+            // Define frames for fireball animation
+            leftFrames = new List<Rectangle>
+            {
+                new Rectangle(101, 253, 24, 8),
+                new Rectangle(131, 253, 24, 8)
+            };
+
+            rightFrames = new List<Rectangle>
+            {
+                new Rectangle(161, 253, 24, 8),
+                new Rectangle(191, 254, 24, 8)
+            };
         }
 
         public Ball(Vector2 position, float speed, bool direction)
         {
-            Texture = direction ? textureLeft : textureRight; // Choose the correct texture based on direction
             Position = position;
-            Position.Y = Position.Y - 50;
+            Position.Y = Position.Y - 30;
             Speed = speed;
             this.direction = direction;
             IsVisible = true; // Initialize to true so the ball is visible
 
-            currentFrame = direction ? columns - 1 : 0; // Start from the appropriate frame based on direction
-            totalFrames = rows * columns; // Calculate the total number of frames
+            currentFrame = 0;
+            totalFrames = leftFrames.Count; // Both left and right frames have the same count
         }
 
         // Handle fireball creation based on input flags from the controller
@@ -101,21 +114,10 @@ namespace MarioGame
             timeCounter += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (timeCounter >= timePerFrame)
             {
-                if (direction) // Reverse animation for left direction
+                currentFrame++;
+                if (currentFrame >= totalFrames)
                 {
-                    currentFrame--;
-                    if (currentFrame < 0)
-                    {
-                        currentFrame = columns - 1; // Loop back to the last frame
-                    }
-                }
-                else // Forward animation for right direction
-                {
-                    currentFrame++;
-                    if (currentFrame >= totalFrames)
-                    {
-                        currentFrame = 0;
-                    }
+                    currentFrame = 0;
                 }
                 timeCounter -= timePerFrame;
             }
@@ -131,18 +133,11 @@ namespace MarioGame
         {
             if (IsVisible)
             {
-                // Calculate the width and height of each frame
-                int frameWidth = Texture.Width / columns;
-                int frameHeight = Texture.Height / rows;
+                // Select the appropriate frame list based on direction
+                Rectangle sourceRectangle = direction ? leftFrames[currentFrame] : rightFrames[currentFrame];
 
-                // Calculate the current frame's row and column
-                int row = currentFrame / columns;
-                int column = currentFrame % columns;
-
-                // Ensure the correct portion of the sprite sheet is drawn
-                Rectangle sourceRectangle = new Rectangle(column * frameWidth, row * frameHeight, frameWidth, frameHeight);
                 // Draw the current frame using the correct sourceRectangle
-                spriteBatch.Draw(Texture, Position, sourceRectangle, Color.White);
+                spriteBatch.Draw(spriteSheet, Position, sourceRectangle, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
             }
         }
 
@@ -154,9 +149,8 @@ namespace MarioGame
 
         public Rectangle GetDestinationRectangle()
         {
-            int frameWidth = Texture.Width / columns;
-            int frameHeight = Texture.Height / rows;
-            return new Rectangle((int)Position.X, (int)Position.Y, frameWidth, frameHeight);
+            Rectangle sourceRectangle = direction ? leftFrames[currentFrame] : rightFrames[currentFrame];
+            return new Rectangle((int)Position.X, (int)Position.Y, (int)(sourceRectangle.Width * scale), (int)(sourceRectangle.Height * scale));
         }
     }
 }

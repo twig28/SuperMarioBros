@@ -104,7 +104,7 @@ namespace MarioGame
 
             enemies = new List<IEnemy>
             {
-                new Goomba(enemyTextures, _spriteBatch, 500, 500),
+                new Goomba(enemyTextures, _spriteBatch, 500, 200),
                 new Koopa(enemyTextures, _spriteBatch, 600, 500),
                 new Piranha(enemyTextures, _spriteBatch, 1100, 500),
             };
@@ -137,9 +137,7 @@ namespace MarioGame
 
             // Use the Ball class's static method to handle fireball inputs and update
            Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl);
-
             Ball.UpdateAll(gameTime, GraphicsDevice.Viewport.Width);
-
             CollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime,false);
             CollisionLogic.CheckFireballBlockCollision(Ball.GetBalls(), blocks);
 
