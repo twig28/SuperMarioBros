@@ -12,7 +12,7 @@ namespace MarioGame.Sprites
     internal class PiranhaSprite : ISprite
     {
         private const int SpriteWidth = 75;
-        private const int SpriteHeight = 115;
+        private const int SpriteHeight = 100;
         private int SourceX = 390;
         private int SourceY = 30;
         private const int SourceWidth = 16;

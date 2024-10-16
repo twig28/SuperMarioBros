@@ -15,8 +15,6 @@ namespace MarioGame
         private GoombaSprite sprite;
         private int posX;
         private int posY;
-        private int width;
-        private int height;
         private double timeElapsed = 0;
         private double timeElapsedSinceUpdate = 0;
 

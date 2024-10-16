@@ -15,8 +15,6 @@ namespace MarioGame
         private KoopaSprite sprite;
         private int posX;
         private int posY;
-        private int width;
-        private int height;
         private bool changeSpriteDirection = false;
         private double timeElapsed = 0;
         private double timeElapsedSinceUpdate = 0;
