@@ -1,8 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.ComponentModel;
-using System.Net;
-using static System.Formats.Asn1.AsnWriter;
+using Microsoft.Xna.Framework.Input;
+using MarioGame.Controllers;
+using MarioGame.Interfaces;
+using MarioGame.Items;
+using MarioGame.Blocks;
+using System.Collections.Generic;
+using MarioGame.Collisions;
 
 namespace MarioGame
 {
@@ -28,14 +32,16 @@ namespace MarioGame
         public bool isJumping = false;
         public bool isGrounded = true;
         public bool isFalling= false;
-        public float groundLevel;
+    
+
         public Texture2D marioTexture { get; set; }
         public Vector2 PlayerPosition;
         public Vector2 UPlayerPosition;
-        public Rectangle Position;
         float PlayerSpeed;
+        public float velocity = 0f;
         public GraphicsDeviceManager _graphics;
         public Game1 Game;
+
         public MotionPlayer MRplayer;
         public MotionPlayerLeft MLplayer;
         public Static Staplayer;
@@ -44,18 +50,10 @@ namespace MarioGame
         public Damaged Damagedplayer;
         public Fall Fallplayer;
         public JumpL JumpLplayer;
-        public float velocity = 0f;
+        public MarioController Mario_state;
         public SpriteType current = SpriteType.Static;
+
       
-        // Added properties
-        public float setPosX
-        {
-            set { UPlayerPosition.X = value; }
-        }
-        public float setPosY
-        {
-            set { UPlayerPosition.Y = value; }
-        }
 
         public PlayerSprite(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics, Game1 game)
         {
@@ -65,7 +63,6 @@ namespace MarioGame
             PlayerSpeed = speed;
             _graphics = Graphics;
             Game = game;
-            groundLevel = Graphics.PreferredBackBufferHeight - 95;
         }
 
         public void intialize_player()
@@ -87,6 +84,7 @@ namespace MarioGame
             Damagedplayer = new Damaged(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
             //falling
             Fallplayer = new Fall(marioTexture, PlayerPosition, PlayerSpeed, _graphics, Game);
+            Mario_state = new MarioController(Game);
 
         }
 
@@ -153,40 +151,57 @@ namespace MarioGame
        
 
 
-        public void Draw(SpriteBatch _spriteBatch)
+        public void Draw(SpriteBatch _spriteBatch, int width, int height, float Scale, List<Rectangle> sourceRectangle)
         {
             //check sprint type for draw
+            if(Fire || Big)
+            {
+                width = 18;
+                height = 32;
+            }
+            else
+            {
+                width = 14;
+                height = 16;
+            }
+            sourceRectangle = Mario_state.Switch(current);
             if (current == PlayerSprite.SpriteType.Static)
             {
-                Staplayer.Draw(_spriteBatch);
+                Staplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle);
             }
             if (current == PlayerSprite.SpriteType.StaticL)
             {
-                StaLplayer.Draw(_spriteBatch);
+              
+                StaLplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle);
             }
             if (current == PlayerSprite.SpriteType.Motion)
             {
-                MRplayer.Draw(_spriteBatch);
+               
+                MRplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle);
             }
             if (current == PlayerSprite.SpriteType.MotionL)
             {
-                MLplayer.Draw(_spriteBatch);
+              
+                MLplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle);
             }
             if (current == PlayerSprite.SpriteType.Jump)
             {
-                Jumpplayer.Draw(_spriteBatch);
+              
+                Jumpplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle);
             }
             if (current == PlayerSprite.SpriteType.JumpL)
             {
-                 JumpLplayer.Draw(_spriteBatch);
+              
+                JumpLplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle);
             }
             if (current == PlayerSprite.SpriteType.Damaged)
             {
-                Damagedplayer.Draw(_spriteBatch);
+              
+                Damagedplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle);
             }
             if (current == PlayerSprite.SpriteType.Falling)
             {
-                Fallplayer.Draw(_spriteBatch);
+                Fallplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle);
             }
         }
 

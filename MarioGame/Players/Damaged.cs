@@ -1,8 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.ComponentModel;
-using static System.Formats.Asn1.AsnWriter;
-
+using Microsoft.Xna.Framework.Input;
+using MarioGame.Controllers;
+using MarioGame.Interfaces;
+using MarioGame.Items;
+using MarioGame.Blocks;
+using System.Collections.Generic;
+using MarioGame.Collisions;
 namespace MarioGame
 {
     //would have texture, position, state, and more properties
@@ -10,11 +14,11 @@ namespace MarioGame
     {
 
 
-        public Texture2D Texture { get; set; }
+        private Texture2D Texture { get; set; }
         public Vector2 Position;
-        public float Speed;
-        public GraphicsDeviceManager graphics;
-        public float Scale = 3f;
+        private float Speed;
+        private GraphicsDeviceManager graphics;
+        //private float Scale = 3f;
         public Damaged(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics)
         {
             Texture = texture;
@@ -34,10 +38,10 @@ namespace MarioGame
             
             
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch,int width, int height,float Scale, List<Rectangle> sourceRectangle)
         {
-            Rectangle sourceRectangle = new Rectangle(0, 16, 14, 16);
-            spriteBatch.Draw(Texture, Position, sourceRectangle, Color.White, 0f, new Vector2(14 / 2, 16 / 2), Scale, SpriteEffects.None, 0f);
+            //Rectangle sourceRectangle = new Rectangle(0, 16, 14, 16);
+            spriteBatch.Draw(Texture, Position, sourceRectangle[0], Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
         }
 
       

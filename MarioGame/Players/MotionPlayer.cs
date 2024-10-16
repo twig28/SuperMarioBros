@@ -10,11 +10,11 @@ namespace MarioGame {
 public class MotionPlayer : IPlayer
     {
     public Texture2D Texture { get; set; }
-        public Game1 Game;
+        private Game1 Game;
         public Vector2 Position;
     private float Scale = 3f;
     private float Speed;
-    public GraphicsDeviceManager graphics;
+    private GraphicsDeviceManager graphics;
     private int currentFrame;
     private int totalFrames;
     private float timePerFrame = 0.2f; // Time per frame in seconds
@@ -80,46 +80,45 @@ public class MotionPlayer : IPlayer
 
 
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch,int width, int height, float sourceScale, List<Rectangle> sourceRectangle)
         {
-            int width;
-            int height;
+            
             //check status
-            List<Rectangle> sourceRectangle = new List<Rectangle>();
+           // List<Rectangle> sourceRectangle = new List<Rectangle>();
 
             if (Game.player_sprite.Fire)
             {
+                /*
                 sourceRectangle.Clear();
                 sourceRectangle.Add(new Rectangle(237, 122, 18, 32));
                 sourceRectangle.Add(new Rectangle(263, 122, 18, 32));
                 sourceRectangle.Add(new Rectangle(287, 122, 18, 32));
-                width = 18;
-                height = 32;
+               */
                 Position.Y = Position.Y - 22;
 
 
             }
             else if (!Game.player_sprite.Fire && Game.player_sprite.Big)
             {
+                /*
                 sourceRectangle.Clear();
                 sourceRectangle.Add(new Rectangle(238, 52, 18, 32));
                 sourceRectangle.Add(new Rectangle(270, 52, 18, 32));
                 sourceRectangle.Add(new Rectangle(299, 52, 18, 32));
-                width = 18;
-                height = 32;
+               */
                 Position.Y = Position.Y - 24;
 
             }
             else
             {
-             width = 14;
-             height = 16;
+            /*
              sourceRectangle.Clear();
              sourceRectangle.Add(new Rectangle(240, 0, 14, 16));
              sourceRectangle.Add(new Rectangle(270, 0, 14, 16));
              sourceRectangle.Add(new Rectangle(300, 0, 14, 16));
+            */
             }
-        spriteBatch.Draw(Texture, Position, sourceRectangle[currentFrame], Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
+        spriteBatch.Draw(Texture, Position, sourceRectangle[currentFrame], Color.White, 0f, new Vector2(width / 2, height / 2), sourceScale, SpriteEffects.None, 0f);
 
             
 

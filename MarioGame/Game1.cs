@@ -169,7 +169,7 @@ namespace MarioGame
             _spriteBatch.Begin();
 
             items.Draw(_spriteBatch);
-            player_sprite.Draw(_spriteBatch);
+            player_sprite.Draw(_spriteBatch, 14, 16,3f, new List<Rectangle>());
 
             foreach (var block in blocks)
             {

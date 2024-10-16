@@ -14,7 +14,7 @@ namespace MarioGame
     public interface IPlayer
     {
         void Update(GameTime gm);
-        void Draw(SpriteBatch spriteBatch);
+        void Draw(SpriteBatch spriteBatch,int width, int height, float Scale, List<Rectangle> sourceRectangle);
     }
 }
 
