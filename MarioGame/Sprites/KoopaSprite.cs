@@ -1,12 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-using MarioGame.Items;
 
 namespace MarioGame
 {
@@ -20,29 +13,31 @@ namespace MarioGame
         private const int SourceHeight = 24;
         private SpriteBatch sb;
         private Texture2D texture;
-        Rectangle DestinationRectangle;
-        Rectangle SourceRectangle;
+        private Rectangle DestinationRectangle;
+        private Rectangle SourceRectangle;
         private const int spacingInterval = 30;
-        int currSprite = 0;
+        private int currSprite = 0;
         private bool hasChangedToShellAnim = false;
         private double timeElapsed = 0;
         private double timeElapsedSinceLastUpdate = 0;
         private double elapsedTimeForShellAnim = 0.7;
 
-        public Rectangle GetDestinationRectangle() { return DestinationRectangle; }
+        public bool ChangeDirection { get; set; }
+        public int posX { get; set; }
+        public int posY { get; set; }
+
+        public Rectangle GetDestinationRectangle() => DestinationRectangle;
+
         public KoopaSprite(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
         {
             sb = SpriteBatch;
-            posX = X; posY = Y;
+            posX = X;
+            posY = Y;
             texture = Texture;
             DestinationRectangle = new Rectangle(posX, posY, SpriteWidth, SpriteHeight);
             SourceRectangle = new Rectangle(SourceX, SourceY, SourceWidth, SourceHeight);
             ChangeDirection = false;
         }
-
-        public bool ChangeDirection { get; set; }
-        public int posX { get; set; }
-        public int posY { get; set; }
 
         public void Draw()
         {
@@ -73,25 +68,12 @@ namespace MarioGame
 
         public void Update(GameTime gm)
         {
-
             if (ChangeDirection)
             {
-                //Going Right -> Going Left
-                if (SourceRectangle.X >= 200)
-                {
-                    SourceRectangle.X = 150;
-                    currSprite = 0;
-                }
-                //Going Left -> Going Right
-                else
-                {
-                    SourceRectangle.X = 210;
-                    currSprite = 0;
-                }
+                SourceRectangle.X = (SourceRectangle.X >= 200) ? 150 : 210;
+                currSprite = 0;
                 ChangeDirection = false;
             }
-            if (!hasChangedToShellAnim)
-            {
                 if (currSprite == 0)
                 {
                     SourceRectangle.X += spacingInterval;
@@ -102,8 +84,11 @@ namespace MarioGame
                     SourceRectangle.X -= spacingInterval;
                     currSprite = 0;
                 }
-            }
+        }
 
+        public void SetDeathFrame()
+        {
+            SourceRectangle = new Rectangle(330, 20, SourceWidth, SourceHeight);
         }
     }
 }

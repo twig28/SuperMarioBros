@@ -214,6 +214,7 @@ namespace MarioGame
                     {
                         if (enemy is Koopa koopa)
                         {
+                            enemy.TriggerDeath(gt, true);
                             //spawn new koopa (which includes triggering death)
                             //newKoopa = koopa.SpawnKoopa();
                             //enemies.Add(newKoopa);

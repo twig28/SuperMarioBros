@@ -1,12 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace MarioGame
 {
     internal class Koopa : IEnemy
     {
         private const double animInterval = 0.2;
+        private const double DeathDuration = 2.0;
         private KoopaSprite sprite;
         private int posX;
         private int posY;
@@ -24,7 +24,6 @@ namespace MarioGame
         public Rectangle GetDestinationRectangle() => sprite.GetDestinationRectangle();
 
         public bool IsShell => isShell;
-
         public double getdeathStartTime => deathStartTime;
 
         public bool DefaultMoveMentDirection
@@ -55,12 +54,18 @@ namespace MarioGame
 
         public void Update(GameTime gm)
         {
-            if (Alive)
+            if (deathStartTime > 0)
+            {
+                if (gm.TotalGameTime.TotalSeconds - deathStartTime >= DeathDuration)
+                {
+                    Alive = false;
+                    return;
+                }
+            }
+            else
             {
                 timeElapsed = gm.TotalGameTime.TotalSeconds;
-
                 posX += _DefaultMoveMentDirection ? 1 : -1;
-
                 posY += 5;
 
                 sprite.posX = posX;
@@ -78,35 +83,12 @@ namespace MarioGame
                     sprite.Update(gm);
                 }
             }
-            else if (isShell)
-            {
-                timeElapsed = gm.TotalGameTime.TotalSeconds;
-                posX += _DefaultMoveMentDirection ? 3 : -3;
-
-                sprite.posX = posX;
-                sprite.posY = posY;
-
-                sprite.Update(gm);
-            }
         }
 
         public void TriggerDeath(GameTime gm, bool stomped)
         {
-            Alive = false; 
-
-            if (stomped)
-            {
-                isShell = true;
-
-                // Transition to shell sprite animation
-                bool changed = false;
-                while (!changed)
-                {
-                    changed = sprite.ChangeToShell(gm);
-                }
-            }
-
-            sprite.Update(gm);
+            deathStartTime = gm.TotalGameTime.TotalSeconds;
+            sprite.SetDeathFrame();
         }
     }
 }
