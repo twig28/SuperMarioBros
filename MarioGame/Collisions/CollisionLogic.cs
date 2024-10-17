@@ -207,10 +207,14 @@ namespace MarioGame
                     {
                         mario.current = PlayerSprite.SpriteType.Damaged;
                     }
-                    else if(enemy is Koopa)
+                    else
                     {
-                        enemy.TriggerDeath(gt, true);
-                        //enemy = ;
+                        enemy.TriggerDeath(gt, false);
+                        if (enemy is Koopa)
+                        {
+                            //enemy = ;
+                        }
+                        enemyToRemove = enemy;
                     }
                 }
                 else if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None)
