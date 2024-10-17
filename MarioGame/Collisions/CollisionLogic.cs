@@ -231,7 +231,11 @@ namespace MarioGame
                 }
                 else if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None && enemy.getdeathStartTime < 0)
                 {
-                    if(mario.Big || mario.Fire)
+                    if (enemy is KoopaShell koopashell)
+                    {
+                        //nothing for now
+                    }
+                    else if (mario.Big || mario.Fire)
                     {
                         mario.Big = false;
                         mario.Fire = false;
