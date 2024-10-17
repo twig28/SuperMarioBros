@@ -203,22 +203,22 @@ namespace MarioGame
             {
                 if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) == CollisionDirection.Below)
                 {
-                    enemy.TriggerDeath(gt, false);
-                    if (enemy is Koopa)
-                    {
-                        //spawn koopaShell
-                    }
-                    enemyToRemove = enemy; 
                     if(enemy is Piranha)
                     {
                         mario.current = PlayerSprite.SpriteType.Damaged;
+                    }
+                    else if(enemy is Koopa)
+                    {
+                        enemy.TriggerDeath(gt, true);
+                        //enemy = ;
                     }
                 }
                 else if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None)
                 {
                     if(mario.Big || mario.Fire)
                     {
-                        //demote mario to small mario
+                        mario.Big = false;
+                        mario.Fire = false;
                     }
                     else
                     {
