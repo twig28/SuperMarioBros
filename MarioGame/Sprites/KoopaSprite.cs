@@ -88,7 +88,7 @@ namespace MarioGame
 
         public void SetDeathFrame()
         {
-            SourceRectangle = new Rectangle(330, 20, SourceWidth, SourceHeight);
+            SourceRectangle = new Rectangle(330, 3, SourceWidth, SourceHeight);
         }
     }
 }

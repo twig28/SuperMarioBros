@@ -199,6 +199,7 @@ namespace MarioGame
         public static void CheckMarioEnemyCollision(PlayerSprite mario, ref List<IEnemy> enemies, GameTime gt)
         {
             IEnemy enemyToRemove = null;
+            IEnemy enemyToAdd = null;
             foreach (IEnemy enemy in enemies)
             {
                 if (enemy.Alive == false) {
@@ -216,12 +217,15 @@ namespace MarioGame
                         {
                             enemy.TriggerDeath(gt, true);
                             //spawn new koopa (which includes triggering death)
-                            //newKoopa = koopa.SpawnKoopa();
-                            //enemies.Add(newKoopa);
+                            KoopaShell shell = koopa.SpawnKoopa(gt);
+                            enemyToAdd = shell;
+                            
+                            //Make mario Jump
                         }
                         else
                         {
                             enemy.TriggerDeath(gt, true);
+                            //Make mario Jump
                         }
                     }
                 }
@@ -238,7 +242,8 @@ namespace MarioGame
                     }
                 }
             }
-            enemies.Remove(enemyToRemove);
+            if (enemyToRemove != null) { enemies.Remove(enemyToRemove); }
+            if (enemyToAdd != null) { enemies.Add(enemyToAdd); }
         }
 
 

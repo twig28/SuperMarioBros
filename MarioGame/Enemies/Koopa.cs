@@ -6,7 +6,7 @@ namespace MarioGame
     internal class Koopa : IEnemy
     {
         private const double animInterval = 0.2;
-        private const double DeathDuration = 2.0;
+        private const double DeathDuration = 0.5;
         private KoopaSprite sprite;
         private int posX;
         private int posY;
@@ -14,6 +14,8 @@ namespace MarioGame
         private double timeElapsed = 0;
         private double timeElapsedSinceUpdate = 0;
         private double deathStartTime = -1;
+        Texture2D textureForShell;
+        SpriteBatch spriteBatchForShell;
 
         private bool _alive = true;
         private bool isShell = false;
@@ -45,6 +47,8 @@ namespace MarioGame
             posX = X;
             posY = Y;
             sprite = new KoopaSprite(Texture, SpriteBatch, posX, posY);
+            textureForShell = Texture;
+            spriteBatchForShell = SpriteBatch;
         }
 
         public void Draw()
@@ -85,8 +89,14 @@ namespace MarioGame
             }
         }
 
+        public KoopaShell SpawnKoopa(GameTime gm){
+            this.TriggerDeath(gm, true);
+            return new KoopaShell(textureForShell, spriteBatchForShell, posX, posY);
+        }
+
         public void TriggerDeath(GameTime gm, bool stomped)
         {
+            sprite.posY = posY + 30;
             deathStartTime = gm.TotalGameTime.TotalSeconds;
             sprite.SetDeathFrame();
         }
