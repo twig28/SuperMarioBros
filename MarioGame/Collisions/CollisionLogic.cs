@@ -201,6 +201,9 @@ namespace MarioGame
             IEnemy enemyToRemove = null;
             foreach (IEnemy enemy in enemies)
             {
+                if (enemy.Alive == false) {
+                    enemyToRemove = enemy;
+                }
                 if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) == CollisionDirection.Below)
                 {
                     if(enemy is Piranha)
@@ -209,15 +212,19 @@ namespace MarioGame
                     }
                     else
                     {
-                        enemy.TriggerDeath(gt, false);
-                        if (enemy is Koopa)
+                        if (enemy is Koopa koopa)
                         {
-                            //enemy = ;
+                            //spawn new koopa (which includes triggering death)
+                            //newKoopa = koopa.SpawnKoopa();
+                            //enemies.Add(newKoopa);
                         }
-                        enemyToRemove = enemy;
+                        else
+                        {
+                            enemy.TriggerDeath(gt, true);
+                        }
                     }
                 }
-                else if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None)
+                else if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None && enemy.getdeathStartTime < 0)
                 {
                     if(mario.Big || mario.Fire)
                     {

@@ -6,23 +6,32 @@ namespace MarioGame
 {
     internal class Piranha : IEnemy
     {
-        private const double MovementInterval = 2; 
-        private const double AnimationInterval = 0.4; 
-        private const double DelayInterval = 5; 
+        private const double MovementInterval = 2;
+        private const double AnimationInterval = 0.4;
+        private const double DelayInterval = 5;
 
         private double movementTimer = 0;
         private double animationTimer = 0;
         private double delayTimer = 0;
-        private bool isWaiting = false; 
+        private bool isWaiting = false;
+        private double deathStartTime = -1;
 
         private PiranhaSprite sprite;
         private bool isMovingUp = true;
-        private bool alive = true;
+        private bool _alive = true;
 
         public bool DefaultMoveMentDirection
         {
             get => isMovingUp;
-            set => isMovingUp = value; 
+            set => isMovingUp = value;
+        }
+
+        public double getdeathStartTime => deathStartTime;
+
+        public bool Alive
+        {
+            get => _alive;
+            set => _alive = value;
         }
 
         private int posX;
@@ -43,12 +52,12 @@ namespace MarioGame
 
         public void Draw()
         {
-            if (alive) sprite.Draw();
+            if (Alive) sprite.Draw();
         }
 
         public void Update(GameTime gameTime)
         {
-            if (!alive) return;
+            if (!Alive) return;
 
             double elapsed = gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -77,7 +86,7 @@ namespace MarioGame
                 if (movementTimer >= MovementInterval)
                 {
                     movementTimer = 0;
-                    isWaiting = true; 
+                    isWaiting = true;
                 }
 
                 // Move the Piranha in the current direction if moving
@@ -90,7 +99,7 @@ namespace MarioGame
 
         public void TriggerDeath(GameTime gameTime, bool stomped)
         {
-            alive = false;
+            Alive = false;  // Use the new property
             sprite.Update(gameTime);  // Optional: freeze or animate on death
         }
     }
