@@ -191,6 +191,10 @@ namespace MarioGame
                     if (GetCollisionDirection(enemy.GetDestinationRectangle(), enemy2.GetDestinationRectangle()) != CollisionDirection.None)
                     {
                         enemy.DefaultMoveMentDirection = !enemy.DefaultMoveMentDirection;
+                        if (enemy is KoopaShell && enemy2.getdeathStartTime <= 0)
+                        {
+                            enemy2.TriggerDeath(gt, false);
+                        }
                     }
                 }
             }
@@ -222,7 +226,12 @@ namespace MarioGame
                             
                             //Make mario Jump
                         }
-                        else if (enemy is not KoopaShell)
+                        else if (enemy is KoopaShell shell)
+                        {
+                            shell.Start();
+                        }
+                        //is normal enemy
+                        else
                         {
                             enemy.TriggerDeath(gt, true);
                             //Make mario Jump
