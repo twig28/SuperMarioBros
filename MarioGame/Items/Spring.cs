@@ -13,6 +13,7 @@ namespace MarioGame.Items
         private int currentFrame = 0;
         private double timer = 0;
         private const int timePerFrame = 100;
+        private int yOffset = 0;
 
         public Spring(Texture2D texture)
         {
@@ -48,6 +49,11 @@ namespace MarioGame.Items
         public string getName()
         {
             return "Spring";
+        }
+
+        public void moveY(int y)
+        {
+            yOffset += y;
         }
     }
 }

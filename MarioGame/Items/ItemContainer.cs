@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MarioGame.Collisions;
 using MarioGame.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,51 +15,60 @@ public class ItemContainer
         items.Add(new Coin(texture));
         items.Add(new FireFlower(texture));
         items.Add(new Mushroom(texture));
-        items.Add(new Spring(texture));
         items.Add(new Star(texture));
     }
 
-    public List<IItem> getItemList() 
-    { 
+    public List<IItem> getItemList()
+    {
         return items;
     }
 
     public static void Initialize()
     {
-        items.Clear();
     }
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime, List<IBlock> blocks)
     {
         foreach (IItem item in items)
         {
             item.Update(gameTime);
+            ItemCollision itemCollision = new ItemCollision(item);
+            itemCollision.ItemBlockCollision(blocks);
         }
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        int xValue = 100;
-        int yValue = 600;
-        Vector2 location = new Vector2(xValue, yValue);
         foreach (IItem item in items)
         {
-            if (items.Count > 0)
+            switch (item.getName())
             {
-                item.Draw(spriteBatch, location);
-                xValue += 100;
-                location = new Vector2(xValue, yValue);
+                case "Coin":
+                    item.Draw(spriteBatch,new(100, 550));
+                    break;
+                case "FireFlower":
+                    item.Draw(spriteBatch, new(200, 550));
+                    break;
+                case "Mushroom":
+                    item.Draw(spriteBatch, new(300, 550));
+                    break;
+                case "Star":
+                    item.Draw(spriteBatch, new(400, 550));
+                    break;
+                default:
+                    break;
+
             }
         }
     }
     public void DrawCollisionRectangles(SpriteBatch spriteBatch)
     {
-        Texture2D rectangle = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);    
+        Texture2D rectangle = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
         rectangle.SetData(new[] { Color.White });
 
         // Draw blocks' collision rectangles
         foreach (IItem item in items)
         {
-            spriteBatch.Draw(rectangle, item.getDestinationRectangle(), Color.Green*0.3f);
+            spriteBatch.Draw(rectangle, item.getDestinationRectangle(), Color.Green * 0.3f);
         }
     }
 

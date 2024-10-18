@@ -128,8 +128,7 @@ namespace MarioGame
 
             player_sprite.Update(gameTime);
 
-         //  ItemCollision itemCollision = new ItemCollision(player_sprite);
-         //  itemCollision.ItemCollisionHandler(items.getItemList());
+            
 
             foreach (var block in blocks)
             {
@@ -142,7 +141,7 @@ namespace MarioGame
             CollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime,false);
             CollisionLogic.CheckFireballBlockCollision(Ball.GetBalls(), blocks);
 
-            items.Update(gameTime);
+            items.Update(gameTime, blocks);
             base.Update(gameTime);
         }
         //For Sprint 3 Debug Only
