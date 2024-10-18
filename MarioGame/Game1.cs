@@ -33,6 +33,7 @@ namespace MarioGame
         private float ballSpeed = 300f;
 
         public bool Fire = false;
+        public bool Star = false;
 
         private List<IEnemy> enemies;
         private List<IBlock> blocks;
@@ -106,7 +107,7 @@ namespace MarioGame
             {
                 new Goomba(enemyTextures, _spriteBatch, 500, 200),
                 new Koopa(enemyTextures, _spriteBatch, 600, 500),
-                new Piranha(enemyTextures, _spriteBatch, 1100, 500),
+                new Piranha(enemyTextures, _spriteBatch, 1090, 538),
             };
 
             player_sprite = new PlayerSprite(marioTexture, PlayerPosition, PlayerSpeed, _graphics, this);
@@ -136,7 +137,7 @@ namespace MarioGame
             }
 
             // Use the Ball class's static method to handle fireball inputs and update
-           Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl);
+            Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl);
             Ball.UpdateAll(gameTime, GraphicsDevice.Viewport.Width);
             CollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime,false);
             CollisionLogic.CheckFireballBlockCollision(Ball.GetBalls(), blocks);
@@ -174,7 +175,6 @@ namespace MarioGame
                 block.Draw(_spriteBatch);
             }
 
-            // Use Ball class's static method to draw all balls
             Ball.DrawAll(_spriteBatch);
             DrawCollisionRectangles(_spriteBatch);
 

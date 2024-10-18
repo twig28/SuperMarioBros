@@ -14,6 +14,8 @@ namespace MarioGame
         Rectangle GetDestinationRectangle();
         int setPosX { set; }
         int setPosY { set; }
+        double getdeathStartTime { get; }
+        bool Alive { get; set; }
         void Draw();
         void Update(GameTime gm);
         void TriggerDeath(GameTime gm, bool stomped);

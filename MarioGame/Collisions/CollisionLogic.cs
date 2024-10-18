@@ -199,26 +199,46 @@ namespace MarioGame
         public static void CheckMarioEnemyCollision(PlayerSprite mario, ref List<IEnemy> enemies, GameTime gt)
         {
             IEnemy enemyToRemove = null;
+            IEnemy enemyToAdd = null;
             foreach (IEnemy enemy in enemies)
             {
+                if (enemy.Alive == false) {
+                    enemyToRemove = enemy;
+                }
                 if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) == CollisionDirection.Below)
                 {
-                    enemy.TriggerDeath(gt, false);
-                    if (enemy is Koopa)
-                    {
-                        //spawn koopaShell
-                    }
-                    enemyToRemove = enemy; 
                     if(enemy is Piranha)
                     {
                         mario.current = PlayerSprite.SpriteType.Damaged;
                     }
-                }
-                else if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None)
-                {
-                    if(mario.Big)
+                    else
                     {
-                        //demote mario to small mario
+                        if (enemy is Koopa koopa)
+                        {
+                            enemy.TriggerDeath(gt, true);
+                            //spawn new koopa (which includes triggering death)
+                            KoopaShell shell = koopa.SpawnKoopa(gt);
+                            enemyToAdd = shell;
+                            
+                            //Make mario Jump
+                        }
+                        else
+                        {
+                            enemy.TriggerDeath(gt, true);
+                            //Make mario Jump
+                        }
+                    }
+                }
+                else if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None && enemy.getdeathStartTime < 0)
+                {
+                    if (enemy is KoopaShell koopashell)
+                    {
+                        //nothing for now
+                    }
+                    else if (mario.Big || mario.Fire)
+                    {
+                        mario.Big = false;
+                        mario.Fire = false;
                     }
                     else
                     {
@@ -226,7 +246,8 @@ namespace MarioGame
                     }
                 }
             }
-            enemies.Remove(enemyToRemove);
+            if (enemyToRemove != null) { enemies.Remove(enemyToRemove); }
+            if (enemyToAdd != null) { enemies.Add(enemyToAdd); }
         }
 
 

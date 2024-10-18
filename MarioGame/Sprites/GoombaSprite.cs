@@ -1,66 +1,64 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using MarioGame;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MarioGame
+internal class GoombaSprite : ISprite
 {
-    internal class GoombaSprite : ISprite
+    private const int SpriteWidth = 60;
+    private const int SpriteHeight = 80;
+    private int SourceX = 0;
+    private int SourceY = 4;
+    private const int SourceWidth = 16;
+    private const int SourceHeight = 17;
+    private SpriteBatch sb;
+    private Texture2D texture;
+    private Rectangle DestinationRectangle;
+    private Rectangle SourceRectangle;
+    private const int spacingInterval = 30;
+    private int currSprite = 0;
+
+    public bool ChangeDirection { get; set; }
+    public int posX { get; set; }
+    public int posY { get; set; }
+
+    public Rectangle GetDestinationRectangle() { return DestinationRectangle; }
+
+    public GoombaSprite(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
     {
-        private const int SpriteWidth = 60;
-        private const int SpriteHeight = 80;
-        private int SourceX = 0;
-        private int SourceY = 4;
-        private const int SourceWidth = 16;
-        private const int SourceHeight = 17;
-        private SpriteBatch sb;
-        private Texture2D texture;
-        Rectangle DestinationRectangle;
-        Rectangle SourceRectangle;
-        private const int spacingInterval = 30;
-        int currSprite = 0;
+        sb = SpriteBatch;
+        posX = X; posY = Y;
+        texture = Texture;
+        DestinationRectangle = new Rectangle(posX, posY, SpriteWidth, SpriteHeight);
+        SourceRectangle = new Rectangle(SourceX, SourceY, SourceWidth, SourceHeight);
+        ChangeDirection = false;
+    }
 
-        public bool ChangeDirection { get; set; }
-        public int posX { get; set; }
-        public int posY { get; set; }
+    public void Draw()
+    {
+        DestinationRectangle = new Rectangle(posX, posY, SpriteWidth, SpriteHeight);
+        sb.Begin();
+        sb.Draw(texture, DestinationRectangle, SourceRectangle, Color.White);
+        sb.End();
+    }
 
-        public Rectangle GetDestinationRectangle() { return DestinationRectangle; }
-
-        public GoombaSprite(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
+    public void Update(GameTime gm)
+    {
+        if (currSprite == 0)
         {
-            sb = SpriteBatch;
-            posX = X; posY = Y;
-            texture = Texture;
-            DestinationRectangle = new Rectangle(posX, posY, SpriteWidth, SpriteHeight);
-            SourceRectangle = new Rectangle(SourceX, SourceY, SourceWidth, SourceHeight);
-            ChangeDirection = false;
+            SourceRectangle.X += spacingInterval;
+            currSprite = 1;
         }
-
-        public void Draw()
+        else
         {
-            DestinationRectangle = new Rectangle(posX, posY, SpriteWidth, SpriteHeight);
-            sb.Begin();
-            sb.Draw(texture, DestinationRectangle, SourceRectangle, Color.White);
-            sb.End();
+            SourceRectangle.X -= spacingInterval;
+            currSprite = 0;
         }
+    }
 
-        public void Update(GameTime gm)
-        {
-            if (currSprite == 0)
-            {
-                SourceRectangle.X += spacingInterval;
-                currSprite = 1;
-            }
-            else
-            {
-                SourceRectangle.X -= spacingInterval;
-                currSprite = 0;
-            }
-
-        }
+    public void SetDeathFrame()
+    {
+        // Switch to the death frame on the texture (X = 60, Y = 7)
+        SourceRectangle = new Rectangle(60, 7, SourceWidth, SourceHeight + 2);
+        currSprite = 2;
     }
 }
