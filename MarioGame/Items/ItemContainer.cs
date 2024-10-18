@@ -18,6 +18,11 @@ public class ItemContainer
         items.Add(new Star(texture));
     }
 
+    public void AddItem(IItem item)
+    {
+        items.Add(item);
+    }
+
     public List<IItem> getItemList()
     {
         return items;

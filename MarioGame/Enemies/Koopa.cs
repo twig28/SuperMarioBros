@@ -13,7 +13,7 @@ namespace MarioGame
         private bool changeSpriteDirection = false;
         private double timeElapsed = 0;
         private double timeElapsedSinceUpdate = 0;
-        private double deathStartTime = -1;
+        private double deathStartTime = 0;
         Texture2D textureForShell;
         SpriteBatch spriteBatchForShell;
 
