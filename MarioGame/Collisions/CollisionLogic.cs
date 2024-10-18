@@ -188,7 +188,7 @@ namespace MarioGame
                 foreach (IEnemy enemy2 in enemies)
                 {
                     if (enemy2 == enemy) { continue; }
-                    if (GetCollisionDirection(enemy.GetDestinationRectangle(), enemy2.GetDestinationRectangle()) != CollisionDirection.None)
+                    if (GetCollisionDirection(enemy.GetDestinationRectangle(), enemy2.GetDestinationRectangle()) != CollisionDirection.None && enemy2.getdeathStartTime <= 0)
                     {
                         enemy.DefaultMoveMentDirection = !enemy.DefaultMoveMentDirection;
                         if (enemy is KoopaShell && enemy2.getdeathStartTime <= 0)

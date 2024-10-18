@@ -32,11 +32,6 @@ namespace MarioGame.Levels
                 string filePath = Path.Combine("..", "..", "..", "Levels", "Level1.csv");
                 List<(string ObjectType, int X, int Y)> entities = LoadEntitiesFromCSV(filePath);
 
-                for (int i = 0; i <= game.GraphicsDevice.Viewport.Width - 120; i += 60)
-                {
-                    blocks.Add(new GroundBlock(new Vector2(i, game.GraphicsDevice.Viewport.Height - 60), groundBlockTexture));
-                }
-
                 foreach (var entity in entities)
                 {
                     Vector2 position = new Vector2(entity.X, entity.Y);
@@ -69,7 +64,14 @@ namespace MarioGame.Levels
                             break;
                     }
                 }
+
+                for (int i = 0; i <= game.GraphicsDevice.Viewport.Width - 120; i += 60)
+                {
+                    blocks.Add(new GroundBlock(new Vector2(i, game.GraphicsDevice.Viewport.Height - 60), groundBlockTexture));
+                }
+
             }
+
             else
             {
                 //Raw test data
