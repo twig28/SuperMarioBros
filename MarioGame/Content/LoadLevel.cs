@@ -13,7 +13,7 @@ namespace MarioGame
             Game1 game,
             List<IBlock> blocks,
             List<IEnemy> enemies,
-            ItemContainer items)
+            ItemContainer items, int level)
         {
             // Load resources
             SpriteFont font = game.Content.Load<SpriteFont>("File");

@@ -25,7 +25,6 @@ namespace MarioGame
         ItemContainer items;
 
         private float ballSpeed = 300f;
-        private LoadLevels ll;
 
         public bool Fire = false;
         public bool Star = false;
@@ -77,7 +76,7 @@ namespace MarioGame
             blocks = new List<IBlock>();
             items = new ItemContainer(itemTextures);
 
-            LoadLevels.LoadLevel(this, blocks, enemies, items);
+            LoadLevels.LoadLevel(this, blocks, enemies, items, 1);
 
             // Load fireball textures through the Ball class
             Ball.LoadContent(Content);
@@ -102,8 +101,6 @@ namespace MarioGame
 
             player_sprite.Update(gameTime);
 
-            
-
             foreach (var block in blocks)
             {
                 block.Update(gameTime);
@@ -118,6 +115,7 @@ namespace MarioGame
             items.Update(gameTime, blocks);
             base.Update(gameTime);
         }
+
         //For Sprint 3 Debug Only
         private void DrawCollisionRectangles(SpriteBatch spriteBatch)
         {
@@ -128,6 +126,7 @@ namespace MarioGame
             Rectangle marioRect = player_sprite.GetDestinationRectangle();
             spriteBatch.Draw(rectTexture, marioRect, Color.Red * 0.5f);
         }
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
