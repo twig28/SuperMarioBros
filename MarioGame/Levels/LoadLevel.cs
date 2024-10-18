@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using MarioGame.Blocks;
 
-namespace MarioGame
+namespace MarioGame.Levels
 {
     internal class LoadLevels
     {
