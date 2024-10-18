@@ -18,7 +18,6 @@ namespace MarioGame
         public Vector2 Position;
         private float Speed;
         private GraphicsDeviceManager graphics;
-        //private float Scale = 3f;
         public Damaged(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics)
         {
             Texture = texture;
@@ -30,7 +29,6 @@ namespace MarioGame
         public void Update(GameTime gameTime)
         {
             float updatedSpeed = Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
- 
 
                     Position.Y += 5*updatedSpeed;
 
@@ -38,9 +36,8 @@ namespace MarioGame
             
             
         }
-        public void Draw(SpriteBatch spriteBatch,int width, int height,float Scale, List<Rectangle> sourceRectangle)
+        public void Draw(SpriteBatch spriteBatch,int width, int height,float Scale, List<Rectangle> sourceRectangle, int pos_difference)
         {
-            //Rectangle sourceRectangle = new Rectangle(0, 16, 14, 16);
             spriteBatch.Draw(Texture, Position, sourceRectangle[0], Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
         }
 

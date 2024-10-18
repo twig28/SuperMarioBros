@@ -15,10 +15,9 @@ namespace MarioGame
     {
 
 
-        public Texture2D Texture { get; set; }
+        private Texture2D Texture { get; set; }
         public Vector2 Position;
-        public Game1 Game;
-       // public float Scale = 3f;
+        private Game1 Game;
        
         public Static(Texture2D texture, Vector2 position,Game1 game)
         {
@@ -28,25 +27,10 @@ namespace MarioGame
 
         }
 
-        public void Draw(SpriteBatch spriteBatch,int width, int height,float Scale, List<Rectangle> sourceRectangle)
+        public void Draw(SpriteBatch spriteBatch,int width, int height,float Scale, List<Rectangle> sourceRectangle,int pos_difference)
         {
-            //check status
-
-          
-          // Rectangle sourceRectangle = new Rectangle(210, 0, 14, 16);
-
-            if (Game.player_sprite.Fire)
-            {
-              
-                Position.Y = Position.Y - 22;
-               // sourceRectangle = new Rectangle(209, 122, 18, 32);
-            }
-            else if(!Game.player_sprite.Fire && Game.player_sprite.Big) 
-            {
-               
-                Position.Y = Position.Y - 24;
-               // sourceRectangle = new Rectangle(208, 52, 18, 32);
-            }
+            
+            Position.Y-=pos_difference;
            
             spriteBatch.Draw(Texture, Position, sourceRectangle[0], Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
 
