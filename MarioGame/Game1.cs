@@ -7,6 +7,7 @@ using MarioGame.Items;
 using MarioGame.Blocks;
 using System.Collections.Generic;
 using MarioGame.Collisions;
+using MarioGame.Levels;
 
 namespace MarioGame
 {
