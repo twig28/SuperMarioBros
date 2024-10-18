@@ -213,7 +213,7 @@ namespace MarioGame
                     }
                     else
                     {
-                        if (enemy is Koopa koopa)
+                        if (enemy is Koopa koopa && koopa.getdeathStartTime <= 0)
                         {
                             enemy.TriggerDeath(gt, true);
                             //spawn new koopa (which includes triggering death)
@@ -222,14 +222,14 @@ namespace MarioGame
                             
                             //Make mario Jump
                         }
-                        else
+                        else if (enemy is not KoopaShell)
                         {
                             enemy.TriggerDeath(gt, true);
                             //Make mario Jump
                         }
                     }
                 }
-                else if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None && enemy.getdeathStartTime < 0)
+                else if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None && enemy.getdeathStartTime <= 0)
                 {
                     if (enemy is KoopaShell koopashell)
                     {
