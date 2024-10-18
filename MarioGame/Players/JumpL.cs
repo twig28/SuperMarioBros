@@ -15,21 +15,15 @@ namespace MarioGame
     {
 
 
-        public Texture2D Texture { get; set; }
+        private Texture2D Texture { get; set; }
         public Vector2 Position;
-        private GraphicsDeviceManager graphics;
-        public Game1 Game;
-       // public float Scale = 3f;
-        //for jump
-        float jumpSpeed = -10f;
-        float gravity = 0.3f;     
-        float groundLevel;
-        public JumpL(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics, Game1 game)
+        private Game1 Game;
+        private float jumpSpeed = -10f;
+        private float gravity = 0.3f;     
+        public JumpL(Texture2D texture, Vector2 position, Game1 game)
         {
             Texture = texture;
             Position = position;
-            graphics = Graphics;
-            groundLevel = Graphics.PreferredBackBufferHeight - 95;
             Game = game;
         }
 
@@ -57,24 +51,10 @@ namespace MarioGame
 
         }
 
-        public void Draw(SpriteBatch spriteBatch,int width,int height,float Scale, List<Rectangle> sourceRectangle)
+        public void Draw(SpriteBatch spriteBatch,int width,int height,float Scale, List<Rectangle> sourceRectangle, int pos_difference)
         {
-            //check status
-           // Rectangle sourceRectangle = new Rectangle(29, 0, 17, 17);
-           
-            if (Game.player_sprite.Fire)
-            {
-               
-               // sourceRectangle = new Rectangle(25, 122, 18, 32);
-                Position.Y -= 22;
-            }
-            else if (!Game.player_sprite.Fire && Game.player_sprite.Big)
-            {
-               
-             //   sourceRectangle = new Rectangle(29, 52, 18, 32);
-                Position.Y -= 24;
-
-            }
+            
+            Position.Y -= pos_difference;
             spriteBatch.Draw(Texture, Position, sourceRectangle[0], Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
 
         }

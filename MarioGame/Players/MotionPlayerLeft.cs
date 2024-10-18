@@ -12,8 +12,8 @@ namespace MarioGame
         private Texture2D Texture { get; set; }
         public Vector2 Position;
         private Game1 Game;
-        private float Scale = 3f;
         private float Speed;
+        private float Scale = 3f;
         private GraphicsDeviceManager graphics;
         private int currentFrame;
         private int totalFrames;
@@ -86,43 +86,11 @@ namespace MarioGame
 
         }
 
-        public void Draw(SpriteBatch spriteBatch, int width, int height, float sourceScale, List<Rectangle> sourceRectangle)
+        public void Draw(SpriteBatch spriteBatch, int width, int height, float sourceScale, List<Rectangle> sourceRectangle, int pos_difference)
         {
            
-           // List<Rectangle> sourceRectangle = new List<Rectangle>();
-            //check status
-
-            if (Game.player_sprite.Fire)
-            {
-               /*
-                sourceRectangle.Clear();
-                sourceRectangle.Add(new Rectangle(151, 122, 18, 32));
-                sourceRectangle.Add(new Rectangle(128, 122, 18, 32));
-                sourceRectangle.Add(new Rectangle(102, 122, 18, 32));
-               */
-                Position.Y = Position.Y - 22;
-
-
-            }
-            else if (!Game.player_sprite.Fire && Game.player_sprite.Big)
-            {
-               /*
-                sourceRectangle.Clear();
-                sourceRectangle.Add(new Rectangle(150, 52, 18, 32));
-                sourceRectangle.Add(new Rectangle(120, 52, 18, 32));
-                sourceRectangle.Add(new Rectangle(89, 52, 18, 32));
-               */
-                Position.Y = Position.Y - 24;
-            }
-            else
-            {
-                /*
-                sourceRectangle.Clear();
-                sourceRectangle.Add(new Rectangle(150, 0, 14, 16));
-                sourceRectangle.Add(new Rectangle(120, 0, 14, 16));
-                sourceRectangle.Add(new Rectangle(88, 0, 14, 16));
-                */
-            }
+           
+            Position.Y -= pos_difference;
             spriteBatch.Draw(Texture, Position, sourceRectangle[currentFrame], Color.White, 0f, new Vector2(width / 2, height / 2), sourceScale, SpriteEffects.None, 0f);
 
         }

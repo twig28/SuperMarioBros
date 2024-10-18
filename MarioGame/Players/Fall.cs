@@ -21,7 +21,6 @@ namespace MarioGame
         public float Speed = 1f;
         private GraphicsDeviceManager graphics;
         private Game1 Game;
-        //private float Scale = 3f;
 
         public Fall(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics, Game1 game)
         {
@@ -47,50 +46,10 @@ namespace MarioGame
                 
             }
            
-
-
-
-
         }
-        public void Draw(SpriteBatch spriteBatch,int width,int height, float Scale, List<Rectangle> sourceRectangle)
+        public void Draw(SpriteBatch spriteBatch,int width,int height, float Scale, List<Rectangle> sourceRectangle, int pos_difference)
         {
-           // Rectangle sourceRectangle;
-            if (Game.player_sprite.left)
-            {
-                //sourceRectangle = new Rectangle(29, 0, 17, 17);
-                if (Game.player_sprite.Fire)
-                {
-                   
-                   // sourceRectangle = new Rectangle(25, 122, 18, 32);
-                    Position.Y -= 22;
-                }
-                else if (!Game.player_sprite.Fire && Game.player_sprite.Big)
-                {
-                   
-                   // sourceRectangle = new Rectangle(29, 52, 18, 32);
-                    Position.Y -= 24;
-
-                }
-            }
-            else {
-           // sourceRectangle = new Rectangle(358, 0, 17, 17);
-            //check status
-
-            if (Game.player_sprite.Fire)
-            {
-               
-                //sourceRectangle = new Rectangle(361, 122, 18, 32);
-                Position.Y -= 22;
-
-            }
-            else if (!Game.player_sprite.Fire && Game.player_sprite.Big)
-            {
-               
-               // sourceRectangle = new Rectangle(358, 52, 18, 32);
-                Position.Y -= 24;
-
-            }
-            }
+            Position.Y -= pos_difference;
             spriteBatch.Draw(Texture, Position, sourceRectangle[0], Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
         }
 

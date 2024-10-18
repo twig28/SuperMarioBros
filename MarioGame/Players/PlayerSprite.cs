@@ -77,9 +77,9 @@ namespace MarioGame
             //moving toward left
             MLplayer = new MotionPlayerLeft(marioTexture, PlayerPosition, PlayerSpeed, _graphics,Game);
             //juming toward right
-            Jumpplayer = new Jump(marioTexture, PlayerPosition, PlayerSpeed, _graphics, Game);
+            Jumpplayer = new Jump(marioTexture, PlayerPosition, Game);
             //juming toward left
-            JumpLplayer = new JumpL(marioTexture, PlayerPosition, PlayerSpeed, _graphics, Game);
+            JumpLplayer = new JumpL(marioTexture, PlayerPosition, Game);
             //damaged
             Damagedplayer = new Damaged(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
             //falling
@@ -151,57 +151,65 @@ namespace MarioGame
        
 
 
-        public void Draw(SpriteBatch _spriteBatch, int width, int height, float Scale, List<Rectangle> sourceRectangle)
+        public void Draw(SpriteBatch _spriteBatch, int width, int height, float Scale, List<Rectangle> sourceRectangle, int pos_difference)
         {
             //check sprint type for draw
-            if(Fire || Big)
+            if(Fire)
             {
                 width = 18;
                 height = 32;
+                pos_difference = 22;
+            }
+            else if(Big)
+            {
+                width = 18;
+                height = 32;
+                pos_difference = 24;
             }
             else
             {
                 width = 14;
                 height = 16;
+                pos_difference = 0;
             }
             sourceRectangle = Mario_state.Switch(current);
             if (current == PlayerSprite.SpriteType.Static)
             {
-                Staplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle);
+                Staplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle,pos_difference);
             }
             if (current == PlayerSprite.SpriteType.StaticL)
             {
               
-                StaLplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle);
+                StaLplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle, pos_difference);
             }
             if (current == PlayerSprite.SpriteType.Motion)
             {
                
-                MRplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle);
+                MRplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle, pos_difference);
             }
             if (current == PlayerSprite.SpriteType.MotionL)
             {
               
-                MLplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle);
+                MLplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle, pos_difference);
             }
             if (current == PlayerSprite.SpriteType.Jump)
             {
               
-                Jumpplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle);
+                Jumpplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle, pos_difference);
             }
             if (current == PlayerSprite.SpriteType.JumpL)
             {
               
-                JumpLplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle);
+                JumpLplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle, pos_difference);
             }
             if (current == PlayerSprite.SpriteType.Damaged)
             {
               
-                Damagedplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle);
+                Damagedplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle, pos_difference);
             }
             if (current == PlayerSprite.SpriteType.Falling)
             {
-                Fallplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle);
+                Fallplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle, pos_difference);
             }
         }
 
