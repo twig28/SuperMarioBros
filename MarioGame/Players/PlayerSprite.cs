@@ -159,6 +159,7 @@ namespace MarioGame
                 width = 18;
                 height = 32;
                 pos_difference = 22;
+               // Game.Fire = true;
             }
             else if(Big)
             {

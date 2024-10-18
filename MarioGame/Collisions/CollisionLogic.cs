@@ -158,20 +158,32 @@ namespace MarioGame
 
                 if (!StandingBlock.Contains(block) && mario_rec.Intersects(block_rec))
                 {
-                    
-                    if (mario_rec.Right >= block_rec.Left && mario_rec.Left < block_rec.Left)
-                    {
-                        mario.UPlayerPosition.X = block_rec.Left - mario_rec.Width / 2;
-                    }
-                    else if (mario_rec.Left <= block_rec.Right && mario_rec.Right > block_rec.Right)
-                    {
-                        mario.UPlayerPosition.X = block_rec.Right + mario_rec.Width / 2;
-                    }
+
+                        if ((mario.Big || mario.Fire) && block.IsBreakable)
+                        {
+                            blocksToRemove.Add(block);
+                        }
+                        else
+                        {
+                            if (mario_rec.Right >= block_rec.Left && mario_rec.Left < block_rec.Left)
+                            {
+                                mario.UPlayerPosition.X = block_rec.Left - mario_rec.Width / 2;
+                            }
+                            else if (mario_rec.Left <= block_rec.Right && mario_rec.Right > block_rec.Right)
+                            {
+                                mario.UPlayerPosition.X = block_rec.Right + mario_rec.Width / 2;
+                            }
+                        }
 
                 }
 
 
             }
+            foreach(IBlock block in blocksToRemove)
+                {
+                    blocks.Remove(block);
+                }
+
 
         }
 
@@ -264,8 +276,19 @@ namespace MarioGame
                 if (mario_rec.Intersects(item_rec))
                 {
                     itemRemove = item;
-                    
-                    
+                    if(item.getName() == "FireFlower")
+                    {
+                        mario.Big = false;
+                        mario.Fire = true;
+                        mario.Game.Fire = true;
+                    }
+                    else if (item.getName() == "Mushroom")
+                    {
+                        if(!mario.Fire)
+                        {
+                            mario.Big = true;
+                        }
+                    }
                 }
             }
             items.Remove(itemRemove);
