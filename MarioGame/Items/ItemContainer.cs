@@ -25,6 +25,7 @@ public class ItemContainer
 
     public static void Initialize()
     {
+        items.Clear();
     }
     public void Update(GameTime gameTime, List<IBlock> blocks)
     {
