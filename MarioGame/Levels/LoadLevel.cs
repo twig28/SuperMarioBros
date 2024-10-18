@@ -67,9 +67,6 @@ namespace MarioGame.Levels
                         case "Coin":
                             //items.AddItem(new Coin(itemTextures, position));
                             break;
-                        default:
-                            // Handle unknown object types if needed
-                            break;
                     }
                 }
             }
