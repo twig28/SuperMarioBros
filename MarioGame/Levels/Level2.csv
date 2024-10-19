@@ -1,6 +1,6 @@
 ObjectType,XPosition,YPosition
 Pipe,1075,500
-Pipe,275,500
+Pipe,250,500
 BaseBlock,900,600
 MysteryBlock,660,200
 MysteryBlock,660,400
@@ -12,5 +12,5 @@ Goomba,100,200
 Koopa,600,500
 Koopa,700,500
 Piranha,1090,538
-Piranha,290,538
+Piranha,270,538
 Coin,900,750
