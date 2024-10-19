@@ -25,12 +25,21 @@ namespace MarioGame.Levels
             Texture2D blockTexture = game.Content.Load<Texture2D>("InitialBrickBlock");
             Texture2D multipleBlockTextures = game.Content.Load<Texture2D>("blocks");
             Texture2D sceneryTextures = game.Content.Load<Texture2D>("smb1_scenery_sprites");
+            List<(string ObjectType, int X, int Y)> entities;
+
 
             if (level == 1)
             {
                 // Load CSV Data
                 string filePath = Path.Combine("..", "..", "..", "Levels", "Level1.csv");
-                List<(string ObjectType, int X, int Y)> entities = LoadEntitiesFromCSV(filePath);
+                entities = LoadEntitiesFromCSV(filePath);
+
+            }
+            else
+            {
+                string filePath = Path.Combine("..", "..", "..", "Levels", "Level2.csv");
+                entities = LoadEntitiesFromCSV(filePath);
+            }
 
                 foreach (var entity in entities)
                 {
@@ -71,21 +80,6 @@ namespace MarioGame.Levels
                 }
 
             }
-
-            else
-            {
-                //Raw test data
-                enemies.Add(new Goomba(enemyTextures, game._spriteBatch, 500, 200));
-                enemies.Add(new Koopa(enemyTextures, game._spriteBatch, 600, 500));
-                enemies.Add(new Piranha(enemyTextures, game._spriteBatch, 1090, 538));
-
-                blocks.Add(new Block(new Vector2(500, 450), blockTexture));
-                blocks.Add(new GroundBlock(new Vector2(900, game.GraphicsDevice.Viewport.Height - 120), groundBlockTexture));
-                blocks.Add(new MysteryBlock(new Vector2(560, 200), multipleBlockTextures));
-                blocks.Add(new MysteryBlock(new Vector2(560, 450), multipleBlockTextures));
-                blocks.Add(new MediumPipe(new Vector2(1075, 500), sceneryTextures));
-            }
-        }
 
         private static List<(string ObjectType, int X, int Y)> LoadEntitiesFromCSV(string filePath)
         {

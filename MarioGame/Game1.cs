@@ -30,6 +30,8 @@ namespace MarioGame
         public bool Fire = false;
         public bool Star = false;
 
+        int currLevel = 1;
+
         private List<IEnemy> enemies;
         private List<IBlock> blocks;
 
@@ -41,6 +43,12 @@ namespace MarioGame
         {
             this.Initialize();
             this.LoadContent();
+        }
+
+        public void ChangeCurrLevel(int level)
+        {
+            currLevel = level;
+            ResetGame();
         }
 
         public Game1()
@@ -77,7 +85,7 @@ namespace MarioGame
             blocks = new List<IBlock>();
             items = new ItemContainer(itemTextures);
 
-            LoadLevels.LoadLevel(this, blocks, enemies, items, 1);
+            LoadLevels.LoadLevel(this, blocks, enemies, items, currLevel);
 
             // Load fireball textures through the Ball class
             Ball.LoadContent(Content);
