@@ -6,14 +6,14 @@ namespace MarioGame
     internal class Koopa : IEnemy
     {
         private const double animInterval = 0.2;
-        private const double DeathDuration = 0.5;
+        private const double DeathDuration = 0.1;
         private KoopaSprite sprite;
         private int posX;
         private int posY;
         private bool changeSpriteDirection = false;
         private double timeElapsed = 0;
         private double timeElapsedSinceUpdate = 0;
-        private double deathStartTime = -1;
+        private double deathStartTime = 0;
         Texture2D textureForShell;
         SpriteBatch spriteBatchForShell;
 

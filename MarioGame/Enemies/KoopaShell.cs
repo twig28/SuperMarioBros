@@ -66,11 +66,6 @@ namespace MarioGame
             _DefaultMoveMentDirection = !_DefaultMoveMentDirection;
         }
 
-        public void Stop()
-        {
-            isMoving = false;
-        }
-
         public void Start()
         {
             isMoving = true;

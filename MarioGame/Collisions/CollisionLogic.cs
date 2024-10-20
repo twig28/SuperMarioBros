@@ -188,9 +188,13 @@ namespace MarioGame
                 foreach (IEnemy enemy2 in enemies)
                 {
                     if (enemy2 == enemy) { continue; }
-                    if (GetCollisionDirection(enemy.GetDestinationRectangle(), enemy2.GetDestinationRectangle()) != CollisionDirection.None)
+                    if (GetCollisionDirection(enemy.GetDestinationRectangle(), enemy2.GetDestinationRectangle()) != CollisionDirection.None && enemy2.getdeathStartTime <= 0)
                     {
                         enemy.DefaultMoveMentDirection = !enemy.DefaultMoveMentDirection;
+                        if (enemy is KoopaShell && enemy2.getdeathStartTime <= 0)
+                        {
+                            enemy2.TriggerDeath(gt, false);
+                        }
                     }
                 }
             }
@@ -213,7 +217,7 @@ namespace MarioGame
                     }
                     else
                     {
-                        if (enemy is Koopa koopa)
+                        if (enemy is Koopa koopa && koopa.getdeathStartTime <= 0)
                         {
                             enemy.TriggerDeath(gt, true);
                             //spawn new koopa (which includes triggering death)
@@ -222,6 +226,11 @@ namespace MarioGame
                             
                             //Make mario Jump
                         }
+                        else if (enemy is KoopaShell shell)
+                        {
+                            shell.Start();
+                        }
+                        //is normal enemy
                         else
                         {
                             enemy.TriggerDeath(gt, true);
@@ -229,7 +238,7 @@ namespace MarioGame
                         }
                     }
                 }
-                else if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None && enemy.getdeathStartTime < 0)
+                else if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None && enemy.getdeathStartTime <= 0)
                 {
                     if (enemy is KoopaShell koopashell)
                     {

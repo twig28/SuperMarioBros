@@ -7,19 +7,14 @@ using MarioGame.Items;
 using MarioGame.Blocks;
 using System.Collections.Generic;
 using MarioGame.Collisions;
+using MarioGame.Levels;
 
 namespace MarioGame
 {
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
-        private SpriteFont font;
-        Texture2D marioTexture;
-        Texture2D enemyTextures;
-        Texture2D itemTextures;
-        Texture2D sceneryTextures;
-        private Texture2D multipleBlockTextures;
+        public SpriteBatch _spriteBatch;
 
         public Vector2 PlayerPosition;
         public Vector2 UPlayerPosition;
@@ -35,6 +30,8 @@ namespace MarioGame
         public bool Fire = false;
         public bool Star = false;
 
+        int currLevel = 1;
+
         private List<IEnemy> enemies;
         private List<IBlock> blocks;
 
@@ -46,6 +43,12 @@ namespace MarioGame
         {
             this.Initialize();
             this.LoadContent();
+        }
+
+        public void ChangeCurrLevel(int level)
+        {
+            currLevel = level;
+            ResetGame();
         }
 
         public Game1()
@@ -68,48 +71,27 @@ namespace MarioGame
 
             // Initialize player's position
             PlayerSpeed = 100f;
+            PlayerPosition = new Vector2(500, 500);
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            font = Content.Load<SpriteFont>("File");
-            marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
-            enemyTextures = Content.Load<Texture2D>("smb_enemies_sheet");
-            itemTextures = Content.Load<Texture2D>("smb_items_sheet");
-            groundBlockTexture = Content.Load<Texture2D>("resizedGroundBlock");
-            blockTexture = Content.Load<Texture2D>("InitialBrickBlock");
-            multipleBlockTextures = Content.Load<Texture2D>("blocks");
-            sceneryTextures = Content.Load<Texture2D>("smb1_scenery_sprites");
 
+            Texture2D itemTextures = Content.Load<Texture2D>("smb_items_sheet");
+
+            enemies = new List<IEnemy>();
+            blocks = new List<IBlock>();
             items = new ItemContainer(itemTextures);
+
+            LoadLevels.LoadLevel(this, blocks, enemies, items, currLevel);
 
             // Load fireball textures through the Ball class
             Ball.LoadContent(Content);
 
-            blocks = new List<IBlock>
-            {
-                new Block(new Vector2(500, 450), blockTexture),
-                new GroundBlock(new Vector2(900, GraphicsDevice.Viewport.Height - 120), groundBlockTexture),
-               new MysteryBlock(new Vector2(560, 200), multipleBlockTextures),
-                new MysteryBlock(new Vector2(560, 450), multipleBlockTextures),
-                new MediumPipe(new Vector2(1075, 500), sceneryTextures)
-            };
-            PlayerPosition = new Vector2(100, GraphicsDevice.Viewport.Height - 83);
-            // Create a row of blocks on the bottom, except for the leftmost two so Mario can fall
-            for (int i = 0; i <= GraphicsDevice.Viewport.Width - 120; i += 60)
-            {
-                blocks.Add(new GroundBlock(new Vector2(i, GraphicsDevice.Viewport.Height - 60), groundBlockTexture));
-            }
-
-            enemies = new List<IEnemy>
-            {
-                new Goomba(enemyTextures, _spriteBatch, 500, 200),
-                new Koopa(enemyTextures, _spriteBatch, 600, 500),
-                new Piranha(enemyTextures, _spriteBatch, 1090, 538),
-            };
-
+            //Initialize Player
+            Texture2D marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
             player_sprite = new PlayerSprite(marioTexture, PlayerPosition, PlayerSpeed, _graphics, this);
             player_sprite.intialize_player();
         }
@@ -128,8 +110,6 @@ namespace MarioGame
 
             player_sprite.Update(gameTime);
 
-            
-
             foreach (var block in blocks)
             {
                 block.Update(gameTime);
@@ -144,6 +124,7 @@ namespace MarioGame
             items.Update(gameTime, blocks);
             base.Update(gameTime);
         }
+
         //For Sprint 3 Debug Only
         private void DrawCollisionRectangles(SpriteBatch spriteBatch)
         {
@@ -154,6 +135,7 @@ namespace MarioGame
             Rectangle marioRect = player_sprite.GetDestinationRectangle();
             spriteBatch.Draw(rectTexture, marioRect, Color.Red * 0.5f);
         }
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
