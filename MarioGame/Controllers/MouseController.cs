@@ -18,6 +18,9 @@ public class MouseController : IController
             {
                 Game.Exit();
             }
+            if(Mouse.GetState().LeftButton == ButtonState.Pressed) {
+
+            }
         }
 
     public bool IsKeyPressed(Keys key, KeyboardState currentKeyboardState)

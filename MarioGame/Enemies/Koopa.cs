@@ -1,115 +1,104 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace MarioGame
 {
     internal class Koopa : IEnemy
     {
         private const double animInterval = 0.2;
+        private const double DeathDuration = 0.1;
         private KoopaSprite sprite;
         private int posX;
         private int posY;
-        private int width;
-        private int height;
         private bool changeSpriteDirection = false;
         private double timeElapsed = 0;
         private double timeElapsedSinceUpdate = 0;
+        private double deathStartTime = 0;
+        Texture2D textureForShell;
+        SpriteBatch spriteBatchForShell;
 
-        private bool alive = true;
+        private bool _alive = true;
         private bool isShell = false;
-        public int setPosX { set { posX = value; } }
-        public int setPosY { set { posY = value; } }
-        public Rectangle GetDestinationRectangle() { return sprite.GetDestinationRectangle(); }
 
-        public bool getIsShell() { return isShell; }
+        public int setPosX { set => posX = value; }
+        public int setPosY { set => posY = value; }
 
-        private bool _DefaultMoveMentDirection = true;
+        public Rectangle GetDestinationRectangle() => sprite.GetDestinationRectangle();
+
+        public bool IsShell => isShell;
+        public double getdeathStartTime => deathStartTime;
+
         public bool DefaultMoveMentDirection
         {
-            get { return _DefaultMoveMentDirection; }
+            get => _DefaultMoveMentDirection;
             set { _DefaultMoveMentDirection = value; changeSpriteDirection = true; }
         }
 
+        public bool Alive
+        {
+            get => _alive;
+            set => _alive = value;
+        }
+
+        private bool _DefaultMoveMentDirection = true;
+
         public Koopa(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
         {
-            posX = X; posY = Y;
+            posX = X;
+            posY = Y;
             sprite = new KoopaSprite(Texture, SpriteBatch, posX, posY);
+            textureForShell = Texture;
+            spriteBatchForShell = SpriteBatch;
         }
 
         public void Draw()
         {
-            if (alive || isShell) sprite.Draw();
+            if (Alive || isShell) sprite.Draw();
         }
 
         public void Update(GameTime gm)
         {
-            if (alive)
+            if (deathStartTime > 0)
+            {
+                if (gm.TotalGameTime.TotalSeconds - deathStartTime >= DeathDuration)
+                {
+                    Alive = false;
+                    return;
+                }
+            }
+            else
             {
                 timeElapsed = gm.TotalGameTime.TotalSeconds;
-                if (_DefaultMoveMentDirection)
-                {
-                    posX++;
-                }
-                else
-                {
-                    posX--;
-                }
-                //gravity 
-                posY = posY + 5;
+                posX += _DefaultMoveMentDirection ? 1 : -1;
+                posY += 5;
+
                 sprite.posX = posX;
                 sprite.posY = posY;
+
                 if (changeSpriteDirection)
                 {
-                    //signals change direction to sprite class
                     sprite.ChangeDirection = true;
                     changeSpriteDirection = false;
                 }
+
                 if (timeElapsed - timeElapsedSinceUpdate > animInterval)
                 {
                     timeElapsedSinceUpdate = timeElapsed;
                     sprite.Update(gm);
                 }
             }
-            else if (isShell)
-            {
-                timeElapsed = gm.TotalGameTime.TotalSeconds;
-                if (_DefaultMoveMentDirection)
-                {
-                    posX = posX + 3;
-                }
-                else
-                {
-                    posX = posX - 3;
-                }
-                sprite.posX = posX;
-                sprite.posY = posY;
-                sprite.Update(gm);
-            }
+        }
+
+        public KoopaShell SpawnKoopa(GameTime gm){
+            this.TriggerDeath(gm, true);
+            return new KoopaShell(textureForShell, spriteBatchForShell, posX, posY);
         }
 
         public void TriggerDeath(GameTime gm, bool stomped)
         {
-            alive = false;
-            //handle using sprite
-            if (stomped)
-            {
-                isShell = true;
-                //because of animation of changing to shell
-                sprite.ChangeToShell(gm);
-                bool changed = false;
-                while (!changed)
-                {
-                    changed = sprite.ChangeToShell(gm);
-                }
-            }
-
-            sprite.Update(gm);
+            sprite.posY = posY + 30;
+            deathStartTime = gm.TotalGameTime.TotalSeconds;
+            sprite.SetDeathFrame();
         }
     }
 }

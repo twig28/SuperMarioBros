@@ -7,25 +7,29 @@ namespace MarioGame.Collisions
 {
     internal class ItemCollision
     {
-        private PlayerSprite player;
-        public ItemCollision(PlayerSprite player)
+        private IItem item;
+        public ItemCollision(IItem item)
         {
-            this.player = player;
+            this.item = item;
         }
 
-        public void ItemCollisionHandler(List<IItem> items)
+        public void ItemBlockCollision(List<IBlock> blocks)
         {
-
-            IItem itemRemove;
-            foreach (IItem item in items)
+            Rectangle itemRectangle = item.getDestinationRectangle();
+            Rectangle blockRectangle;
+            Rectangle intersection;
+            foreach (IBlock block in blocks)
             {
-                Rectangle itemRectangle = item.getDestinationRectangle();
-                Rectangle playerRectangle = player.GetDestinationRectangle();
-
-               
+                blockRectangle = block.GetDestinationRectangle();
+                intersection = Rectangle.Intersect(itemRectangle, blockRectangle);
+                if (!intersection.IsEmpty)
+                {
+                    if(intersection.Width >= intersection.Height)
+                    {
+                        item.moveY(-intersection.Height);
+                    }
+                }
             }
-           
-            
         }
     }
 }

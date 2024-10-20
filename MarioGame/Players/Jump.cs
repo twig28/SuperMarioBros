@@ -1,8 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.ComponentModel;
-using static System.Formats.Asn1.AsnWriter;
-
+using Microsoft.Xna.Framework.Input;
+using MarioGame.Controllers;
+using MarioGame.Interfaces;
+using MarioGame.Items;
+using MarioGame.Blocks;
+using System.Collections.Generic;
+using MarioGame.Collisions;
 namespace MarioGame
 {
     //would have texture, position, state, and more properties
@@ -10,28 +14,21 @@ namespace MarioGame
     {
 
 
-        public Texture2D Texture { get; set; }
+        private Texture2D Texture { get; set; }
         public Vector2 Position;
-        public float Speed;
-        public Game1 Game;
+        private Game1 Game;
         public GraphicsDeviceManager graphics;
-        public float Scale = 3f;
-        //for jump
-        float jumpSpeed = -10f;   
-        float gravity = 0.3f;     
-        public Jump(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics, Game1 game)
+        private float jumpSpeed = -10f;   
+        private float gravity = 0.3f;     
+        public Jump(Texture2D texture, Vector2 position, Game1 game)
         {
             Texture = texture;
             Position = position;
-            Speed = speed;
-            graphics = Graphics;
             Game = game;
         }
 
         public void Update(GameTime gameTime)
         {
-
-            float updatedSpeed = Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (Game.player_sprite.isGrounded)
             {
@@ -54,30 +51,10 @@ namespace MarioGame
 
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch,int width,int height, float Scale, List<Rectangle> sourceRectangle, int pos_difference)
         {
-            Rectangle sourceRectangle = new Rectangle(358, 0, 17, 17);
-            int width = 17;
-            int height = 17;
-            //check status
-           
-            if (Game.player_sprite.Fire)
-            {
-                width = 18;
-                height = 32;
-                sourceRectangle = new Rectangle(361, 122, 18, 32);
-                Position.Y -= 22;
-
-            }
-            else if (!Game.player_sprite.Fire && Game.player_sprite.Big)
-            {
-                width = 18;
-                height = 32;
-                sourceRectangle = new Rectangle(358, 52, 18, 32);
-                Position.Y -= 24;
-
-            }
-            spriteBatch.Draw(Texture, Position, sourceRectangle, Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
+            Position.Y -= pos_difference;
+            spriteBatch.Draw(Texture, Position, sourceRectangle[0], Color.White, 0f, new Vector2(width / 2, height / 2), Scale, SpriteEffects.None, 0f);
 
         }
     }

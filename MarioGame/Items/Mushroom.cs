@@ -13,6 +13,7 @@ namespace MarioGame.Items
         private int currentFrame = 0;
         private double timer = 0;
         private const int timePerFrame = 200;
+        private int yOffset = 0;
 
         public Mushroom(Texture2D texture) {
             this.texture = texture;
@@ -21,12 +22,12 @@ namespace MarioGame.Items
 
         public void Update(GameTime gameTime)
         {
-            //no update need
+            yOffset += 2;
         }
 
         public void Draw(SpriteBatch spriteBatch, Vector2 location)
         {
-            destinationRectangle = new Rectangle((int)location.X, (int)location.Y, 32, 32);
+            destinationRectangle = new Rectangle((int)location.X, (int)location.Y + yOffset, 32, 32);
             spriteBatch.Draw(texture, destinationRectangle, sourceRectangle[currentFrame], Color.White);
         }
 
@@ -38,6 +39,11 @@ namespace MarioGame.Items
         public string getName()
         {
             return "Mushroom";
+        }
+
+        public void moveY(int y)
+        {
+            yOffset += y;
         }
     }
 }
