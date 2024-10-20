@@ -85,7 +85,7 @@ namespace MarioGame
             items = new ItemContainer(itemTextures);
 
             // Load fireball textures through the Ball class
-            Ball.LoadContent(Content);
+            BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
 
             blocks = new List<IBlock>
             {
