@@ -71,7 +71,7 @@ namespace MarioGame
 
             // Initialize player's position
             PlayerSpeed = 100f;
-            PlayerPosition = new Vector2(500, 500);
+            PlayerPosition = new Vector2(100, 500);
             base.Initialize();
         }
 
@@ -88,7 +88,7 @@ namespace MarioGame
             LoadLevels.LoadLevel(this, blocks, enemies, items, currLevel);
 
             // Load fireball textures through the Ball class
-            Ball.LoadContent(Content);
+            BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
 
             //Initialize Player
             Texture2D marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
@@ -136,6 +136,7 @@ namespace MarioGame
             spriteBatch.Draw(rectTexture, marioRect, Color.Red * 0.5f);
         }
 
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
@@ -157,7 +158,7 @@ namespace MarioGame
             }
 
             Ball.DrawAll(_spriteBatch);
-            DrawCollisionRectangles(_spriteBatch);
+            //DrawCollisionRectangles(_spriteBatch);
 
             _spriteBatch.End();
 
