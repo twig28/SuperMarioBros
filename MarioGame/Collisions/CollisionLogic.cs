@@ -366,6 +366,8 @@ namespace MarioGame
                 enemies.Remove(enemy);
             }
         }
+
+        
     }
 }
 
