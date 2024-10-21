@@ -166,7 +166,7 @@ public class KeyboardController : IController
             if (IsKeyPressed(Keys.D1, currentKeyState))
             {
                 Game.ChangeCurrLevel(1);
-            Game.Fire = false;
+            Game.Fire = false; 
             }
 
     }

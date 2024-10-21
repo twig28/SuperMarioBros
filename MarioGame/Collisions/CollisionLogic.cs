@@ -115,7 +115,7 @@ namespace MarioGame
                     Rectangle mario_rec = mario.GetDestinationRectangle();
                     if (mario_rec.Intersects(block_rec))
                     {
-                        if (mario.UPlayerPosition.Y < block_rec.Top)
+                        if (mario.UPlayerPosition.Y < block_rec.Top )
                         {
                             StandingBlock.Add(block);
                             if (!mario.isGrounded)
@@ -146,13 +146,21 @@ namespace MarioGame
 
                             }
                         }
-                        else if (mario.UPlayerPosition.Y > block_rec.Bottom && !mario.isGrounded)
+                        else if (mario.UPlayerPosition.Y > block_rec.Bottom && !mario.isGrounded && mario.UPlayerPosition.X < block_rec.Right && mario.UPlayerPosition.X > block_rec.Left)
                         {
                             mario.velocity = 0f;
 
                             if (mario.Big || mario.Fire)
                             {
-                                mario.UPlayerPosition.Y = block_rec.Bottom + mario_rec.Height / 2 + 24;
+                                if (block.IsBreakable)
+                                {
+                                    blocksToRemove.Add(block);
+                                    mario.UPlayerPosition.Y = block_rec.Bottom + mario_rec.Height / 2 + 24;
+                                }
+                                else
+                                {
+                                    mario.UPlayerPosition.Y = block_rec.Bottom + mario_rec.Height / 2 + 24;
+                                }
                             }
                             else if (!mario.Big && !mario.Fire)
                             {
@@ -194,13 +202,14 @@ namespace MarioGame
 
                     if (!StandingBlock.Contains(block) && mario_rec.Intersects(block_rec))
                     {
-
+                        /*FOR STAR
                         if ((mario.Big || mario.Fire) && block.IsBreakable)
                         {
                             blocksToRemove.Add(block);
                         }
-                        else
-                        {
+                        */
+                       // else
+                       // {
                             if (mario_rec.Right >= block_rec.Left && mario_rec.Left < block_rec.Left)
                             {
                                 mario.UPlayerPosition.X = block_rec.Left - mario_rec.Width / 2;
@@ -209,7 +218,7 @@ namespace MarioGame
                             {
                                 mario.UPlayerPosition.X = block_rec.Right + mario_rec.Width / 2;
                             }
-                        }
+                       // }
 
                     }
 
