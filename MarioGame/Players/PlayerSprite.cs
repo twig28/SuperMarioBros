@@ -32,6 +32,7 @@ namespace MarioGame
         public bool isJumping = false;
         public bool isGrounded = true;
         public bool isFalling= false;
+        public bool invincible = false;
     
 
         public Texture2D marioTexture { get; set; }
@@ -41,6 +42,7 @@ namespace MarioGame
         public float velocity = 0f;
         public GraphicsDeviceManager _graphics;
         public Game1 Game;
+        public int invincibletime = 3;
 
         public MotionPlayer MRplayer;
         public MotionPlayerLeft MLplayer;
@@ -239,6 +241,8 @@ namespace MarioGame
             }
             return rectangle;
         }
+
+       
 
     }
 }

@@ -251,7 +251,9 @@ namespace MarioGame
                     {
                         mario.Big = false;
                         mario.Fire = false;
+
                     }
+                   
                     else
                     {
                         mario.current = PlayerSprite.SpriteType.Damaged;

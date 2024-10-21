@@ -62,7 +62,7 @@ namespace MarioGame
 
             // Initialize player's position
             PlayerSpeed = 100f;
-            PlayerPosition = new Vector2(500, 500);
+            PlayerPosition = new Vector2(100, 500);
             base.Initialize();
         }
 
@@ -127,6 +127,7 @@ namespace MarioGame
             spriteBatch.Draw(rectTexture, marioRect, Color.Red * 0.5f);
         }
 
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
@@ -148,7 +149,7 @@ namespace MarioGame
             }
 
             Ball.DrawAll(_spriteBatch);
-            DrawCollisionRectangles(_spriteBatch);
+            //DrawCollisionRectangles(_spriteBatch);
 
             _spriteBatch.End();
 
