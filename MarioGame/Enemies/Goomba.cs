@@ -12,7 +12,7 @@ internal class Goomba : IEnemy
     private double timeElapsedSinceUpdate = 0;
 
     private bool _alive = true;
-    private double deathStartTime = -1; 
+    private double deathStartTime = 0; 
     private const double DeathDuration = 2.0; 
 
     private bool _DefaultMoveMentDirection = true;
@@ -78,8 +78,15 @@ internal class Goomba : IEnemy
 
     public void TriggerDeath(GameTime gm, bool stomped)
     {
-        deathStartTime = gm.TotalGameTime.TotalSeconds;
-        sprite.posY = posY + 40;
-        sprite.SetDeathFrame();  
+        if (stomped)
+        {
+            deathStartTime = gm.TotalGameTime.TotalSeconds;
+            sprite.posY = posY + 40;
+            sprite.SetDeathFrame();
+        }
+        else
+        {
+            Alive = false;
+        } 
     }
 }

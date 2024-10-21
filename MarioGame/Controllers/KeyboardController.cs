@@ -150,6 +150,16 @@ public class KeyboardController : IController
             {
                 keyboardPermitN = true;
             }
-        
+
+            if (IsKeyPressed(Keys.D2, currentKeyState))
+            {
+                Game.ChangeCurrLevel(2);
+            }
+
+            if (IsKeyPressed(Keys.D1, currentKeyState))
+            {
+                Game.ChangeCurrLevel(1);
+            }
+
     }
 }
