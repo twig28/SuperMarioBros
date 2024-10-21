@@ -64,7 +64,10 @@ public class KeyboardController : IController
                 {
                     if (Game.player_sprite.current == PlayerSprite.SpriteType.Jump || Game.player_sprite.current == PlayerSprite.SpriteType.JumpL)
                     {
-                        Game.player_sprite.UPlayerPosition.X += 5f;
+                        if (Game.player_sprite.UPlayerPosition.X < 1280 - (14 * 3f / 2) )
+                        {
+                            Game.player_sprite.UPlayerPosition.X += 5f;
+                        }
 
                     }
                     else
@@ -83,8 +86,11 @@ public class KeyboardController : IController
                 {
                     if (Game.player_sprite.current == PlayerSprite.SpriteType.Jump || Game.player_sprite.current == PlayerSprite.SpriteType.JumpL)
                     {
-                        Game.player_sprite.UPlayerPosition.X -= 5f;
+                        if (Game.player_sprite.UPlayerPosition.X > 18 * 3f / 2)
+                        {
 
+                            Game.player_sprite.UPlayerPosition.X -= 5f;
+                        }
                     }
                     else
                     {
@@ -134,8 +140,8 @@ public class KeyboardController : IController
             if (currentKeyState.IsKeyDown(Keys.R))
             {
                 Game.ResetGame();
-                Game.player_sprite.current = PlayerSprite.SpriteType.Static;
-                Game.player_sprite.UPlayerPosition = Game.player_sprite.PlayerPosition;
+            Game.player_sprite.Reset();
+            
             }
 
             // Control the fireball
