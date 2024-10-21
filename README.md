@@ -6,12 +6,10 @@ This:
 https://www.youtube.com/watch?v=cWOkHQXw0JQ&t=37s
 
 Controls For Sprint2:
-O/P: Change Displayed Enemy
-WASD: Change Mario Position
-U/I: Change Displayed Item
-T/Y: Change Displayed Block
-X/M: Change Mario Big/Fire
-J: Make Mario origin state
-Q: Quit Game
-R: Reset Game
+WAS: Change Mario Position and Jump
+X/M: Change Mario Big/Fire Manually
+J: Make Mario origin State Manually
 Z/N: Throw Fireball (first change mario to fire by pressing M)
+Q: Quit Game
+R: Reset Level
+1/2 Change Between leveles
