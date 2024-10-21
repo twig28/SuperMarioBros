@@ -5,7 +5,7 @@ namespace MarioGame.Interfaces;
 
 public interface IItem
 {
-    void Draw(SpriteBatch spriteBatch, Vector2 location);
+    void Draw(SpriteBatch spriteBatch);
     void Update(GameTime gameTime);
     public Rectangle getDestinationRectangle();
     public string getName();

@@ -23,8 +23,6 @@ namespace MarioGame
 
         IController keyControl;
         IController mouseControl;
-        ItemContainer items;
-
         private float ballSpeed = 300f;
 
         public bool Fire = false;
@@ -34,6 +32,7 @@ namespace MarioGame
 
         private List<IEnemy> enemies;
         private List<IBlock> blocks;
+        private List<IItem> items;
 
         // Block textures
         private Texture2D groundBlockTexture;
@@ -65,7 +64,6 @@ namespace MarioGame
 
         protected override void Initialize()
         {
-            ItemContainer.Initialize();
             keyControl = new KeyboardController(this);
             mouseControl = new MouseController(this);
 
@@ -83,7 +81,7 @@ namespace MarioGame
 
             enemies = new List<IEnemy>();
             blocks = new List<IBlock>();
-            items = new ItemContainer(itemTextures);
+            items = new List<IItem>();
 
             LoadLevels.LoadLevel(this, blocks, enemies, items, currLevel);
 
@@ -105,7 +103,8 @@ namespace MarioGame
             CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
             CollisionLogic.CheckEnemyEnemyCollision(enemies, gameTime);
             CollisionLogic.CheckMarioEnemyCollision(player_sprite, ref enemies, gameTime);
-            CollisionLogic.CheckMarioItemCollision(player_sprite, items.getItemList(),gameTime);
+            CollisionLogic.CheckMarioItemCollision(player_sprite, items,gameTime);
+            CollisionLogic.CheckItemBlockCollision(blocks,items);
             blocks.RemoveAll(block => block is Block b && b.IsDestroyed);
 
             player_sprite.Update(gameTime);
@@ -115,13 +114,17 @@ namespace MarioGame
                 block.Update(gameTime);
             }
 
+            foreach (IItem item in items)
+            {
+                item.Update(gameTime);
+            }
+
             // Use the Ball class's static method to handle fireball inputs and update
             Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl);
             Ball.UpdateAll(gameTime, GraphicsDevice.Viewport.Width);
             CollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime,false);
             CollisionLogic.CheckFireballBlockCollision(Ball.GetBalls(), blocks);
 
-            items.Update(gameTime, blocks);
             base.Update(gameTime);
         }
 
@@ -149,12 +152,16 @@ namespace MarioGame
 
             _spriteBatch.Begin();
 
-            items.Draw(_spriteBatch);
             player_sprite.Draw(_spriteBatch, 14, 16,3f, new List<Rectangle>(),0);
 
             foreach (var block in blocks)
             {
                 block.Draw(_spriteBatch);
+            }
+
+            foreach (IItem item in items)
+            {
+                item.Draw(_spriteBatch);
             }
 
             Ball.DrawAll(_spriteBatch);

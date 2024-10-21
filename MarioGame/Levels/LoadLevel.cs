@@ -15,7 +15,8 @@ namespace MarioGame.Levels
             Game1 game,
             List<IBlock> blocks,
             List<IEnemy> enemies,
-            ItemContainer items, int level)
+            List<IItem> items,
+            int level)
         {
             // Load resources
             SpriteFont font = game.Content.Load<SpriteFont>("File");
@@ -42,45 +43,54 @@ namespace MarioGame.Levels
                 entities = LoadEntitiesFromCSV(filePath);
             }
 
-                foreach (var entity in entities)
+            foreach (var entity in entities)
+            {
+                Vector2 position = new Vector2(entity.X, entity.Y);
+
+                switch (entity.ObjectType)
                 {
-                    Vector2 position = new Vector2(entity.X, entity.Y);
-
-                    switch (entity.ObjectType)
-                    {
-                        case "BaseBlock":
-                            blocks.Add(new GroundBlock(position, groundBlockTexture));
-                            break;
-                        case "MysteryBlock":
-                            blocks.Add(new MysteryBlock(position, multipleBlockTextures));
-                            break;
-                        case "BrickBlock":
-                            blocks.Add(new Block(position, blockTexture));
-                            break;
-                        case "Pipe":
-                            blocks.Add(new MediumPipe(position, sceneryTextures));
-                            break;
-                        case "Goomba":
-                            enemies.Add(new Goomba(enemyTextures, game._spriteBatch, entity.X, entity.Y));
-                            break;
-                        case "Koopa":
-                            enemies.Add(new Koopa(enemyTextures, game._spriteBatch, entity.X, entity.Y));
-                            break;
-                        case "Piranha":
-                            enemies.Add(new Piranha(enemyTextures, game._spriteBatch, entity.X, entity.Y));
-                            break;
-                        case "Coin":
-                            //items.AddItem(new Coin(itemTextures, position));
-                            break;
-                    }
+                    case "BaseBlock":
+                        blocks.Add(new GroundBlock(position, groundBlockTexture));
+                        break;
+                    case "MysteryBlock":
+                        blocks.Add(new MysteryBlock(position, multipleBlockTextures));
+                        break;
+                    case "BrickBlock":
+                        blocks.Add(new Block(position, blockTexture));
+                        break;
+                    case "Pipe":
+                        blocks.Add(new MediumPipe(position, sceneryTextures));
+                        break;
+                    case "Goomba":
+                        enemies.Add(new Goomba(enemyTextures, game._spriteBatch, entity.X, entity.Y));
+                        break;
+                    case "Koopa":
+                        enemies.Add(new Koopa(enemyTextures, game._spriteBatch, entity.X, entity.Y));
+                        break;
+                    case "Piranha":
+                        enemies.Add(new Piranha(enemyTextures, game._spriteBatch, entity.X, entity.Y));
+                        break;
+                    case "Coin":
+                        items.Add(new Coin(itemTextures, position));
+                        break;
+                    case "FireFlower":
+                        items.Add(new FireFlower(itemTextures, position));
+                        break;
+                    case "Mushroom":
+                        items.Add(new Mushroom(itemTextures, position));
+                        break;
+                    case "Star":
+                        items.Add(new Star(itemTextures, position));
+                        break;
                 }
-
-                for (int i = 0; i <= game.GraphicsDevice.Viewport.Width - 120; i += 60)
-                {
-                    blocks.Add(new GroundBlock(new Vector2(i, game.GraphicsDevice.Viewport.Height - 60), groundBlockTexture));
-                }
-
             }
+
+            for (int i = 0; i <= game.GraphicsDevice.Viewport.Width - 120; i += 60)
+            {
+                blocks.Add(new GroundBlock(new Vector2(i, game.GraphicsDevice.Viewport.Height - 60), groundBlockTexture));
+            }
+
+        }
 
         private static List<(string ObjectType, int X, int Y)> LoadEntitiesFromCSV(string filePath)
         {

@@ -19,24 +19,6 @@ namespace MarioGame
             Side = 3
         }
 
-        public void ItemBlockCollision(List<IBlock> blocks, IItem item)
-        {
-            Rectangle itemRectangle = item.getDestinationRectangle();
-            Rectangle blockRectangle;
-            Rectangle intersection;
-            foreach (IBlock block in blocks)
-            {
-                blockRectangle = block.GetDestinationRectangle();
-                intersection = Rectangle.Intersect(itemRectangle, blockRectangle);
-                if (!intersection.IsEmpty)
-                {
-                    if (intersection.Width >= intersection.Height)
-                    {
-                        item.moveY(-intersection.Height);
-                    }
-                }
-            }
-        }
         static public CollisionDirection GetCollisionDirection(Rectangle r1, Rectangle r2) //Comparing r1 to r2, i.e. r1 is below r2
         {
             if (!r1.Intersects(r2))
@@ -89,100 +71,129 @@ namespace MarioGame
             }
         }
 
+        //function that has a for each between item and blocks/obstacles
+
+        public static void CheckItemBlockCollision(List<IBlock> blocks, List<IItem> items)
+        {
+            Rectangle itemRectangle;
+            Rectangle blockRectangle;
+            Rectangle intersection;
+            foreach (IItem item in items)
+            {
+                String itemName = item.getName();
+                if (itemName.Equals("Mushroom") || itemName.Equals("Star"))
+                {
+                    itemRectangle = item.getDestinationRectangle();
+                    foreach (IBlock block in blocks)
+                    {
+                        blockRectangle = block.GetDestinationRectangle();
+                        intersection = Rectangle.Intersect(itemRectangle, blockRectangle);
+                        if (!intersection.IsEmpty)
+                        {
+                            if (intersection.Width >= intersection.Height)
+                            {
+                                item.moveY(-intersection.Height);
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         //function that has a for each between mario and blocks/obstacles
         public static void CheckMarioBlockCollision(PlayerSprite mario, List<IBlock> blocks)
         {
-            if(mario.current != PlayerSprite.SpriteType.Damaged) { 
-            List<IBlock> blocksToRemove = new List<IBlock>();
-            List<IBlock> StandingBlock = new List<IBlock>();
-            List<IBlock> BelowBlock = new List<IBlock>();
-
-            foreach (IBlock block in blocks)
+            if (mario.current != PlayerSprite.SpriteType.Damaged)
             {
-                Rectangle block_rec = block.GetDestinationRectangle();
-                Rectangle mario_rec = mario.GetDestinationRectangle();
-                if (mario_rec.Intersects(block_rec))
+                List<IBlock> blocksToRemove = new List<IBlock>();
+                List<IBlock> StandingBlock = new List<IBlock>();
+                List<IBlock> BelowBlock = new List<IBlock>();
+
+                foreach (IBlock block in blocks)
                 {
-                    if (mario.UPlayerPosition.Y < block_rec.Top)
+                    Rectangle block_rec = block.GetDestinationRectangle();
+                    Rectangle mario_rec = mario.GetDestinationRectangle();
+                    if (mario_rec.Intersects(block_rec))
                     {
-                        StandingBlock.Add(block);
-                        if (!mario.isGrounded)
+                        if (mario.UPlayerPosition.Y < block_rec.Top)
                         {
-                            mario.isGrounded = true;
-                            mario.isJumping = false;
+                            StandingBlock.Add(block);
+                            if (!mario.isGrounded)
+                            {
+                                mario.isGrounded = true;
+                                mario.isJumping = false;
+                                mario.velocity = 0f;
+                                mario.Fallplayer.Speed = 0f;
+                                if (!mario.left)
+                                {
+                                    mario.current = PlayerSprite.SpriteType.Static;
+                                }
+                                else
+                                {
+                                    mario.current = PlayerSprite.SpriteType.StaticL;
+                                }
+
+
+
+                            }
+                            if (mario.Big || mario.Fire)
+                            {
+                                mario.UPlayerPosition.Y = block_rec.Top - mario_rec.Height / 2 + 26;
+                            }
+                            else if (!mario.Big && !mario.Fire)
+                            {
+                                mario.UPlayerPosition.Y = block_rec.Top - mario_rec.Height / 2 + 2;
+
+                            }
+                        }
+                        else if (mario.UPlayerPosition.Y > block_rec.Bottom && !mario.isGrounded)
+                        {
                             mario.velocity = 0f;
-                            mario.Fallplayer.Speed = 0f;
-                            if (!mario.left)
+
+                            if (mario.Big || mario.Fire)
                             {
-                                mario.current = PlayerSprite.SpriteType.Static;
+                                mario.UPlayerPosition.Y = block_rec.Bottom + mario_rec.Height / 2 + 24;
                             }
-                            else
+                            else if (!mario.Big && !mario.Fire)
                             {
-                                mario.current = PlayerSprite.SpriteType.StaticL;
+                                mario.UPlayerPosition.Y = block_rec.Bottom + mario_rec.Height / 2 + 2;
+
                             }
-
-
-
-                        }
-                        if (mario.Big || mario.Fire)
-                        {
-                            mario.UPlayerPosition.Y = block_rec.Top - mario_rec.Height / 2 + 26;
-                        }
-                        else if (!mario.Big && !mario.Fire)
-                        {
-                            mario.UPlayerPosition.Y = block_rec.Top - mario_rec.Height / 2 + 2;
-
-                        }
-                    }
-                    else if (mario.UPlayerPosition.Y > block_rec.Bottom && !mario.isGrounded)
-                    {
-                        mario.velocity = 0f;
-
-                        if (mario.Big || mario.Fire)
-                        {
-                            mario.UPlayerPosition.Y = block_rec.Bottom + mario_rec.Height / 2 + 24;
-                        }
-                        else if (!mario.Big && !mario.Fire)
-                        {
-                            mario.UPlayerPosition.Y = block_rec.Bottom + mario_rec.Height / 2 + 2;
-
-                        }
                             /*if(write for if this block is mystery block)
                             {
                              1.  this block change to common state, i.e every mystery block can only be turn for one time
                              2.item come ou of mystery block and ?move?
                             }
                             */
+                        }
                     }
-                }
-                else
-                {
-                    if (StandingBlock.Contains(block))
+                    else
                     {
-                        StandingBlock.Remove(block);
+                        if (StandingBlock.Contains(block))
+                        {
+                            StandingBlock.Remove(block);
+                        }
                     }
+
+
+
                 }
 
-
-
-            }
-
-            if (StandingBlock.Count == 0 && mario.isGrounded)
-            {
-
-                mario.isGrounded = false;
-                mario.isFalling = true;
-                mario.current = PlayerSprite.SpriteType.Falling;
-            }
-
-            foreach (IBlock block in blocks)
-            {
-                Rectangle block_rec = block.GetDestinationRectangle();
-                Rectangle mario_rec = mario.GetDestinationRectangle();
-
-                if (!StandingBlock.Contains(block) && mario_rec.Intersects(block_rec))
+                if (StandingBlock.Count == 0 && mario.isGrounded)
                 {
+
+                    mario.isGrounded = false;
+                    mario.isFalling = true;
+                    mario.current = PlayerSprite.SpriteType.Falling;
+                }
+
+                foreach (IBlock block in blocks)
+                {
+                    Rectangle block_rec = block.GetDestinationRectangle();
+                    Rectangle mario_rec = mario.GetDestinationRectangle();
+
+                    if (!StandingBlock.Contains(block) && mario_rec.Intersects(block_rec))
+                    {
 
                         if ((mario.Big || mario.Fire) && block.IsBreakable)
                         {
@@ -200,23 +211,23 @@ namespace MarioGame
                             }
                         }
 
+                    }
+
+
                 }
-
-
-            }
-            foreach(IBlock block in blocksToRemove)
+                foreach (IBlock block in blocksToRemove)
                 {
                     blocks.Remove(block);
                 }
 
 
-        }
+            }
 
 
 
 
         }
-     
+
         //function that has a for each between enemies and other enemies
         public static void CheckEnemyEnemyCollision(List<IEnemy> enemies, GameTime gt)
         {
@@ -236,19 +247,20 @@ namespace MarioGame
                 }
             }
         }
-        
+
         public static void CheckMarioEnemyCollision(PlayerSprite mario, ref List<IEnemy> enemies, GameTime gt)
         {
             IEnemy enemyToRemove = null;
             IEnemy enemyToAdd = null;
             foreach (IEnemy enemy in enemies)
             {
-                if (enemy.Alive == false) {
+                if (enemy.Alive == false)
+                {
                     enemyToRemove = enemy;
                 }
                 if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) == CollisionDirection.Below)
                 {
-                    if(enemy is Piranha)
+                    if (enemy is Piranha)
                     {
                         mario.current = PlayerSprite.SpriteType.Damaged;
                     }
@@ -260,7 +272,7 @@ namespace MarioGame
                             //spawn new koopa (which includes triggering death)
                             KoopaShell shell = koopa.SpawnKoopa(gt);
                             enemyToAdd = shell;
-                            
+
                             //Make mario Jump
                         }
                         else if (enemy is KoopaShell shell)
@@ -287,7 +299,7 @@ namespace MarioGame
                         mario.Fire = false;
 
                     }
-                   
+
                     else
                     {
                         mario.current = PlayerSprite.SpriteType.Damaged;
@@ -308,11 +320,11 @@ namespace MarioGame
             {
                 Rectangle mario_rec = mario.GetDestinationRectangle();
                 Rectangle item_rec = item.getDestinationRectangle();
-               
+
                 if (mario_rec.Intersects(item_rec))
                 {
                     itemRemove = item;
-                    if(item.getName() == "FireFlower")
+                    if (item.getName() == "FireFlower")
                     {
                         mario.Big = false;
                         mario.Fire = true;
@@ -320,7 +332,7 @@ namespace MarioGame
                     }
                     else if (item.getName() == "Mushroom")
                     {
-                        if(!mario.Fire)
+                        if (!mario.Fire)
                         {
                             mario.Big = true;
                         }
@@ -386,7 +398,7 @@ namespace MarioGame
             }
         }
 
-        
+
     }
 }
 

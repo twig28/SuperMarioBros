@@ -10,14 +10,17 @@ namespace MarioGame.Items
         private List<Rectangle> sourceRectangle = new List<Rectangle>();
         private Rectangle destinationRectangle;
         private Texture2D texture;
+        private Vector2 position;
         private int currentFrame = 0;
         private double timer = 0;
         private const int timePerFrame = 100;
         private int yOffset = 0;
+        private int xOffset = 0;
 
-        public Star(Texture2D texture)
+        public Star(Texture2D texture, Vector2 position)
         {
             this.texture = texture;
+            this.position = position;
             sourceRectangle.Add(new Rectangle(5, 94, 14, 16));
             sourceRectangle.Add(new Rectangle(35, 94, 14, 16));
             sourceRectangle.Add(new Rectangle(65, 94, 14, 16));
@@ -26,7 +29,8 @@ namespace MarioGame.Items
 
         public void Update(GameTime gameTime)
         {
-            yOffset++;
+            yOffset += 2;
+            xOffset++;
             if (timer > timePerFrame)
             {
                 timer = 0;
@@ -37,9 +41,9 @@ namespace MarioGame.Items
             timer += gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
-        public void Draw(SpriteBatch spriteBatch, Vector2 location)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            destinationRectangle = new Rectangle((int)location.X, (int)location.Y + yOffset, 32, 32);
+            destinationRectangle = new Rectangle((int)position.X + xOffset, (int)position.Y + yOffset, 32, 32);
             spriteBatch.Draw(texture, destinationRectangle, sourceRectangle[currentFrame], Color.White);
         }
 
