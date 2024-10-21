@@ -18,6 +18,25 @@ namespace MarioGame
             Below = 2,
             Side = 3
         }
+
+        public void ItemBlockCollision(List<IBlock> blocks, IItem item)
+        {
+            Rectangle itemRectangle = item.getDestinationRectangle();
+            Rectangle blockRectangle;
+            Rectangle intersection;
+            foreach (IBlock block in blocks)
+            {
+                blockRectangle = block.GetDestinationRectangle();
+                intersection = Rectangle.Intersect(itemRectangle, blockRectangle);
+                if (!intersection.IsEmpty)
+                {
+                    if (intersection.Width >= intersection.Height)
+                    {
+                        item.moveY(-intersection.Height);
+                    }
+                }
+            }
+        }
         static public CollisionDirection GetCollisionDirection(Rectangle r1, Rectangle r2) //Comparing r1 to r2, i.e. r1 is below r2
         {
             if (!r1.Intersects(r2))

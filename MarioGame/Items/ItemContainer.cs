@@ -37,8 +37,8 @@ public class ItemContainer
         foreach (IItem item in items)
         {
             item.Update(gameTime);
-            ItemCollision itemCollision = new ItemCollision(item);
-            itemCollision.ItemBlockCollision(blocks);
+            CollisionLogic collision = new CollisionLogic();
+            collision.ItemBlockCollision(blocks,item);
         }
     }
 
