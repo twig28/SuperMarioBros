@@ -385,6 +385,8 @@ namespace MarioGame.Collisions
                 enemies.Remove(enemy);
             }
         }
+
+        
     }
 }
 
