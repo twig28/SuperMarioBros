@@ -13,4 +13,8 @@ Koopa,600,500
 Koopa,700,500
 Piranha,1090,538
 Piranha,270,538
-Coin,900,750
+Coin,400,200
+Coin,450,200
+Coin,500,200
+FireFlower,675,365
+Mushroom,0,600
