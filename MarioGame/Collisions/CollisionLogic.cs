@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MarioGame
+namespace MarioGame.Collisions
 {
     internal class CollisionLogic
     {
