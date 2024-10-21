@@ -242,7 +242,18 @@ namespace MarioGame
             return rectangle;
         }
 
-       
+       public void Reset()
+        {
+         left = false;
+            Fire = false;
+         Big = false;
+        isJumping = false;
+         isGrounded = true;
+        isFalling = false;
+         invincible = false;
+        current = PlayerSprite.SpriteType.Static;
+            UPlayerPosition = Game.player_sprite.PlayerPosition;
+    }
 
     }
 }

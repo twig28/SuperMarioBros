@@ -148,6 +148,12 @@ namespace MarioGame
                             mario.UPlayerPosition.Y = block_rec.Bottom + mario_rec.Height / 2 + 2;
 
                         }
+                            /*if(write for if this block is mystery block)
+                            {
+                             1.  this block change to common state, i.e every mystery block can only be turn for one time
+                             2.item come ou of mystery block and ?move?
+                            }
+                            */
                     }
                 }
                 else
