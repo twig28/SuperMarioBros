@@ -1,6 +1,8 @@
 ﻿using MarioGame.Blocks;
 using MarioGame.Interfaces;
+using MarioGame.Items;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,7 +83,7 @@ namespace MarioGame
             foreach (IItem item in items)
             {
                 String itemName = item.getName();
-                if (itemName.Equals("Mushroom") || itemName.Equals("Star"))
+                // if (itemName.Equals("Mushroom") || itemName.Equals("Star"))
                 {
                     itemRectangle = item.getDestinationRectangle();
                     foreach (IBlock block in blocks)
@@ -92,7 +94,10 @@ namespace MarioGame
                         {
                             if (intersection.Width >= intersection.Height)
                             {
-                                item.moveY(-intersection.Height);
+                                if (itemName.Equals("Mushroom") || itemName.Equals("Star"))
+                                    item.moveY(-intersection.Height);
+                                item.OnCollide();
+                                block.OnCollide();
                             }
                         }
                     }
@@ -101,7 +106,7 @@ namespace MarioGame
         }
 
         //function that has a for each between mario and blocks/obstacles
-        public static void CheckMarioBlockCollision(PlayerSprite mario, List<IBlock> blocks)
+        public static void CheckMarioBlockCollision(PlayerSprite mario, List<IBlock> blocks, List<IItem> items)
         {
             if (mario.current != PlayerSprite.SpriteType.Damaged)
             {
@@ -115,7 +120,7 @@ namespace MarioGame
                     Rectangle mario_rec = mario.GetDestinationRectangle();
                     if (mario_rec.Intersects(block_rec))
                     {
-                        if (mario.UPlayerPosition.Y < block_rec.Top )
+                        if (mario.UPlayerPosition.Y < block_rec.Top)
                         {
                             StandingBlock.Add(block);
                             if (!mario.isGrounded)
@@ -160,6 +165,23 @@ namespace MarioGame
                                 else
                                 {
                                     mario.UPlayerPosition.Y = block_rec.Bottom + mario_rec.Height / 2 + 24;
+
+                                    // this is a mystery block
+                                    MysteryBlock mystery = block as MysteryBlock;
+                                    if (mystery != null && mystery.IsOpened == false)
+                                    {
+                                        mystery.OnCollide();
+                                        // should have a coin factory to create coins
+                                        Texture2D coinTexture = Game1.Instance.Content.Load<Texture2D>("smb_items_sheet");
+                                        float xOffset = block_rec.Width / 2 - 16;
+                                        var coin = new Coin(coinTexture, block.Position - new Vector2(-xOffset, block_rec.Height));
+                                        items.Add(coin);
+
+                                        coin.Velocity = new Vector2(0f, -3f) * 30f;
+                                        coin.GravityScale = 15.0f;
+                                        coin.EnableGravity = true;
+                                        block.OnCollide(); // should move all collision logic to items
+                                    }
                                 }
                             }
                             else if (!mario.Big && !mario.Fire)
@@ -208,17 +230,17 @@ namespace MarioGame
                             blocksToRemove.Add(block);
                         }
                         */
-                       // else
-                       // {
-                            if (mario_rec.Right >= block_rec.Left && mario_rec.Left < block_rec.Left)
-                            {
-                                mario.UPlayerPosition.X = block_rec.Left - mario_rec.Width / 2;
-                            }
-                            else if (mario_rec.Left <= block_rec.Right && mario_rec.Right > block_rec.Right)
-                            {
-                                mario.UPlayerPosition.X = block_rec.Right + mario_rec.Width / 2;
-                            }
-                       // }
+                        // else
+                        // {
+                        if (mario_rec.Right >= block_rec.Left && mario_rec.Left < block_rec.Left)
+                        {
+                            mario.UPlayerPosition.X = block_rec.Left - mario_rec.Width / 2;
+                        }
+                        else if (mario_rec.Left <= block_rec.Right && mario_rec.Right > block_rec.Right)
+                        {
+                            mario.UPlayerPosition.X = block_rec.Right + mario_rec.Width / 2;
+                        }
+                        // }
 
                     }
 

@@ -10,5 +10,6 @@ public interface IItem
     public Rectangle getDestinationRectangle();
     public string getName();
     public void moveY(int y);
+    public void OnCollide();
 }
 

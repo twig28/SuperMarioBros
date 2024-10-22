@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Intrinsics.X86;
 using MarioGame.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,13 +18,21 @@ namespace MarioGame.Items
         private const int timePerFrame = 200;
         private int yOffset = 0;
 
-        public Coin(Texture2D texture, Vector2 position) {
+        // need a base class to do physical simulation
+        public float GravityScale { get; set; }
+        public bool EnableGravity { get; set; }
+        public Vector2 Velocity { get; set; }
+
+        public Coin(Texture2D texture, Vector2 position)
+        {
             this.texture = texture;
             this.position = position;
             sourceRectangle.Add(new Rectangle(128, 95, 8, 14));
             sourceRectangle.Add(new Rectangle(158, 95, 8, 14));
             sourceRectangle.Add(new Rectangle(188, 95, 8, 14));
             sourceRectangle.Add(new Rectangle(218, 95, 8, 14));
+
+            Velocity = Vector2.Zero;
         }
 
         public void Update(GameTime gameTime)
@@ -35,6 +45,14 @@ namespace MarioGame.Items
                     currentFrame = 0;
             }
             timer += gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (EnableGravity)
+            {
+                Velocity += new Vector2(0, GravityScale * deltaTime);
+            }
+            position.X += Velocity.X * deltaTime;
+            position.Y += Velocity.Y * deltaTime;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -56,6 +74,13 @@ namespace MarioGame.Items
         public void moveY(int y)
         {
             yOffset += y;
+        }
+
+        public void OnCollide()
+        {
+            Velocity = Vector2.Zero;
+            GravityScale = 0.0f;
+            EnableGravity = false;
         }
     }
 }

@@ -38,6 +38,8 @@ namespace MarioGame
         private Texture2D groundBlockTexture;
         private Texture2D blockTexture;
 
+        public static Game1 Instance { get; private set; }
+
         public void ResetGame()
         {
             this.Initialize();
@@ -60,6 +62,8 @@ namespace MarioGame
             _graphics.PreferredBackBufferHeight = 720;
 
             _graphics.ApplyChanges();
+
+            Instance = this;
         }
 
         protected override void Initialize()
@@ -100,11 +104,11 @@ namespace MarioGame
             mouseControl.HandleInputs();
 
             CollisionLogic.CheckEnemyBlockCollisions(enemies, blocks);
-            CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
+            CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks, items);
             CollisionLogic.CheckEnemyEnemyCollision(enemies, gameTime);
             CollisionLogic.CheckMarioEnemyCollision(player_sprite, ref enemies, gameTime);
-            CollisionLogic.CheckMarioItemCollision(player_sprite, items,gameTime);
-            CollisionLogic.CheckItemBlockCollision(blocks,items);
+            CollisionLogic.CheckMarioItemCollision(player_sprite, items, gameTime);
+            CollisionLogic.CheckItemBlockCollision(blocks, items);
             blocks.RemoveAll(block => block is Block b && b.IsDestroyed);
 
             player_sprite.Update(gameTime);
@@ -122,7 +126,7 @@ namespace MarioGame
             // Use the Ball class's static method to handle fireball inputs and update
             Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl);
             Ball.UpdateAll(gameTime, GraphicsDevice.Viewport.Width);
-            CollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime,false);
+            CollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime, false);
             CollisionLogic.CheckFireballBlockCollision(Ball.GetBalls(), blocks);
 
             base.Update(gameTime);
@@ -152,7 +156,7 @@ namespace MarioGame
 
             _spriteBatch.Begin();
 
-            player_sprite.Draw(_spriteBatch, 14, 16,3f, new List<Rectangle>(),0);
+            player_sprite.Draw(_spriteBatch, 14, 16, 3f, new List<Rectangle>(), 0);
 
             foreach (var block in blocks)
             {
