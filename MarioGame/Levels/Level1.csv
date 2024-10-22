@@ -1,7 +1,7 @@
 ObjectType,XPosition,YPosition
 Pipe,1075,500
 BaseBlock,900,600
-MysteryBlock,560,200
+MysteryBlock,500,200
 MysteryBlock,560,450
 BrickBlock,500,450
 BrickBlock,440,450
