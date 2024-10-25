@@ -7,6 +7,7 @@ using MarioGame.Items;
 using MarioGame.Blocks;
 using System.Collections.Generic;
 using MarioGame.Levels;
+using System.Net.Http.Headers;
 
 
 namespace MarioGame
@@ -20,6 +21,7 @@ namespace MarioGame
         public Vector2 UPlayerPosition;
         float PlayerSpeed;
         public PlayerSprite player_sprite;
+        Vector2 offset;
 
         IController keyControl;
         IController mouseControl;
@@ -149,10 +151,15 @@ namespace MarioGame
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             //calculate offset for camera
+            float cameraOffsetThreshold = 650;
             Rectangle marioRect = player_sprite.GetDestinationRectangle();
             float marioPositionX = marioRect.X + marioRect.Width / 2;
             float screenCenterX = GraphicsDevice.Viewport.Width / 2;
-            Vector2 offset = new Vector2(screenCenterX - marioPositionX, 0);
+
+            if(marioPositionX > cameraOffsetThreshold)
+            {
+                offset = new Vector2(screenCenterX - marioPositionX, 0);
+            }
             Matrix transform = Matrix.CreateTranslation(new Vector3(offset, 0));
 
             _spriteBatch.Begin(transformMatrix: transform);
