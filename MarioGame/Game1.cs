@@ -46,6 +46,7 @@ namespace MarioGame
         {
             this.Initialize();
             this.LoadContent();
+            offset = new Vector2(0, 0);
         }
 
         public void ChangeCurrLevel(int level)
