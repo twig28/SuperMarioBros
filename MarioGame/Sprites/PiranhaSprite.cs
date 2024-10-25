@@ -42,9 +42,7 @@ namespace MarioGame.Sprites
         public void Draw()
         {
             DestinationRectangle = new Rectangle(posX, posY, SpriteWidth, SpriteHeight);
-            sb.Begin();
             sb.Draw(texture, DestinationRectangle, SourceRectangle, Color.White);
-            sb.End();
         }
 
         public void Update(GameTime gm)

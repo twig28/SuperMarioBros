@@ -148,13 +148,20 @@ namespace MarioGame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            //calculate offset for camera
+            Rectangle marioRect = player_sprite.GetDestinationRectangle();
+            float marioPositionX = marioRect.X + marioRect.Width / 2;
+            float screenCenterX = GraphicsDevice.Viewport.Width / 2;
+            Vector2 offset = new Vector2(screenCenterX - marioPositionX, 0);
+            Matrix transform = Matrix.CreateTranslation(new Vector3(offset, 0));
+
+            _spriteBatch.Begin(transformMatrix: transform);
+
             foreach (IEnemy enemy in enemies)
             {
                 enemy.Update(gameTime);
                 enemy.Draw();
             }
-
-            _spriteBatch.Begin();
 
             player_sprite.Draw(_spriteBatch, 14, 16, 3f, new List<Rectangle>(), 0);
 
