@@ -77,12 +77,12 @@ public class MotionPlayer : IPlayer
 
 
 
-        public void Draw(SpriteBatch spriteBatch,int width, int height, float sourceScale, List<Rectangle> sourceRectangle, int pos_difference)
+        public void Draw(SpriteBatch spriteBatch,int width, int height, float sourceScale, List<Rectangle> sourceRectangle, int pos_difference,Color c)
         {
             
            
         Position.Y -= pos_difference;
-        spriteBatch.Draw(Texture, Position, sourceRectangle[currentFrame], Color.White, 0f, new Vector2(width / 2, height / 2), sourceScale, SpriteEffects.None, 0f);
+        spriteBatch.Draw(Texture, Position, sourceRectangle[currentFrame], c, 0f, new Vector2(width / 2, height / 2), sourceScale, SpriteEffects.None, 0f);
 
             
 

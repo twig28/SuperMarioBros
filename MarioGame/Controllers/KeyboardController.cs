@@ -121,7 +121,7 @@ public class KeyboardController : IController
         }
             if (currentKeyState.IsKeyDown(Keys.X))
             {
-                Game.player_sprite.Big = true;
+                Game.player_sprite.Star = true;
             }
 
             if (currentKeyState.IsKeyDown(Keys.M))
@@ -134,6 +134,7 @@ public class KeyboardController : IController
             {
                 Game.player_sprite.Fire = false;
                 Game.player_sprite.Big = false;
+                Game.player_sprite.Star = false;
                 Game.Fire = false;
             }
 

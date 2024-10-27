@@ -23,12 +23,17 @@ namespace MarioGame
             if (current == PlayerSprite.SpriteType.Static)
             {
                 sourceRectangle.Clear();
-                if (Game.player_sprite.Fire)
+                if (Game.player_sprite.Star)
+                {
+                    sourceRectangle.Clear();
+                    sourceRectangle.Add(new Rectangle(208, 52, 18, 32));
+                }
+                else if (Game.player_sprite.Fire)
                 {
                     sourceRectangle.Clear();
                     sourceRectangle.Add(new Rectangle(209, 122, 18, 32));
                 }
-                else if (!Game.player_sprite.Fire && Game.player_sprite.Big)
+                else if (!Game.player_sprite.Star && !Game.player_sprite.Fire && Game.player_sprite.Big)
                 {
                     sourceRectangle.Clear();
                     sourceRectangle.Add(new Rectangle(208, 52, 18, 32));
@@ -44,14 +49,18 @@ namespace MarioGame
             if (current == PlayerSprite.SpriteType.StaticL)
             {
                 sourceRectangle.Clear();
-                
-                if (Game.player_sprite.Fire)
+                if (Game.player_sprite.Star)
+                {
+                    sourceRectangle.Clear();
+                    sourceRectangle.Add(new Rectangle(179, 52, 18, 32));
+                }
+                else if (Game.player_sprite.Fire)
                 {
                     sourceRectangle.Clear();
                     sourceRectangle.Add(new Rectangle(180, 122, 18, 32));
                 }
                 
-                else if (!Game.player_sprite.Fire && Game.player_sprite.Big)
+                else if (!Game.player_sprite.Star && !Game.player_sprite.Fire && Game.player_sprite.Big)
                {
                     sourceRectangle.Clear();
                     sourceRectangle.Add(new Rectangle(179, 52, 18, 32));
@@ -69,7 +78,14 @@ namespace MarioGame
             if (current == PlayerSprite.SpriteType.Motion)
             {
                 sourceRectangle.Clear();
-                if (Game.player_sprite.Fire)
+                if (Game.player_sprite.Star)
+                {
+                    sourceRectangle.Clear();
+                    sourceRectangle.Add(new Rectangle(238, 52, 18, 32));
+                    sourceRectangle.Add(new Rectangle(270, 52, 18, 32));
+                    sourceRectangle.Add(new Rectangle(299, 52, 18, 32));
+                }
+                else if (Game.player_sprite.Fire)
                 {
 
                     sourceRectangle.Clear();
@@ -101,7 +117,14 @@ namespace MarioGame
             if (current == PlayerSprite.SpriteType.MotionL)
             {
                 sourceRectangle.Clear();
-                if (Game.player_sprite.Fire)
+                if (Game.player_sprite.Star)
+                {
+                    sourceRectangle.Clear();
+                    sourceRectangle.Add(new Rectangle(150, 52, 18, 32));
+                    sourceRectangle.Add(new Rectangle(120, 52, 18, 32));
+                    sourceRectangle.Add(new Rectangle(89, 52, 18, 32));
+                }
+                else if (Game.player_sprite.Fire)
                 {
 
                     sourceRectangle.Clear();
@@ -138,8 +161,12 @@ namespace MarioGame
             {
                 sourceRectangle.Clear();
 
-
-                if (Game.player_sprite.Fire)
+                if (Game.player_sprite.Star)
+                {
+                    sourceRectangle.Clear();
+                    sourceRectangle.Add(new Rectangle(358, 52, 18, 32));
+                }
+                else if (Game.player_sprite.Fire)
                 {
                     sourceRectangle.Clear();
                     sourceRectangle.Add(new Rectangle(361, 122, 18, 32));
@@ -165,7 +192,12 @@ namespace MarioGame
             if (current == PlayerSprite.SpriteType.JumpL)
             {
                 sourceRectangle.Clear();
-                if (Game.player_sprite.Fire)
+                 if (Game.player_sprite.Star)
+                {
+                    sourceRectangle.Clear();
+                    sourceRectangle.Add(new Rectangle(29, 52, 18, 32));
+                }
+                else if (Game.player_sprite.Fire)
                 {
                     sourceRectangle.Clear();
 
@@ -201,7 +233,13 @@ namespace MarioGame
 
                 if (Game.player_sprite.left)
                 {
-                    if (Game.player_sprite.Fire)
+                    if (Game.player_sprite.Star)
+                    {
+                        sourceRectangle.Clear();
+
+                        sourceRectangle.Add(new Rectangle(29, 52, 18, 32));
+                    }
+                   else if (Game.player_sprite.Fire)
                     {
                         sourceRectangle.Clear();
                         sourceRectangle.Add(new Rectangle(25, 122, 18, 32));
@@ -224,8 +262,14 @@ namespace MarioGame
                 else
                 {
                     //check status
+                    if (Game.player_sprite.Star)
+                    {
+                        sourceRectangle.Clear();
 
-                    if (Game.player_sprite.Fire)
+                        sourceRectangle.Add(new Rectangle(358, 52, 18, 32));
+                    }
+
+                   else if (Game.player_sprite.Fire)
                     {
                         sourceRectangle.Clear();
 
