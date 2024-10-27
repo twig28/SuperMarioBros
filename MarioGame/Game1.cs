@@ -7,6 +7,7 @@ using MarioGame.Items;
 using MarioGame.Blocks;
 using System.Collections.Generic;
 using MarioGame.Levels;
+using System.Net.Http.Headers;
 
 
 namespace MarioGame
@@ -20,6 +21,7 @@ namespace MarioGame
         public Vector2 UPlayerPosition;
         float PlayerSpeed;
         public PlayerSprite player_sprite;
+        Vector2 offset;
 
         IController keyControl;
         IController mouseControl;
@@ -38,10 +40,13 @@ namespace MarioGame
         private Texture2D groundBlockTexture;
         private Texture2D blockTexture;
 
+        public static Game1 Instance { get; private set; }
+
         public void ResetGame()
         {
             this.Initialize();
             this.LoadContent();
+            offset = new Vector2(0, 0);
         }
 
         public void ChangeCurrLevel(int level)
@@ -60,6 +65,8 @@ namespace MarioGame
             _graphics.PreferredBackBufferHeight = 720;
 
             _graphics.ApplyChanges();
+
+            Instance = this;
         }
 
         protected override void Initialize()
@@ -100,11 +107,11 @@ namespace MarioGame
             mouseControl.HandleInputs();
 
             CollisionLogic.CheckEnemyBlockCollisions(enemies, blocks);
-            CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks);
+            CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks, items);
             CollisionLogic.CheckEnemyEnemyCollision(enemies, gameTime);
             CollisionLogic.CheckMarioEnemyCollision(player_sprite, ref enemies, gameTime);
-            CollisionLogic.CheckMarioItemCollision(player_sprite, items,gameTime);
-            CollisionLogic.CheckItemBlockCollision(blocks,items);
+            CollisionLogic.CheckMarioItemCollision(player_sprite, items, gameTime);
+            CollisionLogic.CheckItemBlockCollision(blocks, items);
             blocks.RemoveAll(block => block is Block b && b.IsDestroyed);
 
             player_sprite.Update(gameTime);
@@ -122,7 +129,7 @@ namespace MarioGame
             // Use the Ball class's static method to handle fireball inputs and update
             Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl);
             Ball.UpdateAll(gameTime, GraphicsDevice.Viewport.Width);
-            CollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime,false);
+            CollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime, false);
             CollisionLogic.CheckFireballBlockCollision(Ball.GetBalls(), blocks);
 
             base.Update(gameTime);
@@ -143,6 +150,20 @@ namespace MarioGame
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            //calculate offset for camera
+            float cameraOffsetThreshold = 650;
+            Rectangle marioRect = player_sprite.GetDestinationRectangle();
+            float marioPositionX = marioRect.X + marioRect.Width / 2;
+            float screenCenterX = GraphicsDevice.Viewport.Width / 2;
+
+            if(marioPositionX > cameraOffsetThreshold)
+            {
+                offset = new Vector2(screenCenterX - marioPositionX, 0);
+            }
+            Matrix transform = Matrix.CreateTranslation(new Vector3(offset, 0));
+
+            _spriteBatch.Begin(transformMatrix: transform);
 
             foreach (IEnemy enemy in enemies)
             {

@@ -2,11 +2,11 @@ ObjectType,XPosition,YPosition
 Pipe,1075,500
 Pipe,250,500
 BaseBlock,900,600
-MysteryBlock,660,200
+MysteryBlock,300,200
 MysteryBlock,660,400
 BrickBlock,500,400
 BrickBlock,440,400
-BrickBlock,0,600
+BrickBlock,200,500
 Goomba,500,200
 Goomba,100,200
 Koopa,600,500

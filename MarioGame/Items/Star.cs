@@ -61,5 +61,9 @@ namespace MarioGame.Items
             yOffset += y;
         }
 
+        public void OnCollide()
+        {
+
+        }
     }
 }

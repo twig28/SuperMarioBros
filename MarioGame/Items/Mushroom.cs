@@ -17,7 +17,8 @@ namespace MarioGame.Items
         private int yOffset = 0;
         private int xOffest = 0;
 
-        public Mushroom(Texture2D texture,Vector2 position) {
+        public Mushroom(Texture2D texture, Vector2 position)
+        {
             this.texture = texture;
             this.position = position;
             sourceRectangle.Add(new Rectangle(184, 34, 16, 16));
@@ -48,6 +49,11 @@ namespace MarioGame.Items
         public void moveY(int y)
         {
             yOffset += y;
+        }
+
+        public void OnCollide()
+        {
+
         }
     }
 }

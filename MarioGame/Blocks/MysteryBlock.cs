@@ -9,6 +9,7 @@ namespace MarioGame.Blocks
         public Vector2 Position { get; set; }
         public bool IsSolid { get; }
         public bool IsBreakable { get; }
+        public bool IsOpened { get; set; }
 
         public const double animInterval = 0.5;
         public const int spriteInterval = 16;
@@ -27,12 +28,22 @@ namespace MarioGame.Blocks
             Position = position;
             Texture = texture;
             DestinationRectangle = new Rectangle((int)position.X, (int)position.Y, dimension, dimension);
+            IsOpened = false;
         }
 
-        public void OnCollide() { }
+        public void OnCollide()
+        {
+            IsOpened = true;
+        }
 
         public virtual void Update(GameTime gameTime)
         {
+            if (IsOpened)
+            {
+                sourceRectangle.X = 80 + spriteInterval * 4;
+                currSprite = 4;// after hit
+                return;
+            }
             timeElapsed = gameTime.TotalGameTime.TotalSeconds;
             if (timeElapsed - timeElapsedSinceUpdate > animInterval)
             {

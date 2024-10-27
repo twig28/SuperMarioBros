@@ -33,9 +33,7 @@ namespace MarioGame
         public void Draw()
         {
             destinationRectangle = new Rectangle(posX, posY, SpriteWidth, SpriteHeight);
-            spriteBatch.Begin();
             spriteBatch.Draw(texture, destinationRectangle, sourceRectangle, Color.White);
-            spriteBatch.End();
         }
 
         public void Update(GameTime gm)
