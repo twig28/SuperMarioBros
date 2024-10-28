@@ -45,12 +45,14 @@ public class MotionPlayer : IPlayer
 
                 timeCounter -= timePerFrame;
             }
+            Position.X += updatedSpeed;
+
             //for running with different status
+            /*
             if (!Game.player_sprite.Big && !Game.player_sprite.Fire)
             {
                 if (Position.X < graphics.PreferredBackBufferWidth - (14 * Scale / 2))//check if reach to the bottom edge
                 {
-                    Position.X += updatedSpeed;
 
                 }
             }
@@ -70,7 +72,7 @@ public class MotionPlayer : IPlayer
 
                 }
             }
-
+            */
 
         }
 

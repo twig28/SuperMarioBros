@@ -171,7 +171,6 @@ namespace MarioGame
                 enemy.Draw();
             }
 
-            _spriteBatch.Begin();
 
             player_sprite.Draw(_spriteBatch, 14, 16,3f, new List<Rectangle>(),0,Color.White);
 

@@ -155,7 +155,7 @@ namespace MarioGame
                         {
                             mario.velocity = 0f;
 
-                            if (mario.Big || mario.Fire)
+                            if (mario.Big || mario.Fire || mario.Star)
                             {
                                 if (block.IsBreakable)
                                 {
@@ -224,14 +224,14 @@ namespace MarioGame
 
                     if (!StandingBlock.Contains(block) && mario_rec.Intersects(block_rec))
                     {
-                        /*FOR STAR
-                        if ((mario.Big || mario.Fire) && block.IsBreakable)
+                        
+                        if (mario.Star && block.IsBreakable)
                         {
                             blocksToRemove.Add(block);
                         }
-                        */
-                        // else
-                        // {
+                        
+                        else
+                         {
                         if (mario_rec.Right >= block_rec.Left && mario_rec.Left < block_rec.Left)
                         {
                             mario.UPlayerPosition.X = block_rec.Left - mario_rec.Width / 2;
@@ -240,7 +240,7 @@ namespace MarioGame
                         {
                             mario.UPlayerPosition.X = block_rec.Right + mario_rec.Width / 2;
                         }
-                        // }
+                         }
 
                     }
 
@@ -323,6 +323,35 @@ namespace MarioGame
                     if (enemy is KoopaShell koopashell)
                     {
                         //nothing for now
+                    }
+                    else if(mario.Star)
+                    {
+                        if (enemy is Piranha)
+                        {
+                            enemy.TriggerDeath(gt, true);
+                        }
+                        else if (enemy is Koopa koopa && koopa.getdeathStartTime <= 0)
+                        {
+                            enemy.TriggerDeath(gt, true);
+                            //spawn new koopa (which includes triggering death)
+                            KoopaShell shell = koopa.SpawnKoopa(gt);
+                            enemyToAdd = shell;
+
+                            //Make mario Jump
+                        }
+                        else if (enemy is KoopaShell shell)
+                        {
+                            shell.Start();
+                        }
+                        //is normal enemy
+                        else
+                        {
+                            enemy.TriggerDeath(gt, true);
+                            //Make mario Jump
+                        }
+
+
+
                     }
                     else if (mario.Big || mario.Fire)
                     {

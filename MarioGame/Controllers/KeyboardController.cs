@@ -64,10 +64,10 @@ public class KeyboardController : IController
                 {
                     if (Game.player_sprite.current == PlayerSprite.SpriteType.Jump || Game.player_sprite.current == PlayerSprite.SpriteType.JumpL)
                     {
-                        if (Game.player_sprite.UPlayerPosition.X < 1280 - (14 * 3f / 2) )
-                        {
+                      //  if (Game.player_sprite.UPlayerPosition.X < 1280 - (14 * 3f / 2) )
+                      //  {
                             Game.player_sprite.UPlayerPosition.X += 5f;
-                        }
+                       // }
 
                     }
                     else
@@ -121,6 +121,7 @@ public class KeyboardController : IController
         }
             if (currentKeyState.IsKeyDown(Keys.X))
             {
+               // Game.player_sprite.Big = true;
                 Game.player_sprite.Star = true;
             }
 

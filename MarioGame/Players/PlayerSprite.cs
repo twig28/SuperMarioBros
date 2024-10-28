@@ -159,7 +159,7 @@ namespace MarioGame
                 width = 18;
                 height = 32;
                 pos_difference = 24;
-                c = Color.Blue;
+                c = Color.SteelBlue;
 
             }
             //check sprint type for draw
@@ -262,7 +262,7 @@ namespace MarioGame
         isFalling = false;
          invincible = false;
         current = PlayerSprite.SpriteType.Static;
-            UPlayerPosition = Game.player_sprite.PlayerPosition;
+            UPlayerPosition = Game.PlayerPosition;
     }
 
     }
