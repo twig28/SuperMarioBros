@@ -85,11 +85,6 @@ namespace MarioGame.Levels
                 }
             }
 
-            for (int i = 0; i <= game.GraphicsDevice.Viewport.Width - 120; i += 60)
-            {
-                blocks.Add(new GroundBlock(new Vector2(i, game.GraphicsDevice.Viewport.Height - 60), groundBlockTexture));
-            }
-
         }
 
         private static List<(string ObjectType, int X, int Y)> LoadEntitiesFromCSV(string filePath)
