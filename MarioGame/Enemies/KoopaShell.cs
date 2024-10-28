@@ -28,6 +28,11 @@ namespace MarioGame
             set => _alive = value;
         }
 
+        public bool getIsMoving()
+        {
+            return isMoving;
+        }
+
         public double getdeathStartTime => -1;  // Not needed for the shell
 
         public Rectangle GetDestinationRectangle() => sprite.GetDestinationRectangle();

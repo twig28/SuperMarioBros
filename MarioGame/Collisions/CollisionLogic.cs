@@ -308,13 +308,21 @@ namespace MarioGame
                         }
                         else if (enemy is KoopaShell shell)
                         {
-                            shell.Start();
+                            if (shell.getIsMoving())
+                            {
+                                mario.current = PlayerSprite.SpriteType.Damaged;
+                            }
+                            else
+                            {
+                                shell.Start();
+                            }
                         }
                         //is normal enemy
                         else
                         {
                             enemy.TriggerDeath(gt, true);
-                            //Make mario Jump
+                            mario.isGrounded = true;
+                            mario.current = PlayerSprite.SpriteType.Jump;
                         }
                     }
                 }
