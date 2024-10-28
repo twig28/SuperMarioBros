@@ -141,7 +141,7 @@ namespace MarioGame
 
 
                             }
-                            if (mario.Big || mario.Fire)
+                            if (mario.Big || mario.Fire || mario.Star)
                             {
                                 mario.UPlayerPosition.Y = block_rec.Top - mario_rec.Height / 2 + 26;
                             }
@@ -154,37 +154,34 @@ namespace MarioGame
                         else if (mario.UPlayerPosition.Y > block_rec.Bottom && !mario.isGrounded && mario.UPlayerPosition.X < block_rec.Right && mario.UPlayerPosition.X > block_rec.Left)
                         {
                             mario.velocity = 0f;
+                            // this is a mystery block
+                            MysteryBlock mystery = block as MysteryBlock;
+                            if (mystery != null && mystery.IsOpened == false)
+                            {
+                                mystery.OnCollide();
+                                // should have a coin factory to create coins
+                                Texture2D coinTexture = Game1.Instance.Content.Load<Texture2D>("smb_items_sheet");
+                                float xOffset = block_rec.Width / 2 - 16;
+                                var coin = new Coin(coinTexture, block.Position - new Vector2(-xOffset, block_rec.Height));
+                                items.Add(coin);
 
+                                coin.Velocity = new Vector2(0f, -3f) * 30f;
+                                coin.GravityScale = 15.0f;
+                                coin.EnableGravity = true;
+                                block.OnCollide(); // should move all collision logic to items
+                            }
                             if (mario.Big || mario.Fire || mario.Star)
                             {
                                 if (block.IsBreakable)
                                 {
                                     blocksToRemove.Add(block);
-                                    mario.UPlayerPosition.Y = block_rec.Bottom + mario_rec.Height / 2 + 24;
                                 }
-                                else
-                                {
+                                
                                     mario.UPlayerPosition.Y = block_rec.Bottom + mario_rec.Height / 2 + 24;
 
-                                    // this is a mystery block
-                                    MysteryBlock mystery = block as MysteryBlock;
-                                    if (mystery != null && mystery.IsOpened == false)
-                                    {
-                                        mystery.OnCollide();
-                                        // should have a coin factory to create coins
-                                        Texture2D coinTexture = Game1.Instance.Content.Load<Texture2D>("smb_items_sheet");
-                                        float xOffset = block_rec.Width / 2 - 16;
-                                        var coin = new Coin(coinTexture, block.Position - new Vector2(-xOffset, block_rec.Height));
-                                        items.Add(coin);
-
-                                        coin.Velocity = new Vector2(0f, -3f) * 30f;
-                                        coin.GravityScale = 15.0f;
-                                        coin.EnableGravity = true;
-                                        block.OnCollide(); // should move all collision logic to items
-                                    }
-                                }
+                                
                             }
-                            else if (!mario.Big && !mario.Fire)
+                            else
                             {
                                 mario.UPlayerPosition.Y = block_rec.Bottom + mario_rec.Height / 2 + 2;
 
@@ -384,15 +381,23 @@ namespace MarioGame
                 if (mario_rec.Intersects(item_rec))
                 {
                     itemRemove = item;
-                    if (item.getName() == "FireFlower")
+
+                    if(item.getName() == "Star")
                     {
-                        mario.Big = false;
-                        mario.Fire = true;
-                        mario.Game.Fire = true;
+                        mario.Star = true;
+                    }
+                   else if (item.getName() == "FireFlower")
+                    {
+                                if (!mario.Star)
+                                {
+                                    mario.Big = false;
+                                    mario.Fire = true;
+                                    mario.Game.Fire = true;
+                                }
                     }
                     else if (item.getName() == "Mushroom")
                     {
-                        if (!mario.Fire)
+                        if (!mario.Fire && !mario.Star)
                         {
                             mario.Big = true;
                         }

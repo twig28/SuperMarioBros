@@ -230,18 +230,10 @@ namespace MarioGame
         public Rectangle GetDestinationRectangle()
         {
             Rectangle rectangle = new Rectangle();
-            if (Fire)
+           
+            if(Fire || Big || Star)
             {
-                
                 rectangle = new Rectangle((int)(UPlayerPosition.X - 27), (int)(UPlayerPosition.Y - 71), 54, 96);
-
-
-            }
-            else if (!Fire && Big)
-            {
-               
-                rectangle = new Rectangle((int)(UPlayerPosition.X - 27), (int)(UPlayerPosition.Y - 71), 54 , 96);
-
             }
             else
             {

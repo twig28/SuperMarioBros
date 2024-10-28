@@ -28,7 +28,6 @@ namespace MarioGame
         private float ballSpeed = 300f;
 
         public bool Fire = false;
-        public bool Star = false;
 
         int currLevel = 1;
 
