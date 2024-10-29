@@ -305,7 +305,7 @@ namespace MarioGame
                         }
                         else if (enemy is KoopaShell shell)
                         {
-                            if (shell.getIsMoving())
+                            if (shell.getIsMoving() && shell.getdeathStartTime > 2)
                             {
                                 mario.current = PlayerSprite.SpriteType.Damaged;
                             }
@@ -317,9 +317,16 @@ namespace MarioGame
                         //is normal enemy
                         else
                         {
-                            enemy.TriggerDeath(gt, true);
-                            mario.isGrounded = true;
-                            mario.current = PlayerSprite.SpriteType.Jump;
+                            if (mario.current == PlayerSprite.SpriteType.Jump && enemy.getdeathStartTime <= 0)
+                            {
+                                enemy.TriggerDeath(gt, true);
+                                mario.isGrounded = true;
+                                mario.current = PlayerSprite.SpriteType.Jump;
+                            }
+                            else
+                            {
+                                enemy.TriggerDeath(gt, true);
+                            }
                         }
                     }
                 }

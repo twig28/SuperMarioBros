@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Reflection.Metadata.Ecma335;
 
 namespace MarioGame
 {
@@ -12,6 +13,7 @@ namespace MarioGame
         private bool isMoving = false;  // Tracks if the shell is in motion
         private bool _DefaultMoveMentDirection = true;
         private bool _alive = true;
+        private double aliveTime = 0;
 
         public int setPosX { set => posX = value; }
         public int setPosY { set => posY = value; }
@@ -33,7 +35,7 @@ namespace MarioGame
             return isMoving;
         }
 
-        public double getdeathStartTime => -1;  // Not needed for the shell
+        public double getdeathStartTime => aliveTime;
 
         public Rectangle GetDestinationRectangle() => sprite.GetDestinationRectangle();
 
@@ -64,6 +66,8 @@ namespace MarioGame
             sprite.posY = posY;
 
             sprite.Update(gameTime);
+
+
         }
 
         public void ChangeDirection()
