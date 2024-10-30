@@ -1,19 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Reflection.Metadata.Ecma335;
 
 namespace MarioGame
 {
     internal class KoopaShell : IEnemy
     {
-        private const double Speed = 9.0;  // 3x the original Koopa speed
+        private const double Speed = 9.0;
+        private const double CooldownDuration = 1.0;
         private KoopaShellSprite sprite;
         private int posX;
         private int posY;
-        private bool isMoving = false;  // Tracks if the shell is in motion
+        private bool isMoving = false;
         private bool _DefaultMoveMentDirection = true;
         private bool _alive = true;
         private double aliveTime = 0;
+        private double creationTime;
 
         public int setPosX { set => posX = value; }
         public int setPosY { set => posY = value; }
@@ -30,10 +31,7 @@ namespace MarioGame
             set => _alive = value;
         }
 
-        public bool getIsMoving()
-        {
-            return isMoving;
-        }
+        public bool getIsMoving() => isMoving;
 
         public double getdeathStartTime => aliveTime;
 
@@ -44,6 +42,7 @@ namespace MarioGame
             posX = x;
             posY = y;
             sprite = new KoopaShellSprite(texture, spriteBatch, posX, posY);
+            creationTime = 0;
         }
 
         public void Draw()
@@ -55,19 +54,14 @@ namespace MarioGame
         {
             if (!Alive) return;
 
-            if (isMoving)
-            {
-                posX += _DefaultMoveMentDirection ? (int)Speed : -(int)Speed;
-            }
+            aliveTime += gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (isMoving) posX += _DefaultMoveMentDirection ? (int)Speed : -(int)Speed;
 
             posY += 5;
-
             sprite.posX = posX;
             sprite.posY = posY;
-
             sprite.Update(gameTime);
-
-
         }
 
         public void ChangeDirection()
@@ -75,14 +69,21 @@ namespace MarioGame
             _DefaultMoveMentDirection = !_DefaultMoveMentDirection;
         }
 
-        public void Start()
+        public void Start(bool direction)
         {
-            isMoving = true;
+            if (aliveTime >= CooldownDuration)
+            {
+                isMoving = true;
+                if (!direction)
+                {
+                    ChangeDirection();
+                }
+            }
         }
 
         public void TriggerDeath(GameTime gameTime, bool stomped)
         {
-            Alive = false;  // Once dead, the shell disappears.
+            Alive = false;
         }
     }
 }

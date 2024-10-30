@@ -311,7 +311,14 @@ namespace MarioGame
                             }
                             else
                             {
-                                shell.Start();
+                                if (mario.current == PlayerSprite.SpriteType.Motion || mario.current == PlayerSprite.SpriteType.Jump)
+                                {
+                                    shell.Start(true);
+                                }
+                                if ((mario.current == PlayerSprite.SpriteType.MotionL || mario.current == PlayerSprite.SpriteType.JumpL))
+                                {
+                                    shell.Start(false);
+                                }
                             }
                         }
                         //is normal enemy
@@ -354,7 +361,14 @@ namespace MarioGame
                         }
                         else if (enemy is KoopaShell shell)
                         {
-                            shell.Start();
+                            if (mario.current == PlayerSprite.SpriteType.Motion || mario.current == PlayerSprite.SpriteType.Jump)
+                            {
+                                shell.Start(true);
+                            }
+                            if ((mario.current == PlayerSprite.SpriteType.MotionL || mario.current == PlayerSprite.SpriteType.JumpL))
+                            {
+                                shell.Start(false);
+                            }
                         }
                         //is normal enemy
                         else

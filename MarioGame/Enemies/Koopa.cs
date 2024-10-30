@@ -89,7 +89,8 @@ namespace MarioGame
             }
         }
 
-        public KoopaShell SpawnKoopa(GameTime gm){
+        public KoopaShell SpawnKoopa(GameTime gm)
+        {
             this.TriggerDeath(gm, true);
             return new KoopaShell(textureForShell, spriteBatchForShell, posX, posY);
         }
