@@ -7,7 +7,7 @@ namespace MarioGame.Blocks
 	public abstract class BaseBlock : IBlock
 	{
 
-		const int dimension = 60;
+		const int dimension = 50;
         public Vector2 Position { get; set; }
         public abstract bool IsSolid { get; }
         public abstract bool IsBreakable { get; }
