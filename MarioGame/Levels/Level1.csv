@@ -19,6 +19,7 @@ Coin,900,300
 Coin,950,300
 Coin,1000,300
 BaseBlock,0,600
+BaseBlock,0,550
 BaseBlock,50,600
 BaseBlock,100,600
 BaseBlock,150,600

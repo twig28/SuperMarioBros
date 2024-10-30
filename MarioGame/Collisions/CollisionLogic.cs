@@ -292,14 +292,8 @@ namespace MarioGame
 
                             mario.velocity = -10f;
                         }
-                        else if (enemy is KoopaShell shell)
+                        else if (enemy is KoopaShell shell && !shell.getIsMoving())
                         {
-                            if (shell.getIsMoving())
-                            {
-                                toDie = true;
-                            }
-                            else
-                            {
                                 if (mario.current == PlayerSprite.SpriteType.Motion || mario.current == PlayerSprite.SpriteType.Jump)
                                 {
                                     shell.Start(true);
@@ -308,7 +302,6 @@ namespace MarioGame
                                 {
                                     shell.Start(false);
                                 }
-                            }
                         }
                         //is normal enemy
                         else
@@ -317,7 +310,7 @@ namespace MarioGame
                             {
                                 mario.velocity = -10f;
                             }
-                            enemy.TriggerDeath(gt, true);
+                            if(enemy is not KoopaShell) enemy.TriggerDeath(gt, true);
                         }
                     }
                 }
@@ -325,21 +318,17 @@ namespace MarioGame
                 {
                     if(mario.Star)
                     {
-                        if (enemy is Piranha)
+                        enemy.TriggerDeath(gt, false);
+                    }
+                    if(enemy is KoopaShell shell && !shell.getIsMoving())
+                    {
+                        if (mario.current == PlayerSprite.SpriteType.Motion || mario.current == PlayerSprite.SpriteType.Jump)
                         {
-                            enemy.TriggerDeath(gt, false);
+                            shell.Start(true);
                         }
-                        else if (enemy is Koopa koopa && koopa.getdeathStartTime <= 0)
+                        if ((mario.current == PlayerSprite.SpriteType.MotionL || mario.current == PlayerSprite.SpriteType.JumpL))
                         {
-                            enemy.TriggerDeath(gt, false);
-                            //spawn new koopa (which includes triggering death)
-                            KoopaShell shell = koopa.SpawnKoopa(gt);
-                            enemyToAdd = shell;
-                        }
-                        //is normal enemy
-                        else
-                        {
-                            enemy.TriggerDeath(gt, false);
+                            shell.Start(false);
                         }
                     }
                     else
@@ -354,17 +343,12 @@ namespace MarioGame
                             mario.Big = false;
                             mario.Fire = false;
                             mario.invincible = true;
-
-
                         }
-                        else if (mario.invincible)
-                        {
-
-                        }
-                        else
+                        else if (!mario.invincible)
                         {
                             mario.current = PlayerSprite.SpriteType.Damaged;
                         }
+                        toDie = false;
                     }
                 }
             }

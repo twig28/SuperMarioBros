@@ -6,7 +6,7 @@ namespace MarioGame
     internal class KoopaShell : IEnemy
     {
         private const double Speed = 9.0;
-        private const double CooldownDuration = 1.0;
+        private const double CooldownDuration = 0.1;
         private KoopaShellSprite sprite;
         private int posX;
         private int posY;
@@ -33,7 +33,7 @@ namespace MarioGame
 
         public bool getIsMoving() => isMoving;
 
-        public double getdeathStartTime => aliveTime;
+        public double getdeathStartTime => -1;
 
         public Rectangle GetDestinationRectangle() => sprite.GetDestinationRectangle();
 
