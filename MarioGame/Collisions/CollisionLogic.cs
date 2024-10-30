@@ -136,9 +136,6 @@ namespace MarioGame
                                 {
                                     mario.current = PlayerSprite.SpriteType.StaticL;
                                 }
-
-
-
                             }
                             if (mario.Big || mario.Fire || mario.Star)
                             {
@@ -200,9 +197,6 @@ namespace MarioGame
                             StandingBlock.Remove(block);
                         }
                     }
-
-
-
                 }
 
                 if (StandingBlock.Count == 0 && mario.isGrounded)
@@ -246,13 +240,7 @@ namespace MarioGame
                 {
                     blocks.Remove(block);
                 }
-
-
             }
-
-
-
-
         }
 
         //function that has a for each between enemies and other enemies
@@ -346,8 +334,6 @@ namespace MarioGame
                             //spawn new koopa (which includes triggering death)
                             KoopaShell shell = koopa.SpawnKoopa(gt);
                             enemyToAdd = shell;
-
-                            //Make mario Jump
                         }
                         //is normal enemy
                         else
@@ -385,12 +371,9 @@ namespace MarioGame
             if (enemyToAdd != null) { enemies.Add(enemyToAdd); }
         }
 
-
-
         public static void CheckMarioItemCollision(PlayerSprite mario, List<IItem> items, GameTime gt)
         {
             IItem itemRemove = null;
-            String a = "FireFlower";
             foreach (IItem item in items)
             {
                 Rectangle mario_rec = mario.GetDestinationRectangle();
@@ -448,8 +431,6 @@ namespace MarioGame
                 fireballs.Remove(fireball);
             }
         }
-
-
 
         public static void CheckFireballEnemyCollision(List<IBall> fireballs, ref List<IEnemy> enemies, GameTime gm, bool stomped)
         {
