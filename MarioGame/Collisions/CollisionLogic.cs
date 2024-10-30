@@ -305,7 +305,7 @@ namespace MarioGame
                         }
                         else if (enemy is KoopaShell shell)
                         {
-                            if (shell.getIsMoving())
+                            if (shell.getIsMoving() && shell.getdeathStartTime > 2)
                             {
                                 mario.current = PlayerSprite.SpriteType.Damaged;
                             }
