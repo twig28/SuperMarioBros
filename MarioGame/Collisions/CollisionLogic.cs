@@ -128,7 +128,6 @@ namespace MarioGame
                                 mario.isGrounded = true;
                                 mario.isJumping = false;
                                 mario.velocity = 0f;
-                                mario.Fallplayer.Speed = 0f;
                                 if (!mario.left)
                                 {
                                     mario.current = PlayerSprite.SpriteType.Static;
