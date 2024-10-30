@@ -166,8 +166,17 @@ namespace MarioGame
 
             foreach (IEnemy enemy in enemies)
             {
-                enemy.Update(gameTime);
-                enemy.Draw();
+                Rectangle enemyRect = enemy.GetDestinationRectangle();
+                float enemyScreenX = enemyRect.X + offset.X;
+                float enemyScreenY = enemyRect.Y + offset.Y;
+
+                // Check if the enemy is within the visible screen boundaries
+                if (enemyScreenX + enemyRect.Width > 0 && enemyScreenX < GraphicsDevice.Viewport.Width &&
+                    enemyScreenY + enemyRect.Height > 0 && enemyScreenY < GraphicsDevice.Viewport.Height)
+                {
+                    enemy.Update(gameTime);
+                    enemy.Draw();
+                }
             }
 
             player_sprite.Draw(_spriteBatch, 14, 16,3f, new List<Rectangle>(),0,Color.White);

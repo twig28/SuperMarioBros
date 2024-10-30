@@ -16,7 +16,7 @@ namespace MarioGame.Blocks
         public int currSprite = 0;
         private double timeElapsed = 0;
         private double timeElapsedSinceUpdate = 0;
-        private const int dimension = 60;
+        private const int dimension = 50;
 
         protected Texture2D Texture { get; set; }
         Rectangle sourceRectangle = new Rectangle(80, 112, 15, 15);

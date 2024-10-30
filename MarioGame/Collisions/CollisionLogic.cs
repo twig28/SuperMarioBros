@@ -137,9 +137,6 @@ namespace MarioGame
                                 {
                                     mario.current = PlayerSprite.SpriteType.StaticL;
                                 }
-
-
-
                             }
                             if (mario.Big || mario.Fire || mario.Star)
                             {
@@ -201,9 +198,6 @@ namespace MarioGame
                             StandingBlock.Remove(block);
                         }
                     }
-
-
-
                 }
 
                 if (StandingBlock.Count == 0 && mario.isGrounded)
@@ -247,13 +241,7 @@ namespace MarioGame
                 {
                     blocks.Remove(block);
                 }
-
-
             }
-
-
-
-
         }
 
         //function that has a for each between enemies and other enemies
@@ -278,6 +266,7 @@ namespace MarioGame
 
         public static void CheckMarioEnemyCollision(PlayerSprite mario, ref List<IEnemy> enemies, GameTime gt)
         {
+            bool toDie = false;
             IEnemy enemyToRemove = null;
             IEnemy enemyToAdd = null;
             foreach (IEnemy enemy in enemies)
@@ -290,7 +279,7 @@ namespace MarioGame
                 {
                     if (enemy is Piranha)
                     {
-                        mario.current = PlayerSprite.SpriteType.Damaged;
+                        toDie = true;
                     }
                     else
                     {
@@ -305,9 +294,9 @@ namespace MarioGame
                         }
                         else if (enemy is KoopaShell shell)
                         {
-                            if (shell.getIsMoving() && shell.getdeathStartTime > 2)
+                            if (shell.getIsMoving())
                             {
-                                mario.current = PlayerSprite.SpriteType.Damaged;
+                                toDie = true;
                             }
                             else
                             {
@@ -329,72 +318,53 @@ namespace MarioGame
                                 mario.velocity = -10f;
                             }
                             enemy.TriggerDeath(gt, true);
-               
-                            
-                           
-                            
-
-
                         }
                     }
                 }
                 else if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None && enemy.getdeathStartTime <= 0)
                 {
-                    if (enemy is KoopaShell koopashell)
-                    {
-                        //nothing for now
-                    }
-                    else if(mario.Star)
+                    if(mario.Star)
                     {
                         if (enemy is Piranha)
                         {
-                            enemy.TriggerDeath(gt, true);
+                            enemy.TriggerDeath(gt, false);
                         }
                         else if (enemy is Koopa koopa && koopa.getdeathStartTime <= 0)
                         {
-                            enemy.TriggerDeath(gt, true);
+                            enemy.TriggerDeath(gt, false);
                             //spawn new koopa (which includes triggering death)
                             KoopaShell shell = koopa.SpawnKoopa(gt);
                             enemyToAdd = shell;
-
-                            //Make mario Jump
-                        }
-                        else if (enemy is KoopaShell shell)
-                        {
-                            if (mario.current == PlayerSprite.SpriteType.Motion || mario.current == PlayerSprite.SpriteType.Jump)
-                            {
-                                shell.Start(true);
-                            }
-                            if ((mario.current == PlayerSprite.SpriteType.MotionL || mario.current == PlayerSprite.SpriteType.JumpL))
-                            {
-                                shell.Start(false);
-                            }
                         }
                         //is normal enemy
                         else
                         {
-                            enemy.TriggerDeath(gt, true);
-                            //Make mario Jump
+                            enemy.TriggerDeath(gt, false);
                         }
-
-
-
-                    }
-                    else if (mario.Big || mario.Fire)
-                    {
-                        mario.Big = false;
-                        mario.Fire = false;
-                        mario.invincible = true;
-
-
-                    }
-                    else if (mario.invincible)
-                    {
-
                     }
                     else
                     {
-                        mario.current = PlayerSprite.SpriteType.Damaged;
+                        toDie = true;
+                    }
+
+                    if (toDie)
+                    {
+                        if (mario.Big || mario.Fire)
+                        {
+                            mario.Big = false;
+                            mario.Fire = false;
+                            mario.invincible = true;
+
+
+                        }
+                        else if (mario.invincible)
+                        {
+
+                        }
+                        else
+                        {
+                            mario.current = PlayerSprite.SpriteType.Damaged;
+                        }
                     }
                 }
             }
@@ -402,12 +372,9 @@ namespace MarioGame
             if (enemyToAdd != null) { enemies.Add(enemyToAdd); }
         }
 
-
-
         public static void CheckMarioItemCollision(PlayerSprite mario, List<IItem> items, GameTime gt)
         {
             IItem itemRemove = null;
-            String a = "FireFlower";
             foreach (IItem item in items)
             {
                 Rectangle mario_rec = mario.GetDestinationRectangle();
@@ -465,8 +432,6 @@ namespace MarioGame
                 fireballs.Remove(fireball);
             }
         }
-
-
 
         public static void CheckFireballEnemyCollision(List<IBall> fireballs, ref List<IEnemy> enemies, GameTime gm, bool stomped)
         {
