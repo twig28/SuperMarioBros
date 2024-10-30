@@ -301,7 +301,7 @@ namespace MarioGame
                             KoopaShell shell = koopa.SpawnKoopa(gt);
                             enemyToAdd = shell;
 
-                            //Make mario Jump
+                            mario.velocity = -10f;
                         }
                         else if (enemy is KoopaShell shell)
                         {
@@ -317,9 +317,17 @@ namespace MarioGame
                         //is normal enemy
                         else
                         {
+                            if (enemy.getdeathStartTime <= 0)
+                            {
+                                mario.velocity = -10f;
+                            }
                             enemy.TriggerDeath(gt, true);
-                            mario.isGrounded = true;
-                            mario.current = PlayerSprite.SpriteType.Jump;
+               
+                            
+                           
+                            
+
+
                         }
                     }
                 }
@@ -362,9 +370,14 @@ namespace MarioGame
                     {
                         mario.Big = false;
                         mario.Fire = false;
+                        mario.invincible = true;
+
 
                     }
+                    else if (mario.invincible)
+                    {
 
+                    }
                     else
                     {
                         mario.current = PlayerSprite.SpriteType.Damaged;

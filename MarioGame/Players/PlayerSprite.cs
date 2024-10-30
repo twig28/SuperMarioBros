@@ -32,6 +32,7 @@ namespace MarioGame
         public bool isFalling= false;
         public bool invincible = false;
         public bool Star = false;
+        private int time = -1;
     
 
         public Texture2D marioTexture { get; set; }
@@ -94,6 +95,27 @@ namespace MarioGame
         {
             // update based on current sprite type
             //below for checking current state of mario
+            if(Star || invincible)
+            {
+                if(time == -1 && Star)
+                {
+                    time = 1000;
+                }
+                else if (time == -1 && invincible)
+                {
+                    time = 100;
+                }
+                else if(time == 0)
+                {
+                    Star = false;
+                    invincible = false;
+                    time = -1;
+                }
+                else
+                {
+                    time--;
+                }
+            }
             if (current == SpriteType.Motion)
             {
                 MRplayer.Position = UPlayerPosition; //U means upated
@@ -177,6 +199,14 @@ namespace MarioGame
                 height = 32;
                 pos_difference = 24;
                 c=Color.White;
+            }
+            else if (invincible)
+            {
+                width = 14;
+                height = 16;
+                pos_difference = 0;
+                c = Color.SteelBlue;
+
             }
             else
             {
