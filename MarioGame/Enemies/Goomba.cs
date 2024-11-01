@@ -15,7 +15,7 @@ internal class Goomba : IEnemy
     private double deathStartTime = 0; 
     private const double DeathDuration = 2.0; 
 
-    private bool _DefaultMoveMentDirection = true;
+    private bool _DefaultMoveMentDirection = false;
 
     public int setPosX { set { posX = value; } }
     public int setPosY { set { posY = value; } }

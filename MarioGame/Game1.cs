@@ -61,7 +61,7 @@ namespace MarioGame
             IsMouseVisible = true;
 
             _graphics.PreferredBackBufferWidth = 1280;
-            _graphics.PreferredBackBufferHeight = 720;
+            _graphics.PreferredBackBufferHeight = 750;
 
             _graphics.ApplyChanges();
 
