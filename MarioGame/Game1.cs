@@ -8,6 +8,7 @@ using MarioGame.Blocks;
 using System.Collections.Generic;
 using MarioGame.Levels;
 using System.Net.Http.Headers;
+using MarioGame.Sprites;
 
 
 namespace MarioGame
@@ -193,6 +194,11 @@ namespace MarioGame
 
             Ball.DrawAll(_spriteBatch);
             //DrawCollisionRectangles(_spriteBatch);
+
+            if (player_sprite.current == PlayerSprite.SpriteType.Damaged)
+            {
+                GameOver.Draw(this, _spriteBatch);
+            }
 
             _spriteBatch.End();
 

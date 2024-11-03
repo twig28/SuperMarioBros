@@ -164,3 +164,10 @@
 /processorParam:TextureFormat=Color
 /build:Resource/standing.png
 
+#begin Resource/text.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Resource/text.spritefont
+

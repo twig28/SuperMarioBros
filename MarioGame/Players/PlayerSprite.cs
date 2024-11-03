@@ -6,6 +6,7 @@ using MarioGame.Interfaces;
 using MarioGame.Items;
 using MarioGame.Blocks;
 using System.Collections.Generic;
+using MarioGame.Sprites;
 namespace MarioGame
 {
    
@@ -145,7 +146,6 @@ namespace MarioGame
                 Damagedplayer.Position = UPlayerPosition;
                 Damagedplayer.Update(gameTime);
                 UPlayerPosition = Damagedplayer.Position;
-
             }
             else if (current == SpriteType.Falling)
             {
