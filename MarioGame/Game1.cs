@@ -19,7 +19,6 @@ namespace MarioGame
         private GraphicsDeviceManager _graphics;
         public SpriteBatch _spriteBatch;
 
-       
         public PlayerSprite player_sprite;
         Vector2 offset;
 
@@ -34,10 +33,6 @@ namespace MarioGame
         private List<IEnemy> enemies;
         private List<IBlock> blocks;
         private List<IItem> items;
-
-        // Block textures
-        private Texture2D groundBlockTexture;
-        private Texture2D blockTexture;
 
         public static Game1 Instance { get; private set; }
 
@@ -93,7 +88,6 @@ namespace MarioGame
             // Load fireball textures through the Ball class
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
 
-            //Initialize Player
             Texture2D marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
             player_sprite = new PlayerSprite(marioTexture, new Vector2(100, 500), 100f, _graphics, this);
             player_sprite.intialize_player();
@@ -133,18 +127,6 @@ namespace MarioGame
 
             base.Update(gameTime);
         }
-
-        //For Sprint 3 Debug Only
-        private void DrawCollisionRectangles(SpriteBatch spriteBatch)
-        {
-            Texture2D rectTexture = new Texture2D(GraphicsDevice, 1, 1);
-            rectTexture.SetData(new[] { Color.White });
-
-            // Draw Mario's collision rectangle
-            Rectangle marioRect = player_sprite.GetDestinationRectangle();
-            spriteBatch.Draw(rectTexture, marioRect, Color.Red * 0.5f);
-        }
-
 
         protected override void Draw(GameTime gameTime)
         {
@@ -194,7 +176,6 @@ namespace MarioGame
             }
 
             Ball.DrawAll(_spriteBatch);
-            //DrawCollisionRectangles(_spriteBatch);
 
             if (player_sprite.current == PlayerSprite.SpriteType.Damaged)
             {
