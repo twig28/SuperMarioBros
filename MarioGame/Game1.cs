@@ -170,6 +170,11 @@ namespace MarioGame
                 item.Draw(_spriteBatch);
             }
 
+            foreach (IScenery scene in scenery)
+            {
+                scene.Draw(_spriteBatch);
+            }
+
             Ball.DrawAll(_spriteBatch);
 
             if (player_sprite.current == PlayerSprite.SpriteType.Damaged)

@@ -18,6 +18,7 @@ namespace MarioGame.Scenery
         {
             sourceRectangle = new Rectangle(0, 0, 600, 300);
             destinationRectangle = new Rectangle(x, y, 600, 300);
+            this.texture = texture;
         }
         public virtual void Draw(SpriteBatch spriteBatch)
         {

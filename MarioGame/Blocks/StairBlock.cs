@@ -9,7 +9,7 @@ namespace MarioGame.Blocks
         public override bool IsBreakable => false;
 
         public StairBlock(Vector2 position, Texture2D texture)
-            : base(position, texture, new Rectangle(0, 0, 50, 50))
+            : base(position, texture, new Rectangle(0, 0, 160, 155))
         {
         }
 

@@ -29,6 +29,7 @@ namespace MarioGame.Levels
             Texture2D multipleBlockTextures = game.Content.Load<Texture2D>("blocks");
             Texture2D sceneryTextures = game.Content.Load<Texture2D>("smb1_scenery_sprites");
             Texture2D signTexture = game.Content.Load<Texture2D>("Super_Mario_Bros._NES_Logo");
+            Texture2D stairBlockTexture = game.Content.Load<Texture2D>("Hard_Block_SMB");
             List <(string ObjectType, int X, int Y)> entities;
 
 
@@ -60,6 +61,9 @@ namespace MarioGame.Levels
                         break;
                     case "BrickBlock":
                         blocks.Add(new Block(position, blockTexture));
+                        break;
+                    case "StairBlock":
+                        blocks.Add(new StairBlock(position, stairBlockTexture));
                         break;
                     case "Pipe":
                         blocks.Add(new MediumPipe(position, sceneryTextures));
