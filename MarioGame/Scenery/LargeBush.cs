@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace MarioGame.Scenery
 {
-    internal class LargeHill : IScenery
+    internal class LargeBush : IScenery
     {
         private Texture2D texture;
         private Rectangle destinationRectangle;
         private Rectangle sourceRectangle;
 
-        public LargeHill(Texture2D texture, int x, int y)
+        public LargeBush(Texture2D texture, int x, int y)
         {
-            sourceRectangle = new Rectangle(85, 4, 82, 36);
-            destinationRectangle = new Rectangle(x, y, 300, 140);
+            sourceRectangle = new Rectangle(220, 21, 65, 20);
+            destinationRectangle = new Rectangle(x, y, 180, 70);
             this.texture = texture;
         }
         public virtual void Draw(SpriteBatch spriteBatch)

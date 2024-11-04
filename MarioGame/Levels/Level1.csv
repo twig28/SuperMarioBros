@@ -1,6 +1,9 @@
 ObjectType,XPosition,YPosition
 Sign,30,70
 LargeHill,0,460
+SmallHill,800,530
+SmallBush,1100,540
+LargeBush,610,535
 MysteryBlock,800,400
 SmallCloud,900,30
 BrickBlock,950,400
@@ -9,6 +12,7 @@ BrickBlock,1050,400
 MysteryBlock,1050,200
 MysteryBlock,1100,400
 BrickBlock,1150,400
+LargeCloud,1300,150
 Pipe, 1300, 500
 Pipe, 1700, 400
 Goomba,2000,500

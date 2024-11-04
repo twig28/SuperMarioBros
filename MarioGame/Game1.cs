@@ -154,13 +154,17 @@ namespace MarioGame
                     enemyScreenY + enemyRect.Height > 0 && enemyScreenY < GraphicsDevice.Viewport.Height)
                 {
                     enemy.Update(gameTime);
-                    enemy.Draw();
                 }
             }
 
             foreach (IScenery scene in scenery)
             {
                 scene.Draw(_spriteBatch);
+            }
+
+            foreach (IEnemy enemy in enemies)
+            {
+                enemy.Draw();
             }
 
             player_sprite.Draw(_spriteBatch, 14, 16,3f, new List<Rectangle>(),0,Color.White);
