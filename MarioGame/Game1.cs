@@ -88,8 +88,7 @@ namespace MarioGame
             // Load fireball textures through the Ball class
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
 
-            Texture2D marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
-            player_sprite = new PlayerSprite(marioTexture, new Vector2(100, 500), 100f, _graphics, this);
+            player_sprite = new PlayerSprite(Content.Load<Texture2D>("smb_mario_sheet"), new Vector2(100, 500), 100f, _graphics, this);
             player_sprite.intialize_player();
             font = Content.Load<SpriteFont>("text");
         }
@@ -105,6 +104,11 @@ namespace MarioGame
             CollisionLogic.CheckMarioEnemyCollision(player_sprite, ref enemies, gameTime);
             CollisionLogic.CheckMarioItemCollision(player_sprite, items, gameTime);
             CollisionLogic.CheckItemBlockCollision(blocks, items);
+
+            if (MarioPositionChecks.checkDeathByFalling(player_sprite.GetDestinationRectangle(), GraphicsDevice.Viewport.Height)) player_sprite.current = PlayerSprite.SpriteType.Damaged;
+            if (MarioPositionChecks.isLevelFinished(player_sprite.GetDestinationRectangle(), currLevel)) ChangeCurrLevel(currLevel + 1);
+
+
             blocks.RemoveAll(block => block is Block b && b.IsDestroyed);
 
             player_sprite.Update(gameTime);
@@ -132,21 +136,12 @@ namespace MarioGame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            //calculate offset for camera
-            float cameraOffsetThreshold = 650;
-            Rectangle marioRect = player_sprite.GetDestinationRectangle();
-            float marioPositionX = marioRect.X + marioRect.Width / 2;
-            float screenCenterX = GraphicsDevice.Viewport.Width / 2;
-
-            if(marioPositionX > cameraOffsetThreshold)
-            {
-                offset = new Vector2(screenCenterX - marioPositionX, 0);
-            }
+            offset = MarioPositionChecks.GetCameraOffset(player_sprite.GetDestinationRectangle(), GraphicsDevice.Viewport.Width);
             Matrix transform = Matrix.CreateTranslation(new Vector3(offset, 0));
+             _spriteBatch.Begin(transformMatrix: transform);
 
-            _spriteBatch.Begin(transformMatrix: transform);
             //draw string for record score of mario
-            _spriteBatch.DrawString(font,"Score: " + player_sprite.score, new Vector2(marioRect.X,0), Color.White);
+            _spriteBatch.DrawString(font,"Score: " + player_sprite.score, new Vector2(player_sprite.GetDestinationRectangle().X,0), Color.White);
             //Score.Draw(this, _spriteBatch,100);
             foreach (IEnemy enemy in enemies)
             {
