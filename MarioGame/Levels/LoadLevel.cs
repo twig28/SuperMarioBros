@@ -26,7 +26,8 @@ namespace MarioGame.Levels
             Texture2D blockTexture = game.Content.Load<Texture2D>("InitialBrickBlock");
             Texture2D multipleBlockTextures = game.Content.Load<Texture2D>("blocks");
             Texture2D sceneryTextures = game.Content.Load<Texture2D>("smb1_scenery_sprites");
-            List<(string ObjectType, int X, int Y)> entities;
+            Texture2D signTexture = game.Content.Load<Texture2D>("Super_Mario_Bros._NES_Logo");
+            List <(string ObjectType, int X, int Y)> entities;
 
 
             if (level == 1)
