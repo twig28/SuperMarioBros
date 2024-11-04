@@ -388,6 +388,10 @@ namespace MarioGame
                             mario.Big = true;
                         }
                     }
+                    else if (item.getName() == "Coin")
+                    {
+                        mario.score += 1;
+                    }
                 }
             }
             items.Remove(itemRemove);

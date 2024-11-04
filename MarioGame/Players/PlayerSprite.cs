@@ -34,6 +34,7 @@ namespace MarioGame
         public bool invincible = false;
         public bool Star = false;
         private int time = -1;
+        public int score = 0;
     
 
         public Texture2D marioTexture { get; set; }
@@ -202,7 +203,7 @@ namespace MarioGame
             }
             else if (invincible)
             {
-                width = 14;
+                width = 16;
                 height = 16;
                 pos_difference = 0;
                 c = Color.SteelBlue;
@@ -210,7 +211,7 @@ namespace MarioGame
             }
             else
             {
-                width = 14;
+                width = 16;
                 height = 16;
                 pos_difference = 0;
                 c= Color.White;
@@ -284,8 +285,8 @@ namespace MarioGame
         isFalling = false;
          invincible = false;
         current = PlayerSprite.SpriteType.Static;
-            UPlayerPosition = Game.PlayerPosition;
-    }
+         UPlayerPosition = new Vector2(100, 500);
+        }
 
     }
 }

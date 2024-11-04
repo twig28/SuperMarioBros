@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using MarioGame.Levels;
 using System.Net.Http.Headers;
 using MarioGame.Sprites;
+using MarioGame.Score;
 
 
 namespace MarioGame
@@ -18,9 +19,7 @@ namespace MarioGame
         private GraphicsDeviceManager _graphics;
         public SpriteBatch _spriteBatch;
 
-        public Vector2 PlayerPosition;
-        public Vector2 UPlayerPosition;
-        float PlayerSpeed;
+       
         public PlayerSprite player_sprite;
         Vector2 offset;
 
@@ -55,6 +54,8 @@ namespace MarioGame
             ResetGame();
         }
 
+        SpriteFont font;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -74,9 +75,6 @@ namespace MarioGame
             keyControl = new KeyboardController(this);
             mouseControl = new MouseController(this);
 
-            // Initialize player's position
-            PlayerSpeed = 100f;
-            PlayerPosition = new Vector2(100, 500);
             base.Initialize();
         }
 
@@ -97,8 +95,9 @@ namespace MarioGame
 
             //Initialize Player
             Texture2D marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
-            player_sprite = new PlayerSprite(marioTexture, PlayerPosition, PlayerSpeed, _graphics, this);
+            player_sprite = new PlayerSprite(marioTexture, new Vector2(100, 500), 100f, _graphics, this);
             player_sprite.intialize_player();
+            font = Content.Load<SpriteFont>("text");
         }
 
         protected override void Update(GameTime gameTime)
@@ -164,7 +163,9 @@ namespace MarioGame
             Matrix transform = Matrix.CreateTranslation(new Vector3(offset, 0));
 
             _spriteBatch.Begin(transformMatrix: transform);
-
+            //draw string for record score of mario
+            _spriteBatch.DrawString(font,"Score: " + player_sprite.score, new Vector2(screenCenterX,0), Color.White);
+            //Score.Draw(this, _spriteBatch,100);
             foreach (IEnemy enemy in enemies)
             {
                 Rectangle enemyRect = enemy.GetDestinationRectangle();
