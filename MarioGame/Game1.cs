@@ -164,7 +164,7 @@ namespace MarioGame
 
             _spriteBatch.Begin(transformMatrix: transform);
             //draw string for record score of mario
-            _spriteBatch.DrawString(font,"Score: " + player_sprite.score, new Vector2(screenCenterX,0), Color.White);
+            _spriteBatch.DrawString(font,"Score: " + player_sprite.score, new Vector2(marioRect.X,0), Color.White);
             //Score.Draw(this, _spriteBatch,100);
             foreach (IEnemy enemy in enemies)
             {
