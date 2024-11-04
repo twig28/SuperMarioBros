@@ -16,7 +16,7 @@ namespace MarioGame.Scenery
 
         public SuperMarioSign(Texture2D texture, int x, int y)
         {
-            sourceRectangle = new Rectangle(0, 0, 600, 300);
+            sourceRectangle = new Rectangle(0, 362, 1200, 480);
             destinationRectangle = new Rectangle(x, y, 600, 300);
             this.texture = texture;
         }

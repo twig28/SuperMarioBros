@@ -158,6 +158,11 @@ namespace MarioGame
                 }
             }
 
+            foreach (IScenery scene in scenery)
+            {
+                scene.Draw(_spriteBatch);
+            }
+
             player_sprite.Draw(_spriteBatch, 14, 16,3f, new List<Rectangle>(),0,Color.White);
 
             foreach (var block in blocks)
@@ -168,11 +173,6 @@ namespace MarioGame
             foreach (IItem item in items)
             {
                 item.Draw(_spriteBatch);
-            }
-
-            foreach (IScenery scene in scenery)
-            {
-                scene.Draw(_spriteBatch);
             }
 
             Ball.DrawAll(_spriteBatch);
