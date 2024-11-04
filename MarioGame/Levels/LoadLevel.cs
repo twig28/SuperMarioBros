@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using MarioGame.Blocks;
 using System.IO;
 using System;
+using MarioGame.Scenery;
 
 namespace MarioGame.Levels
 {
@@ -16,6 +17,7 @@ namespace MarioGame.Levels
             List<IBlock> blocks,
             List<IEnemy> enemies,
             List<IItem> items,
+            List<IScenery> scenery,
             int level)
         {
             // Load resources
@@ -82,6 +84,9 @@ namespace MarioGame.Levels
                         break;
                     case "Star":
                         items.Add(new Star(itemTextures, position));
+                        break;
+                    case "Sign":
+                        scenery.Add(new SuperMarioSign(signTexture, entity.X, entity.Y));
                         break;
                 }
             }

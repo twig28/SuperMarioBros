@@ -1,4 +1,5 @@
 ObjectType,XPosition,YPosition
+Sign,50,50
 MysteryBlock,800,400
 BrickBlock,950,400
 MysteryBlock,1000,400

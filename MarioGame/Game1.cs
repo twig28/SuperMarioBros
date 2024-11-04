@@ -34,6 +34,7 @@ namespace MarioGame
         private List<IEnemy> enemies;
         private List<IBlock> blocks;
         private List<IItem> items;
+        private List<IScenery> scenery;
 
         public static Game1 Instance { get; private set; }
 
@@ -84,8 +85,9 @@ namespace MarioGame
             enemies = new List<IEnemy>();
             blocks = new List<IBlock>();
             items = new List<IItem>();
+            scenery = new List<IScenery>();
 
-            LoadLevels.LoadLevel(this, blocks, enemies, items, currLevel);
+            LoadLevels.LoadLevel(this, blocks, enemies, items, scenery, currLevel);
 
             // Load fireball textures through the Ball class
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));

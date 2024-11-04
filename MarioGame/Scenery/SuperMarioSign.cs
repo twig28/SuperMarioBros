@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MarioGame.Scenery
 {
-    internal class SuperMarioSign
+    internal class SuperMarioSign : IScenery
     {
         private Texture2D texture;
         private Rectangle destinationRectangle;
