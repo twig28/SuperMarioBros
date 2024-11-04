@@ -25,12 +25,24 @@
 /processorParam:TextureFormat=Color
 /build:Resource/blocks.png
 
+#begin Resource/coin.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Resource/coin.wav
+
 #begin Resource/File.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Resource/File.spritefont
+
+#begin Resource/fireball.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Resource/fireball.wav
 
 #begin Resource/fireballLeft.png
 /importer:TextureImporter
@@ -79,6 +91,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Resource/InitialBrickBlock.png
+
+#begin Resource/jump.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Resource/jump.wav
 
 #begin Resource/marioStatic.png
 /importer:TextureImporter

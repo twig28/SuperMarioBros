@@ -28,20 +28,27 @@ namespace MarioGame
         }
 
         // Handle fireball creation based on input flags from the controller
-        public static void CreateFireballs(Vector2 playerPosition, float ballSpeed, Controllers.KeyboardController controller)
-        {
-            if (controller.keyboardPermitZ) // Fire to the left
-            {
-                balls.Add(new Ball(playerPosition, ballSpeed, true));
-                controller.keyboardPermitZ = false; // Reset the flag
-            }
+      public static void CreateFireballs(Vector2 playerPosition, float ballSpeed, Controllers.KeyboardController controller)
+{
+    if (controller.keyboardPermitZ) // Fire to the left
+    {
+        balls.Add(new Ball(playerPosition, ballSpeed, true));
+        controller.keyboardPermitZ = false; // Reset the flag
 
-            if (controller.keyboardPermitN) // Fire to the right
-            {
-                balls.Add(new Ball(playerPosition, ballSpeed, false));
-                controller.keyboardPermitN = false; // Reset the flag
-            }
-        }
+        // 播放火球音效
+        Game1.Instance.GetSoundLib().PlaySound("fireball");
+    }
+
+    if (controller.keyboardPermitN) // Fire to the right
+    {
+        balls.Add(new Ball(playerPosition, ballSpeed, false));
+        controller.keyboardPermitN = false; // Reset the flag
+
+        // 播放火球音效
+        Game1.Instance.GetSoundLib().PlaySound("fireball");
+    }
+}
+
 
         // Update all balls
         public static void UpdateAll(GameTime gameTime, int screenWidth)

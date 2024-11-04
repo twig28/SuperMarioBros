@@ -39,7 +39,7 @@ namespace MarioGame
         // Block textures
         private Texture2D groundBlockTexture;
         private Texture2D blockTexture;
-
+        private SoundLib soundLib;
         public static Game1 Instance { get; private set; }
 
         public void ResetGame()
@@ -65,7 +65,7 @@ namespace MarioGame
             _graphics.PreferredBackBufferHeight = 750;
 
             _graphics.ApplyChanges();
-
+            soundLib = new SoundLib(); 
             Instance = this;
         }
 
@@ -83,7 +83,7 @@ namespace MarioGame
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            
             Texture2D itemTextures = Content.Load<Texture2D>("smb_items_sheet");
 
             enemies = new List<IEnemy>();
@@ -97,6 +97,7 @@ namespace MarioGame
 
             //Initialize Player
             Texture2D marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
+            soundLib.LoadContent(Content);
             player_sprite = new PlayerSprite(marioTexture, PlayerPosition, PlayerSpeed, _graphics, this);
             player_sprite.intialize_player();
         }
@@ -146,7 +147,10 @@ namespace MarioGame
             spriteBatch.Draw(rectTexture, marioRect, Color.Red * 0.5f);
         }
 
-
+         public SoundLib GetSoundLib()
+        {
+            return soundLib;
+        }
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
