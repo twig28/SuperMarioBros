@@ -12,8 +12,8 @@ Goomba,2000,500
 Pipe, 2100, 370
 Goomba,1200,500
 Pipe, 2600, 370
-Goomba,1200,500
-Goomba,1200,500
+Goomba,2400,500
+Goomba,2500,500
 BaseBlock,0,700
 BaseBlock,0,650
 BaseBlock,0,600
@@ -200,12 +200,6 @@ BaseBlock,3000,600
 BaseBlock,3050,700
 BaseBlock,3050,650
 BaseBlock,3050,600
-BaseBlock,3100,700
-BaseBlock,3100,650
-BaseBlock,3100,600
-BaseBlock,3150,700
-BaseBlock,3150,650
-BaseBlock,3150,600
 BaseBlock,3200,700
 BaseBlock,3200,650
 BaseBlock,3200,600
