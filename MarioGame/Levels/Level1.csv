@@ -6,6 +6,13 @@ BrickBlock,1050,400
 MysteryBlock,1050,200
 MysteryBlock,1100,400
 BrickBlock,1150,400
+Pipe, 1300, 500
+Pipe, 1700, 400
+Goomba,2000,500
+Pipe, 2100, 370
+Goomba,1200,500
+Pipe, 2600, 370
+Goomba,1200,500
 Goomba,1200,500
 BaseBlock,0,700
 BaseBlock,0,650

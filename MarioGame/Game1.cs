@@ -18,6 +18,7 @@ namespace MarioGame
     {
         private GraphicsDeviceManager _graphics;
         public SpriteBatch _spriteBatch;
+        public SpriteBatch spriteBatchText;
 
         public PlayerSprite player_sprite;
         Vector2 offset;
@@ -76,6 +77,7 @@ namespace MarioGame
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            spriteBatchText = new SpriteBatch(GraphicsDevice);
 
             Texture2D itemTextures = Content.Load<Texture2D>("smb_items_sheet");
 
@@ -138,11 +140,7 @@ namespace MarioGame
 
             offset = MarioPositionChecks.GetCameraOffset(player_sprite.GetDestinationRectangle(), GraphicsDevice.Viewport.Width);
             Matrix transform = Matrix.CreateTranslation(new Vector3(offset, 0));
-             _spriteBatch.Begin(transformMatrix: transform);
-
-            //draw string for record score of mario
-            _spriteBatch.DrawString(font,"Score: " + player_sprite.score, new Vector2(player_sprite.GetDestinationRectangle().X,0), Color.White);
-            //Score.Draw(this, _spriteBatch,100);
+            _spriteBatch.Begin(transformMatrix: transform);
             foreach (IEnemy enemy in enemies)
             {
                 Rectangle enemyRect = enemy.GetDestinationRectangle();
@@ -178,6 +176,14 @@ namespace MarioGame
             }
 
             _spriteBatch.End();
+
+            spriteBatchText.Begin();
+
+            //draw string for record score of mario
+            spriteBatchText.DrawString(font, "Coins: " + player_sprite.score, new Vector2(40, 0), Color.White);
+            //Score.Draw(this, _spriteBatch,100);
+
+            spriteBatchText.End();
 
             base.Draw(gameTime);
         }
