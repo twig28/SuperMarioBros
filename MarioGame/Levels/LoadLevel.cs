@@ -92,6 +92,24 @@ namespace MarioGame.Levels
                     case "Sign":
                         scenery.Add(new SuperMarioSign(signTexture, entity.X, entity.Y));
                         break;
+                    case "LargeHill":
+                        scenery.Add(new LargeHill(sceneryTextures, entity.X, entity.Y));
+                        break;
+                    case "SmallHill":
+                        //scenery.Add(new SuperMarioSign(signTexture, entity.X, entity.Y));
+                        break;
+                    case "SmallBush":
+                        //scenery.Add(new SuperMarioSign(signTexture, entity.X, entity.Y));
+                        break;
+                    case "SmallCloud":
+                        scenery.Add(new SmallCloud(sceneryTextures, entity.X, entity.Y));
+                        break;
+                    case "LargeCloud":
+                        //scenery.Add(new SuperMarioSign(signTexture, entity.X, entity.Y));
+                        break;
+                    case "Castle":
+                        //scenery.Add(new SuperMarioSign(signTexture, entity.X, entity.Y));
+                        break;
                 }
             }
 
