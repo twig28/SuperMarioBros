@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using MarioGame.Blocks;
 using System.IO;
 using System;
+using MarioGame.Scenery;
 
 namespace MarioGame.Levels
 {
@@ -16,6 +17,7 @@ namespace MarioGame.Levels
             List<IBlock> blocks,
             List<IEnemy> enemies,
             List<IItem> items,
+            List<IScenery> scenery,
             int level)
         {
             // Load resources
@@ -26,7 +28,9 @@ namespace MarioGame.Levels
             Texture2D blockTexture = game.Content.Load<Texture2D>("InitialBrickBlock");
             Texture2D multipleBlockTextures = game.Content.Load<Texture2D>("blocks");
             Texture2D sceneryTextures = game.Content.Load<Texture2D>("smb1_scenery_sprites");
-            List<(string ObjectType, int X, int Y)> entities;
+            Texture2D signTexture = game.Content.Load<Texture2D>("Super_Mario_Bros._NES_Logo");
+            Texture2D stairBlockTexture = game.Content.Load<Texture2D>("Hard_Block_SMB");
+            List <(string ObjectType, int X, int Y)> entities;
 
 
             if (level == 1)
@@ -58,6 +62,9 @@ namespace MarioGame.Levels
                     case "BrickBlock":
                         blocks.Add(new Block(position, blockTexture));
                         break;
+                    case "StairBlock":
+                        blocks.Add(new StairBlock(position, stairBlockTexture));
+                        break;
                     case "Pipe":
                         blocks.Add(new MediumPipe(position, sceneryTextures));
                         break;
@@ -81,6 +88,30 @@ namespace MarioGame.Levels
                         break;
                     case "Star":
                         items.Add(new Star(itemTextures, position));
+                        break;
+                    case "Sign":
+                        scenery.Add(new SuperMarioSign(signTexture, entity.X, entity.Y));
+                        break;
+                    case "LargeHill":
+                        scenery.Add(new LargeHill(sceneryTextures, entity.X, entity.Y));
+                        break;
+                    case "SmallHill":
+                        scenery.Add(new SmallHill(sceneryTextures, entity.X, entity.Y));
+                        break;
+                    case "SmallBush":
+                        scenery.Add(new SmallBush(sceneryTextures, entity.X, entity.Y));
+                        break;
+                    case "LargeBush":
+                        scenery.Add(new LargeBush(sceneryTextures, entity.X, entity.Y));
+                        break;
+                    case "SmallCloud":
+                        scenery.Add(new SmallCloud(sceneryTextures, entity.X, entity.Y));
+                        break;
+                    case "LargeCloud":
+                        scenery.Add(new LargeCloud(sceneryTextures, entity.X, entity.Y));
+                        break;
+                    case "Castle":
+                        //scenery.Add(new Castle(signTexture, entity.X, entity.Y));
                         break;
                 }
             }

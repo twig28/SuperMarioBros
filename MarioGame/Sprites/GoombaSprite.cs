@@ -4,8 +4,8 @@ using Microsoft.Xna.Framework;
 
 internal class GoombaSprite : ISprite
 {
-    private const int SpriteWidth = 60;
-    private const int SpriteHeight = 80;
+    private const int SpriteWidth = 50;
+    private const int SpriteHeight = 65;
     private int SourceX = 0;
     private int SourceY = 4;
     private const int SourceWidth = 16;

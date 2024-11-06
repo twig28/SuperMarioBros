@@ -34,6 +34,7 @@ namespace MarioGame
         private List<IEnemy> enemies;
         private List<IBlock> blocks;
         private List<IItem> items;
+        private List<IScenery> scenery;
 
         // Block textures
         private Texture2D groundBlockTexture;
@@ -88,8 +89,9 @@ namespace MarioGame
             enemies = new List<IEnemy>();
             blocks = new List<IBlock>();
             items = new List<IItem>();
+            scenery = new List<IScenery>();
 
-            LoadLevels.LoadLevel(this, blocks, enemies, items, currLevel);
+            LoadLevels.LoadLevel(this, blocks, enemies, items, scenery, currLevel);
 
             // Load fireball textures through the Ball class
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
@@ -173,8 +175,17 @@ namespace MarioGame
                     enemyScreenY + enemyRect.Height > 0 && enemyScreenY < GraphicsDevice.Viewport.Height)
                 {
                     enemy.Update(gameTime);
-                    enemy.Draw();
                 }
+            }
+
+            foreach (IScenery scene in scenery)
+            {
+                scene.Draw(_spriteBatch);
+            }
+
+            foreach (IEnemy enemy in enemies)
+            {
+                enemy.Draw();
             }
 
             player_sprite.Draw(_spriteBatch, 14, 16,3f, new List<Rectangle>(),0,Color.White);
