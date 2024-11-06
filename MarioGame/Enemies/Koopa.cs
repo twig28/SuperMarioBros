@@ -14,8 +14,7 @@ namespace MarioGame
         private double timeElapsed = 0;
         private double timeElapsedSinceUpdate = 0;
         private double deathStartTime = 0;
-        Texture2D textureForShell;
-        SpriteBatch spriteBatchForShell;
+        private KoopaShell KoopaShell;
 
         private bool _alive = true;
         private bool isShell = false;
@@ -47,8 +46,7 @@ namespace MarioGame
             posX = X;
             posY = Y;
             sprite = new KoopaSprite(Texture, SpriteBatch, posX, posY);
-            textureForShell = Texture;
-            spriteBatchForShell = SpriteBatch;
+            KoopaShell = new KoopaShell(Texture, SpriteBatch, posX, posY);
         }
 
         public void Draw()
@@ -92,7 +90,9 @@ namespace MarioGame
         public KoopaShell SpawnKoopa(GameTime gm)
         {
             this.TriggerDeath(gm, true);
-            return new KoopaShell(textureForShell, spriteBatchForShell, posX, posY);
+            KoopaShell.setPosX = posX;
+            KoopaShell.setPosY = posY;
+            return KoopaShell;
         }
 
         public void TriggerDeath(GameTime gm, bool stomped)

@@ -5,20 +5,22 @@ SmallHill,800,530
 SmallBush,1100,540
 LargeBush,610,535
 MysteryBlock,800,400
-SmallCloud,900,30
 BrickBlock,950,400
 MysteryBlock,1000,400
 BrickBlock,1050,400
 MysteryBlock,1050,200
 MysteryBlock,1100,400
 BrickBlock,1150,400
+SmallCloud,900,30
 LargeCloud,1300,150
+LargeCloud,2100,150
+Koopa,200,300
 Pipe, 1300, 500
 Pipe, 1700, 400
-Goomba,2000,500
 Pipe, 2100, 370
-Goomba,1200,500
 Pipe, 2600, 370
+Goomba,2000,500
+Goomba,1200,500
 Goomba,2400,500
 Goomba,2500,500
 BaseBlock,0,700
