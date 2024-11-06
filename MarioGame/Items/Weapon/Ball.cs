@@ -28,20 +28,27 @@ namespace MarioGame
         }
 
         // Handle fireball creation based on input flags from the controller
-        public static void CreateFireballs(Vector2 playerPosition, float ballSpeed, Controllers.KeyboardController controller)
+      public static void CreateFireballs(Vector2 playerPosition, float ballSpeed, Controllers.KeyboardController controller)
+      {
+        if (controller.keyboardPermitZ) // Fire to the left
         {
-            if (controller.keyboardPermitZ) // Fire to the left
-            {
-                balls.Add(new Ball(playerPosition, ballSpeed, true));
-                controller.keyboardPermitZ = false; // Reset the flag
-            }
+            balls.Add(new Ball(playerPosition, ballSpeed, true));
+            controller.keyboardPermitZ = false; // Reset the flag
 
-            if (controller.keyboardPermitN) // Fire to the right
-            {
-                balls.Add(new Ball(playerPosition, ballSpeed, false));
-                controller.keyboardPermitN = false; // Reset the flag
-            }
+                
+            Game1.Instance.GetSoundLib().PlaySound("fireball");
         }
+
+        if (controller.keyboardPermitN) // Fire to the right
+        {
+            balls.Add(new Ball(playerPosition, ballSpeed, false));
+            controller.keyboardPermitN = false; // Reset the flag
+
+                
+            Game1.Instance.GetSoundLib().PlaySound("fireball");
+        }
+     }
+
 
         // Update all balls
         public static void UpdateAll(GameTime gameTime, int screenWidth)
@@ -75,7 +82,7 @@ namespace MarioGame
             ballSprite.Update(gameTime);
 
             // Check if the ball is off the screen
-            if (Position.X < 0 || Position.X > screenWidth)
+            if (Position.X < 0 )
             {
                 IsVisible = false; // Hide the ball when it goes off-screen
             }

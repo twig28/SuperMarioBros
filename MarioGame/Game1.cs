@@ -36,6 +36,10 @@ namespace MarioGame
         private List<IItem> items;
         private List<IScenery> scenery;
 
+        // Block textures
+        private Texture2D groundBlockTexture;
+        private Texture2D blockTexture;
+        private SoundLib soundLib;
         public static Game1 Instance { get; private set; }
 
         public void ResetGame()
@@ -63,7 +67,7 @@ namespace MarioGame
             _graphics.PreferredBackBufferHeight = 750;
 
             _graphics.ApplyChanges();
-
+            soundLib = new SoundLib(); 
             Instance = this;
         }
 
@@ -79,9 +83,9 @@ namespace MarioGame
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             spriteBatchText = new SpriteBatch(GraphicsDevice);
-
             Texture2D itemTextures = Content.Load<Texture2D>("smb_items_sheet");
-
+            //Load the sound
+             soundLib.LoadContent(Content);
             enemies = new List<IEnemy>();
             blocks = new List<IBlock>();
             items = new List<IItem>();
@@ -92,6 +96,8 @@ namespace MarioGame
             // Load fireball textures through the Ball class
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
 
+            //Initialize Player
+            Texture2D marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
             player_sprite = new PlayerSprite(Content.Load<Texture2D>("smb_mario_sheet"), new Vector2(100, 500), 100f, _graphics, this);
             player_sprite.intialize_player();
             font = Content.Load<SpriteFont>("text");
@@ -136,6 +142,21 @@ namespace MarioGame
             base.Update(gameTime);
         }
 
+        //For Sprint 3 Debug Only
+        private void DrawCollisionRectangles(SpriteBatch spriteBatch)
+        {
+            Texture2D rectTexture = new Texture2D(GraphicsDevice, 1, 1);
+            rectTexture.SetData(new[] { Color.White });
+
+            // Draw Mario's collision rectangle
+            Rectangle marioRect = player_sprite.GetDestinationRectangle();
+            spriteBatch.Draw(rectTexture, marioRect, Color.Red * 0.5f);
+        }
+
+         public SoundLib GetSoundLib()
+        {
+            return soundLib;
+        }
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
