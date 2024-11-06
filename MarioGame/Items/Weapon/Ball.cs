@@ -82,7 +82,7 @@ namespace MarioGame
             ballSprite.Update(gameTime);
 
             // Check if the ball is off the screen
-            if (Position.X < 0 || Position.X > screenWidth)
+            if (Position.X < 0 )
             {
                 IsVisible = false; // Hide the ball when it goes off-screen
             }
