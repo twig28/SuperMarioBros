@@ -68,7 +68,7 @@ namespace MarioGame
 
                 }
             }
-            else if (!Game.player_sprite.Fire && Game.player_sprite.Big)
+            else if (!Game.player_sprite.Fire && (Game.player_sprite.Big || Game.player_sprite.Star))
             {
                 if (Position.X > 18 * Scale / 2) //check if reach to the top edge
                 {

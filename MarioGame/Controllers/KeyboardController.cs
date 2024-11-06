@@ -60,9 +60,8 @@ public class KeyboardController : IController
             }
             if (currentKeyState.IsKeyDown(Keys.Right) || currentKeyState.IsKeyDown(Keys.D))
             {
-                if (Game.player_sprite.current != PlayerSprite.SpriteType.Falling)
-                {
-                    if (Game.player_sprite.current == PlayerSprite.SpriteType.Jump || Game.player_sprite.current == PlayerSprite.SpriteType.JumpL)
+               
+                    if (Game.player_sprite.current == PlayerSprite.SpriteType.Jump || Game.player_sprite.current == PlayerSprite.SpriteType.JumpL || Game.player_sprite.current == PlayerSprite.SpriteType.Falling)
                     {
                       //  if (Game.player_sprite.UPlayerPosition.X < 1280 - (14 * 3f / 2) )
                       //  {
@@ -74,7 +73,7 @@ public class KeyboardController : IController
                     {
                         Game.player_sprite.current = PlayerSprite.SpriteType.Motion;
                     }
-                }
+                
                 Game.player_sprite.left = false;
 
 
@@ -82,9 +81,8 @@ public class KeyboardController : IController
 
             if (currentKeyState.IsKeyDown(Keys.Left) || currentKeyState.IsKeyDown(Keys.A))
             {
-                if (Game.player_sprite.current != PlayerSprite.SpriteType.Falling)
-                {
-                    if (Game.player_sprite.current == PlayerSprite.SpriteType.Jump || Game.player_sprite.current == PlayerSprite.SpriteType.JumpL)
+              
+                    if (Game.player_sprite.current == PlayerSprite.SpriteType.Jump || Game.player_sprite.current == PlayerSprite.SpriteType.JumpL || Game.player_sprite.current == PlayerSprite.SpriteType.Falling)
                     {
                         if (Game.player_sprite.UPlayerPosition.X > 18 * 3f / 2)
                         {
@@ -96,7 +94,7 @@ public class KeyboardController : IController
                     {
                         Game.player_sprite.current = PlayerSprite.SpriteType.MotionL;
                     }
-                }
+               
                 Game.player_sprite.left = true;
 
             }

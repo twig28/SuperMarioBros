@@ -178,7 +178,7 @@ namespace MarioGame
             {
                 item.Draw(_spriteBatch);
             }
-
+            
             Ball.DrawAll(_spriteBatch);
 
             if (player_sprite.current == PlayerSprite.SpriteType.Damaged)

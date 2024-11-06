@@ -44,7 +44,6 @@ namespace MarioGame
         public float velocity = 0f;
         public GraphicsDeviceManager _graphics;
         public Game1 Game;
-        public int invincibletime = 3;
 
         public MotionPlayer MRplayer;
         public MotionPlayerLeft MLplayer;
