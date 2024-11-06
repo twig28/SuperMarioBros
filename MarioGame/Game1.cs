@@ -83,7 +83,8 @@ namespace MarioGame
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             spriteBatchText = new SpriteBatch(GraphicsDevice);
             Texture2D itemTextures = Content.Load<Texture2D>("smb_items_sheet");
-
+            //Load the sound
+             soundLib.LoadContent(Content);
             enemies = new List<IEnemy>();
             blocks = new List<IBlock>();
             items = new List<IItem>();
@@ -150,7 +151,10 @@ namespace MarioGame
             spriteBatch.Draw(rectTexture, marioRect, Color.Red * 0.5f);
         }
 
-
+         public SoundLib GetSoundLib()
+        {
+            return soundLib;
+        }
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
