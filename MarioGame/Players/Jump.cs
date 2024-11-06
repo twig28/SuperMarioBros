@@ -17,7 +17,7 @@ namespace MarioGame
         public Vector2 Position;
         private Game1 Game;
         public GraphicsDeviceManager graphics;
-        private float jumpSpeed = -10f;   
+        private float jumpSpeed = -12f;   
         private float gravity = 0.3f;     
         public Jump(Texture2D texture, Vector2 position, Game1 game)
         {

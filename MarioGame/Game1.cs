@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using MarioGame.Levels;
 using System.Net.Http.Headers;
 using MarioGame.Sprites;
+using MarioGame.Score;
 
 
 namespace MarioGame
@@ -17,10 +18,8 @@ namespace MarioGame
     {
         private GraphicsDeviceManager _graphics;
         public SpriteBatch _spriteBatch;
+        public SpriteBatch spriteBatchText;
 
-        public Vector2 PlayerPosition;
-        public Vector2 UPlayerPosition;
-        float PlayerSpeed;
         public PlayerSprite player_sprite;
         Vector2 offset;
 
@@ -55,6 +54,8 @@ namespace MarioGame
             ResetGame();
         }
 
+        SpriteFont font;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -74,16 +75,13 @@ namespace MarioGame
             keyControl = new KeyboardController(this);
             mouseControl = new MouseController(this);
 
-            // Initialize player's position
-            PlayerSpeed = 100f;
-            PlayerPosition = new Vector2(100, 500);
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+            spriteBatchText = new SpriteBatch(GraphicsDevice);
             Texture2D itemTextures = Content.Load<Texture2D>("smb_items_sheet");
 
             enemies = new List<IEnemy>();
@@ -97,9 +95,9 @@ namespace MarioGame
 
             //Initialize Player
             Texture2D marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
-            soundLib.LoadContent(Content);
-            player_sprite = new PlayerSprite(marioTexture, PlayerPosition, PlayerSpeed, _graphics, this);
+            player_sprite = new PlayerSprite(Content.Load<Texture2D>("smb_mario_sheet"), new Vector2(100, 500), 100f, _graphics, this);
             player_sprite.intialize_player();
+            font = Content.Load<SpriteFont>("text");
         }
 
         protected override void Update(GameTime gameTime)
@@ -113,6 +111,11 @@ namespace MarioGame
             CollisionLogic.CheckMarioEnemyCollision(player_sprite, ref enemies, gameTime);
             CollisionLogic.CheckMarioItemCollision(player_sprite, items, gameTime);
             CollisionLogic.CheckItemBlockCollision(blocks, items);
+
+            if (MarioPositionChecks.checkDeathByFalling(player_sprite.GetDestinationRectangle(), GraphicsDevice.Viewport.Height)) player_sprite.current = PlayerSprite.SpriteType.Damaged;
+            if (MarioPositionChecks.isLevelFinished(player_sprite.GetDestinationRectangle(), currLevel)) ChangeCurrLevel(currLevel + 1);
+
+
             blocks.RemoveAll(block => block is Block b && b.IsDestroyed);
 
             player_sprite.Update(gameTime);
@@ -147,28 +150,14 @@ namespace MarioGame
             spriteBatch.Draw(rectTexture, marioRect, Color.Red * 0.5f);
         }
 
-         public SoundLib GetSoundLib()
-        {
-            return soundLib;
-        }
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            //calculate offset for camera
-            float cameraOffsetThreshold = 650;
-            Rectangle marioRect = player_sprite.GetDestinationRectangle();
-            float marioPositionX = marioRect.X + marioRect.Width / 2;
-            float screenCenterX = GraphicsDevice.Viewport.Width / 2;
-
-            if(marioPositionX > cameraOffsetThreshold)
-            {
-                offset = new Vector2(screenCenterX - marioPositionX, 0);
-            }
+            offset = MarioPositionChecks.GetCameraOffset(player_sprite.GetDestinationRectangle(), GraphicsDevice.Viewport.Width);
             Matrix transform = Matrix.CreateTranslation(new Vector3(offset, 0));
-
             _spriteBatch.Begin(transformMatrix: transform);
-
             foreach (IEnemy enemy in enemies)
             {
                 Rectangle enemyRect = enemy.GetDestinationRectangle();
@@ -197,7 +186,6 @@ namespace MarioGame
             }
 
             Ball.DrawAll(_spriteBatch);
-            //DrawCollisionRectangles(_spriteBatch);
 
             if (player_sprite.current == PlayerSprite.SpriteType.Damaged)
             {
@@ -205,6 +193,14 @@ namespace MarioGame
             }
 
             _spriteBatch.End();
+
+            spriteBatchText.Begin();
+
+            //draw string for record score of mario
+            spriteBatchText.DrawString(font, "Coins: " + player_sprite.score, new Vector2(40, 0), Color.White);
+            //Score.Draw(this, _spriteBatch,100);
+
+            spriteBatchText.End();
 
             base.Draw(gameTime);
         }
