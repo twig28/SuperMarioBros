@@ -33,6 +33,7 @@ namespace MarioGame
         public bool isFalling= false;
         public bool invincible = false;
         public bool Star = false;
+        public bool crouched = false;
         private int time = -1;
         public int score = 0;
     
@@ -284,6 +285,7 @@ namespace MarioGame
         isFalling = false;
          invincible = false;
         current = PlayerSprite.SpriteType.Static;
+        crouched = false;
          UPlayerPosition = new Vector2(100, 500);
         }
 

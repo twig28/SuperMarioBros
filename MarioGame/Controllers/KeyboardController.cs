@@ -148,8 +148,7 @@ public class KeyboardController : IController
             if (currentKeyState.IsKeyDown(Keys.R))
             {
                 Game.ResetGame();
-            Game.player_sprite.Reset();
-            
+                Game.player_sprite.Reset();
             }
 
             // Control the fireball
@@ -176,6 +175,15 @@ public class KeyboardController : IController
                 Game.SetLevel(1);
             Game.Fire = false; 
             }
+
+            if (currentKeyState.IsKeyDown(Keys.S) || currentKeyState.IsKeyDown(Keys.Down))
+        {
+            Game.player_sprite.crouched = true;
+        }
+        else
+        {
+            Game.player_sprite.crouched = false;
+        }
 
     }
 }
