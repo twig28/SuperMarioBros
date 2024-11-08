@@ -10,6 +10,7 @@ using MarioGame.Levels;
 using System.Net.Http.Headers;
 using MarioGame.Sprites;
 using MarioGame.Score;
+using MarioGame.Collisions;
 
 
 namespace MarioGame
@@ -20,6 +21,7 @@ namespace MarioGame
         public SpriteBatch _spriteBatch;
         public SpriteBatch spriteBatchText;
 
+        //make private
         public PlayerSprite player_sprite;
         private Vector2 offset;
 
@@ -27,6 +29,7 @@ namespace MarioGame
         IController mouseControl;
         private float ballSpeed = 300f;
 
+        //make private
         public bool Fire = false;
 
         int currLevel = 1;
@@ -107,10 +110,10 @@ namespace MarioGame
             keyControl.HandleInputs();
             mouseControl.HandleInputs();
 
-            CollisionLogic.CheckEnemyBlockCollisions(enemies, blocks);
-            CollisionLogic.CheckMarioBlockCollision(player_sprite, blocks, items);
-            CollisionLogic.CheckEnemyEnemyCollision(enemies, gameTime);
-            CollisionLogic.CheckMarioEnemyCollision(player_sprite, ref enemies, gameTime);
+            EnemyCollisionLogic.CheckEnemyBlockCollisions(enemies, blocks);
+            MarioBlockCollisionLogic.CheckMarioBlockCollision(player_sprite, blocks, items);
+            EnemyCollisionLogic.CheckEnemyEnemyCollision(enemies, gameTime);
+            MarioEnemyCollisionLogic.CheckMarioEnemyCollision(player_sprite, ref enemies, gameTime);
             CollisionLogic.CheckMarioItemCollision(player_sprite, items, gameTime);
             CollisionLogic.CheckItemBlockCollision(blocks, items);
 
