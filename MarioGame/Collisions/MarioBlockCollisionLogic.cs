@@ -22,18 +22,28 @@ namespace MarioGame.Collisions
 
             foreach (IBlock block in blocks)
             {
-                if(block is Flagpole) { 
-                    //to be implemented, move mario down to ground and add score
-                    continue; 
-                }
-                else if(block is LPipe lpipe && CollisionLogic.GetCollisionDirection(block.GetDestinationRectangle(), mario.GetDestinationRectangle()) == CollisionLogic.CollisionDirection.Side)
+                Rectangle blockRect = block.GetDestinationRectangle();
+                Rectangle marioRect = mario.GetDestinationRectangle();
+                if (block is Flagpole)
                 {
-                    //move mario animation optional
+                    //TODO to be implemented, move mario down to ground and add score
+                    continue;
+                }
+                //Pipe that occurs after castles
+                else if (block is LPipe lpipe && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Side)
+                {
+                    //TODO move mario animation optional
                     Game1.Instance.SetLevel(Game1.Instance.GetLevel() + 1);
                     continue;
                 }
-                Rectangle blockRect = block.GetDestinationRectangle();
-                Rectangle marioRect = mario.GetDestinationRectangle();
+                //Pipes that go places
+                else if (block is Pipe p && p.getIsEntrance() && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Above) //&& mario is crouching
+                {
+                    (Vector2 destination, int level) = p.GetDestination();
+                    Game1.Instance.SetLevel(level);
+                    //TODO move mario to destination spot
+                    break;
+                }
 
                 if (marioRect.Intersects(blockRect))
                 {

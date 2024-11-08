@@ -38,7 +38,8 @@ namespace MarioGame
         public void SetLevel(int level)
         {
             this.CurrLevel = level;
-            ResetGame();
+            player_sprite.Reset();
+            ResetLevel();
         }
 
         public int GetLevel()
@@ -61,6 +62,12 @@ namespace MarioGame
             offset = new Vector2(0, 0);
         }
 
+        public void ResetLevel()
+        {
+            this.LoadContent();
+            offset = new Vector2(0, 0);
+        }
+
         SpriteFont font;
 
         public Game1()
@@ -75,7 +82,6 @@ namespace MarioGame
             _graphics.ApplyChanges();
             soundLib = new SoundLib(); 
             Instance = this;
-            SetLevel(1);
         }
 
         protected override void Initialize()
@@ -83,7 +89,14 @@ namespace MarioGame
             keyControl = new KeyboardController(this);
             mouseControl = new MouseController(this);
 
+            player_sprite = new PlayerSprite(Content.Load<Texture2D>("smb_mario_sheet"), new Vector2(100, 500), 100f, _graphics, this);
+            player_sprite.intialize_player();
+            font = Content.Load<SpriteFont>("text");
+
+            SetLevel(1);
+
             base.Initialize();
+
         }
 
         protected override void LoadContent()
@@ -102,10 +115,6 @@ namespace MarioGame
 
             // Load fireball textures through the Ball class
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
-
-            player_sprite = new PlayerSprite(Content.Load<Texture2D>("smb_mario_sheet"), new Vector2(100, 500), 100f, _graphics, this);
-            player_sprite.intialize_player();
-            font = Content.Load<SpriteFont>("text");
         }
 
         protected override void Update(GameTime gameTime)
@@ -186,8 +195,6 @@ namespace MarioGame
                 enemy.Draw();
             }
 
-            player_sprite.Draw(_spriteBatch, 14, 16,3f, new List<Rectangle>(),0,Color.White);
-
             foreach (var block in blocks)
             {
                 block.Draw(_spriteBatch);
@@ -204,6 +211,8 @@ namespace MarioGame
             {
                 GameOver.Draw(this, _spriteBatch);
             }
+
+            player_sprite.Draw(_spriteBatch, 14, 16, 3f, new List<Rectangle>(), 0, Color.White);
 
             _spriteBatch.End();
 

@@ -7,6 +7,7 @@ using MarioGame.Blocks;
 using System.IO;
 using System;
 using MarioGame.Scenery;
+using System.Reflection.PortableExecutable;
 
 namespace MarioGame.Levels
 {
@@ -30,19 +31,14 @@ namespace MarioGame.Levels
             Texture2D sceneryTextures = game.Content.Load<Texture2D>("smb1_scenery_sprites");
             Texture2D signTexture = game.Content.Load<Texture2D>("Super_Mario_Bros._NES_Logo");
             Texture2D stairBlockTexture = game.Content.Load<Texture2D>("Hard_Block_SMB");
-            List <(string ObjectType, int X, int Y)> entities;
+            string filePath = "";
 
+            filePath = Path.Combine("..", "..", "..", "Levels", $"Level{level}.csv");
 
-            if (level == 1)
-            {
-                string filePath = Path.Combine("..", "..", "..", "Levels", "Level1.csv");
-                entities = LoadEntitiesFromCSV(filePath);
-            }
-            else
-            {
-                string filePath = Path.Combine("..", "..", "..", "Levels", "Level2.csv");
-                entities = LoadEntitiesFromCSV(filePath);
-            }
+            var (colorPalette, marioPosition, entities, pipeDestinations) = LoadEntitiesFromCSV(filePath);
+
+            // Set Mario's starting position
+            //game.player_sprite.SetPosition(marioPosition);
 
             foreach (var entity in entities)
             {
@@ -62,8 +58,29 @@ namespace MarioGame.Levels
                     case "StairBlock":
                         blocks.Add(new StairBlock(position, stairBlockTexture));
                         break;
+                    case "PipeDestination":
+                        var pipe = new Pipe(position, sceneryTextures);
+                        if (pipeDestinations.Count > 0)
+                        {
+                            var destination = pipeDestinations[0];
+                            pipe.setIsEntrance(destination.LevelDest, destination.X, destination.Y);
+                            pipeDestinations.RemoveAt(0); 
+                        }
+                        blocks.Add(pipe);
+                        break;
                     case "Pipe":
-                        blocks.Add(new MediumPipe(position, sceneryTextures));
+                        blocks.Add(new Pipe(position, sceneryTextures));
+                        break;
+                    case "LongPipeDestination":
+                        var longPipe = new Pipe(position, sceneryTextures);
+                        longPipe.makePipeLong();
+                        if (pipeDestinations.Count > 0)
+                        {
+                            var destination = pipeDestinations[0];
+                            longPipe.setIsEntrance(destination.LevelDest, destination.X, destination.Y);
+                            pipeDestinations.RemoveAt(0); 
+                        }
+                        blocks.Add(longPipe);
                         break;
                     case "Goomba":
                         enemies.Add(new Goomba(enemyTextures, game._spriteBatch, entity.X, entity.Y));
@@ -114,35 +131,79 @@ namespace MarioGame.Levels
                         blocks.Add(new Flagpole(position, sceneryTextures));
                         break;
                     case "LPipe":
-                        //blocks.Add(new LPipe(position, sceneryTextures));
+                        blocks.Add(new LPipe(position, sceneryTextures));
                         break;
                 }
-            }
 
+            }
         }
 
-        private static List<(string ObjectType, int X, int Y)> LoadEntitiesFromCSV(string filePath)
+        private static (string colorPalette, Vector2 marioPosition, List<(string ObjectType, int X, int Y)> entities, List<(int LevelDest, int X, int Y)> pipeDestinations) LoadEntitiesFromCSV(string filePath)
         {
+            string colorPalette = "";
+            Vector2 marioPosition = Vector2.Zero;
             var entities = new List<(string, int, int)>();
+            var pipeDestinations = new List<(int LevelDest, int X, int Y)>();
 
             using (var reader = new StreamReader(filePath))
             {
+                // Read first two lines for ColorPalette and MarioPosition
+                var colorPaletteLine = reader.ReadLine();
+                if (colorPaletteLine != null)
+                {
+                    var colorValues = colorPaletteLine.Split(',');
+                    if (colorValues[0] == "ColorPalette")
+                    {
+                        colorPalette = colorValues[1];
+                    }
+                }
+
+                var marioPositionLine = reader.ReadLine();
+                if (marioPositionLine != null)
+                {
+                    var marioValues = marioPositionLine.Split(',');
+                    if (marioValues[0] == "MarioPosition")
+                    {
+                        int marioX = int.Parse(marioValues[1]);
+                        int marioY = int.Parse(marioValues[2]);
+                        marioPosition = new Vector2(marioX, marioY);
+                    }
+                }
                 reader.ReadLine();
 
+                // Read remaining lines for entities
                 while (!reader.EndOfStream)
                 {
                     var line = reader.ReadLine();
                     var values = line.Split(',');
 
-                    string objectType = values[0];
-                    int xPosition = int.Parse(values[1]);
-                    int yPosition = int.Parse(values[2]);
+                    if (values[0] == "PipeDestination")
+                    {
+                        // Parse and add the PipeDestination to the list
+                        string objectType = values[0];
+                        int xPosition = int.Parse(values[1]);
+                        int yPosition = int.Parse(values[2]);
 
-                    entities.Add((objectType, xPosition, yPosition));
+                        entities.Add((objectType, xPosition, yPosition));
+                        int levelDest = int.Parse(values[3]);
+                        int xPos = int.Parse(values[4]);
+                        int yPos = int.Parse(values[5]);
+                        pipeDestinations.Add((levelDest, xPos, yPos));
+                    }
+                    else
+                    {
+                        // Handle other entities
+                        string objectType = values[0];
+                        int xPosition = int.Parse(values[1]);
+                        int yPosition = int.Parse(values[2]);
+
+                        entities.Add((objectType, xPosition, yPosition));
+                    }
                 }
             }
 
-            return entities;
+            return (colorPalette, marioPosition, entities, pipeDestinations);
+
         }
     }
 }
