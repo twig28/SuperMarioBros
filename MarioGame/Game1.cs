@@ -21,7 +21,7 @@ namespace MarioGame
         public SpriteBatch spriteBatchText;
 
         public PlayerSprite player_sprite;
-        Vector2 offset;
+        private Vector2 offset;
 
         IController keyControl;
         IController mouseControl;
@@ -97,7 +97,6 @@ namespace MarioGame
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
 
             //Initialize Player
-            Texture2D marioTexture = Content.Load<Texture2D>("smb_mario_sheet");
             player_sprite = new PlayerSprite(Content.Load<Texture2D>("smb_mario_sheet"), new Vector2(100, 500), 100f, _graphics, this);
             player_sprite.intialize_player();
             font = Content.Load<SpriteFont>("text");
@@ -115,9 +114,7 @@ namespace MarioGame
             CollisionLogic.CheckMarioItemCollision(player_sprite, items, gameTime);
             CollisionLogic.CheckItemBlockCollision(blocks, items);
 
-            if (MarioPositionChecks.checkDeathByFalling(player_sprite.GetDestinationRectangle(), GraphicsDevice.Viewport.Height)) player_sprite.current = PlayerSprite.SpriteType.Damaged;
-            if (MarioPositionChecks.isLevelFinished(player_sprite.GetDestinationRectangle(), currLevel)) ChangeCurrLevel(currLevel + 1);
-
+            if (PositionChecks.checkDeathByFalling(player_sprite.GetDestinationRectangle(), GraphicsDevice.Viewport.Height)) player_sprite.current = PlayerSprite.SpriteType.Damaged;
 
             blocks.RemoveAll(block => block is Block b && b.IsDestroyed);
 
@@ -161,19 +158,14 @@ namespace MarioGame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            offset = MarioPositionChecks.GetCameraOffset(player_sprite.GetDestinationRectangle(), GraphicsDevice.Viewport.Width);
+            offset = PositionChecks.GetCameraOffset(player_sprite.GetDestinationRectangle(), GraphicsDevice.Viewport.Width);
             Matrix transform = Matrix.CreateTranslation(new Vector3(offset, 0));
             _spriteBatch.Begin(transformMatrix: transform);
+
             foreach (IEnemy enemy in enemies)
             {
-                Rectangle enemyRect = enemy.GetDestinationRectangle();
-                float enemyScreenX = enemyRect.X + offset.X;
-                float enemyScreenY = enemyRect.Y + offset.Y;
-
-                // Check if the enemy is within the visible screen boundaries
-                if (enemyScreenX + enemyRect.Width > 0 && enemyScreenX < GraphicsDevice.Viewport.Width &&
-                    enemyScreenY + enemyRect.Height > 0 && enemyScreenY < GraphicsDevice.Viewport.Height)
-                {
+                if (PositionChecks.renderEnemy(enemy, offset, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height))
+                { 
                     enemy.Update(gameTime);
                 }
             }

@@ -35,11 +35,8 @@ namespace MarioGame.Levels
 
             if (level == 1)
             {
-                // Load CSV Data
                 string filePath = Path.Combine("..", "..", "..", "Levels", "Level1.csv");
                 entities = LoadEntitiesFromCSV(filePath);
-
-
             }
             else
             {

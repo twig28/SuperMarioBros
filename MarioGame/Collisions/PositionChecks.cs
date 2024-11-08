@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MarioGame
 {
-    internal class MarioPositionChecks
+    internal class PositionChecks
     {
         public static Vector2 GetCameraOffset(Rectangle marioRect, float screenWidth)
         {
@@ -26,23 +26,26 @@ namespace MarioGame
 
         public static bool checkDeathByFalling(Rectangle marioRect, float screenHeight)
         {
-            if(marioRect.Y > screenHeight)
+            if (marioRect.Y > screenHeight)
             {
                 return true;
             }
             return false;
         }
 
-        public static bool isLevelFinished(Rectangle marioRect, int level)
+        public static bool renderEnemy(IEnemy enemy, Vector2 offset, int width, int height)
         {
-            if(level == 1 && marioRect.X > 7000)
+            Rectangle enemyRect = enemy.GetDestinationRectangle();
+            float enemyScreenX = enemyRect.X + offset.X;
+            float enemyScreenY = enemyRect.Y + offset.Y;
+
+            // Check if the enemy is within the visible screen boundaries
+            if (enemyScreenX + enemyRect.Width > 0 && enemyScreenX < width &&
+                enemyScreenY + enemyRect.Height > 0 && enemyScreenY < height)
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
     }
 }
