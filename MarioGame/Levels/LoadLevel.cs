@@ -37,7 +37,7 @@ namespace MarioGame.Levels
 
             var (colorPalette, marioPosition, entities, pipeDestinations) = LoadEntitiesFromCSV(filePath);
 
-            // Set Mario's starting position
+            //Set Mario's starting position when loading
             //game.player_sprite.SetPosition(marioPosition);
 
             foreach (var entity in entities)
@@ -125,7 +125,7 @@ namespace MarioGame.Levels
                         scenery.Add(new LargeCloud(sceneryTextures, entity.X, entity.Y));
                         break;
                     case "Castle":
-                        //scenery.Add(new Castle(signTexture, entity.X, entity.Y));
+                        scenery.Add(new Castle(signTexture, entity.X, entity.Y));
                         break;
                     case "Flag":
                         blocks.Add(new Flagpole(position, sceneryTextures));

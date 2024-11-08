@@ -37,7 +37,8 @@ namespace MarioGame.Collisions
                     continue;
                 }
                 //Pipes that go places
-                else if (block is Pipe p && p.getIsEntrance() && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Above && mario.crouched) //&& mario is crouching
+                else if (block is Pipe p && (p.getIsEntrance() && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Above && mario.crouched || 
+                    p.getIsLong() && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Side))
                 {
                     (Vector2 destination, int level) = p.GetDestination();
                     Game1.Instance.SetLevel(level);

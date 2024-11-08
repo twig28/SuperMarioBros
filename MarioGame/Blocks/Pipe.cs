@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MarioGame.Interfaces;
+using System.Runtime.CompilerServices;
 
 namespace MarioGame
 {
@@ -17,6 +18,7 @@ namespace MarioGame
         public bool IsSolid { get; }
         public bool IsBreakable { get; }
         private bool isEntrance;
+        private bool isLong;
 
         public bool getIsEntrance()
         {
@@ -32,7 +34,12 @@ namespace MarioGame
 
         public void makePipeLong()
         {
+            isLong = true;
+        }
 
+        public bool getIsLong()
+        {
+            return isLong;
         }
 
         public void setIsEntrance(int LevelDestination, int XPosDest, int YPosDest)
