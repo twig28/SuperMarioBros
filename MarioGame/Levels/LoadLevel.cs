@@ -110,6 +110,12 @@ namespace MarioGame.Levels
                     case "Castle":
                         //scenery.Add(new Castle(signTexture, entity.X, entity.Y));
                         break;
+                    case "Flag":
+                        blocks.Add(new Flagpole(position, sceneryTextures));
+                        break;
+                    case "LPipe":
+                        //blocks.Add(new LPipe(position, sceneryTextures));
+                        break;
                 }
             }
 

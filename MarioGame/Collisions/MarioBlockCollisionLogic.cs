@@ -22,6 +22,15 @@ namespace MarioGame.Collisions
 
             foreach (IBlock block in blocks)
             {
+                if(block is Flagpole) { 
+                    //to be implemented, move mario down to ground and add score
+                    continue; 
+                }
+                else if(block is LPipe)
+                {
+                    Game1.Instance.SetLevel(Game1.Instance.GetLevel() + 1);
+                    continue;
+                }
                 Rectangle blockRect = block.GetDestinationRectangle();
                 Rectangle marioRect = mario.GetDestinationRectangle();
 

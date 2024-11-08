@@ -11,6 +11,7 @@ using System.Net.Http.Headers;
 using MarioGame.Sprites;
 using MarioGame.Score;
 using MarioGame.Collisions;
+using System.Runtime.CompilerServices;
 
 
 namespace MarioGame
@@ -32,16 +33,24 @@ namespace MarioGame
         //make private
         public bool Fire = false;
 
-        int currLevel = 1;
+        public int CurrLevel { get; set; }
+
+        public void SetLevel(int level)
+        {
+            this.CurrLevel = level;
+            ResetGame();
+        }
+
+        public int GetLevel()
+        {
+            return this.CurrLevel;
+        }
 
         private List<IEnemy> enemies;
         private List<IBlock> blocks;
         private List<IItem> items;
         private List<IScenery> scenery;
 
-        // Block textures
-        private Texture2D groundBlockTexture;
-        private Texture2D blockTexture;
         private SoundLib soundLib;
         public static Game1 Instance { get; private set; }
 
@@ -50,12 +59,6 @@ namespace MarioGame
             this.Initialize();
             this.LoadContent();
             offset = new Vector2(0, 0);
-        }
-
-        public void ChangeCurrLevel(int level)
-        {
-            currLevel = level;
-            ResetGame();
         }
 
         SpriteFont font;
@@ -72,6 +75,7 @@ namespace MarioGame
             _graphics.ApplyChanges();
             soundLib = new SoundLib(); 
             Instance = this;
+            SetLevel(1);
         }
 
         protected override void Initialize()
@@ -94,7 +98,7 @@ namespace MarioGame
             items = new List<IItem>();
             scenery = new List<IScenery>();
 
-            LoadLevels.LoadLevel(this, blocks, enemies, items, scenery, currLevel);
+            LoadLevels.LoadLevel(this, blocks, enemies, items, scenery, this.CurrLevel);
 
             // Load fireball textures through the Ball class
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));

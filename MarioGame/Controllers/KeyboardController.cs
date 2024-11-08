@@ -167,13 +167,13 @@ public class KeyboardController : IController
 
             if (IsKeyPressed(Keys.D2, currentKeyState))
             {
-                Game.ChangeCurrLevel(2);
+                Game.SetLevel(2);
             Game.Fire = false;
             }
 
             if (IsKeyPressed(Keys.D1, currentKeyState))
             {
-                Game.ChangeCurrLevel(1);
+                Game.SetLevel(1);
             Game.Fire = false; 
             }
 

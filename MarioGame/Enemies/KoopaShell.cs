@@ -14,7 +14,6 @@ namespace MarioGame
         private bool _DefaultMoveMentDirection = true;
         private bool _alive = true;
         private double aliveTime = 0;
-        private double creationTime;
 
         public int setPosX { set => posX = value; }
         public int setPosY { set => posY = value; }
@@ -42,7 +41,6 @@ namespace MarioGame
             posX = x;
             posY = y;
             sprite = new KoopaShellSprite(texture, spriteBatch, posX, posY);
-            creationTime = 0;
         }
 
         public void Draw()
