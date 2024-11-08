@@ -47,5 +47,27 @@ namespace MarioGame
             }
             return false;
         }
-    }
-}
+
+        public static void checkPipe(PlayerSprite mario, int level)
+        {
+            int newLevel;
+            Vector2 newPosition;
+            Rectangle secretRectangle;
+            if(level == 1)
+            {
+                newLevel = 0;
+                secretRectangle = new Rectangle(0,0,20,1);
+            }
+            else
+            {
+                newLevel = 1;
+                secretRectangle = new Rectangle(0, 0, 1, 20);
+            }
+                if (CollisionLogic.GetCollisionDirection(mario.GetDestinationRectangle(), secretRectangle) == CollisionLogic.CollisionDirection.Below) //&& crouched or pushing down
+                {
+                    Game1.Instance.SetLevel(newLevel);
+                    //move mario to the shortcut location using newPosition
+                }
+                }
+            }
+        }

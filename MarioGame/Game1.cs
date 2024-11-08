@@ -90,7 +90,7 @@ namespace MarioGame
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             spriteBatchText = new SpriteBatch(GraphicsDevice);
-            Texture2D itemTextures = Content.Load<Texture2D>("smb_items_sheet");
+
             //Load the sound
              soundLib.LoadContent(Content);
             enemies = new List<IEnemy>();
@@ -103,7 +103,6 @@ namespace MarioGame
             // Load fireball textures through the Ball class
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
 
-            //Initialize Player
             player_sprite = new PlayerSprite(Content.Load<Texture2D>("smb_mario_sheet"), new Vector2(100, 500), 100f, _graphics, this);
             player_sprite.intialize_player();
             font = Content.Load<SpriteFont>("text");

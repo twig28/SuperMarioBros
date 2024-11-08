@@ -26,8 +26,9 @@ namespace MarioGame.Collisions
                     //to be implemented, move mario down to ground and add score
                     continue; 
                 }
-                else if(block is LPipe)
+                else if(block is LPipe lpipe && CollisionLogic.GetCollisionDirection(block.GetDestinationRectangle(), mario.GetDestinationRectangle()) == CollisionLogic.CollisionDirection.Side)
                 {
+                    //move mario animation optional
                     Game1.Instance.SetLevel(Game1.Instance.GetLevel() + 1);
                     continue;
                 }
