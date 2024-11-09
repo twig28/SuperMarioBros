@@ -16,8 +16,8 @@ namespace MarioGame.Scenery
 
         public Castle(Texture2D texture, int x, int y)
         {
-            sourceRectangle = new Rectangle(220, 21, 65, 20);
-            destinationRectangle = new Rectangle(x, y, 180, 70);
+            sourceRectangle = new Rectangle(80, 765, 150, 178);
+            destinationRectangle = new Rectangle(x, y, 400, 600);
             this.texture = texture;
         }
         public virtual void Draw(SpriteBatch spriteBatch)

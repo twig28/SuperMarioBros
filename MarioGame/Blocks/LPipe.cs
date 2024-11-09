@@ -18,15 +18,14 @@ namespace MarioGame.Blocks
         private double timeElapsedSinceUpdate = 0;
 
         protected Texture2D Texture { get; set; }
-        Rectangle sourceRectangle = new Rectangle(248, 592, 25, 170);
+        Rectangle sourceRectangle = new Rectangle(156, 381, 65, 70);
         protected Rectangle DestinationRectangle;
-        // private ISprite sprite;
 
         public LPipe(Vector2 position, Texture2D texture)
         {
             Position = position;
             Texture = texture;
-            DestinationRectangle = new Rectangle((int)position.X, (int)position.Y, 75, 400);
+            DestinationRectangle = new Rectangle((int)position.X, (int)position.Y, 200, 200);
             IsCollided = false;
         }
 

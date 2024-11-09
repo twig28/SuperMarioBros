@@ -8,8 +8,8 @@ namespace MarioGame
     public class Pipe : IBlock
     {
 
-        private const int width = 120;
-        private const int height = 250;
+        private int width = 120;
+        private int height = 250;
         private int xPosDest;
         private int yPosDest;
         private int levelDestination;
@@ -35,6 +35,10 @@ namespace MarioGame
         public void makePipeLong()
         {
             isLong = true;
+            width = 240;
+            height = 700;
+            SourceRectangle = new Rectangle(83, 318, 62, 132);
+            DestinationRectangle = new Rectangle((int)Position.X, (int)Position.Y, width, height);
         }
 
         public bool getIsLong()

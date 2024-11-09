@@ -33,6 +33,7 @@ namespace MarioGame.Levels
             Texture2D stairBlockTexture = game.Content.Load<Texture2D>("Hard_Block_SMB");
             string filePath = "";
 
+            //In this game Level0-1 correspond to 1-1 above and underground and Level2-3 corresponds to 1-2 above and underground
             filePath = Path.Combine("..", "..", "..", "Levels", $"Level{level}.csv");
 
             var (colorPalette, marioPosition, entities, pipeDestinations) = LoadEntitiesFromCSV(filePath);
@@ -75,16 +76,21 @@ namespace MarioGame.Levels
                     case "Pipe":
                         blocks.Add(new Pipe(position, sceneryTextures));
                         break;
-                    case "LongPipeDestination":
+                    case "LongPipe":
                         var longPipe = new Pipe(position, sceneryTextures);
                         longPipe.makePipeLong();
+                        blocks.Add(longPipe);
+                        break;
+                    case "LongPipeDestination":
+                        var longPipeD = new Pipe(position, sceneryTextures);
+                        longPipeD.makePipeLong();
                         if (pipeDestinations.Count > 0)
                         {
                             var destination = pipeDestinations[0];
-                            longPipe.setIsEntrance(destination.LevelDest, destination.X, destination.Y);
+                            longPipeD.setIsEntrance(destination.LevelDest, destination.X, destination.Y);
                             pipeDestinations.RemoveAt(0);
                         }
-                        blocks.Add(longPipe);
+                        blocks.Add(longPipeD);
                         break;
                     case "Goomba":
                         enemies.Add(new Goomba(enemyTextures, game._spriteBatch, entity.X, entity.Y));
@@ -129,7 +135,7 @@ namespace MarioGame.Levels
                         scenery.Add(new LargeCloud(sceneryTextures, entity.X, entity.Y));
                         break;
                     case "Castle":
-                        scenery.Add(new Castle(signTexture, entity.X, entity.Y));
+                        scenery.Add(new Castle(sceneryTextures, entity.X, entity.Y));
                         break;
                     case "Flag":
                         blocks.Add(new Flagpole(position, sceneryTextures));
