@@ -14,12 +14,12 @@ namespace MarioGame.Levels
     internal class LoadLevels
     {
         public static void LoadLevel(
-            Game1 game,
-            List<IBlock> blocks,
-            List<IEnemy> enemies,
-            List<IItem> items,
-            List<IScenery> scenery,
-            int level)
+    Game1 game,
+    List<IBlock> blocks,
+    List<IEnemy> enemies,
+    List<IItem> items,
+    List<IScenery> scenery,
+    int level)
         {
             // Load resources
             SpriteFont font = game.Content.Load<SpriteFont>("File");
@@ -37,8 +37,12 @@ namespace MarioGame.Levels
 
             var (colorPalette, marioPosition, entities, pipeDestinations) = LoadEntitiesFromCSV(filePath);
 
-            //Set Mario's starting position when loading
-            //game.player_sprite.SetPosition(marioPosition);
+            // Ensure colorPalette is parsed as an integer and used correctly
+            int parsedColorPalette = int.Parse(colorPalette);
+            Game1.Instance.SetBackgroundColor(parsedColorPalette);
+
+            // Set Mario's starting position when loading
+            // game.player_sprite.SetPosition(marioPosition);
 
             foreach (var entity in entities)
             {
@@ -64,7 +68,7 @@ namespace MarioGame.Levels
                         {
                             var destination = pipeDestinations[0];
                             pipe.setIsEntrance(destination.LevelDest, destination.X, destination.Y);
-                            pipeDestinations.RemoveAt(0); 
+                            pipeDestinations.RemoveAt(0);
                         }
                         blocks.Add(pipe);
                         break;
@@ -78,7 +82,7 @@ namespace MarioGame.Levels
                         {
                             var destination = pipeDestinations[0];
                             longPipe.setIsEntrance(destination.LevelDest, destination.X, destination.Y);
-                            pipeDestinations.RemoveAt(0); 
+                            pipeDestinations.RemoveAt(0);
                         }
                         blocks.Add(longPipe);
                         break;
@@ -134,11 +138,10 @@ namespace MarioGame.Levels
                         blocks.Add(new LPipe(position, sceneryTextures));
                         break;
                 }
-
             }
         }
 
-        private static (string colorPalette, Vector2 marioPosition, List<(string ObjectType, int X, int Y)> entities, List<(int LevelDest, int X, int Y)> pipeDestinations) LoadEntitiesFromCSV(string filePath)
+    private static (string colorPalette, Vector2 marioPosition, List<(string ObjectType, int X, int Y)> entities, List<(int LevelDest, int X, int Y)> pipeDestinations) LoadEntitiesFromCSV(string filePath)
         {
             string colorPalette = "";
             Vector2 marioPosition = Vector2.Zero;
@@ -152,7 +155,7 @@ namespace MarioGame.Levels
                 if (colorPaletteLine != null)
                 {
                     var colorValues = colorPaletteLine.Split(',');
-                    if (colorValues[0] == "ColorPalette")
+                    if (colorValues[0] == "ColorPallete")
                     {
                         colorPalette = colorValues[1];
                     }

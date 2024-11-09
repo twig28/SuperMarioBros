@@ -68,6 +68,18 @@ namespace MarioGame
             offset = new Vector2(0, 0);
         }
 
+        Color backgroundColor;
+        public void SetBackgroundColor(int palette)
+        {
+            if (palette == 1) {
+                backgroundColor = Color.CornflowerBlue;
+            }
+            else
+            {
+                backgroundColor = Color.Black;
+            }
+        }
+
         SpriteFont font;
 
         public Game1()
@@ -154,24 +166,13 @@ namespace MarioGame
             base.Update(gameTime);
         }
 
-        //For Sprint 3 Debug Only
-        private void DrawCollisionRectangles(SpriteBatch spriteBatch)
-        {
-            Texture2D rectTexture = new Texture2D(GraphicsDevice, 1, 1);
-            rectTexture.SetData(new[] { Color.White });
-
-            // Draw Mario's collision rectangle
-            Rectangle marioRect = player_sprite.GetDestinationRectangle();
-            spriteBatch.Draw(rectTexture, marioRect, Color.Red * 0.5f);
-        }
-
          public SoundLib GetSoundLib()
         {
             return soundLib;
         }
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(backgroundColor);
 
             offset = PositionChecks.GetCameraOffset(player_sprite.GetDestinationRectangle(), GraphicsDevice.Viewport.Width);
             Matrix transform = Matrix.CreateTranslation(new Vector3(offset, 0));
