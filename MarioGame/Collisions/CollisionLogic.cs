@@ -195,7 +195,6 @@ namespace MarioGame
             foreach (IEnemy enemy in enemyToDie)
             {
                 enemy.TriggerDeath(gm, stomped);
-                enemies.Remove(enemy);
             }
         }
 

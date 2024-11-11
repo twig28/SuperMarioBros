@@ -33,10 +33,14 @@ internal class GoombaSprite : ISprite
         ChangeDirection = false;
     }
 
+    public bool Invert { get; set; } = false; // Property to control inversion of the sprite
     public void Draw()
     {
         DestinationRectangle = new Rectangle(posX, posY, SpriteWidth, SpriteHeight);
-        sb.Draw(texture, DestinationRectangle, SourceRectangle, Color.White);
+
+        // Apply inversion by using a sprite effect
+        SpriteEffects effects = Invert ? SpriteEffects.FlipVertically : SpriteEffects.None;
+        sb.Draw(texture, DestinationRectangle, SourceRectangle, Color.White, 0, Vector2.Zero, effects, 0);
     }
 
     public void Update(GameTime gm)

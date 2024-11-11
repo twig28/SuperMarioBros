@@ -15,6 +15,7 @@ namespace MarioGame.Collisions
             foreach (IEnemy enemy in enemies)
             {
                 if (enemy is Piranha) continue;
+                if (enemy.getdeathStartTime > 0) continue;
                 foreach (IBlock block in blocks)
                 {
                     HandleEnemyBlockCollision(enemy, block);

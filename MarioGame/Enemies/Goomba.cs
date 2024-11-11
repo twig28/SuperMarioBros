@@ -12,8 +12,8 @@ internal class Goomba : IEnemy
     private double timeElapsedSinceUpdate = 0;
 
     private bool _alive = true;
-    private double deathStartTime = 0; 
-    private const double DeathDuration = 2.0; 
+    private double deathStartTime = 0;
+    private const double DeathDuration = 2.0;
 
     private bool _DefaultMoveMentDirection = false;
 
@@ -47,23 +47,63 @@ internal class Goomba : IEnemy
         if (Alive) sprite.Draw();
     }
 
+    private bool isInvertedDeath = false; // Flag for inverted death animation
+
+    public void TriggerDeath(GameTime gm, bool stomped)
+    {
+        if (stomped)
+        {
+            // Stomped death behavior (remain in the same place)
+            deathStartTime = gm.TotalGameTime.TotalSeconds;
+            sprite.posY = posY + 40;
+            sprite.SetDeathFrame();
+        }
+        else
+        {
+            // Fireball death behavior (inverted fall animation)
+            deathStartTime = gm.TotalGameTime.TotalSeconds;
+            isInvertedDeath = true;      // Enable inverted fall
+            sprite.Invert = true;         // Invert the sprite to show it flipped
+        }
+    }
+
     public void Update(GameTime gm)
     {
         if (deathStartTime > 0)
         {
-            // Check if 2 seconds have passed since the death animation started
-            if (gm.TotalGameTime.TotalSeconds - deathStartTime >= DeathDuration)
+            if (isInvertedDeath)
             {
-                Alive = false;
-                return;  
+                // Check if 3 seconds have passed since the death animation started
+                if (gm.TotalGameTime.TotalSeconds - deathStartTime < 3.0)
+                {
+                    posY += 3; 
+                    sprite.posX = posX;
+                    sprite.posY = posY;
+                }
+                else
+                {
+                    // End the death animation after 3 seconds
+                    Alive = false;
+                    sprite.Invert = false; // Reset inversion after animation ends
+                    isInvertedDeath = false;
+                }
+            }
+            else
+            {
+                // Stomped death behavior remains in place
+                if (gm.TotalGameTime.TotalSeconds - deathStartTime >= DeathDuration)
+                {
+                    Alive = false;
+                    return;
+                }
             }
         }
-
         else
         {
+            // Regular movement and animation logic
             timeElapsed = gm.TotalGameTime.TotalSeconds;
-            posX += _DefaultMoveMentDirection ? 1 : -1; 
-            posY += 6;  //Gravity 
+            posX += _DefaultMoveMentDirection ? 1 : -1;
+            posY += 6;  // Gravity for normal movement
 
             sprite.posX = posX;
             sprite.posY = posY;
@@ -74,19 +114,5 @@ internal class Goomba : IEnemy
                 sprite.Update(gm);
             }
         }
-    }
-
-    public void TriggerDeath(GameTime gm, bool stomped)
-    {
-        if (stomped)
-        {
-            deathStartTime = gm.TotalGameTime.TotalSeconds;
-            sprite.posY = posY + 40;
-            sprite.SetDeathFrame();
-        }
-        else
-        {
-            Alive = false;
-        } 
     }
 }

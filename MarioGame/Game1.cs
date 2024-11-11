@@ -194,11 +194,6 @@ namespace MarioGame
                 scene.Draw(_spriteBatch);
             }
 
-            foreach (IEnemy enemy in enemies)
-            {
-                enemy.Draw();
-            }
-
             foreach (var block in blocks)
             {
                 block.Draw(_spriteBatch);
@@ -208,7 +203,12 @@ namespace MarioGame
             {
                 item.Draw(_spriteBatch);
             }
-            
+
+            foreach (IEnemy enemy in enemies)
+            {
+                enemy.Draw();
+            }
+
             Ball.DrawAll(_spriteBatch);
 
             if (player_sprite.current == PlayerSprite.SpriteType.Damaged)
