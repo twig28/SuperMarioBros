@@ -11,6 +11,10 @@ namespace MarioGame.Blocks
         public bool IsBreakable { get; }
         public bool IsOpened { get; set; }
 
+        public bool isBumped = false;
+        private float bumpTimer = 0f;
+        private const float bumpDuration = 0.2f;
+
         public const double animInterval = 0.5;
         public const int spriteInterval = 16;
         public int currSprite = 0;
@@ -23,6 +27,11 @@ namespace MarioGame.Blocks
         protected Rectangle DestinationRectangle;
         // private ISprite sprite;
 
+        public bool getIsBumped()
+        {
+            return isBumped;
+        }
+
         public MysteryBlock(Vector2 position, Texture2D texture)
         {
             Position = position;
@@ -34,10 +43,26 @@ namespace MarioGame.Blocks
         public void OnCollide()
         {
             IsOpened = true;
+            if (!isBumped)
+            {
+                isBumped = true;
+                bumpTimer = 0f;
+                // play animation
+            }
         }
 
-        public virtual void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
+            if (isBumped)
+            {
+                bumpTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (bumpTimer >= bumpDuration)
+                {
+                    isBumped = false;
+                    bumpTimer = 0f;
+                }
+            }
             if (IsOpened)
             {
                 sourceRectangle.X = 80 + spriteInterval * 4;

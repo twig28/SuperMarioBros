@@ -60,9 +60,8 @@ public class KeyboardController : IController
             }
             if (currentKeyState.IsKeyDown(Keys.Right) || currentKeyState.IsKeyDown(Keys.D))
             {
-                if (Game.player_sprite.current != PlayerSprite.SpriteType.Falling)
-                {
-                    if (Game.player_sprite.current == PlayerSprite.SpriteType.Jump || Game.player_sprite.current == PlayerSprite.SpriteType.JumpL)
+               
+                    if (Game.player_sprite.current == PlayerSprite.SpriteType.Jump || Game.player_sprite.current == PlayerSprite.SpriteType.JumpL || Game.player_sprite.current == PlayerSprite.SpriteType.Falling)
                     {
                       //  if (Game.player_sprite.UPlayerPosition.X < 1280 - (14 * 3f / 2) )
                       //  {
@@ -74,7 +73,7 @@ public class KeyboardController : IController
                     {
                         Game.player_sprite.current = PlayerSprite.SpriteType.Motion;
                     }
-                }
+                
                 Game.player_sprite.left = false;
 
 
@@ -82,9 +81,8 @@ public class KeyboardController : IController
 
             if (currentKeyState.IsKeyDown(Keys.Left) || currentKeyState.IsKeyDown(Keys.A))
             {
-                if (Game.player_sprite.current != PlayerSprite.SpriteType.Falling)
-                {
-                    if (Game.player_sprite.current == PlayerSprite.SpriteType.Jump || Game.player_sprite.current == PlayerSprite.SpriteType.JumpL)
+              
+                    if (Game.player_sprite.current == PlayerSprite.SpriteType.Jump || Game.player_sprite.current == PlayerSprite.SpriteType.JumpL || Game.player_sprite.current == PlayerSprite.SpriteType.Falling)
                     {
                         if (Game.player_sprite.UPlayerPosition.X > 18 * 3f / 2)
                         {
@@ -96,7 +94,7 @@ public class KeyboardController : IController
                     {
                         Game.player_sprite.current = PlayerSprite.SpriteType.MotionL;
                     }
-                }
+               
                 Game.player_sprite.left = true;
 
             }
@@ -150,8 +148,7 @@ public class KeyboardController : IController
             if (currentKeyState.IsKeyDown(Keys.R))
             {
                 Game.ResetGame();
-            Game.player_sprite.Reset();
-            
+                Game.player_sprite.Reset();
             }
 
             // Control the fireball
@@ -169,15 +166,24 @@ public class KeyboardController : IController
 
             if (IsKeyPressed(Keys.D2, currentKeyState))
             {
-                Game.ChangeCurrLevel(2);
+                Game.SetLevel(2);
             Game.Fire = false;
             }
 
             if (IsKeyPressed(Keys.D1, currentKeyState))
             {
-                Game.ChangeCurrLevel(1);
+                Game.SetLevel(1);
             Game.Fire = false; 
             }
+
+            if (currentKeyState.IsKeyDown(Keys.S) || currentKeyState.IsKeyDown(Keys.Down))
+        {
+            Game.player_sprite.crouched = true;
+        }
+        else
+        {
+            Game.player_sprite.crouched = false;
+        }
 
     }
 }

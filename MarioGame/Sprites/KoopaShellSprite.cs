@@ -8,7 +8,7 @@ namespace MarioGame
         private const int SpriteWidth = 60;
         private const int SpriteHeight = 50;
         private const int SourceX = 360;
-        private const int SourceY = 4;
+        private int SourceY = 4;
         private SpriteBatch spriteBatch;
         private Texture2D texture;
         private Rectangle destinationRectangle;
@@ -17,15 +17,19 @@ namespace MarioGame
         public int posX { get; set; }
         public int posY { get; set; }
 
-        public KoopaShellSprite(Texture2D texture, SpriteBatch spriteBatch, int x, int y)
+        public KoopaShellSprite(Texture2D texture, SpriteBatch spriteBatch, int x, int y, int color)
         {
             this.spriteBatch = spriteBatch;
             this.texture = texture;
             posX = x;
             posY = y;
 
+            if(color == 2)
+            {
+                SourceY = 63;
+            }
             destinationRectangle = new Rectangle(posX, posY, SpriteWidth, SpriteHeight);
-            sourceRectangle = new Rectangle(SourceX, SourceY, 16, 18);
+            sourceRectangle = new Rectangle(SourceX, SourceY, 17, 16);
         }
 
         public Rectangle GetDestinationRectangle() => destinationRectangle;

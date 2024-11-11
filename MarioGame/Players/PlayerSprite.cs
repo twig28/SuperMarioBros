@@ -33,6 +33,7 @@ namespace MarioGame
         public bool isFalling= false;
         public bool invincible = false;
         public bool Star = false;
+        public bool crouched = false;
         private int time = -1;
         public int score = 0;
     
@@ -44,7 +45,6 @@ namespace MarioGame
         public float velocity = 0f;
         public GraphicsDeviceManager _graphics;
         public Game1 Game;
-        public int invincibletime = 3;
 
         public MotionPlayer MRplayer;
         public MotionPlayerLeft MLplayer;
@@ -67,6 +67,11 @@ namespace MarioGame
             PlayerSpeed = speed;
             _graphics = Graphics;
             Game = game;
+        }
+
+        public void setPosition(int x, int y)
+        {
+            this.UPlayerPosition = new Vector2(x, y);
         }
 
         public void intialize_player()
@@ -285,6 +290,7 @@ namespace MarioGame
         isFalling = false;
          invincible = false;
         current = PlayerSprite.SpriteType.Static;
+        crouched = false;
          UPlayerPosition = new Vector2(100, 500);
         }
 

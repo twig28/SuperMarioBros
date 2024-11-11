@@ -14,7 +14,6 @@ namespace MarioGame
         private bool _DefaultMoveMentDirection = true;
         private bool _alive = true;
         private double aliveTime = 0;
-        private double creationTime;
 
         public int setPosX { set => posX = value; }
         public int setPosY { set => posY = value; }
@@ -37,12 +36,11 @@ namespace MarioGame
 
         public Rectangle GetDestinationRectangle() => sprite.GetDestinationRectangle();
 
-        public KoopaShell(Texture2D texture, SpriteBatch spriteBatch, int x, int y)
+        public KoopaShell(Texture2D texture, SpriteBatch spriteBatch, int x, int y, int color)
         {
             posX = x;
             posY = y;
-            sprite = new KoopaShellSprite(texture, spriteBatch, posX, posY);
-            creationTime = 0;
+            sprite = new KoopaShellSprite(texture, spriteBatch, posX, posY, color);
         }
 
         public void Draw()

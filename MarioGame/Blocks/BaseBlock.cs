@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using MarioGame.Interfaces;
 
-namespace MarioGame.Blocks
+namespace MarioGame
 {
 	public abstract class BaseBlock : IBlock
 	{

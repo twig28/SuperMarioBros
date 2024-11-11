@@ -21,6 +21,7 @@ namespace MarioGame
         private double timeElapsed = 0;
         private double timeElapsedSinceLastUpdate = 0;
         private double elapsedTimeForShellAnim = 0.7;
+        int color = 0;
 
         public bool ChangeDirection { get; set; }
         public int posX { get; set; }
@@ -28,15 +29,20 @@ namespace MarioGame
 
         public Rectangle GetDestinationRectangle() => DestinationRectangle;
 
-        public KoopaSprite(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
+        public KoopaSprite(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y, int color)
         {
             sb = SpriteBatch;
             posX = X;
             posY = Y;
             texture = Texture;
+            if(color == 2)
+            {
+                SourceY = 60;
+            }
             DestinationRectangle = new Rectangle(posX, posY, SpriteWidth, SpriteHeight);
             SourceRectangle = new Rectangle(SourceX, SourceY, SourceWidth, SourceHeight);
-            ChangeDirection = false;
+            ChangeDirection = true;
+            this.color = color;
         }
 
         public void Draw()

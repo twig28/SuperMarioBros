@@ -45,36 +45,6 @@ namespace MarioGame
             return CollisionDirection.Side;
         }
 
-        static public void CheckEnemyBlockCollisions(List<IEnemy> enemies, List<IBlock> blocks)
-        {
-            foreach (IEnemy enemy in enemies)
-            {
-                // Piranhas have no collision with blocks
-                if (!(enemy is Piranha))
-                {
-                    foreach (IBlock block in blocks)
-                    {
-                        CollisionDirection collisionDirection = GetCollisionDirection(block.GetDestinationRectangle(), enemy.GetDestinationRectangle());
-
-                        if (collisionDirection == CollisionDirection.Above)
-                        {
-                            enemy.setPosY = (int)block.Position.Y - enemy.GetDestinationRectangle().Height;
-                        }
-                        else if (collisionDirection == CollisionDirection.Side)
-                        {
-                            // Allow side collision if enemy's bottom is not within a tolerance of the block's top (10)
-                            if (enemy.GetDestinationRectangle().Bottom > block.GetDestinationRectangle().Top + 10)
-                            {
-                                enemy.DefaultMoveMentDirection = !enemy.DefaultMoveMentDirection;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        //function that has a for each between item and blocks/obstacles
-
         public static void CheckItemBlockCollision(List<IBlock> blocks, List<IItem> items)
         {
             Rectangle itemRectangle;
@@ -105,297 +75,75 @@ namespace MarioGame
             }
         }
 
-        //function that has a for each between mario and blocks/obstacles
-        public static void CheckMarioBlockCollision(PlayerSprite mario, List<IBlock> blocks, List<IItem> items)
-        {
-            if (mario.current != PlayerSprite.SpriteType.Damaged)
-            {
-                List<IBlock> blocksToRemove = new List<IBlock>();
-                List<IBlock> StandingBlock = new List<IBlock>();
-                List<IBlock> BelowBlock = new List<IBlock>();
-
-                foreach (IBlock block in blocks)
-                {
-                    Rectangle block_rec = block.GetDestinationRectangle();
-                    Rectangle mario_rec = mario.GetDestinationRectangle();
-                    if (mario_rec.Intersects(block_rec))
-                    {
-                        if (mario.UPlayerPosition.Y < block_rec.Top)
-                        {
-                            StandingBlock.Add(block);
-                            if (!mario.isGrounded)
-                            {
-                                mario.isGrounded = true;
-                                mario.isJumping = false;
-                                mario.velocity = 0f;
-                               // mario.Fallplayer.Speed = 0f;
-                                if (!mario.left)
-                                {
-                                    mario.current = PlayerSprite.SpriteType.Static;
-                                }
-                                else
-                                {
-                                    mario.current = PlayerSprite.SpriteType.StaticL;
-                                }
-                            }
-                            if (mario.Big || mario.Fire || mario.Star)
-                            {
-                                mario.UPlayerPosition.Y = block_rec.Top - mario_rec.Height / 2 + 26;
-                            }
-                            else if (!mario.Big && !mario.Fire)
-                            {
-                                mario.UPlayerPosition.Y = block_rec.Top - mario_rec.Height / 2 + 2;
-
-                            }
-                        }
-                        else if (mario.UPlayerPosition.Y > block_rec.Bottom && !mario.isGrounded && mario.UPlayerPosition.X < block_rec.Right && mario.UPlayerPosition.X > block_rec.Left)
-                        {
-                            mario.velocity = 0f;
-                            // this is a mystery block
-                            MysteryBlock mystery = block as MysteryBlock;
-                            if (mystery != null && mystery.IsOpened == false)
-                            {
-                                mystery.OnCollide();
-                                // should have a coin factory to create coins
-                                Texture2D coinTexture = Game1.Instance.Content.Load<Texture2D>("smb_items_sheet");
-                                float xOffset = block_rec.Width / 2 - 16;
-                                var coin = new Coin(coinTexture, block.Position - new Vector2(-xOffset, block_rec.Height));
-                                items.Add(coin);
-
-                                coin.Velocity = new Vector2(0f, -3f) * 30f;
-                                coin.GravityScale = 15.0f;
-                                coin.EnableGravity = true;
-                                block.OnCollide(); // should move all collision logic to items
-                            }
-                            if (mario.Big || mario.Fire || mario.Star)
-                            {
-                                if (block.IsBreakable)
-                                {
-                                    blocksToRemove.Add(block);
-                                }
-                                
-                                    mario.UPlayerPosition.Y = block_rec.Bottom + mario_rec.Height / 2 + 24;
-
-                                
-                            }
-                            else
-                            {
-                                mario.UPlayerPosition.Y = block_rec.Bottom + mario_rec.Height / 2 + 2;
-
-                            }
-                            /*if(write for if this block is mystery block)
-                            {
-                             1.  this block change to common state, i.e every mystery block can only be turn for one time
-                             2.item come ou of mystery block and ?move?
-                            }
-                            */
-                        }
-                    }
-                    else
-                    {
-                        if (StandingBlock.Contains(block))
-                        {
-                            StandingBlock.Remove(block);
-                        }
-                    }
-                }
-
-                if (StandingBlock.Count == 0 && mario.isGrounded)
-                {
-
-                    mario.isGrounded = false;
-                    mario.isFalling = true;
-                    mario.current = PlayerSprite.SpriteType.Falling;
-                }
-
-                foreach (IBlock block in blocks)
-                {
-                    Rectangle block_rec = block.GetDestinationRectangle();
-                    Rectangle mario_rec = mario.GetDestinationRectangle();
-
-                    if (!StandingBlock.Contains(block) && mario_rec.Intersects(block_rec))
-                    {
-                        
-                        if (mario.Star && block.IsBreakable)
-                        {
-                            blocksToRemove.Add(block);
-                        }
-                        
-                        else
-                         {
-                        if (mario_rec.Right >= block_rec.Left && mario_rec.Left < block_rec.Left)
-                        {
-                            mario.UPlayerPosition.X = block_rec.Left - mario_rec.Width / 2;
-                        }
-                        else if (mario_rec.Left <= block_rec.Right && mario_rec.Right > block_rec.Right)
-                        {
-                            mario.UPlayerPosition.X = block_rec.Right + mario_rec.Width / 2;
-                        }
-                         }
-
-                    }
-
-
-                }
-                foreach (IBlock block in blocksToRemove)
-                {
-                    blocks.Remove(block);
-                }
-            }
-        }
-
-        //function that has a for each between enemies and other enemies
-        public static void CheckEnemyEnemyCollision(List<IEnemy> enemies, GameTime gt)
-        {
-            foreach (IEnemy enemy in enemies)
-            {
-                foreach (IEnemy enemy2 in enemies)
-                {
-                    if (enemy2 == enemy) { continue; }
-                    if (GetCollisionDirection(enemy.GetDestinationRectangle(), enemy2.GetDestinationRectangle()) != CollisionDirection.None && enemy2.getdeathStartTime <= 0)
-                    {
-                        enemy.DefaultMoveMentDirection = !enemy.DefaultMoveMentDirection;
-                        if (enemy is KoopaShell && enemy2.getdeathStartTime <= 0)
-                        {
-                            enemy2.TriggerDeath(gt, false);
-                        }
-                    }
-                }
-            }
-        }
-
-        public static void CheckMarioEnemyCollision(PlayerSprite mario, ref List<IEnemy> enemies, GameTime gt)
-        {
-            bool toDie = false;
-            IEnemy enemyToRemove = null;
-            IEnemy enemyToAdd = null;
-            foreach (IEnemy enemy in enemies)
-            {
-                if (enemy.Alive == false)
-                {
-                    enemyToRemove = enemy;
-                }
-                if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) == CollisionDirection.Below)
-                {
-                    if (enemy is Piranha)
-                    {
-                        toDie = true;
-                    }
-                    else
-                    {
-                        if (enemy is Koopa koopa && koopa.getdeathStartTime <= 0)
-                        {
-                            enemy.TriggerDeath(gt, true);
-                            //spawn new koopa (which includes triggering death)
-                            KoopaShell shell = koopa.SpawnKoopa(gt);
-                            enemyToAdd = shell;
-
-                            mario.velocity = -10f;
-                        }
-                        else if (enemy is KoopaShell shell && !shell.getIsMoving())
-                        {
-                                if (mario.current == PlayerSprite.SpriteType.Motion || mario.current == PlayerSprite.SpriteType.Jump)
-                                {
-                                    shell.Start(true);
-                                }
-                                if ((mario.current == PlayerSprite.SpriteType.MotionL || mario.current == PlayerSprite.SpriteType.JumpL))
-                                {
-                                    shell.Start(false);
-                                }
-                        }
-                        //is normal enemy
-                        else
-                        {
-                            if (enemy.getdeathStartTime <= 0)
-                            {
-                                mario.velocity = -10f;
-                            }
-                            if(enemy is not KoopaShell) enemy.TriggerDeath(gt, true);
-                        }
-                    }
-                }
-                else if (GetCollisionDirection(mario.GetDestinationRectangle(), enemy.GetDestinationRectangle()) != CollisionDirection.None && enemy.getdeathStartTime <= 0)
-                {
-                    if(mario.Star)
-                    {
-                        enemy.TriggerDeath(gt, false);
-                    }
-                    if(enemy is KoopaShell shell && !shell.getIsMoving())
-                    {
-                        if (mario.current == PlayerSprite.SpriteType.Motion || mario.current == PlayerSprite.SpriteType.Jump)
-                        {
-                            shell.Start(true);
-                        }
-                        if ((mario.current == PlayerSprite.SpriteType.MotionL || mario.current == PlayerSprite.SpriteType.JumpL))
-                        {
-                            shell.Start(false);
-                        }
-                    }
-                    else
-                    {
-                        toDie = true;
-                    }
-
-                    if (toDie)
-                    {
-                        if (mario.Big || mario.Fire)
-                        {
-                            mario.Big = false;
-                            mario.Fire = false;
-                            mario.invincible = true;
-                        }
-                        else if (!mario.invincible)
-                        {
-                            mario.current = PlayerSprite.SpriteType.Damaged;
-                        }
-                        toDie = false;
-                    }
-                }
-            }
-            if (enemyToRemove != null) { enemies.Remove(enemyToRemove); }
-            if (enemyToAdd != null) { enemies.Add(enemyToAdd); }
-        }
-
         public static void CheckMarioItemCollision(PlayerSprite mario, List<IItem> items, GameTime gt)
         {
-            IItem itemRemove = null;
+            IItem itemToRemove = null;
+
             foreach (IItem item in items)
             {
-                Rectangle mario_rec = mario.GetDestinationRectangle();
-                Rectangle item_rec = item.getDestinationRectangle();
-
-                if (mario_rec.Intersects(item_rec))
+                if (mario.GetDestinationRectangle().Intersects(item.getDestinationRectangle()))
                 {
-                    itemRemove = item;
-
-                    if(item.getName() == "Star")
-                    {
-                        mario.Star = true;
-                    }
-                   else if (item.getName() == "FireFlower")
-                    {
-                                if (!mario.Star)
-                                {
-                                    mario.Big = false;
-                                    mario.Fire = true;
-                                    mario.Game.Fire = true;
-                                }
-                    }
-                    else if (item.getName() == "Mushroom")
-                    {
-                        if (!mario.Fire && !mario.Star)
-                        {
-                            mario.Big = true;
-                        }
-                    }
-                    else if (item.getName() == "Coin")
-                    {
-                        mario.score += 1;
-                    }
+                    itemToRemove = item;
+                    ApplyItemEffect(mario, item);
                 }
             }
-            items.Remove(itemRemove);
+
+            if (itemToRemove != null)
+            {
+                items.Remove(itemToRemove);
+            }
         }
+
+        private static void ApplyItemEffect(PlayerSprite mario, IItem item)
+        {
+            switch (item.getName())
+            {
+                case "Star":
+                    ActivateStarPower(mario);
+                    break;
+
+                case "FireFlower":
+                    ActivateFirePower(mario);
+                    break;
+
+                case "Mushroom":
+                    GrowMario(mario);
+                    break;
+
+                case "Coin":
+                    IncreaseScore(mario);
+                    break;
+            }
+        }
+
+        private static void ActivateStarPower(PlayerSprite mario)
+        {
+            mario.Star = true;
+        }
+
+        private static void ActivateFirePower(PlayerSprite mario)
+        {
+            if (!mario.Star)
+            {
+                mario.Big = false;
+                mario.Fire = true;
+                mario.Game.Fire = true;
+            }
+        }
+
+        private static void GrowMario(PlayerSprite mario)
+        {
+            if (!mario.Fire && !mario.Star)
+            {
+                mario.Big = true;
+            }
+        }
+
+        private static void IncreaseScore(PlayerSprite mario)
+        {
+            mario.score += 1;
+        }
+
 
         public static void CheckFireballBlockCollision(List<IBall> fireballs, List<IBlock> blocks)
         {
@@ -447,7 +195,6 @@ namespace MarioGame
             foreach (IEnemy enemy in enemyToDie)
             {
                 enemy.TriggerDeath(gm, stomped);
-                enemies.Remove(enemy);
             }
         }
 
