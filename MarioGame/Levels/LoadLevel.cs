@@ -44,7 +44,7 @@ namespace MarioGame.Levels
             Game1.Instance.SetBackgroundColor(parsedColorPalette);
 
             // Set Mario's starting position when loading
-            // game.player_sprite.SetPosition(marioPosition);
+            game.player_sprite.setPosition((int)(marioPosition.X), (int)(marioPosition.Y));
 
             foreach (var entity in entities)
             {
