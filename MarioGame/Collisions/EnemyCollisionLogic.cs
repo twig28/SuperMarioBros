@@ -1,4 +1,5 @@
-﻿using MarioGame.Interfaces;
+﻿using MarioGame.Blocks;
+using MarioGame.Interfaces;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace MarioGame.Collisions
 {
     internal class EnemyCollisionLogic
     {
-        public static void CheckEnemyBlockCollisions(List<IEnemy> enemies, List<IBlock> blocks)
+        public static void CheckEnemyBlockCollisions(List<IEnemy> enemies, List<IBlock> blocks, GameTime gt)
         {
             foreach (IEnemy enemy in enemies)
             {
@@ -18,11 +19,11 @@ namespace MarioGame.Collisions
                 if (enemy.getdeathStartTime > 0) continue;
                 foreach (IBlock block in blocks)
                 {
-                    HandleEnemyBlockCollision(enemy, block);
+                    HandleEnemyBlockCollision(enemy, block, gt);
                 }
             }
         }
-        private static void HandleEnemyBlockCollision(IEnemy enemy, IBlock block)
+        private static void HandleEnemyBlockCollision(IEnemy enemy, IBlock block, GameTime gt)
         {
             CollisionDirection collisionDirection = GetCollisionDirection(block.GetDestinationRectangle(), enemy.GetDestinationRectangle());
 
@@ -30,6 +31,10 @@ namespace MarioGame.Collisions
             if (collisionDirection == CollisionDirection.Above)
             {
                 enemy.setPosY = (int)block.Position.Y - enemy.GetDestinationRectangle().Height;
+                if(block is Block b && b.getIsBumped() || block is MysteryBlock b2 && b2.getIsBumped())
+                {
+                    enemy.TriggerDeath(gt, false);
+                }
             }
             // Handle side collision only if the enemy is near the block's top
             else if (collisionDirection == CollisionDirection.Side)

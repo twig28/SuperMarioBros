@@ -115,7 +115,7 @@ namespace MarioGame.Collisions
         {
             mario.velocity = 0f;
 
-            if (block is MysteryBlock mystery && !mystery.IsOpened)
+            if (block is MysteryBlock mystery && !mystery.IsOpened && !mystery.isBumped)
             {
                 OpenMysteryBlock(mystery, items, block);
             }
@@ -131,6 +131,10 @@ namespace MarioGame.Collisions
             else
             {
                 mario.UPlayerPosition.Y = block.GetDestinationRectangle().Bottom + mario.GetDestinationRectangle().Height / 2 + 2;
+                if(block is Block b)
+                {
+                    b.Bump();
+                }
             }
         }
 
@@ -147,7 +151,6 @@ namespace MarioGame.Collisions
             coin.EnableGravity = true;
 
             items.Add(coin);
-            block.OnCollide(); // Notify block that it was collided with
         }
 
         private static void HandleSideCollision(PlayerSprite mario, IBlock block)

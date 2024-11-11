@@ -110,7 +110,7 @@ namespace MarioGame
             base.Initialize();
 
             //TEMP
-            player_sprite.setPosition(500, 500);
+            player_sprite.setPosition(3750, 500);
 
         }
 
@@ -137,7 +137,7 @@ namespace MarioGame
             keyControl.HandleInputs();
             mouseControl.HandleInputs();
 
-            EnemyCollisionLogic.CheckEnemyBlockCollisions(enemies, blocks);
+            EnemyCollisionLogic.CheckEnemyBlockCollisions(enemies, blocks, gameTime);
             MarioBlockCollisionLogic.CheckMarioBlockCollision(player_sprite, blocks, items);
             EnemyCollisionLogic.CheckEnemyEnemyCollision(enemies, gameTime);
             MarioEnemyCollisionLogic.CheckMarioEnemyCollision(player_sprite, ref enemies, gameTime);
