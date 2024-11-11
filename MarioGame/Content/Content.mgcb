@@ -25,12 +25,6 @@
 /processorParam:TextureFormat=Color
 /build:Resource/blocks.png
 
-#begin Resource/bosspain.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Resource/bosspain.wav
-
 #begin Resource/coin.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -115,6 +109,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Resource/jump.wav
+
+#begin Resource/killEnemy.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Resource/killEnemy.wav
 
 #begin Resource/marioStatic.png
 /importer:TextureImporter

@@ -104,6 +104,7 @@ public class KeyboardController : IController
                 if (Game.player_sprite.current == PlayerSprite.SpriteType.MotionL || Game.player_sprite.current == PlayerSprite.SpriteType.StaticL)
                 {
                     Game.player_sprite.current = PlayerSprite.SpriteType.JumpL;
+                    Game1.Instance.GetSoundLib().PlaySound("fireball");
                     Game.player_sprite.left = true;
                 }
                 else if (Game.player_sprite.current == PlayerSprite.SpriteType.Motion || Game.player_sprite.current == PlayerSprite.SpriteType.Static)
