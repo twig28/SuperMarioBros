@@ -1,8 +1,7 @@
-ColorPallete,2
+ColorPallete,1
 MarioPosition,50,450
 --------------------
 Sign,30,70
-Koopa,30,70
 LargeHill,0,460
 SmallHill,800,530
 SmallBush,1100,540
@@ -295,15 +294,6 @@ BaseBlock,4050,600
 BaseBlock,4100,700
 BaseBlock,4100,650
 BaseBlock,4100,600
-BaseBlock,4150,700
-BaseBlock,4150,650
-BaseBlock,4150,600
-BaseBlock,4200,700
-BaseBlock,4200,650
-BaseBlock,4200,600
-BaseBlock,4250,700
-BaseBlock,4250,650
-BaseBlock,4250,600
 BaseBlock,4300,700
 BaseBlock,4300,650
 BaseBlock,4300,600
