@@ -67,7 +67,7 @@ namespace MarioGame
             else
             {
                 timeElapsed = gm.TotalGameTime.TotalSeconds;
-                posX += _DefaultMoveMentDirection ? 1 : -1;
+                posX += _DefaultMoveMentDirection ? -1 : 1;
                 posY += 5;
 
                 sprite.posX = posX;

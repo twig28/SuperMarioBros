@@ -51,6 +51,16 @@ BrickBlock,4450,200
 BrickBlock,4500,200
 MysteryBlock,4550,200
 BrickBlock,4550,400
+SmallBush,4350,540
+LargeHill,4750,460
+Goomba,4800,500
+Goomba,4900,500
+BrickBlock,4975,400
+BrickBlock,4925,400
+MysteryBlock,5350,400
+Koopa,5350,500
+LargeBush,5350,535
+MysteryBlock,5500,400
 BaseBlock,0,700
 BaseBlock,0,650
 BaseBlock,0,600

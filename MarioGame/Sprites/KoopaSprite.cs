@@ -41,7 +41,7 @@ namespace MarioGame
             }
             DestinationRectangle = new Rectangle(posX, posY, SpriteWidth, SpriteHeight);
             SourceRectangle = new Rectangle(SourceX, SourceY, SourceWidth, SourceHeight);
-            ChangeDirection = false;
+            ChangeDirection = true;
             this.color = color;
         }
 
