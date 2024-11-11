@@ -8,6 +8,7 @@ using System.IO;
 using System;
 using MarioGame.Scenery;
 using System.Reflection.PortableExecutable;
+using System.Diagnostics;
 
 namespace MarioGame.Levels
 {
@@ -44,7 +45,7 @@ namespace MarioGame.Levels
             Game1.Instance.SetBackgroundColor(parsedColorPalette);
 
             // Set Mario's starting position when loading
-            // game.player_sprite.SetPosition(marioPosition);
+            game.player_sprite.setPosition((int)(marioPosition.X), (int)(marioPosition.Y));
 
             foreach (var entity in entities)
             {
@@ -84,13 +85,13 @@ namespace MarioGame.Levels
                         break;
                     case "LongPipeDestination":
                         var longPipeD = new Pipe(position, sceneryTextures);
-                        longPipeD.makePipeLong();
                         if (pipeDestinations.Count > 0)
                         {
                             var destination = pipeDestinations[0];
                             longPipeD.setIsEntrance(destination.LevelDest, destination.X, destination.Y);
                             pipeDestinations.RemoveAt(0);
                         }
+                        longPipeD.makePipeLong();
                         blocks.Add(longPipeD);
                         break;
                     case "Goomba":
@@ -188,7 +189,7 @@ namespace MarioGame.Levels
                     var line = reader.ReadLine();
                     var values = line.Split(',');
 
-                    if (values[0] == "PipeDestination")
+                    if (values[0] == "PipeDestination" || values[0] == "LongPipeDestination")
                     {
                         // Parse and add the PipeDestination to the list
                         string objectType = values[0];

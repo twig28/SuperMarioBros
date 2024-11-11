@@ -76,7 +76,7 @@ internal class Goomba : IEnemy
                 // Check if 3 seconds have passed since the death animation started
                 if (gm.TotalGameTime.TotalSeconds - deathStartTime < 3.0)
                 {
-                    posY += 3; 
+                    posY += 10; 
                     sprite.posX = posX;
                     sprite.posY = posY;
                 }
