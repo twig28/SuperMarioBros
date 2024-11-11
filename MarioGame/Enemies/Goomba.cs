@@ -36,10 +36,10 @@ internal class Goomba : IEnemy
     public double getdeathStartTime => deathStartTime;
 
 
-    public Goomba(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
+    public Goomba(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y, int pallette)
     {
         posX = X; posY = Y;
-        sprite = new GoombaSprite(Texture, SpriteBatch, posX, posY);
+        sprite = new GoombaSprite(Texture, SpriteBatch, posX, posY, pallette);
     }
 
     public void Draw()

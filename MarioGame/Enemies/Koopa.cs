@@ -41,12 +41,12 @@ namespace MarioGame
 
         private bool _DefaultMoveMentDirection = true;
 
-        public Koopa(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
+        public Koopa(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y, int color)
         {
             posX = X;
             posY = Y;
-            sprite = new KoopaSprite(Texture, SpriteBatch, posX, posY);
-            KoopaShell = new KoopaShell(Texture, SpriteBatch, posX, posY);
+            sprite = new KoopaSprite(Texture, SpriteBatch, posX, posY, color);
+            KoopaShell = new KoopaShell(Texture, SpriteBatch, posX, posY, color);
         }
 
         public void Draw()

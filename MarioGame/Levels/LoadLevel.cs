@@ -37,6 +37,7 @@ namespace MarioGame.Levels
             filePath = Path.Combine("..", "..", "..", "Levels", $"Level{level}.csv");
 
             var (colorPalette, marioPosition, entities, pipeDestinations) = LoadEntitiesFromCSV(filePath);
+            int color = int.Parse(colorPalette);
 
             // Ensure colorPalette is parsed as an integer and used correctly
             int parsedColorPalette = int.Parse(colorPalette);
@@ -93,10 +94,11 @@ namespace MarioGame.Levels
                         blocks.Add(longPipeD);
                         break;
                     case "Goomba":
-                        enemies.Add(new Goomba(enemyTextures, game._spriteBatch, entity.X, entity.Y));
+
+                        enemies.Add(new Goomba(enemyTextures, game._spriteBatch, entity.X, entity.Y, color));
                         break;
                     case "Koopa":
-                        enemies.Add(new Koopa(enemyTextures, game._spriteBatch, entity.X, entity.Y));
+                        enemies.Add(new Koopa(enemyTextures, game._spriteBatch, entity.X, entity.Y, color));
                         break;
                     case "Piranha":
                         enemies.Add(new Piranha(enemyTextures, game._spriteBatch, entity.X, entity.Y));

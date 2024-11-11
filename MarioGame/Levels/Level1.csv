@@ -1,7 +1,8 @@
-ColorPallete,1
+ColorPallete,2
 MarioPosition,50,450
 --------------------
 Sign,30,70
+Koopa,30,70
 LargeHill,0,460
 SmallHill,800,530
 SmallBush,1100,540

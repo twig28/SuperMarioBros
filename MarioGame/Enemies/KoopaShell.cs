@@ -36,11 +36,11 @@ namespace MarioGame
 
         public Rectangle GetDestinationRectangle() => sprite.GetDestinationRectangle();
 
-        public KoopaShell(Texture2D texture, SpriteBatch spriteBatch, int x, int y)
+        public KoopaShell(Texture2D texture, SpriteBatch spriteBatch, int x, int y, int color)
         {
             posX = x;
             posY = y;
-            sprite = new KoopaShellSprite(texture, spriteBatch, posX, posY);
+            sprite = new KoopaShellSprite(texture, spriteBatch, posX, posY, color);
         }
 
         public void Draw()
