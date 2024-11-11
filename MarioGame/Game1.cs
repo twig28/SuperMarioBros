@@ -109,6 +109,9 @@ namespace MarioGame
 
             base.Initialize();
 
+            //TEMP
+            player_sprite.setPosition(500, 500);
+
         }
 
         protected override void LoadContent()
@@ -221,6 +224,7 @@ namespace MarioGame
 
             //draw string for record score of mario
             spriteBatchText.DrawString(font, "Coins: " + player_sprite.score, new Vector2(40, 0), Color.White);
+            spriteBatchText.DrawString(font, "Debug Mario Pos: " + player_sprite.UPlayerPosition, new Vector2(20, 600), Color.Yellow);
             //Score.Draw(this, _spriteBatch,100);
 
             spriteBatchText.End();

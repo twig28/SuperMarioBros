@@ -30,12 +30,14 @@ namespace MarioGame.Collisions
 
             if (collisionDirection == CollisionDirection.Above)
             {
+                // Position the enemy on top of the block
                 enemy.setPosY = (int)block.Position.Y - enemy.GetDestinationRectangle().Height;
             }
             else if (collisionDirection == CollisionDirection.Side)
             {
-                // Allow side collision if enemy's bottom is not within a tolerance of the block's top (10)
-                if (enemy.GetDestinationRectangle().Bottom > block.GetDestinationRectangle().Top + 10)
+                // Only change direction if the enemy is aligned with the side of the block and is close to the top of the block
+                if (enemy.GetDestinationRectangle().Bottom >= block.GetDestinationRectangle().Top - 1 &&
+                    enemy.GetDestinationRectangle().Bottom <= block.GetDestinationRectangle().Top + 5)
                 {
                     enemy.DefaultMoveMentDirection = !enemy.DefaultMoveMentDirection;
                 }
@@ -68,6 +70,5 @@ namespace MarioGame.Collisions
                 enemy2.TriggerDeath(gt, false);
             }
         }
-
     }
 }

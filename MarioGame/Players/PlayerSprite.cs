@@ -69,6 +69,11 @@ namespace MarioGame
             Game = game;
         }
 
+        public void setPosition(int x, int y)
+        {
+            this.UPlayerPosition = new Vector2(x, y);
+        }
+
         public void intialize_player()
         {
             //Player initialize
