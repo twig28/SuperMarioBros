@@ -36,7 +36,7 @@ namespace MarioGame
         {
             isLong = true;
             width = 240;
-            height = 700;
+            height = 575;
             SourceRectangle = new Rectangle(83, 318, 62, 132);
             DestinationRectangle = new Rectangle((int)Position.X, (int)Position.Y, width, height);
         }

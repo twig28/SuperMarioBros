@@ -43,7 +43,8 @@ namespace MarioGame.Collisions
                     (Vector2 destination, int level) = p.GetDestination();
                     Game1.Instance.SetLevel(level);
                     //TODO move mario to destination spot
-                    break;
+                    mario.setPosition((int)destination.X, (int)destination.Y);
+                    continue;
                 }
 
                 if (marioRect.Intersects(blockRect))
