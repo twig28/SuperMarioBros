@@ -91,7 +91,6 @@ namespace MarioGame
             _graphics.PreferredBackBufferHeight = 750;
 
             _graphics.ApplyChanges();
-            soundLib = new SoundLib(); 
             Instance = this;
         }
 
@@ -105,6 +104,7 @@ namespace MarioGame
             font = Content.Load<SpriteFont>("text");
 
             SetLevel(1);
+            soundLib.PlayTheme();
 
             base.Initialize();
 
@@ -122,7 +122,6 @@ namespace MarioGame
             //Load the sound
             soundLib=new SoundLib();
             soundLib.LoadContent(Content);
-            soundLib.PlayTheme();
             enemies = new List<IEnemy>();
             blocks = new List<IBlock>();
             items = new List<IItem>();

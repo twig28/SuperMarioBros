@@ -1,7 +1,7 @@
 ColorPallete,2
 MarioPosition,50,0
 --------------------
-LongPipeDestination,675,30,1,10000,500
+LongPipeDestination,675,30,1,9075,400
 BaseBlock,0,700
 BaseBlock,0,650
 BaseBlock,0,600
