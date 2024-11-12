@@ -1,36 +1,35 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
-//first created SoundLib private SoundLib soundLib; then choose your sound  soundLib.PlaySound("fireball");
+
 namespace MarioGame
 {
     public class SoundLib
     {
-        // Dictionary to store sound effects by name
-        private Dictionary<string, SoundEffect> soundEffects;
+        private Dictionary<string, SoundEffect> soundEffects; 
+        private SoundEffectInstance themeInstance; 
 
-        /// <summary>
-        /// Initializes the SoundLib instance with an empty dictionary for sound effects.
-        /// </summary>
         public SoundLib()
         {
             soundEffects = new Dictionary<string, SoundEffect>();
         }
 
         /// <summary>
-        /// Loads sound effects from the ContentManager. Call this once during initialization.
+        /// Loads sound effects from the ContentManager. This method should be called once during initialization.
         /// </summary>
         /// <param name="content">ContentManager used to load sound assets.</param>
         public void LoadContent(ContentManager content)
         {
-            // Load each sound effect and add it to the dictionary
+           
             soundEffects["jump"] = content.Load<SoundEffect>("jump");
             soundEffects["fireball"] = content.Load<SoundEffect>("fireball");
             soundEffects["coin"] = content.Load<SoundEffect>("coin");
             soundEffects["killEnemy"] = content.Load<SoundEffect>("killEnemy");
-            soundEffects["dokey"] = content.Load<SoundEffect>("dokey");
-            soundEffects["marioDie"] = content.Load<SoundEffect>("marioDie");
-             soundEffects["gameOver"] = content.Load<SoundEffect>("gameOver");
+
+            
+            var theme = content.Load<SoundEffect>("theme"); 
+            themeInstance = theme.CreateInstance();
+            themeInstance.IsLooped = true; // keep playing
         }
 
         /// <summary>
@@ -42,6 +41,50 @@ namespace MarioGame
             if (soundEffects.ContainsKey(soundName))
             {
                 soundEffects[soundName].Play();
+            }
+        }
+
+        /// <summary>
+        /// Starts playing the theme song in a loop if it's not already playing.
+        /// </summary>
+        public void PlayTheme()
+        {
+            if (themeInstance.State != SoundState.Playing)
+            {
+                themeInstance.Play();
+            }
+        }
+
+        /// <summary>
+        /// Pauses the theme song if it's currently playing.
+        /// </summary>
+        public void PauseTheme()
+        {
+            if (themeInstance.State == SoundState.Playing)
+            {
+                themeInstance.Pause();
+            }
+        }
+
+        /// <summary>
+        /// Resumes the theme song if it's currently paused.
+        /// </summary>
+        public void ResumeTheme()
+        {
+            if (themeInstance.State == SoundState.Paused)
+            {
+                themeInstance.Resume();
+            }
+        }
+
+        /// <summary>
+        /// Stops the theme song from playing.
+        /// </summary>
+        public void StopTheme()
+        {
+            if (themeInstance.State != SoundState.Stopped)
+            {
+                themeInstance.Stop();
             }
         }
     }

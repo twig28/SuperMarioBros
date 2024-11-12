@@ -225,3 +225,9 @@
 /processorParam:TextureFormat=Compressed
 /build:Resource/text.spritefont
 
+#begin Resource/theme.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Resource/theme.wav
+
