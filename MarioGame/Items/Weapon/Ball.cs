@@ -52,6 +52,7 @@ namespace MarioGame
             {
                 balls.Add(new Ball(playerPosition, ballSpeed, true));
                 controller.keyboardPermitZ = false; // Reset key flag
+                soundLib.PlaySound("dokey");
                 soundLib.PlaySound("fireball");
             }
 
@@ -59,6 +60,7 @@ namespace MarioGame
             {
                 balls.Add(new Ball(playerPosition, ballSpeed, false));
                 controller.keyboardPermitN = false; // Reset key flag
+                soundLib.PlaySound("dokey");
                  soundLib.PlaySound("fireball");
             }
         }

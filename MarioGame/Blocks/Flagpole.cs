@@ -26,7 +26,7 @@ namespace MarioGame.Blocks
         {
             Position = position;
             Texture = texture;
-            DestinationRectangle = new Rectangle((int)position.X, (int)position.Y, 75, 400);
+            DestinationRectangle = new Rectangle((int)position.X, (int)position.Y, 75, 500);
             IsCollided = false;
         }
 

@@ -91,7 +91,6 @@ namespace MarioGame
             _graphics.PreferredBackBufferHeight = 750;
 
             _graphics.ApplyChanges();
-            soundLib = new SoundLib(); 
             Instance = this;
         }
 
@@ -105,11 +104,12 @@ namespace MarioGame
             font = Content.Load<SpriteFont>("text");
 
             SetLevel(1);
+            soundLib.PlayTheme();
 
             base.Initialize();
 
             //TEMP
-            player_sprite.setPosition(3750, 500);
+            //player_sprite.setPosition(3750, 500);
 
         }
 
@@ -117,10 +117,11 @@ namespace MarioGame
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             spriteBatchText = new SpriteBatch(GraphicsDevice);
+            
 
             //Load the sound
             soundLib=new SoundLib();
-             soundLib.LoadContent(Content);
+            soundLib.LoadContent(Content);
             enemies = new List<IEnemy>();
             blocks = new List<IBlock>();
             items = new List<IItem>();
@@ -165,7 +166,14 @@ namespace MarioGame
             Ball.UpdateAll(gameTime, GraphicsDevice.Viewport.Width);
             CollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime, false);
             CollisionLogic.CheckFireballBlockCollision(Ball.GetBalls(), blocks);
-
+            if (player_sprite.current == PlayerSprite.SpriteType.Damaged )
+            {
+                soundLib.StopTheme();
+            }
+            else
+            {
+                soundLib.PlayTheme();
+            }
             base.Update(gameTime);
         }
 

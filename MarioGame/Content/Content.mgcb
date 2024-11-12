@@ -31,6 +31,12 @@
 /processorParam:Quality=Best
 /build:Resource/coin.wav
 
+#begin Resource/dokey.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Resource/dokey.wav
+
 #begin Resource/File.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -67,6 +73,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Resource/fireballRight.png
+
+#begin Resource/gameOver.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Resource/gameOver.wav
 
 #begin Resource/GroundBlock.png
 /importer:TextureImporter
@@ -115,6 +127,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Resource/killEnemy.wav
+
+#begin Resource/marioDie.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Resource/marioDie.wav
 
 #begin Resource/marioStatic.png
 /importer:TextureImporter
@@ -206,4 +224,10 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Resource/text.spritefont
+
+#begin Resource/theme.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Resource/theme.wav
 
