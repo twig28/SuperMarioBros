@@ -28,6 +28,9 @@ namespace MarioGame
             soundEffects["fireball"] = content.Load<SoundEffect>("fireball");
             soundEffects["coin"] = content.Load<SoundEffect>("coin");
             soundEffects["killEnemy"] = content.Load<SoundEffect>("killEnemy");
+            soundEffects["dokey"] = content.Load<SoundEffect>("dokey");
+            soundEffects["marioDie"] = content.Load<SoundEffect>("marioDie");
+             soundEffects["gameOver"] = content.Load<SoundEffect>("gameOver");
         }
 
         /// <summary>
