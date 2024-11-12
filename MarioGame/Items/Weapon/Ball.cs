@@ -16,6 +16,8 @@ namespace MarioGame
         private BallSprite ballSprite;    // Sprite representation of the fireball
         private bool direction;           // Fireball direction: true = left, false = right
 
+        private SoundLib soundLib;        // Reference to SoundLib 
+
         // Static list to store all active fireball instances
         private static List<IBall> balls = new List<IBall>();
 
@@ -34,7 +36,6 @@ namespace MarioGame
             Speed = speed;
             IsVisible = true;
             lifeTime = 0f;              // Initialize lifetime to zero
-
             this.direction = direction;
             ballSprite = new BallSprite(direction);
         }
@@ -45,20 +46,20 @@ namespace MarioGame
         /// <param name="playerPosition">Current position of the player.</param>
         /// <param name="ballSpeed">Speed of the new fireballs.</param>
         /// <param name="controller">Keyboard controller instance.</param>
-        public static void CreateFireballs(Vector2 playerPosition, float ballSpeed, Controllers.KeyboardController controller)
+        public static void CreateFireballs(Vector2 playerPosition, float ballSpeed, Controllers.KeyboardController controller,SoundLib soundLib)
         {
             if (controller.keyboardPermitZ) // If 'Z' key is pressed for left fireball
             {
                 balls.Add(new Ball(playerPosition, ballSpeed, true));
                 controller.keyboardPermitZ = false; // Reset key flag
-                Game1.Instance.GetSoundLib().PlaySound("fireball");
+                soundLib.PlaySound("fireball");
             }
 
             if (controller.keyboardPermitN) // If 'N' key is pressed for right fireball
             {
                 balls.Add(new Ball(playerPosition, ballSpeed, false));
                 controller.keyboardPermitN = false; // Reset key flag
-                Game1.Instance.GetSoundLib().PlaySound("fireball");
+                 soundLib.PlaySound("fireball");
             }
         }
 

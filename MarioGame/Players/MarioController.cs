@@ -159,6 +159,7 @@ namespace MarioGame
 
             if (current == PlayerSprite.SpriteType.Jump)
             {
+                 
                 sourceRectangle.Clear();
 
                 if (Game.player_sprite.Star)

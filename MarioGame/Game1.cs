@@ -34,7 +34,7 @@ namespace MarioGame
         public bool Fire = false;
 
         public int CurrLevel { get; set; }
-
+        private SoundLib soundLib; 
         public void SetLevel(int level)
         {
             this.CurrLevel = level;
@@ -52,7 +52,6 @@ namespace MarioGame
         private List<IItem> items;
         private List<IScenery> scenery;
 
-        private SoundLib soundLib;
         public static Game1 Instance { get; private set; }
 
         public void ResetGame()
@@ -120,6 +119,7 @@ namespace MarioGame
             spriteBatchText = new SpriteBatch(GraphicsDevice);
 
             //Load the sound
+            soundLib=new SoundLib();
              soundLib.LoadContent(Content);
             enemies = new List<IEnemy>();
             blocks = new List<IBlock>();
@@ -161,7 +161,7 @@ namespace MarioGame
             }
 
             // Use the Ball class's static method to handle fireball inputs and update
-            Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl);
+            Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl,soundLib);
             Ball.UpdateAll(gameTime, GraphicsDevice.Viewport.Width);
             CollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime, false);
             CollisionLogic.CheckFireballBlockCollision(Ball.GetBalls(), blocks);
