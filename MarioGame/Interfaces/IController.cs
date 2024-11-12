@@ -10,7 +10,7 @@ namespace MarioGame
     //(most likely) need to use ICommand Structure
     public interface IController
     {
-        void HandleInputs();
+        void HandleInputs(PlayerSprite mario);
         bool IsKeyPressed(Keys key, KeyboardState currentKeyboardState);
     }
 }

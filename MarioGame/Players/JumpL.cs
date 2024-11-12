@@ -26,23 +26,23 @@ namespace MarioGame
             Game = game;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, PlayerSprite mario)
         {
 
             //for action jumping
-            if (Game.player_sprite.isGrounded)
+            if (mario.isGrounded)
             {
-                Game.player_sprite.isJumping = true;
-                Game.player_sprite.isGrounded = false;
-                Game.player_sprite.velocity = jumpSpeed;
-                Game.player_sprite.current = PlayerSprite.SpriteType.StaticL;
+                mario.isJumping = true;
+                mario.isGrounded = false;
+                mario.velocity = jumpSpeed;
+                mario.current = PlayerSprite.SpriteType.StaticL;
             }
 
 
-            if (Game.player_sprite.isJumping)
+            if (mario.isJumping)
             {
-                Game.player_sprite.velocity += gravity;
-                Position.Y += Game.player_sprite.velocity;
+                mario.velocity += gravity;
+                Position.Y += mario.velocity;
 
 
             }

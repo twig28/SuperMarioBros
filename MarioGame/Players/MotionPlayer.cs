@@ -31,7 +31,7 @@ public class MotionPlayer : IPlayer
 
         }
 
-        public void Update(GameTime gm)
+        public void Update(GameTime gm, PlayerSprite mario)
         {
             //make spirte animated with a fixed period
             float updatedSpeed = Speed * (float)gm.ElapsedGameTime.TotalSeconds;

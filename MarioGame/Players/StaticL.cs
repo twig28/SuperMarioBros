@@ -36,7 +36,7 @@ namespace MarioGame
 
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, PlayerSprite mario)
         {
             //static don't need to update status
         }

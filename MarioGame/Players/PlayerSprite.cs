@@ -46,15 +46,15 @@ namespace MarioGame
         public GraphicsDeviceManager _graphics;
         public Game1 Game;
 
-        public MotionPlayer MRplayer;
-        public MotionPlayerLeft MLplayer;
-        public Static Staplayer;
-        public StaticL StaLplayer;
-        public Jump Jumpplayer;
-        public Damaged Damagedplayer;
-        public Fall Fallplayer;
-        public JumpL JumpLplayer;
-        public MarioController Mario_state;
+        private MotionPlayer MRplayer;
+        private MotionPlayerLeft MLplayer;
+        private Static Staplayer;
+        private StaticL StaLplayer;
+        private Jump Jumpplayer;
+        private Damaged Damagedplayer;
+        private Fall Fallplayer;
+        private JumpL JumpLplayer;
+        private MarioController Mario_state;
         public SpriteType current = SpriteType.Static;
 
       
@@ -98,7 +98,7 @@ namespace MarioGame
         }
 
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, PlayerSprite mario)
         {
             // update based on current sprite type
             //below for checking current state of mario
@@ -126,37 +126,37 @@ namespace MarioGame
             if (current == SpriteType.Motion)
             {
                 MRplayer.Position = UPlayerPosition; //U means upated
-                MRplayer.Update(gameTime);
+                MRplayer.Update(gameTime,this);
                 UPlayerPosition = MRplayer.Position;
             }
             else if (current == SpriteType.MotionL)
             {
                 MLplayer.Position = UPlayerPosition;
-                MLplayer.Update(gameTime);
+                MLplayer.Update(gameTime,this);
                 UPlayerPosition = MLplayer.Position;
             }
             else if (current == SpriteType.Jump)
             {
                 Jumpplayer.Position = UPlayerPosition;
-                Jumpplayer.Update(gameTime);
+                Jumpplayer.Update(gameTime,this);
                 UPlayerPosition = Jumpplayer.Position;
             }
             else if (current == SpriteType.JumpL)
             {
                 JumpLplayer.Position = UPlayerPosition;
-                JumpLplayer.Update(gameTime);
+                JumpLplayer.Update(gameTime,this);
                 UPlayerPosition = JumpLplayer.Position;
             }
             else if (current == SpriteType.Damaged)
             {
                 Damagedplayer.Position = UPlayerPosition;
-                Damagedplayer.Update(gameTime);
+                Damagedplayer.Update(gameTime,this);
                 UPlayerPosition = Damagedplayer.Position;
             }
             else if (current == SpriteType.Falling)
             {
                 Fallplayer.Position = UPlayerPosition;
-                Fallplayer.Update(gameTime);
+                Fallplayer.Update(gameTime,this);
                 UPlayerPosition = Fallplayer.Position;
 
             }
@@ -221,7 +221,7 @@ namespace MarioGame
                 pos_difference = 0;
                 c= Color.White;
             }
-            sourceRectangle = Mario_state.Switch(current);
+            sourceRectangle = Mario_state.Switch(current,this);
             if (current == PlayerSprite.SpriteType.Static)
             {
                 Staplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle,pos_difference,c);

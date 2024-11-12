@@ -25,7 +25,7 @@ namespace MarioGame
             graphics = Graphics;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, PlayerSprite mario)
         {
             float updatedSpeed = Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 

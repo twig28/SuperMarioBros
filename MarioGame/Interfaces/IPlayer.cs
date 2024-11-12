@@ -13,7 +13,7 @@ namespace MarioGame
     //would have texture, position, state, and more properties
     public interface IPlayer
     {
-        void Update(GameTime gm);
+        void Update(GameTime gm, PlayerSprite mario);
         void Draw(SpriteBatch spriteBatch,int width, int height, float Scale, List<Rectangle> sourceRectangle, int pos_difference,Color c);
     }
 }

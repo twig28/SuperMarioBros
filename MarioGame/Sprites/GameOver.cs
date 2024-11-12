@@ -14,13 +14,13 @@ namespace MarioGame.Sprites
         private  GameOver()
         {
         }
-        public static void Draw(Game1 game, SpriteBatch spriteBatch)
+        public static void Draw(Game1 game, SpriteBatch spriteBatch, PlayerSprite mario)
         {
             GameOver.font = game.Content.Load<SpriteFont>("text");
             string text = "Game Over\n" +
                           "Press R to retry";
             Vector2 textSize = font.MeasureString(text);
-            int x = game.player_sprite.GetDestinationRectangle().X - (int)textSize.X/2;
+            int x = mario.GetDestinationRectangle().X - (int)textSize.X/2;
             const int y = 100;
             spriteBatch.DrawString(font, text, new(x,y), Color.Black);
         }

@@ -23,7 +23,7 @@ namespace MarioGame
         public SpriteBatch spriteBatchText;
 
         //make private
-        public PlayerSprite player_sprite;
+        private PlayerSprite player_sprite;
         private Vector2 offset;
 
         IController keyControl;
@@ -126,7 +126,7 @@ namespace MarioGame
             items = new List<IItem>();
             scenery = new List<IScenery>();
 
-            LoadLevels.LoadLevel(this, blocks, enemies, items, scenery, this.CurrLevel);
+            LoadLevels.LoadLevel(this, blocks, enemies, items, scenery, player_sprite,this.CurrLevel);
 
             // Load fireball textures through the Ball class
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
@@ -134,8 +134,8 @@ namespace MarioGame
 
         protected override void Update(GameTime gameTime)
         {
-            keyControl.HandleInputs();
-            mouseControl.HandleInputs();
+            keyControl.HandleInputs(player_sprite);
+            mouseControl.HandleInputs(player_sprite);
 
             EnemyCollisionLogic.CheckEnemyBlockCollisions(enemies, blocks, gameTime);
             MarioBlockCollisionLogic.CheckMarioBlockCollision(player_sprite, blocks, items);
@@ -148,7 +148,7 @@ namespace MarioGame
 
             blocks.RemoveAll(block => block is Block b && b.IsDestroyed);
 
-            player_sprite.Update(gameTime);
+            player_sprite.Update(gameTime,player_sprite);
 
             foreach (var block in blocks)
             {
@@ -213,7 +213,7 @@ namespace MarioGame
 
             if (player_sprite.current == PlayerSprite.SpriteType.Damaged)
             {
-                GameOver.Draw(this, _spriteBatch);
+                GameOver.Draw(this, _spriteBatch,player_sprite);
             }
 
             player_sprite.Draw(_spriteBatch, 14, 16, 3f, new List<Rectangle>(), 0, Color.White);

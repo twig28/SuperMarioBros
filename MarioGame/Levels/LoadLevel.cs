@@ -20,6 +20,7 @@ namespace MarioGame.Levels
     List<IEnemy> enemies,
     List<IItem> items,
     List<IScenery> scenery,
+    PlayerSprite mario,
     int level)
         {
             // Load resources
@@ -45,7 +46,7 @@ namespace MarioGame.Levels
             Game1.Instance.SetBackgroundColor(parsedColorPalette);
 
             // Set Mario's starting position when loading
-            game.player_sprite.setPosition((int)(marioPosition.X), (int)(marioPosition.Y));
+            mario.setPosition((int)(marioPosition.X), (int)(marioPosition.Y));
 
             foreach (var entity in entities)
             {

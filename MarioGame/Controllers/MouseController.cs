@@ -12,7 +12,7 @@ public class MouseController : IController
             Game = gameName;
         }
 
-        public void HandleInputs()
+        public void HandleInputs(PlayerSprite mario)
         {
             if (Mouse.GetState().RightButton == ButtonState.Pressed)
             {

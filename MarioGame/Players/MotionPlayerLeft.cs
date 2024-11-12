@@ -32,7 +32,7 @@ namespace MarioGame
 
         }
 
-        public void Update(GameTime gm)
+        public void Update(GameTime gm, PlayerSprite mario)
         {
 
             //make spirte animated with a fixed period
@@ -48,7 +48,7 @@ namespace MarioGame
                 timeCounter -= timePerFrame;
             }
             //move for differnet status
-            if (!Game.player_sprite.Big && !Game.player_sprite.Fire)
+            if (!mario.Big && !mario.Fire)
             {
                 if (Position.X > 14 * Scale / 2) //check if reach to the top edge
                 {
@@ -58,7 +58,7 @@ namespace MarioGame
 
                 }
             }
-            else if (Game.player_sprite.Fire)
+            else if (mario.Fire)
             {
                 if (Position.X > 18 * Scale / 2) //check if reach to the top edge
                 {
@@ -68,7 +68,7 @@ namespace MarioGame
 
                 }
             }
-            else if (!Game.player_sprite.Fire && (Game.player_sprite.Big || Game.player_sprite.Star))
+            else if (!mario.Fire && (mario.Big || mario.Star))
             {
                 if (Position.X > 18 * Scale / 2) //check if reach to the top edge
                 {

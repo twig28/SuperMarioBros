@@ -29,28 +29,28 @@ namespace MarioGame
             Game = game;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, PlayerSprite mario)
         {
            // float updatedSpeed = Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (Game.player_sprite.isGrounded)
+            if (mario.isGrounded)
             {
-                Game.player_sprite.isFalling = false;
+                mario.isFalling = false;
 
             }
-            else if (Game.player_sprite.isFalling)
+            else if (mario.isFalling)
             {
-                if(Game.player_sprite.velocity < 0f)
+                if(mario.velocity < 0f)
                 {
-                    Game.player_sprite.isFalling = false;
-                    Game.player_sprite.isJumping = true;
-                    Game.player_sprite.current = PlayerSprite.SpriteType.Jump;
+                    mario.isFalling = false;
+                    mario.isJumping = true;
+                    mario.current = PlayerSprite.SpriteType.Jump;
 
                 }
                 else
                 {
-                    Game.player_sprite.velocity = 10f;
-                    Position.Y += Game.player_sprite.velocity;
+                    mario.velocity = 10f;
+                    Position.Y += mario.velocity;
                 }
 
             }
