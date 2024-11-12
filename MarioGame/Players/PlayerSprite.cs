@@ -47,13 +47,10 @@ namespace MarioGame
         public Game1 Game;
 
         private MotionPlayer MRplayer;
-        private MotionPlayerLeft MLplayer;
         private Static Staplayer;
-        private StaticL StaLplayer;
         private Jump Jumpplayer;
         private Damaged Damagedplayer;
         private Fall Fallplayer;
-        private JumpL JumpLplayer;
         private MarioController Mario_state;
         public SpriteType current = SpriteType.Static;
 
@@ -79,20 +76,9 @@ namespace MarioGame
             //Player initialize
             //move toward right
             MRplayer = new MotionPlayer(marioTexture, PlayerPosition, PlayerSpeed, _graphics, Game);
-            //standing toward right
             Staplayer = new Static(marioTexture, PlayerPosition,Game);
-            //standing toward left
-            StaLplayer = new StaticL(marioTexture, PlayerPosition,Game);
-            //moving toward left
-            MLplayer = new MotionPlayerLeft(marioTexture, PlayerPosition, PlayerSpeed, _graphics,Game);
-            //juming toward right
             Jumpplayer = new Jump(marioTexture, PlayerPosition, Game);
-            //juming toward left
-            JumpLplayer = new JumpL(marioTexture, PlayerPosition, Game);
-            //damaged
-            Damagedplayer = new Damaged(marioTexture, PlayerPosition, PlayerSpeed, _graphics);
-            //falling
-            Fallplayer = new Fall(marioTexture, PlayerPosition, PlayerSpeed, _graphics, Game);
+            Damagedplayer = new Damaged(marioTexture, PlayerPosition, PlayerSpeed, _graphics);            Fallplayer = new Fall(marioTexture, PlayerPosition, PlayerSpeed, _graphics, Game);
             Mario_state = new MarioController(Game);
 
         }
@@ -123,30 +109,20 @@ namespace MarioGame
                     time--;
                 }
             }
-            if (current == SpriteType.Motion)
+            if (current == SpriteType.Motion || current == SpriteType.MotionL)
             {
                 MRplayer.Position = UPlayerPosition; //U means upated
                 MRplayer.Update(gameTime,this);
                 UPlayerPosition = MRplayer.Position;
             }
-            else if (current == SpriteType.MotionL)
-            {
-                MLplayer.Position = UPlayerPosition;
-                MLplayer.Update(gameTime,this);
-                UPlayerPosition = MLplayer.Position;
-            }
-            else if (current == SpriteType.Jump)
+            
+            else if (current == SpriteType.Jump || current == SpriteType.JumpL)
             {
                 Jumpplayer.Position = UPlayerPosition;
                 Jumpplayer.Update(gameTime,this);
                 UPlayerPosition = Jumpplayer.Position;
             }
-            else if (current == SpriteType.JumpL)
-            {
-                JumpLplayer.Position = UPlayerPosition;
-                JumpLplayer.Update(gameTime,this);
-                UPlayerPosition = JumpLplayer.Position;
-            }
+           
             else if (current == SpriteType.Damaged)
             {
                 Damagedplayer.Position = UPlayerPosition;
@@ -163,14 +139,10 @@ namespace MarioGame
 
             else
             {
-                if (current == SpriteType.StaticL)
-                {
-                    StaLplayer.Position = UPlayerPosition;
-                }
-                else if (current == SpriteType.Static)
-                {
+               
                     Staplayer.Position = UPlayerPosition;
-                }
+              
+               
 
             }
 
@@ -222,34 +194,19 @@ namespace MarioGame
                 c= Color.White;
             }
             sourceRectangle = Mario_state.Switch(current,this);
-            if (current == PlayerSprite.SpriteType.Static)
+            if (current == PlayerSprite.SpriteType.Static || current == PlayerSprite.SpriteType.StaticL)
             {
                 Staplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle,pos_difference,c);
             }
-            if (current == PlayerSprite.SpriteType.StaticL)
-            {
-              
-                StaLplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle, pos_difference,c);
-            }
-            if (current == PlayerSprite.SpriteType.Motion)
+            if (current == PlayerSprite.SpriteType.Motion || current == PlayerSprite.SpriteType.MotionL)
             {
                
                 MRplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle, pos_difference,c);
             }
-            if (current == PlayerSprite.SpriteType.MotionL)
-            {
-              
-                MLplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle, pos_difference,c);
-            }
-            if (current == PlayerSprite.SpriteType.Jump)
+            if (current == PlayerSprite.SpriteType.Jump || current == PlayerSprite.SpriteType.JumpL)
             {
               
                 Jumpplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle, pos_difference,c);
-            }
-            if (current == PlayerSprite.SpriteType.JumpL)
-            {
-              
-                JumpLplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle, pos_difference,c);
             }
             if (current == PlayerSprite.SpriteType.Damaged)
             {

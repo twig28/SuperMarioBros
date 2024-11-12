@@ -45,7 +45,6 @@ public class MotionPlayer : IPlayer
 
                 timeCounter -= timePerFrame;
             }
-            Position.X += updatedSpeed;
 
             //for running with different status
             /*
@@ -73,6 +72,46 @@ public class MotionPlayer : IPlayer
                 }
             }
             */
+            if(mario.left)
+            {
+                //move for differnet status
+                if (!mario.Big && !mario.Fire)
+                {
+                    if (Position.X > 14 * Scale / 2) //check if reach to the top edge
+                    {
+
+                        Position.X -= updatedSpeed;
+
+
+                    }
+                }
+                else if (mario.Fire)
+                {
+                    if (Position.X > 18 * Scale / 2) //check if reach to the top edge
+                    {
+
+                        Position.X -= updatedSpeed;
+
+
+                    }
+                }
+                else if (!mario.Fire && (mario.Big || mario.Star))
+                {
+                    if (Position.X > 18 * Scale / 2) //check if reach to the top edge
+                    {
+
+                        Position.X -= updatedSpeed;
+
+
+                    }
+                }
+
+            }
+            else
+            {
+                Position.X += updatedSpeed;
+
+            }
 
         }
 
