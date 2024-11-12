@@ -127,7 +127,6 @@ namespace MarioGame
             {
                 mario.Big = false;
                 mario.Fire = true;
-                mario.Game.Fire = true;
             }
         }
 
@@ -141,7 +140,8 @@ namespace MarioGame
 
         private static void IncreaseScore(PlayerSprite mario)
         {
-            mario.score += 1;
+            mario.score += 200;
+            mario.coin += 1;
         }
 
 

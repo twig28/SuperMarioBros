@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using MarioGame.Levels;
 using System.Net.Http.Headers;
 using MarioGame.Sprites;
-using MarioGame.Score;
 using MarioGame.Collisions;
 using System.Runtime.CompilerServices;
 
@@ -51,6 +50,7 @@ namespace MarioGame
         private List<IBlock> blocks;
         private List<IItem> items;
         private List<IScenery> scenery;
+        //private Text text = new Text();
 
         public static Game1 Instance { get; private set; }
 
@@ -211,22 +211,25 @@ namespace MarioGame
 
             Ball.DrawAll(_spriteBatch);
 
-            if (player_sprite.current == PlayerSprite.SpriteType.Damaged)
-            {
-                GameOver.Draw(this, _spriteBatch,player_sprite);
-            }
+           
 
             player_sprite.Draw(_spriteBatch, 14, 16, 3f, new List<Rectangle>(), 0, Color.White);
 
             _spriteBatch.End();
 
             spriteBatchText.Begin();
-
+            
             //draw string for record score of mario
-            spriteBatchText.DrawString(font, "Coins: " + player_sprite.score, new Vector2(40, 0), Color.White);
+            //text.
+            TextDraw.DrawText(font, spriteBatchText, player_sprite);
+            if (player_sprite.current == PlayerSprite.SpriteType.Damaged)
+            {
+                TextDraw.Draw(font, spriteBatchText, player_sprite);
+               // text.DrawGameOver(font, spriteBatchText, player_sprite);
+            }
             spriteBatchText.DrawString(font, "Debug Mario Pos: " + player_sprite.UPlayerPosition, new Vector2(20, 600), Color.Yellow);
             //Score.Draw(this, _spriteBatch,100);
-
+            
             spriteBatchText.End();
 
             base.Draw(gameTime);

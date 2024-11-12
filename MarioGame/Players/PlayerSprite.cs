@@ -34,25 +34,26 @@ namespace MarioGame
         public bool invincible = false;
         public bool Star = false;
         public bool crouched = false;
-        private int time = -1;
+        public int coin = 0;
         public int score = 0;
-    
-
+        public int lives = 1;
+        public SpriteType current = SpriteType.Static;
         public Texture2D marioTexture { get; set; }
-        public Vector2 PlayerPosition;
         public Vector2 UPlayerPosition;
-        float PlayerSpeed;
         public float velocity = 0f;
-        public GraphicsDeviceManager _graphics;
-        public Game1 Game;
 
+        private float PlayerSpeed;
+        public Vector2 PlayerPosition;
+        private GraphicsDeviceManager _graphics;
+        private Game1 Game;
         private MotionPlayer MRplayer;
         private Static Staplayer;
         private Jump Jumpplayer;
         private Damaged Damagedplayer;
         private Fall Fallplayer;
         private MarioController Mario_state;
-        public SpriteType current = SpriteType.Static;
+        private int time = -1;
+
 
       
 
@@ -249,6 +250,9 @@ namespace MarioGame
         current = PlayerSprite.SpriteType.Static;
         crouched = false;
          UPlayerPosition = new Vector2(100, 500);
+            coin = 0;
+            score = 0;
+            lives = 1;
         }
 
     }
