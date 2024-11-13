@@ -61,6 +61,8 @@ namespace MarioGame
             this.Initialize();
             this.LoadContent();
             offset = new Vector2(0, 0);
+            soundLib.Reset();
+
         }
 
         public void ResetLevel()
@@ -106,10 +108,12 @@ namespace MarioGame
             font = Content.Load<SpriteFont>("text");
             previousLevel = GetLevel();
             SetLevel(1);
-          
 
-          
-            soundLib.PlayTheme();
+
+            if (!soundLib.isThemePlaying)
+            {
+                soundLib.PlayTheme();
+            }
 
             base.Initialize();
 
@@ -133,7 +137,7 @@ namespace MarioGame
             scenery = new List<IScenery>();
 
             LoadLevels.LoadLevel(this, blocks, enemies, items, scenery, player_sprite,this.CurrLevel);
-
+            
             // Load fireball textures through the Ball class
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
         }
@@ -164,8 +168,7 @@ namespace MarioGame
             foreach (IItem item in items)
             {
                 item.Update(gameTime);
-            }
-            
+            } 
             // Use the Ball class's static method to handle fireball inputs and update
             Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl,soundLib);
             Ball.UpdateAll(gameTime, GraphicsDevice.Viewport.Width, blocks);
@@ -184,6 +187,7 @@ namespace MarioGame
         {
             return soundLib;
         }
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(backgroundColor);

@@ -105,14 +105,14 @@ public class KeyboardController : IController
                 if (mario.current == PlayerSprite.SpriteType.MotionL || mario.current == PlayerSprite.SpriteType.StaticL)
                 {
                     mario.current = PlayerSprite.SpriteType.JumpL;
-                    Game1.Instance.GetSoundLib().PlaySound("fireball");
+                    Game1.Instance.GetSoundLib().PlaySound("jump");
                     mario.left = true;
                 }
                 else if (mario.current == PlayerSprite.SpriteType.Motion || mario.current == PlayerSprite.SpriteType.Static)
                 {
                     mario.current = PlayerSprite.SpriteType.Jump;
                     mario.left = false;
-                    Game1.Instance.GetSoundLib().PlaySound("fireball");
+                    Game1.Instance.GetSoundLib().PlaySound("jump");
 
                 }
             }
@@ -153,7 +153,7 @@ public class KeyboardController : IController
             if (currentKeyState.IsKeyDown(Keys.R))
             {
                 Game.ResetGame();
-            mario.Reset();
+                mario.Reset();
             }
 
             // Control the fireball
