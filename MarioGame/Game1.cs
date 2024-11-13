@@ -106,7 +106,10 @@ namespace MarioGame
             font = Content.Load<SpriteFont>("text");
             previousLevel = GetLevel();
             SetLevel(1);
-            soundLib.PlaySound("theme");
+          
+
+          
+            soundLib.PlayTheme();
 
             base.Initialize();
 

@@ -22,7 +22,7 @@ public class SoundLib
         soundEffects["killEnemy"] = content.Load<SoundEffect>("killEnemy");
         soundEffects["dokey"] = content.Load<SoundEffect>("dokey");
         soundEffects["gameOver"] = content.Load<SoundEffect>("gameOver");
-
+        soundEffects["theme"] = content.Load<SoundEffect>("theme");
         var theme = content.Load<SoundEffect>("theme");
         themeInstance = theme.CreateInstance();
         themeInstance.IsLooped = true;
@@ -35,13 +35,33 @@ public class SoundLib
             soundEffects[soundName].Play();
         }
     }
-
-    public void StopAndPlayTheme()
+    public void PlayTheme()
     {
-        if (themeInstance.State == SoundState.Playing)
+        DisposeTheme(); 
+        themeInstance = soundEffects["theme"].CreateInstance();
+        themeInstance.IsLooped = true;
+        themeInstance.Play();
+    }
+
+
+   public void StopTheme()
+    {
+        if (themeInstance != null && themeInstance.State == SoundState.Playing)
         {
             themeInstance.Stop();
         }
-        themeInstance.Play();
     }
+
+   public void DisposeTheme()
+    {
+        if (themeInstance != null)
+        {
+            themeInstance.Stop();    
+            themeInstance.Dispose(); 
+            themeInstance = null;    
+        }
+    }
+
+
+
 }
