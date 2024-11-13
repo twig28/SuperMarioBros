@@ -34,22 +34,13 @@ namespace MarioGame.Collisions
                 else if (collisionDirection != CollisionDirection.None && enemy.getdeathStartTime <= 0)
                 {
                     HandleSideOrAboveCollision(mario, enemy, gt, ref toDie);
-                }
-
-                if (toDie)
-                {
-                    if (mario.Big || mario.Fire)
+                    if (toDie)
                     {
-                        mario.Big = false;
-                        mario.Fire = false;
-                        mario.invincible = true;
+                        HandleMarioDamage(mario);
+                        toDie = false;
                     }
-                    else if (!mario.invincible)
-                    {
-                        mario.current = PlayerSprite.SpriteType.Damaged;
-                    }
-                    toDie = false;
                 }
+                
             }
 
             if (enemyToRemove != null) { enemies.Remove(enemyToRemove); }
@@ -68,6 +59,7 @@ namespace MarioGame.Collisions
                 koopa.TriggerDeath(gt, true);
                 enemyToAdd = koopa.SpawnKoopa(gt);
                 mario.velocity = -10f;
+                mario.score += 100;
             }
             else if (enemy is KoopaShell shell && !shell.getIsMoving())
             {
@@ -76,7 +68,12 @@ namespace MarioGame.Collisions
             else if (enemy.getdeathStartTime <= 0)
             {
                 mario.velocity = -10f;
-                if (enemy is not KoopaShell) enemy.TriggerDeath(gt, true);
+
+                if (enemy is not KoopaShell)
+                {
+                    enemy.TriggerDeath(gt, true);
+                    mario.score += 100;
+                }
             }
         }
 
@@ -93,6 +90,7 @@ namespace MarioGame.Collisions
             else
             {
                 toDie = true;
+               // mario.score += 100;
             }
         }
 
@@ -104,9 +102,17 @@ namespace MarioGame.Collisions
                 mario.Fire = false;
                 mario.invincible = true;
             }
-            else if (!mario.invincible)
+            else if (!mario.invincible && mario.lives <= 1)
             {
+                mario.lives = 0;
                 mario.current = PlayerSprite.SpriteType.Damaged;
+
+            }
+            else if(!mario.invincible && mario.lives > 1)
+            {
+                mario.lives -= 1;
+                mario.UPlayerPosition = new Vector2(100, 500);
+                mario.current = PlayerSprite.SpriteType.Static;
             }
         }
 
