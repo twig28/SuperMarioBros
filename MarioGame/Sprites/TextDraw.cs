@@ -19,16 +19,18 @@ namespace MarioGame.Sprites
             string text = "Game Over\n" +
                           "Press R to retry";
             Vector2 textSize = font.MeasureString(text);
-            float x = mario.UPlayerPosition.X;
-            const int y = 100;
-            spriteBatch.DrawString(font, text, new(x,y), Color.Black);
+            
+            spriteBatch.DrawString(font, text, new Vector2(400, 300), Color.Black);
         }
-        public static void DrawText(SpriteFont font, SpriteBatch spriteBatch, PlayerSprite mario)
+        public static void DrawText(SpriteFont font, SpriteBatch spriteBatch, PlayerSprite mario, int level)
         {
 
-            spriteBatch.DrawString(font, "Coins: " + mario.coin, new Vector2(40, 0), Color.White);
-            spriteBatch.DrawString(font, "Score: " + mario.score, new Vector2(400, 0), Color.White);
-            spriteBatch.DrawString(font, "Lives: " + mario.lives, new Vector2(800, 0), Color.White);
+            spriteBatch.DrawString(font, "Coins: \n" 
+                                 + "    " + mario.coin, new Vector2(40, 0), Color.White);
+            spriteBatch.DrawString(font, "Score:\n " + "    " + mario.score, new Vector2(240, 0), Color.White);
+            spriteBatch.DrawString(font, "Lives:\n " + "    "+ mario.lives, new Vector2(440, 0), Color.White);
+            spriteBatch.DrawString(font, "World:\n " + "    "+ level, new Vector2(640, 0), Color.White);
+
 
 
 

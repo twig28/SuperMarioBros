@@ -36,7 +36,7 @@ namespace MarioGame
         public bool crouched = false;
         public int coin = 0;
         public int score = 0;
-        public int lives = 1;
+        public int lives = 5;
         public SpriteType current = SpriteType.Static;
         public Texture2D marioTexture { get; set; }
         public Vector2 UPlayerPosition;
@@ -252,7 +252,7 @@ namespace MarioGame
          UPlayerPosition = new Vector2(100, 500);
             coin = 0;
             score = 0;
-            lives = 1;
+            lives = 5;
         }
 
     }

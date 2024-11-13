@@ -93,7 +93,7 @@ namespace MarioGame
             _graphics.ApplyChanges();
             Instance = this;
         }
-
+        
         protected override void Initialize()
         {
             keyControl = new KeyboardController(this);
@@ -218,7 +218,7 @@ namespace MarioGame
             }
 
             Ball.DrawAll(_spriteBatch);
-
+            
            
 
             player_sprite.Draw(_spriteBatch, 14, 16, 3f, new List<Rectangle>(), 0, Color.White);
@@ -226,10 +226,10 @@ namespace MarioGame
             _spriteBatch.End();
 
             spriteBatchText.Begin();
-            
+
             //draw string for record score of mario
             //text.
-            TextDraw.DrawText(font, spriteBatchText, player_sprite);
+            TextDraw.DrawText(font, spriteBatchText, player_sprite, GetLevel());
             if (player_sprite.current == PlayerSprite.SpriteType.Damaged)
             {
                 TextDraw.Draw(font, spriteBatchText, player_sprite);
