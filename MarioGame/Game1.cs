@@ -164,9 +164,8 @@ namespace MarioGame
 
             // Use the Ball class's static method to handle fireball inputs and update
             Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl,soundLib);
-            Ball.UpdateAll(gameTime, GraphicsDevice.Viewport.Width);
-            CollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime, false);
-            CollisionLogic.CheckFireballBlockCollision(Ball.GetBalls(), blocks);
+            Ball.UpdateAll(gameTime, GraphicsDevice.Viewport.Width, blocks);
+            BallCollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime, false);
             if (player_sprite.current == PlayerSprite.SpriteType.Damaged )
             {
                 soundLib.StopTheme();

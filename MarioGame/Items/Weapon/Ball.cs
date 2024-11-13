@@ -1,90 +1,87 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MarioGame.Blocks;
 using System.Collections.Generic;
+using MarioGame.Interfaces;
+using System;
 
 namespace MarioGame
 {
     public class Ball : IBall
     {
         private Vector2 Position;         // Position of the fireball
-        private float Speed;              // Movement speed of the fireball
+        private Vector2 Velocity;         // Velocity of the fireball (includes direction and speed)
         public bool IsVisible { get; set; } // Determines if the fireball is visible on screen
 
-        private float InitialY;           // Initial Y-coordinate of the fireball (for wave calculation)
-        private float InitialX;           // Initial X-coordinate of the fireball
-        private float lifeTime;           // Time the fireball has been active
+        private float bounceHeight = 20f; // Height of each bounce
+        private float currentGroundLevel; // Current ground level where the fireball will collide
         private BallSprite ballSprite;    // Sprite representation of the fireball
-        private bool direction;           // Fireball direction: true = left, false = right
+        private bool isAscending;         // Flag to track if the fireball is in the ascending phase
 
-        private SoundLib soundLib;        // Reference to SoundLib 
+        private const float Gravity = 500f; // Gravity effect for fireball arc
+        private const int MaxFireballs = 2; // Maximum number of active fireballs allowed at once
 
-        // Static list to store all active fireball instances
-        private static List<IBall> balls = new List<IBall>();
+        private static List<IBall> balls = new List<IBall>(); // Static list to store all active fireball instances
 
         /// <summary>
-        /// Constructor for the Ball class, initializes position, speed, direction, and other properties.
+        /// Constructor for initializing a new fireball instance at a specified position, speed, and direction.
         /// </summary>
-        /// <param name="position">Starting position of the fireball.</param>
-        /// <param name="speed">Speed of the fireball.</param>
-        /// <param name="direction">Direction of the fireball, true = left, false = right.</param>
+        /// <param name="position">Initial position of the fireball.</param>
+        /// <param name="speed">Initial speed of the fireball.</param>
+        /// <param name="direction">Direction of the fireball (true for left, false for right).</param>
         public Ball(Vector2 position, float speed, bool direction)
         {
-            Position = position;
-            Position.Y -= 30;           // Offset Y position slightly upwards
-            InitialY = Position.Y;
-            InitialX = Position.X;
-            Speed = speed;
+            // Initialize the fireball starting position slightly above Mario's body center
+            Position = new Vector2(position.X, position.Y - 15);
+            currentGroundLevel = Position.Y; // Set the initial ground level to the current Y position
             IsVisible = true;
-            lifeTime = 0f;              // Initialize lifetime to zero
-            this.direction = direction;
+            isAscending = false;
+
+            // Calculate initial velocity for a 45-degree downward launch angle
+            float launchAngle = MathHelper.ToRadians(45);
+            Velocity = new Vector2((direction ? -1 : 1) * speed * (float)Math.Cos(launchAngle),
+                                   speed * (float)Math.Sin(launchAngle));
+
             ballSprite = new BallSprite(direction);
         }
 
         /// <summary>
-        /// Creates new fireballs based on player input flags from the keyboard controller.
+        /// Creates new fireball instances based on player input and plays the fireball sound, with a limit of MaxFireballs.
         /// </summary>
-        /// <param name="playerPosition">Current position of the player.</param>
-        /// <param name="ballSpeed">Speed of the new fireballs.</param>
-        /// <param name="controller">Keyboard controller instance.</param>
-        public static void CreateFireballs(Vector2 playerPosition, float ballSpeed, Controllers.KeyboardController controller,SoundLib soundLib)
+        /// <param name="playerPosition">Position of the player (Mario) to launch the fireball from.</param>
+        /// <param name="ballSpeed">Speed of the newly created fireballs.</param>
+        /// <param name="controller">Controller handling keyboard input.</param>
+        /// <param name="soundLib">Sound library instance for playing fireball sound effect.</param>
+        public static void CreateFireballs(Vector2 playerPosition, float ballSpeed, Controllers.KeyboardController controller, SoundLib soundLib)
         {
-            if (controller.keyboardPermitZ) // If 'Z' key is pressed for left fireball
+            // Check if the number of active fireballs is less than the maximum allowed
+            if (balls.Count < MaxFireballs)
             {
-                balls.Add(new Ball(playerPosition, ballSpeed, true));
-                controller.keyboardPermitZ = false; // Reset key flag
-                soundLib.PlaySound("dokey");
-                soundLib.PlaySound("fireball");
-            }
+                if (controller.keyboardPermitZ) // Left fireball
+                {
+                    balls.Add(new Ball(playerPosition, ballSpeed, true));
+                    controller.keyboardPermitZ = false;
+                    soundLib.PlaySound("fireball");
+                }
 
-            if (controller.keyboardPermitN) // If 'N' key is pressed for right fireball
-            {
-                balls.Add(new Ball(playerPosition, ballSpeed, false));
-                controller.keyboardPermitN = false; // Reset key flag
-                soundLib.PlaySound("dokey");
-                 soundLib.PlaySound("fireball");
+                if (controller.keyboardPermitN) // Right fireball
+                {
+                    balls.Add(new Ball(playerPosition, ballSpeed, false));
+                    controller.keyboardPermitN = false;
+                    soundLib.PlaySound("fireball");
+                }
             }
         }
 
-        /// <summary>
-        /// Updates all fireball instances in the game, handling visibility and removal.
-        /// </summary>
-        /// <param name="gameTime">GameTime instance for elapsed time calculations.</param>
-        /// <param name="screenWidth">Width of the game screen, used for fireball limits.</param>
-        public static void UpdateAll(GameTime gameTime, int screenWidth)
+        public static void UpdateAll(GameTime gameTime, int screenWidth, List<IBlock> blocks)
         {
             foreach (var ball in balls)
             {
-                ball.Update(gameTime, screenWidth);
+                ball.Update(gameTime, screenWidth, blocks);
             }
-
-            // Remove any fireballs that are no longer visible
-            balls.RemoveAll(b => !b.IsVisible);
+            balls.RemoveAll(b => !b.IsVisible); // Remove any fireballs marked as invisible
         }
 
-        /// <summary>
-        /// Draws all visible fireball instances on the screen.
-        /// </summary>
-        /// <param name="spriteBatch">SpriteBatch used to draw sprites.</param>
         public static void DrawAll(SpriteBatch spriteBatch)
         {
             foreach (var ball in balls)
@@ -93,41 +90,40 @@ namespace MarioGame
             }
         }
 
-        /// <summary>
-        /// Updates the position, animation, and visibility of the fireball.
-        /// Fireball will be removed after 4 seconds of being active.
-        /// </summary>
-        /// <param name="gameTime">GameTime instance for elapsed time calculations.</param>
-        /// <param name="screenWidth">Width of the game screen, used for fireball limits.</param>
-        public void Update(GameTime gameTime, int screenWidth)
+       public void Update(GameTime gameTime, int screenWidth, List<IBlock> blocks)
         {
-            float updatedSpeed = Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            // Increment the lifetime of the fireball
-            lifeTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (isAscending)
+            {
+                // Fireball is in the ascending phase
+                Position.Y -= Gravity * deltaTime;
+                if (Position.Y <= currentGroundLevel - bounceHeight)
+                {
+                    isAscending = false; // Switch to descending phase after reaching peak
+                }
+            }
+            else
+            {
+                // Fireball is in the descending phase
+                Velocity.Y += Gravity * deltaTime;
+                Position += Velocity * deltaTime;
 
-            // Update fireball's X position based on direction
-            Position.X += direction ? -updatedSpeed : updatedSpeed;
+                // Use BallCollisionLogic to handle block collisions
+                BallCollisionLogic.HandleFireballBlockCollision(this, blocks);
+                
+            }
 
-            // Create a wave trajectory in the Y axis using a sine function
-            float amplitude = 30f;         // Height of the wave motion
-            float frequency = 0.1f;        // Frequency of the wave motion
-            Position.Y = InitialY + amplitude * (float)System.Math.Sin(frequency * Position.X);
-
-            // Update the animation of the fireball sprite
-            ballSprite.Update(gameTime);
-
-            // Set the fireball to invisible if it has existed for more than 4 seconds
-            if (lifeTime > 4f)
+            // Remove fireball if it goes off-screen
+            if (Position.Y > screenWidth || Position.Y < 0)
             {
                 IsVisible = false;
             }
+
+            ballSprite.Update(gameTime);
         }
 
-        /// <summary>
-        /// Draws the fireball on the screen if it is visible.
-        /// </summary>
-        /// <param name="spriteBatch">SpriteBatch used to draw sprites.</param>
+
         public void Draw(SpriteBatch spriteBatch)
         {
             if (IsVisible)
@@ -136,22 +132,23 @@ namespace MarioGame
             }
         }
 
-        /// <summary>
-        /// Retrieves the current list of all active fireball instances.
-        /// </summary>
-        /// <returns>List of IBall instances.</returns>
         public static List<IBall> GetBalls()
         {
             return balls;
         }
 
-        /// <summary>
-        /// Gets the destination rectangle for collision or rendering purposes.
-        /// </summary>
-        /// <returns>Rectangle representing the fireball's position and size.</returns>
         public Rectangle GetDestinationRectangle()
         {
             return ballSprite.GetDestinationRectangle(Position);
+        }
+
+        public void Bounce()
+        {
+            if (!isAscending) // Ensure the fireball only bounces when descending
+            {
+                isAscending = true; // Switch to ascending state
+                Velocity.Y = -MathF.Sqrt(2 * Gravity * bounceHeight); // Set bounce height
+            }
         }
     }
 }
