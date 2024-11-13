@@ -11,5 +11,7 @@ public interface IItem
     public string getName();
     public void moveY(int y);
     public void OnCollide();
+    public bool HasCollision();
+    public float GetLifeTime();
 }
 

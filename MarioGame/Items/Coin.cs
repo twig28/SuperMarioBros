@@ -82,5 +82,15 @@ namespace MarioGame.Items
             GravityScale = 0.0f;
             EnableGravity = false;
         }
+
+        public bool HasCollision()
+        {
+            return false;
+        }
+
+        public float GetLifeTime()
+        {
+            return float.MaxValue;
+        }
     }
 }
