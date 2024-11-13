@@ -52,7 +52,7 @@ namespace MarioGame
         /// <param name="ballSpeed">Speed of the newly created fireballs.</param>
         /// <param name="controller">Controller handling keyboard input.</param>
         /// <param name="soundLib">Sound library instance for playing fireball sound effect.</param>
-        public static void CreateFireballs(Vector2 playerPosition, float ballSpeed, Controllers.KeyboardController controller, SoundLib soundLib)
+       public static void CreateFireballs(Vector2 playerPosition, float ballSpeed, Controllers.KeyboardController controller, SoundLib soundLib)
         {
             // Check if the number of active fireballs is less than the maximum allowed
             if (balls.Count < MaxFireballs)
@@ -70,6 +70,13 @@ namespace MarioGame
                     controller.keyboardPermitN = false;
                     soundLib.PlaySound("fireball");
                 }
+            }
+            else
+            {
+                // Reset the fireball trigger if max fireballs are present
+                // so that no new fireballs are created automatically when they disappear
+                controller.keyboardPermitZ = false;
+                controller.keyboardPermitN = false;
             }
         }
 
