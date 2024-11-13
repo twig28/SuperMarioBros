@@ -34,6 +34,8 @@ namespace MarioGame
 
         public int CurrLevel { get; set; }
         private SoundLib soundLib; 
+        private int previousLevel;
+
         public void SetLevel(int level)
         {
             this.CurrLevel = level;
@@ -102,9 +104,9 @@ namespace MarioGame
             player_sprite = new PlayerSprite(Content.Load<Texture2D>("smb_mario_sheet"), new Vector2(100, 500), 100f, _graphics, this);
             player_sprite.intialize_player();
             font = Content.Load<SpriteFont>("text");
-
+            previousLevel = GetLevel();
             SetLevel(1);
-            soundLib.PlayTheme();
+            soundLib.PlaySound("theme");
 
             base.Initialize();
 
@@ -165,14 +167,13 @@ namespace MarioGame
             Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl,soundLib);
             Ball.UpdateAll(gameTime, GraphicsDevice.Viewport.Width, blocks);
             BallCollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime, false);
-            if (player_sprite.current == PlayerSprite.SpriteType.Damaged )
-            {
-                soundLib.StopTheme();
-            }
-            else
-            {
-                soundLib.PlayTheme();
-            }
+        //    int currentLevel = GetLevel();
+        //     if (currentLevel != previousLevel)
+        // {
+        //     soundLib.StopAndPlayTheme();
+        //     previousLevel = currentLevel;
+        // }
+
             base.Update(gameTime);
         }
 
