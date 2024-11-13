@@ -170,12 +170,6 @@ namespace MarioGame
             Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl,soundLib);
             Ball.UpdateAll(gameTime, GraphicsDevice.Viewport.Width, blocks);
             BallCollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime, false);
-        //    int currentLevel = GetLevel();
-        //     if (currentLevel != previousLevel)
-        // {
-        //     soundLib.StopAndPlayTheme();
-        //     previousLevel = currentLevel;
-        // }
 
             base.Update(gameTime);
         }
