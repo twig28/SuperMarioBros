@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Content;
 public class SoundLib
 {
     private Dictionary<string, SoundEffect> soundEffects;
-    private SoundEffectInstance themeInstance;
+    public SoundEffectInstance themeInstance;
     public bool isThemePlaying = false;
     public SoundLib()
     {
@@ -36,9 +36,7 @@ public class SoundLib
     }
     public void PlayTheme()
     {
-        DisposeTheme(); 
-        themeInstance = soundEffects["theme"].CreateInstance();
-        themeInstance.IsLooped = true;
+       
         themeInstance.Play();
         isThemePlaying = true;
 
@@ -64,11 +62,7 @@ public class SoundLib
         }
     }
 
-    public void Reset()
-    {
-        themeInstance.Stop();
-    }
-
+    
 
 
 }

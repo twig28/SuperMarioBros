@@ -11,6 +11,7 @@ using System.Net.Http.Headers;
 using MarioGame.Sprites;
 using MarioGame.Collisions;
 using System.Runtime.CompilerServices;
+using Microsoft.Xna.Framework.Audio;
 
 
 namespace MarioGame
@@ -23,6 +24,7 @@ namespace MarioGame
 
         //make private
         private PlayerSprite player_sprite;
+        private bool isThemePlaying = false; 
         private Vector2 offset;
 
         IController keyControl;
@@ -58,10 +60,11 @@ namespace MarioGame
 
         public void ResetGame()
         {
+            soundLib.themeInstance.Stop();
             this.Initialize();
             this.LoadContent();
+
             offset = new Vector2(0, 0);
-            soundLib.Reset();
 
         }
 
@@ -110,10 +113,6 @@ namespace MarioGame
             SetLevel(1);
 
 
-            if (!soundLib.isThemePlaying)
-            {
-                soundLib.PlayTheme();
-            }
 
             base.Initialize();
 
@@ -140,6 +139,13 @@ namespace MarioGame
             
             // Load fireball textures through the Ball class
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
+
+            if (!isThemePlaying)
+            {
+               
+                soundLib.themeInstance.Play();
+                isThemePlaying = true;
+            }
         }
 
         protected override void Update(GameTime gameTime)
