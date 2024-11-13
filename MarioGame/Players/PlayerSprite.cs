@@ -52,10 +52,12 @@ namespace MarioGame
         private Damaged Damagedplayer;
         private Fall Fallplayer;
         private MarioController Mario_state;
-        private int time = -1;
+        private int invincibletime = -1;
+        private int Startime = -1;
 
 
-      
+
+
 
         public PlayerSprite(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics, Game1 game)
         {
@@ -91,23 +93,34 @@ namespace MarioGame
             //below for checking current state of mario
             if(Star || invincible)
             {
-                if(time == -1 && Star)
+                if(Startime == -1 && Star)
                 {
-                    time = 1000;
+                    Startime = 1000;
+                    invincible = false;
+                    invincibletime = -1;
                 }
-                else if (time == -1 && invincible)
+                else if (invincibletime == -1 && invincible)
                 {
-                    time = 100;
+                    invincibletime = 100;
                 }
-                else if(time == 0)
+                else if(Startime == 0)
                 {
                     Star = false;
-                    invincible = false;
-                    time = -1;
+                    Startime = -1;
                 }
-                else
+                else if (invincibletime == 0)
                 {
-                    time--;
+                    invincible = false;
+                    invincibletime = -1;
+                }
+
+                else if(Startime>0)
+                {
+                    Startime--;
+                }
+                else if (invincibletime > 0)
+                {
+                    invincibletime--;
                 }
             }
             if (current == SpriteType.Motion || current == SpriteType.MotionL)

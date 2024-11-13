@@ -108,7 +108,7 @@ namespace MarioGame.Collisions
                 mario.current = PlayerSprite.SpriteType.Damaged;
 
             }
-            else
+            else if(!mario.invincible && mario.lives > 1)
             {
                 mario.lives -= 1;
                 mario.UPlayerPosition = new Vector2(100, 500);

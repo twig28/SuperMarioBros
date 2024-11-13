@@ -160,7 +160,7 @@ namespace MarioGame
             {
                 item.Update(gameTime);
             }
-
+            
             // Use the Ball class's static method to handle fireball inputs and update
             Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl,soundLib);
             Ball.UpdateAll(gameTime, GraphicsDevice.Viewport.Width);
