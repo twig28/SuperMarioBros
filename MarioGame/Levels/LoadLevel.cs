@@ -63,6 +63,9 @@ namespace MarioGame.Levels
                     case "BrickBlock":
                         blocks.Add(new Block(position, blockTexture));
                         break;
+                    /*                    case "BrickFragmentBlock":
+                                            blocks.Add(new BrickFragment(multipleBlockTextures, position));
+                                            break;*/
                     case "StairBlock":
                         blocks.Add(new StairBlock(position, stairBlockTexture));
                         break;
@@ -151,7 +154,7 @@ namespace MarioGame.Levels
             }
         }
 
-    private static (string colorPalette, Vector2 marioPosition, List<(string ObjectType, int X, int Y)> entities, List<(int LevelDest, int X, int Y)> pipeDestinations) LoadEntitiesFromCSV(string filePath)
+        private static (string colorPalette, Vector2 marioPosition, List<(string ObjectType, int X, int Y)> entities, List<(int LevelDest, int X, int Y)> pipeDestinations) LoadEntitiesFromCSV(string filePath)
         {
             string colorPalette = "";
             Vector2 marioPosition = Vector2.Zero;

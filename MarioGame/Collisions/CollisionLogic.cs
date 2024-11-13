@@ -52,6 +52,10 @@ namespace MarioGame
             Rectangle intersection;
             foreach (IItem item in items)
             {
+                if (item.HasCollision() == false)
+                {
+                    continue;
+                }
                 String itemName = item.getName();
                 // if (itemName.Equals("Mushroom") || itemName.Equals("Star"))
                 {

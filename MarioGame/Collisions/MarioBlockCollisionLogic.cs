@@ -37,7 +37,7 @@ namespace MarioGame.Collisions
                     continue;
                 }
                 //Pipes that go places
-                else if (block is Pipe p && (p.getIsEntrance() && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Above && mario.crouched || 
+                else if (block is Pipe p && (p.getIsEntrance() && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Above && mario.crouched ||
                     p.getIsLong() && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Side))
                 {
                     (Vector2 destination, int level) = p.GetDestination();
@@ -69,7 +69,7 @@ namespace MarioGame.Collisions
             }
 
             CheckIfFalling(mario, standingBlocks);
-            RemoveBreakableBlocks(blocks, blocksToRemove);
+            RemoveBreakableBlocks(blocks, blocksToRemove, items);
         }
 
         private static bool IsStandingOnBlock(PlayerSprite mario, Rectangle blockRect)
@@ -132,7 +132,7 @@ namespace MarioGame.Collisions
             else
             {
                 mario.UPlayerPosition.Y = block.GetDestinationRectangle().Bottom + mario.GetDestinationRectangle().Height / 2 + 2;
-                if(block is Block b)
+                if (block is Block b)
                 {
                     b.Bump();
                 }
@@ -183,11 +183,26 @@ namespace MarioGame.Collisions
             }
         }
 
-        private static void RemoveBreakableBlocks(List<IBlock> blocks, List<IBlock> blocksToRemove)
+        private static void RemoveBreakableBlocks(List<IBlock> blocks, List<IBlock> blocksToRemove, List<IItem> items)
         {
-            foreach (IBlock block in blocksToRemove)
+            foreach (IBlock blockToRemove in blocksToRemove)
             {
-                blocks.Remove(block);
+                blocks.Remove(blockToRemove);
+
+                Texture2D brickFragmentTexture = Game1.Instance.Content.Load<Texture2D>("blocks");
+                float xOffset = blockToRemove.GetDestinationRectangle().Width / 2 - 16;
+                for (int i = 0; i < 4; ++i)
+                {
+                    float dir = i % 2 == 0 ? 1 : -1;
+                    float yoffset = i < 2 ? 0 : -50;
+                    var brickFragment = new BrickFragment(brickFragmentTexture, blockToRemove.Position - new Vector2(-xOffset, blockToRemove.GetDestinationRectangle().Height + yoffset));
+                    brickFragment.Velocity = new Vector2(dir, -3.0f) * 30f;
+                    brickFragment.GravityScale = 50.0f;
+                    brickFragment.EnableGravity = true;
+                    brickFragment.MaxLifeTime = 2f;
+
+                    items.Add(brickFragment);
+                }
             }
         }
 

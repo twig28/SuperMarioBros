@@ -33,9 +33,7 @@ namespace MarioGame
         public bool Fire = false;
 
         public int CurrLevel { get; set; }
-        private SoundLib soundLib; 
-        private int previousLevel;
-
+        private SoundLib soundLib;
         public void SetLevel(int level)
         {
             this.CurrLevel = level;
@@ -72,7 +70,8 @@ namespace MarioGame
         Color backgroundColor;
         public void SetBackgroundColor(int palette)
         {
-            if (palette == 1) {
+            if (palette == 1)
+            {
                 backgroundColor = Color.CornflowerBlue;
             }
             else
@@ -95,7 +94,7 @@ namespace MarioGame
             _graphics.ApplyChanges();
             Instance = this;
         }
-        
+
         protected override void Initialize()
         {
             keyControl = new KeyboardController(this);
@@ -104,11 +103,8 @@ namespace MarioGame
             player_sprite = new PlayerSprite(Content.Load<Texture2D>("smb_mario_sheet"), new Vector2(100, 500), 100f, _graphics, this);
             player_sprite.intialize_player();
             font = Content.Load<SpriteFont>("text");
-            previousLevel = GetLevel();
-            SetLevel(1);
-          
 
-          
+            SetLevel(1);
             soundLib.PlayTheme();
 
             base.Initialize();
@@ -122,17 +118,17 @@ namespace MarioGame
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             spriteBatchText = new SpriteBatch(GraphicsDevice);
-            
+
 
             //Load the sound
-            soundLib=new SoundLib();
+            soundLib = new SoundLib();
             soundLib.LoadContent(Content);
             enemies = new List<IEnemy>();
             blocks = new List<IBlock>();
             items = new List<IItem>();
             scenery = new List<IScenery>();
 
-            LoadLevels.LoadLevel(this, blocks, enemies, items, scenery, player_sprite,this.CurrLevel);
+            LoadLevels.LoadLevel(this, blocks, enemies, items, scenery, player_sprite, this.CurrLevel);
 
             // Load fireball textures through the Ball class
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
@@ -154,7 +150,7 @@ namespace MarioGame
 
             blocks.RemoveAll(block => block is Block b && b.IsDestroyed);
 
-            player_sprite.Update(gameTime,player_sprite);
+            player_sprite.Update(gameTime, player_sprite);
 
             foreach (var block in blocks)
             {
@@ -165,16 +161,25 @@ namespace MarioGame
             {
                 item.Update(gameTime);
             }
-            
+
+            items.RemoveAll(item => item.GetLifeTime() < 0.0f);
+
             // Use the Ball class's static method to handle fireball inputs and update
-            Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl,soundLib);
+            Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl, soundLib);
             Ball.UpdateAll(gameTime, GraphicsDevice.Viewport.Width, blocks);
             BallCollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime, false);
-
+            if (player_sprite.current == PlayerSprite.SpriteType.Damaged)
+            {
+                soundLib.StopTheme();
+            }
+            else
+            {
+                soundLib.PlayTheme();
+            }
             base.Update(gameTime);
         }
 
-         public SoundLib GetSoundLib()
+        public SoundLib GetSoundLib()
         {
             return soundLib;
         }
@@ -189,7 +194,7 @@ namespace MarioGame
             foreach (IEnemy enemy in enemies)
             {
                 if (PositionChecks.renderEnemy(enemy, offset, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height))
-                { 
+                {
                     enemy.Update(gameTime);
                 }
             }
@@ -215,8 +220,8 @@ namespace MarioGame
             }
 
             Ball.DrawAll(_spriteBatch);
-            
-           
+
+
 
             player_sprite.Draw(_spriteBatch, 14, 16, 3f, new List<Rectangle>(), 0, Color.White);
 
@@ -230,11 +235,11 @@ namespace MarioGame
             if (player_sprite.current == PlayerSprite.SpriteType.Damaged)
             {
                 TextDraw.Draw(font, spriteBatchText, player_sprite);
-               // text.DrawGameOver(font, spriteBatchText, player_sprite);
+                // text.DrawGameOver(font, spriteBatchText, player_sprite);
             }
             spriteBatchText.DrawString(font, "Debug Mario Pos: " + player_sprite.UPlayerPosition, new Vector2(20, 600), Color.Yellow);
             //Score.Draw(this, _spriteBatch,100);
-            
+
             spriteBatchText.End();
 
             base.Draw(gameTime);
