@@ -13,7 +13,7 @@ using MarioGame.Collisions;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework.Audio;
 
-
+//UPD VERSION
 namespace MarioGame
 {
     public class Game1 : Game
@@ -110,7 +110,12 @@ namespace MarioGame
             font = Content.Load<SpriteFont>("text");
 
             SetLevel(1);
-            soundLib.PlayTheme();
+            if (!isThemePlaying)
+            {
+
+                soundLib.themeInstance.Play();
+                isThemePlaying = true;
+            }
 
             base.Initialize();
 
@@ -138,12 +143,7 @@ namespace MarioGame
             // Load fireball textures through the Ball class
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
 
-            if (!isThemePlaying)
-            {
-               
-                soundLib.themeInstance.Play();
-                isThemePlaying = true;
-            }
+           
         }
 
         protected override void Update(GameTime gameTime)
@@ -180,14 +180,7 @@ namespace MarioGame
             Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl, soundLib);
             Ball.UpdateAll(gameTime, GraphicsDevice.Viewport.Width, blocks);
             BallCollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime, false);
-            if (player_sprite.current == PlayerSprite.SpriteType.Damaged)
-            {
-                soundLib.StopTheme();
-            }
-            else
-            {
-                soundLib.PlayTheme();
-            }
+          
             base.Update(gameTime);
         }
 
