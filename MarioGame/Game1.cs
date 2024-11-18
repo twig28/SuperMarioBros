@@ -139,8 +139,7 @@ namespace MarioGame
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
 
             if (!isThemePlaying)
-            {
-               
+            { 
                 soundLib.themeInstance.Play();
                 isThemePlaying = true;
             }
