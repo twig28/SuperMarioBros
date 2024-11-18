@@ -37,21 +37,12 @@ namespace MarioGame
         public int coin = 0;
         public int score = 0;
         public int lives = 5;
-        public SpriteType current = SpriteType.Static;
-        public Texture2D marioTexture { get; set; }
-        public Vector2 UPlayerPosition;
-        public float velocity = 0f;
 
-        private float PlayerSpeed;
+        public SpriteType current = SpriteType.Static;
+        private MarioState state;
+        public float velocity = 0f;
+        public Vector2 UPlayerPosition;
         public Vector2 PlayerPosition;
-        private GraphicsDeviceManager _graphics;
-        private Game1 Game;
-        private MotionPlayer MRplayer;
-        private Static Staplayer;
-        private Jump Jumpplayer;
-        private Damaged Damagedplayer;
-        private Fall Fallplayer;
-        private MarioController Mario_state;
         private int invincibletime = -1;
         private int Startime = -1;
 
@@ -61,29 +52,19 @@ namespace MarioGame
 
         public PlayerSprite(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics, Game1 game)
         {
-            marioTexture = texture;
-            PlayerPosition = position;
             UPlayerPosition = position;
-            PlayerSpeed = speed;
-            _graphics = Graphics;
-            Game = game;
+            PlayerPosition = position;
+            state = new MarioState(texture, speed, Graphics, game);
         }
 
         public void setPosition(int x, int y)
         {
-            this.UPlayerPosition = new Vector2(x, y);
+            UPlayerPosition = new Vector2(x, y);
         }
 
         public void intialize_player()
         {
-            //Player initialize
-            //move toward right
-            MRplayer = new MotionPlayer(marioTexture, PlayerPosition, PlayerSpeed, _graphics, Game);
-            Staplayer = new Static(marioTexture, PlayerPosition,Game);
-            Jumpplayer = new Jump(marioTexture, PlayerPosition, Game);
-            Damagedplayer = new Damaged(marioTexture, PlayerPosition, PlayerSpeed, _graphics);            Fallplayer = new Fall(marioTexture, PlayerPosition, PlayerSpeed, _graphics, Game);
-            Mario_state = new MarioController(Game);
-
+            state.intialize_player(this);
         }
 
 
@@ -123,42 +104,8 @@ namespace MarioGame
                     invincibletime--;
                 }
             }
-            if (current == SpriteType.Motion || current == SpriteType.MotionL)
-            {
-                MRplayer.Position = UPlayerPosition; //U means upated
-                MRplayer.Update(gameTime,this);
-                UPlayerPosition = MRplayer.Position;
-            }
-            
-            else if (current == SpriteType.Jump || current == SpriteType.JumpL)
-            {
-                Jumpplayer.Position = UPlayerPosition;
-                Jumpplayer.Update(gameTime,this);
-                UPlayerPosition = Jumpplayer.Position;
-            }
            
-            else if (current == SpriteType.Damaged)
-            {
-                Damagedplayer.Position = UPlayerPosition;
-                Damagedplayer.Update(gameTime,this);
-                UPlayerPosition = Damagedplayer.Position;
-            }
-            else if (current == SpriteType.Falling)
-            {
-                Fallplayer.Position = UPlayerPosition;
-                Fallplayer.Update(gameTime,this);
-                UPlayerPosition = Fallplayer.Position;
-
-            }
-
-            else
-            {
-               
-                    Staplayer.Position = UPlayerPosition;
-              
-               
-
-            }
+            state.Update(gameTime, this);
 
         }
 
@@ -207,30 +154,8 @@ namespace MarioGame
                 pos_difference = 0;
                 c= Color.White;
             }
-            sourceRectangle = Mario_state.Switch(current,this);
-            if (current == PlayerSprite.SpriteType.Static || current == PlayerSprite.SpriteType.StaticL)
-            {
-                Staplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle,pos_difference,c);
-            }
-            if (current == PlayerSprite.SpriteType.Motion || current == PlayerSprite.SpriteType.MotionL)
-            {
-               
-                MRplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle, pos_difference,c);
-            }
-            if (current == PlayerSprite.SpriteType.Jump || current == PlayerSprite.SpriteType.JumpL)
-            {
-              
-                Jumpplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle, pos_difference,c);
-            }
-            if (current == PlayerSprite.SpriteType.Damaged)
-            {
-              
-                Damagedplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle, pos_difference,c);
-            }
-            if (current == PlayerSprite.SpriteType.Falling)
-            {
-                Fallplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle, pos_difference,c);
-            }
+            state.Draw(_spriteBatch, width, height, Scale, sourceRectangle, pos_difference, c, this);
+           
         }
 
         // Added GetDestinationRectangle method

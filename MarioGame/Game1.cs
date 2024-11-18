@@ -58,7 +58,6 @@ namespace MarioGame
 
         public void ResetGame()
         {
-            soundLib.themeInstance.Stop();
             this.Initialize();
             this.LoadContent();
 
