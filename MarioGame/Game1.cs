@@ -35,6 +35,7 @@ namespace MarioGame
         public bool Fire = false;
 
         public int CurrLevel { get; set; }
+        public int CurrWorld { get; set; }
         private SoundLib soundLib;
         public void SetLevel(int level)
         {
@@ -43,9 +44,10 @@ namespace MarioGame
             ResetLevel();
         }
 
-        public int GetLevel()
+        //Because world != level in display
+        public void SetWorld(int world)
         {
-            return this.CurrLevel;
+            this.CurrWorld = world;
         }
 
         private List<IEnemy> enemies;
@@ -114,9 +116,7 @@ namespace MarioGame
 
             base.Initialize();
 
-            //TEMP
-            //player_sprite.setPosition(3750, 500);
-
+            CurrWorld = 1;
         }
 
         protected override void LoadContent()
@@ -244,7 +244,7 @@ namespace MarioGame
 
             //draw string for record score of mario
             //text.
-            TextDraw.DrawText(font, spriteBatchText, player_sprite, GetLevel());
+            TextDraw.DrawText(font, spriteBatchText, player_sprite, this.CurrWorld);
             if (player_sprite.current == PlayerSprite.SpriteType.Damaged)
             {
                 TextDraw.Draw(font, spriteBatchText, player_sprite);

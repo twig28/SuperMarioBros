@@ -33,8 +33,8 @@ namespace MarioGame.Collisions
                 else if (block is LPipe lpipe && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Side)
                 {
                     //TODO move mario animation (optional)
-                    Game1.Instance.SetLevel(Game1.Instance.GetLevel() + 1);
-                    //Game1.Instance.SetWorld(Game1.Instance.GetLevel() + 1);
+                    Game1.Instance.SetLevel(Game1.Instance.CurrLevel + 1);
+                    Game1.Instance.SetWorld(Game1.Instance.CurrWorld + 1);
                     continue;
                 }
                 //Pipes that go places
