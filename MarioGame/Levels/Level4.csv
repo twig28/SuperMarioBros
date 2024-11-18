@@ -1,7 +1,6 @@
-ColorPallete,2
+ColorPallete,1
 MarioPosition,50,0
--------------------- 1-2 Main
-BrickBlock,950,400
+-------------------- 1-2 Above Ground
 BaseBlock,0,700
 BaseBlock,0,650
 BaseBlock,0,600

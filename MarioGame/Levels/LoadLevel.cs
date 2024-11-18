@@ -195,7 +195,6 @@ namespace MarioGame.Levels
 
                     if (values[0] == "PipeDestination" || values[0] == "LongPipeDestination")
                     {
-                        // Parse and add the PipeDestination to the list
                         string objectType = values[0];
                         int xPosition = int.Parse(values[1]);
                         int yPosition = int.Parse(values[2]);
@@ -208,7 +207,6 @@ namespace MarioGame.Levels
                     }
                     else
                     {
-                        // Handle other entities
                         string objectType = values[0];
                         int xPosition = int.Parse(values[1]);
                         int yPosition = int.Parse(values[2]);
