@@ -35,10 +35,13 @@ namespace MarioGame.Levels
             Texture2D stairBlockTexture = game.Content.Load<Texture2D>("Hard_Block_SMB");
             string filePath = "";
 
-            //In this game Level0-1 correspond to 1-1 above and underground and Level2-3 corresponds to 1-2 above and underground
+            //In this game Level 0-1 corresponds to 1-1 cells and Level2-4 corresponds to 1-2 cells
             filePath = Path.Combine("..", "..", "..", "Levels", $"Level{level}.csv");
 
-            var (colorPalette, marioPosition, entities, pipeDestinations) = LoadEntitiesFromCSV(filePath);
+            var (colorPalette, marioPosition, world, entities, pipeDestinations) = LoadEntitiesFromCSV(filePath);
+
+            Game1.Instance.SetWorld(world);
+
             int color = int.Parse(colorPalette);
 
             // Ensure colorPalette is parsed as an integer and used correctly
@@ -154,16 +157,17 @@ namespace MarioGame.Levels
             }
         }
 
-        private static (string colorPalette, Vector2 marioPosition, List<(string ObjectType, int X, int Y)> entities, List<(int LevelDest, int X, int Y)> pipeDestinations) LoadEntitiesFromCSV(string filePath)
+        private static (string colorPalette, Vector2 marioPosition, int world, List<(string ObjectType, int X, int Y)> entities, List<(int LevelDest, int X, int Y)> pipeDestinations) LoadEntitiesFromCSV(string filePath)
         {
             string colorPalette = "";
             Vector2 marioPosition = Vector2.Zero;
+            int world = 0; // Default world value
             var entities = new List<(string, int, int)>();
             var pipeDestinations = new List<(int LevelDest, int X, int Y)>();
 
             using (var reader = new StreamReader(filePath))
             {
-                // Read first two lines for ColorPalette and MarioPosition
+                // Read first line for ColorPalette
                 var colorPaletteLine = reader.ReadLine();
                 if (colorPaletteLine != null)
                 {
@@ -174,6 +178,7 @@ namespace MarioGame.Levels
                     }
                 }
 
+                // Read second line for MarioPosition
                 var marioPositionLine = reader.ReadLine();
                 if (marioPositionLine != null)
                 {
@@ -185,6 +190,19 @@ namespace MarioGame.Levels
                         marioPosition = new Vector2(marioX, marioY);
                     }
                 }
+
+                // Read third line for World
+                var worldLine = reader.ReadLine();
+                if (worldLine != null)
+                {
+                    var worldValues = worldLine.Split(',');
+                    if (worldValues[0] == "World")
+                    {
+                        world = int.Parse(worldValues[1]);
+                    }
+                }
+
+                // Skip the separator line
                 reader.ReadLine();
 
                 // Read remaining lines for entities
@@ -192,6 +210,9 @@ namespace MarioGame.Levels
                 {
                     var line = reader.ReadLine();
                     var values = line.Split(',');
+
+                    if (values.Length == 0 || string.IsNullOrWhiteSpace(values[0]))
+                        continue;
 
                     if (values[0] == "PipeDestination" || values[0] == "LongPipeDestination")
                     {
@@ -216,8 +237,8 @@ namespace MarioGame.Levels
                 }
             }
 
-            return (colorPalette, marioPosition, entities, pipeDestinations);
-
+            return (colorPalette, marioPosition, world, entities, pipeDestinations);
         }
+
     }
 }

@@ -1,5 +1,6 @@
 ColorPallete,1
 MarioPosition,50,0
+World,2
 -------------------- 1-2 Above Ground
 BaseBlock,0,700
 BaseBlock,0,650

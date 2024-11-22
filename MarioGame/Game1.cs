@@ -24,7 +24,7 @@ namespace MarioGame
 
         //make private
         private PlayerSprite player_sprite;
-        private bool isThemePlaying = false; 
+        private bool isThemePlaying = false;
         private Vector2 offset;
 
         IController keyControl;
@@ -142,8 +142,7 @@ namespace MarioGame
             // Load fireball textures through the Ball class
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
 
-           
-            }
+
         }
 
         protected override void Update(GameTime gameTime)

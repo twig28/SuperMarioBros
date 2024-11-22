@@ -30,11 +30,10 @@ namespace MarioGame.Collisions
                     continue;
                 }
                 //Pipe that occurs after castles
-                else if (block is LPipe lpipe && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Side)
+                else if (block is LPipe lpipe && CollisionLogic.GetCollisionDirection(blockRect, marioRect) != CollisionLogic.CollisionDirection.None)
                 {
                     //TODO move mario animation (optional)
                     Game1.Instance.SetLevel(Game1.Instance.CurrLevel + 1);
-                    Game1.Instance.SetWorld(Game1.Instance.CurrWorld + 1);
                     continue;
                 }
                 //Pipes that go places
