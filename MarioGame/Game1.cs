@@ -157,7 +157,7 @@ namespace MarioGame
             CollisionLogic.CheckMarioItemCollision(player_sprite, items, gameTime);
             CollisionLogic.CheckItemBlockCollision(blocks, items);
 
-            if (PositionChecks.checkDeathByFalling(player_sprite.GetDestinationRectangle(), GraphicsDevice.Viewport.Height)) player_sprite.current = PlayerSprite.SpriteType.Damaged;
+            PositionChecks.checkDeathByFalling(player_sprite, GraphicsDevice.Viewport.Height);
 
             blocks.RemoveAll(block => block is Block b && b.IsDestroyed);
 
