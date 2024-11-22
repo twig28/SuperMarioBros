@@ -69,6 +69,7 @@ namespace MarioGame.Collisions
             if (enemy is KoopaShell && enemy2.getdeathStartTime <= 0)
             {
                 enemy2.TriggerDeath(gt, false);
+                enemy.DefaultMoveMentDirection = !enemy.DefaultMoveMentDirection;
             }
         }
     }
