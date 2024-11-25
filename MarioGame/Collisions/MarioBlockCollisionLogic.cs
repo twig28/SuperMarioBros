@@ -26,7 +26,7 @@ namespace MarioGame.Collisions
                 Rectangle marioRect = mario.GetDestinationRectangle();
                 if (block is Flagpole)
                 {
-                    //TODO to be implemented, move mario down to ground and add score
+                    //WHICH IS FLAGPOLE
                     continue;
                 }
                 //Pipe that occurs after castles

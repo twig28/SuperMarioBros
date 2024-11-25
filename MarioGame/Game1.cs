@@ -19,20 +19,20 @@ namespace MarioGame
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
+        //used in loadlevel - make it private.
         public SpriteBatch _spriteBatch;
-        public SpriteBatch spriteBatchText;
+
+        private SpriteBatch spriteBatchText;
 
         //make private
         private PlayerSprite player_sprite;
-        private bool isThemePlaying = false; 
+        private bool isThemePlaying = false;
         private Vector2 offset;
 
-        IController keyControl;
-        IController mouseControl;
+        private IController keyControl;
+        private IController mouseControl;
         private float ballSpeed = 300f;
 
-        //make private
-        public bool Fire = false;
 
         public int CurrLevel { get; set; }
         public int CurrWorld { get; set; }
@@ -54,7 +54,6 @@ namespace MarioGame
         private List<IBlock> blocks;
         private List<IItem> items;
         private List<IScenery> scenery;
-        //private Text text = new Text();
 
         public static Game1 Instance { get; private set; }
 
@@ -142,9 +141,9 @@ namespace MarioGame
             // Load fireball textures through the Ball class
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
 
-           
-            }
+
         }
+
 
         protected override void Update(GameTime gameTime)
         {
@@ -180,7 +179,7 @@ namespace MarioGame
             Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl, soundLib);
             Ball.UpdateAll(gameTime, GraphicsDevice.Viewport.Width, blocks);
             BallCollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime, false);
-          
+
             base.Update(gameTime);
         }
 
@@ -247,7 +246,7 @@ namespace MarioGame
             //Score.Draw(this, _spriteBatch,100);
 
             spriteBatchText.End();
-
+            
             base.Draw(gameTime);
         }
     }

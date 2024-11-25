@@ -185,7 +185,7 @@ namespace MarioGame
          isGrounded = true;
         isFalling = false;
          invincible = false;
-        current = PlayerSprite.SpriteType.Static;
+            current = PlayerSprite.SpriteType.Falling;
         crouched = false;
          UPlayerPosition = new Vector2(100, 500);
             coin = 0;

@@ -131,23 +131,28 @@ public class KeyboardController : IController
             }
         if (currentKeyState.IsKeyDown(Keys.V))
         {
-            mario.Big = true;
+            if (!mario.Star && !mario.Fire)
+            {
+                mario.Big = true;
+            }
 
         }
 
         if (currentKeyState.IsKeyDown(Keys.M))
             {
-            mario.Big = false;
-            mario.Fire = true;
-                Game.Fire = true;
+            if (!mario.Star)
+            {
+                mario.Big = false;
+                mario.Fire = true;
+            }
             }
 
             if (currentKeyState.IsKeyDown(Keys.J))
             {
+       
             mario.Fire = false;
             mario.Big = false;
             mario.Star = false;
-                Game.Fire = false;
             }
 
             if (currentKeyState.IsKeyDown(Keys.R))
@@ -158,13 +163,13 @@ public class KeyboardController : IController
 
             // Control the fireball
             // To the left
-            if (IsKeyPressed(Keys.Z, currentKeyState) && Game.Fire == true)
+            if (IsKeyPressed(Keys.Z, currentKeyState) && mario.Fire == true)
             {
                 keyboardPermitZ = true;
             }
 
             // To the right
-            if (IsKeyPressed(Keys.N, currentKeyState) && Game.Fire == true)
+            if (IsKeyPressed(Keys.N, currentKeyState) && mario.Fire == true)
             {
                 keyboardPermitN = true;
             }
@@ -172,13 +177,12 @@ public class KeyboardController : IController
             if (IsKeyPressed(Keys.D2, currentKeyState))
             {
                 Game.SetLevel(2);
-            Game.Fire = false;
+                
             }
 
             if (IsKeyPressed(Keys.D1, currentKeyState))
             {
                 Game.SetLevel(1);
-            Game.Fire = false; 
             }
 
             if (currentKeyState.IsKeyDown(Keys.S) || currentKeyState.IsKeyDown(Keys.Down))
