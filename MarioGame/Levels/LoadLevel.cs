@@ -34,7 +34,7 @@ namespace MarioGame.Levels
             Texture2D stairBlockTexture = game.Content.Load<Texture2D>("Hard_Block_SMB");
             string filePath = "";
 
-            //In this game Level 0-1 corresponds to 1-1 cells and Level2-4 corresponds to 1-2 cells
+            //In this game Level 0-1 corresponds to 1-1 cells and Level2-4 corresponds to 1-2 cells, Level5 is custom final level
             filePath = Path.Combine("..", "..", "..", "Levels", $"Level{level}.csv");
 
             var (colorPalette, marioPosition, world, entities, pipeDestinations) = LoadEntitiesFromCSV(filePath);
@@ -45,7 +45,6 @@ namespace MarioGame.Levels
             int parsedColorPalette = int.Parse(colorPalette);
             Game1.Instance.SetBackgroundColor(parsedColorPalette);
 
-            // Set Mario's starting position when loading
             mario.setPosition((int)(marioPosition.X), (int)(marioPosition.Y));
 
             foreach (var entity in entities)
@@ -96,7 +95,6 @@ namespace MarioGame.Levels
                         blocks.Add(longPipeD);
                         break;
                     case "Goomba":
-
                         enemies.Add(new Goomba(enemyTextures, game._spriteBatch, entity.X, entity.Y, color));
                         break;
                     case "Koopa":

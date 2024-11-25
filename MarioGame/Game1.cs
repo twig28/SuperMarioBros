@@ -13,7 +13,6 @@ using MarioGame.Collisions;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework.Audio;
 
-//UPD VERSION
 namespace MarioGame
 {
     public class Game1 : Game
@@ -24,7 +23,6 @@ namespace MarioGame
 
         private SpriteBatch spriteBatchText;
 
-        //make private
         private PlayerSprite player_sprite;
         private bool isThemePlaying = false;
         private Vector2 offset;
@@ -32,7 +30,6 @@ namespace MarioGame
         private IController keyControl;
         private IController mouseControl;
         private float ballSpeed = 300f;
-
 
         public int CurrLevel { get; set; }
         public int CurrWorld { get; set; }
@@ -44,7 +41,7 @@ namespace MarioGame
             ResetLevel();
         }
 
-        //Because world != level in display
+        //Because world != level in the display
         public void SetWorld(int world)
         {
             this.CurrWorld = world;
@@ -127,8 +124,6 @@ namespace MarioGame
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             spriteBatchText = new SpriteBatch(GraphicsDevice);
 
-
-            //Load the sound
             soundLib = new SoundLib();
             soundLib.LoadContent(Content);
             enemies = new List<IEnemy>();
@@ -138,13 +133,10 @@ namespace MarioGame
 
             LoadLevels.LoadLevel(this, blocks, enemies, items, scenery, player_sprite, this.CurrLevel);
 
-            // Load fireball textures through the Ball class
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
 
 
         }
-
-
         protected override void Update(GameTime gameTime)
         {
             keyControl.HandleInputs(player_sprite);
@@ -226,16 +218,12 @@ namespace MarioGame
 
             Ball.DrawAll(_spriteBatch);
 
-
-
             player_sprite.Draw(_spriteBatch, 14, 16, 3f, new List<Rectangle>(), 0, Color.White);
 
             _spriteBatch.End();
 
             spriteBatchText.Begin();
 
-            //draw string for record score of mario
-            //text.
             TextDraw.DrawText(font, spriteBatchText, player_sprite, this.CurrWorld);
             if (player_sprite.current == PlayerSprite.SpriteType.Damaged)
             {
