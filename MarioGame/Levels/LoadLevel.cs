@@ -23,7 +23,6 @@ namespace MarioGame.Levels
     PlayerSprite mario,
     int level)
         {
-            // Load resources
             SpriteFont font = game.Content.Load<SpriteFont>("File");
             Texture2D enemyTextures = game.Content.Load<Texture2D>("smb_enemies_sheet");
             Texture2D itemTextures = game.Content.Load<Texture2D>("smb_items_sheet");
@@ -43,8 +42,6 @@ namespace MarioGame.Levels
             Game1.Instance.SetWorld(world);
 
             int color = int.Parse(colorPalette);
-
-            // Ensure colorPalette is parsed as an integer and used correctly
             int parsedColorPalette = int.Parse(colorPalette);
             Game1.Instance.SetBackgroundColor(parsedColorPalette);
 
@@ -66,9 +63,6 @@ namespace MarioGame.Levels
                     case "BrickBlock":
                         blocks.Add(new Block(position, blockTexture));
                         break;
-                    /*                    case "BrickFragmentBlock":
-                                            blocks.Add(new BrickFragment(multipleBlockTextures, position));
-                                            break;*/
                     case "StairBlock":
                         blocks.Add(new StairBlock(position, stairBlockTexture));
                         break;
@@ -161,7 +155,7 @@ namespace MarioGame.Levels
         {
             string colorPalette = "";
             Vector2 marioPosition = Vector2.Zero;
-            int world = 0; // Default world value
+            int world = 0;
             var entities = new List<(string, int, int)>();
             var pipeDestinations = new List<(int LevelDest, int X, int Y)>();
 
@@ -202,10 +196,8 @@ namespace MarioGame.Levels
                     }
                 }
 
-                // Skip the separator line
+                //separator line
                 reader.ReadLine();
-
-                // Read remaining lines for entities
                 while (!reader.EndOfStream)
                 {
                     var line = reader.ReadLine();

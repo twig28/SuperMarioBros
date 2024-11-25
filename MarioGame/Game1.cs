@@ -198,7 +198,7 @@ namespace MarioGame
 
             foreach (IEnemy enemy in enemies)
             {
-                if (PositionChecks.renderEnemy(enemy, offset, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height))
+                if (PositionChecks.renderEnemy(enemy, offset, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height) || enemy is KoopaShell)
                 {
                     enemy.Update(gameTime);
                 }
