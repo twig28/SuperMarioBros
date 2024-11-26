@@ -4,7 +4,7 @@ using MarioGame.Interfaces;
 
 namespace MarioGame.Blocks
 {
-    public class Flagpole : IBlock
+    public class Platform : IBlock
     {
         public Vector2 Position { get; set; }
         public bool IsSolid { get; }
@@ -17,11 +17,13 @@ namespace MarioGame.Blocks
         private double timeElapsed = 0;
         private double timeElapsedSinceUpdate = 0;
 
+        bool up = true;
+
         protected Texture2D Texture { get; set; }
         Rectangle sourceRectangle = new Rectangle(248, 592, 25, 170);
         protected Rectangle DestinationRectangle;
 
-        public Flagpole(Vector2 position, Texture2D texture)
+        public Platform(Vector2 position, Texture2D texture)
         {
             Position = position;
             Texture = texture;
@@ -38,7 +40,8 @@ namespace MarioGame.Blocks
         {
             if (IsCollided)
             {
-                //to be implemented
+                if (up) { }
+                else { }
             }
         }
 

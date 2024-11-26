@@ -18,9 +18,7 @@ namespace MarioGame
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
-        //used in loadlevel - make it private.
-        public SpriteBatch _spriteBatch;
-
+        private SpriteBatch _spriteBatch;
         private SpriteBatch spriteBatchText;
 
         private PlayerSprite player_sprite;
@@ -50,6 +48,7 @@ namespace MarioGame
         private List<IBlock> blocks;
         private List<IItem> items;
         private List<IScenery> scenery;
+        SpriteFont font;
 
         public static Game1 Instance { get; private set; }
 
@@ -80,9 +79,6 @@ namespace MarioGame
                 backgroundColor = Color.Black;
             }
         }
-
-        SpriteFont font;
-
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -130,26 +126,21 @@ namespace MarioGame
             items = new List<IItem>();
             scenery = new List<IScenery>();
 
-            LoadLevels.LoadLevel(this, blocks, enemies, items, scenery, player_sprite, this.CurrLevel);
-
+            LoadLevels.LoadLevel(this, blocks, enemies, items, scenery, player_sprite, this.CurrLevel, _spriteBatch);
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
-
-
         }
         protected override void Update(GameTime gameTime)
         {
             keyControl.HandleInputs(player_sprite);
             mouseControl.HandleInputs(player_sprite);
 
-            EnemyCollisionLogic.CheckEnemyBlockCollisions(enemies, blocks, gameTime);
+            EnemyCollisionLogic.CheckEnemyBlockCollisions(enemies, blocks, gameTime, player_sprite);
             MarioBlockCollisionLogic.CheckMarioBlockCollision(player_sprite, blocks, items);
-            EnemyCollisionLogic.CheckEnemyEnemyCollision(enemies, gameTime);
+            EnemyCollisionLogic.CheckEnemyEnemyCollision(enemies, gameTime, player_sprite);
             MarioEnemyCollisionLogic.CheckMarioEnemyCollision(player_sprite, ref enemies, gameTime);
             CollisionLogic.CheckMarioItemCollision(player_sprite, items, gameTime);
             CollisionLogic.CheckItemBlockCollision(blocks, items);
-
             PositionChecks.checkDeathByFalling(player_sprite, GraphicsDevice.Viewport.Height);
-
             blocks.RemoveAll(block => block is Block b && b.IsDestroyed);
 
             player_sprite.Update(gameTime, player_sprite);
@@ -166,7 +157,6 @@ namespace MarioGame
 
             items.RemoveAll(item => item.GetLifeTime() < 0.0f);
 
-            // Use the Ball class's static method to handle fireball inputs and update
             Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl, soundLib);
             Ball.UpdateAll(gameTime, GraphicsDevice.Viewport.Width, blocks);
             BallCollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime, false);
@@ -230,7 +220,6 @@ namespace MarioGame
                 // text.DrawGameOver(font, spriteBatchText, player_sprite);
             }
             spriteBatchText.DrawString(font, "Debug Mario Pos: " + player_sprite.UPlayerPosition, new Vector2(20, 600), Color.Yellow);
-            //Score.Draw(this, _spriteBatch,100);
 
             spriteBatchText.End();
             

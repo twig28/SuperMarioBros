@@ -21,7 +21,7 @@ namespace MarioGame.Levels
     List<IItem> items,
     List<IScenery> scenery,
     PlayerSprite mario,
-    int level)
+    int level, SpriteBatch _spriteBatch)
         {
             SpriteFont font = game.Content.Load<SpriteFont>("File");
             Texture2D enemyTextures = game.Content.Load<Texture2D>("smb_enemies_sheet");
@@ -95,13 +95,13 @@ namespace MarioGame.Levels
                         blocks.Add(longPipeD);
                         break;
                     case "Goomba":
-                        enemies.Add(new Goomba(enemyTextures, game._spriteBatch, entity.X, entity.Y, color));
+                        enemies.Add(new Goomba(enemyTextures, _spriteBatch, entity.X, entity.Y, color));
                         break;
                     case "Koopa":
-                        enemies.Add(new Koopa(enemyTextures, game._spriteBatch, entity.X, entity.Y, color));
+                        enemies.Add(new Koopa(enemyTextures, _spriteBatch, entity.X, entity.Y, color));
                         break;
                     case "Piranha":
-                        enemies.Add(new Piranha(enemyTextures, game._spriteBatch, entity.X, entity.Y));
+                        enemies.Add(new Piranha(enemyTextures, _spriteBatch, entity.X, entity.Y));
                         break;
                     case "Coin":
                         items.Add(new Coin(itemTextures, position));

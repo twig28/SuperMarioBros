@@ -9,9 +9,6 @@ using System.Collections.Generic;
 using MarioGame.Sprites;
 namespace MarioGame
 {
-   
-
-    //would have texture, position, state, and more properties
     public class PlayerSprite : IPlayer
     {
         public enum SpriteType
