@@ -53,7 +53,7 @@ namespace MarioGame.Blocks
 
         public void Update(GameTime gameTime)
         {
-            if (isBumped)
+            if (IsOpened)
             {
                 bumpTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -62,9 +62,6 @@ namespace MarioGame.Blocks
                     isBumped = false;
                     bumpTimer = 0f;
                 }
-            }
-            if (IsOpened)
-            {
                 sourceRectangle.X = 80 + spriteInterval * 4;
                 currSprite = 4;// after hit
                 return;

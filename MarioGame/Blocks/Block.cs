@@ -1,23 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace MarioGame
 {
-    // Block class that can be destroyed
     public class Block : BaseBlock
     {
         public override bool IsSolid => true;
         public override bool IsBreakable => true;
 
         private bool isBumped = false;
+        private bool isBreaking = false;
         private float bumpTimer = 0f;
-        private const float bumpDuration = 0.2f; 
+        private const float bumpDuration = 0.2f;
+        private float breakDelay = 0.2f;
+        private float breakTimer = 0f;
 
-        public bool getIsBumped()
-        {
-            return isBumped;
-        }
+        public bool getIsBumped() => isBumped;
         public bool IsDestroyed { get; private set; } = false;
 
         public Block(Vector2 position, Texture2D texture)
@@ -27,21 +25,25 @@ namespace MarioGame
 
         public override void OnCollide()
         {
-            IsDestroyed = true;
-
-            //play a breaking animation
+            isBumped = true;
+            if (!isBreaking && !IsDestroyed)
+            {
+                isBreaking = true;
+                breakTimer = 0f;
+            }
         }
 
         public void Bump()
         {
-            isBumped = true;
-            bumpTimer = 0f; 
-            //play animation
+            if (!isBumped && !IsDestroyed)
+            {
+                isBumped = true;
+                bumpTimer = 0f;
+            }
         }
 
         public override void Update(GameTime gameTime)
         {
-            // Update bump timer if the block is bumped
             if (isBumped)
             {
                 bumpTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -50,6 +52,17 @@ namespace MarioGame
                 {
                     isBumped = false;
                     bumpTimer = 0f;
+                }
+            }
+
+            if (isBreaking)
+            {
+                breakTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (breakTimer >= breakDelay)
+                {
+                    IsDestroyed = true;
+                    isBreaking = false;
                 }
             }
         }

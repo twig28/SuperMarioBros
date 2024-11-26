@@ -124,6 +124,7 @@ namespace MarioGame.Collisions
             {
                 if (block.IsBreakable)
                 {
+                    block.OnCollide();
                     blocksToRemove.Add(block);
                 }
                 mario.UPlayerPosition.Y = block.GetDestinationRectangle().Bottom + mario.GetDestinationRectangle().Height / 2 + 24;
@@ -186,7 +187,14 @@ namespace MarioGame.Collisions
         {
             foreach (IBlock blockToRemove in blocksToRemove)
             {
-                blocks.Remove(blockToRemove);
+                if(blockToRemove is Block b && b.IsDestroyed)
+                {
+                    blocks.Remove(blockToRemove);
+                }
+                else if (blockToRemove is not Block)
+                {
+                    blocks.Remove(blockToRemove);
+                }
 
                 Texture2D brickFragmentTexture = Game1.Instance.Content.Load<Texture2D>("blocks");
                 float xOffset = blockToRemove.GetDestinationRectangle().Width / 2 - 16;
