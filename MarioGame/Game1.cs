@@ -37,7 +37,6 @@ namespace MarioGame
         public void SetLevel(int level)
         {
             this.CurrLevel = level;
-            player_sprite.Reset();
             ResetLevel();
         }
 
