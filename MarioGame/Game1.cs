@@ -38,12 +38,6 @@ namespace MarioGame
             ResetLevel();
         }
 
-        //Because world != level in the display
-        public void SetWorld(int world)
-        {
-            this.CurrWorld = world;
-        }
-
         private List<IEnemy> enemies;
         private List<IBlock> blocks;
         private List<IItem> items;
@@ -58,7 +52,6 @@ namespace MarioGame
             this.LoadContent();
 
             offset = new Vector2(0, 0);
-
         }
 
         public void ResetLevel()
@@ -104,7 +97,6 @@ namespace MarioGame
             SetLevel(1);
             if (!isThemePlaying)
             {
-
                 soundLib.themeInstance.Play();
                 isThemePlaying = true;
             }
@@ -126,7 +118,7 @@ namespace MarioGame
             items = new List<IItem>();
             scenery = new List<IScenery>();
 
-            LoadLevels.LoadLevel(this, blocks, enemies, items, scenery, player_sprite, this.CurrLevel, _spriteBatch);
+            LoadLevels.LoadLevel(this, blocks, enemies, items, scenery, player_sprite, this.CurrLevel, _spriteBatch, -1);
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
         }
         protected override void Update(GameTime gameTime)

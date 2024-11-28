@@ -21,7 +21,7 @@ namespace MarioGame.Levels
     List<IItem> items,
     List<IScenery> scenery,
     PlayerSprite mario,
-    int level, SpriteBatch _spriteBatch)
+    int level, SpriteBatch _spriteBatch, int customColor)
         {
             SpriteFont font = game.Content.Load<SpriteFont>("File");
             Texture2D enemyTextures = game.Content.Load<Texture2D>("smb_enemies_sheet");
@@ -39,9 +39,13 @@ namespace MarioGame.Levels
 
             var (colorPalette, marioPosition, world, entities, pipeDestinations) = LoadEntitiesFromCSV(filePath);
 
-            Game1.Instance.SetWorld(world);
+            Game1.Instance.CurrWorld = world;
 
             int color = int.Parse(colorPalette);
+            if(customColor > -1)
+            {
+                color = customColor;
+            }
             int parsedColorPalette = int.Parse(colorPalette);
             Game1.Instance.SetBackgroundColor(parsedColorPalette);
 
@@ -145,6 +149,14 @@ namespace MarioGame.Levels
                     case "LPipe":
                         blocks.Add(new LPipe(position, sceneryTextures));
                         break;
+                    case "UpPlatform":
+                        blocks.Add(new Platform(position, itemTextures));
+                        break;
+                    case "DownPlatform":
+                        var p = new Platform(position, itemTextures);
+                        blocks.Add(p);
+                        p.ReverseDirection();
+                        break;
                 }
             }
         }
@@ -229,6 +241,5 @@ namespace MarioGame.Levels
 
             return (colorPalette, marioPosition, world, entities, pipeDestinations);
         }
-
     }
 }

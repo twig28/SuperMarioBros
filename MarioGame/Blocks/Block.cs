@@ -12,7 +12,7 @@ namespace MarioGame
         private bool isBreaking = false;
         private float bumpTimer = 0f;
         private const float bumpDuration = 0.2f;
-        private float breakDelay = 0.2f;
+        private float breakDelay = 0.05f;
         private float breakTimer = 0f;
 
         public bool getIsBumped() => isBumped;

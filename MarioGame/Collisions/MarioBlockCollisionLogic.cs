@@ -20,13 +20,13 @@ namespace MarioGame.Collisions
             List<IBlock> blocksToRemove = new List<IBlock>();
             List<IBlock> standingBlocks = new List<IBlock>();
 
-            foreach (IBlock block in blocks)
+            foreach (IBlock block in blocks )
             {
                 Rectangle blockRect = block.GetDestinationRectangle();
                 Rectangle marioRect = mario.GetDestinationRectangle();
-                if (block is Flagpole)
+                if (block is Flagpole f && CollisionLogic.GetCollisionDirection(blockRect, marioRect) != CollisionLogic.CollisionDirection.None)
                 {
-                    //WHICH IS FLAGPOLE
+                    HandleFlagpoleCollision(f, mario);
                     continue;
                 }
                 //Pipe that occurs after castles
@@ -210,6 +210,19 @@ namespace MarioGame.Collisions
 
                     items.Add(brickFragment);
                 }
+            }
+        }
+
+        private static void HandleFlagpoleCollision(Flagpole pole, PlayerSprite mario)
+        {
+            if(!pole.IsCollided)
+            {
+                pole.OnCollide();
+                mario.score += (1 / (mario.GetDestinationRectangle().Y)) * 1000;
+            }
+            else if (!pole.isFinished)
+            {
+
             }
         }
 

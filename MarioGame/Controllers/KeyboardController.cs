@@ -38,15 +38,12 @@ public class KeyboardController : IController
     {
         previousKeyState = currentKeyState;
         currentKeyState = Keyboard.GetState();
-
-       
-
         if (currentKeyState.IsKeyDown(Keys.Q))
         {
             Game.Exit();
         }
 
-        if (mario.current!= PlayerSprite.SpriteType.Damaged)
+        if (mario.current != PlayerSprite.SpriteType.Damaged)
         {
             // Move this to mario class
             if (mario.current == PlayerSprite.SpriteType.MotionL)
@@ -61,47 +58,43 @@ public class KeyboardController : IController
             }
             if (currentKeyState.IsKeyDown(Keys.Right) || currentKeyState.IsKeyDown(Keys.D))
             {
-               
-                    if (mario.current == PlayerSprite.SpriteType.Jump || mario.current == PlayerSprite.SpriteType.JumpL || mario.current == PlayerSprite.SpriteType.Falling)
-                    {
+
+                if (mario.current == PlayerSprite.SpriteType.Jump || mario.current == PlayerSprite.SpriteType.JumpL || mario.current == PlayerSprite.SpriteType.Falling)
+                {
                     //  if (Game.player_sprite.UPlayerPosition.X < 1280 - (14 * 3f / 2) )
                     //  {
                     mario.UPlayerPosition.X += 5f;
-                       // }
-
-                    }
-                    else
-                    {
+                    // }
+                }
+                else
+                {
                     mario.current = PlayerSprite.SpriteType.Motion;
-                    }
-
-                        mario.left = false;
-
-
+                }
+                mario.left = false;
             }
 
             if (currentKeyState.IsKeyDown(Keys.Left) || currentKeyState.IsKeyDown(Keys.A))
             {
-              
-                    if (mario.current == PlayerSprite.SpriteType.Jump || mario.current == PlayerSprite.SpriteType.JumpL || mario.current == PlayerSprite.SpriteType.Falling)
+
+                if (mario.current == PlayerSprite.SpriteType.Jump || mario.current == PlayerSprite.SpriteType.JumpL || mario.current == PlayerSprite.SpriteType.Falling)
+                {
+                    if (mario.UPlayerPosition.X > 18 * 3f / 2)
                     {
-                        if (mario.UPlayerPosition.X > 18 * 3f / 2)
-                        {
 
                         mario.UPlayerPosition.X -= 5f;
-                        }
                     }
-                    else
-                    {
+                }
+                else
+                {
                     mario.current = PlayerSprite.SpriteType.MotionL;
-                    }
+                }
 
                 mario.left = true;
 
             }
             if (currentKeyState.IsKeyDown(Keys.W) || currentKeyState.IsKeyDown(Keys.Up))
             {
-                 
+
                 if (mario.current == PlayerSprite.SpriteType.MotionL || mario.current == PlayerSprite.SpriteType.StaticL)
                 {
                     mario.current = PlayerSprite.SpriteType.JumpL;
@@ -117,43 +110,43 @@ public class KeyboardController : IController
                 }
             }
 
-            if (currentKeyState.IsKeyDown(Keys.E))
-            {
-                mario.current = PlayerSprite.SpriteType.Damaged;
-            }
-        }
-            if (currentKeyState.IsKeyDown(Keys.X))
-            {
-            mario.Big = false;
-            mario.Fire = false;
-            mario.Star = true;
-                
-            }
-        if (currentKeyState.IsKeyDown(Keys.V))
-        {
-            if (!mario.Star && !mario.Fire)
-            {
-                mario.Big = true;
-            }
+            //    if (currentKeyState.IsKeyDown(Keys.E))
+            //    {
+            //        mario.current = PlayerSprite.SpriteType.Damaged;
+            //    }
+            //}
+            //    if (currentKeyState.IsKeyDown(Keys.X))
+            //    {
+            //    mario.Big = false;
+            //    mario.Fire = false;
+            //    mario.Star = true;
 
-        }
+            //    }
+            //if (currentKeyState.IsKeyDown(Keys.V))
+            //{
+            //    if (!mario.Star && !mario.Fire)
+            //    {
+            //        mario.Big = true;
+            //    }
 
-        if (currentKeyState.IsKeyDown(Keys.M))
-            {
-            if (!mario.Star)
-            {
-                mario.Big = false;
-                mario.Fire = true;
-            }
-            }
+            //}
 
-            if (currentKeyState.IsKeyDown(Keys.J))
-            {
-       
-            mario.Fire = false;
-            mario.Big = false;
-            mario.Star = false;
-            }
+            //if (currentKeyState.IsKeyDown(Keys.M))
+            //    {
+            //    if (!mario.Star)
+            //    {
+            //        mario.Big = false;
+            //        mario.Fire = true;
+            //    }
+            //    }
+
+            //    if (currentKeyState.IsKeyDown(Keys.J))
+            //    {
+
+            //    mario.Fire = false;
+            //    mario.Big = false;
+            //    mario.Star = false;
+            //    }
 
             if (currentKeyState.IsKeyDown(Keys.R))
             {
@@ -177,7 +170,7 @@ public class KeyboardController : IController
             if (IsKeyPressed(Keys.D2, currentKeyState))
             {
                 Game.SetLevel(2);
-                
+
             }
 
             if (IsKeyPressed(Keys.D1, currentKeyState))
@@ -186,13 +179,13 @@ public class KeyboardController : IController
             }
 
             if (currentKeyState.IsKeyDown(Keys.S) || currentKeyState.IsKeyDown(Keys.Down))
-        {
-            mario.crouched = true;
+            {
+                mario.crouched = true;
+            }
+            else
+            {
+                mario.crouched = false;
+            }
         }
-        else
-        {
-            mario.crouched = false;
-        }
-
     }
 }

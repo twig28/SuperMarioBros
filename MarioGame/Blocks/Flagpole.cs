@@ -11,6 +11,8 @@ namespace MarioGame.Blocks
         public bool IsBreakable { get; }
         public bool IsCollided { get; set; }
 
+        public bool isFinished = false;
+
         public const double animInterval = 0;
         public const int spriteInterval = 0;
         public int currSprite = 0;
@@ -31,7 +33,14 @@ namespace MarioGame.Blocks
 
         public void OnCollide()
         {
-            IsCollided = true;
+            if ((!IsCollided))
+            {
+                IsCollided = true;
+            }
+        }
+        public Vector2 marioPosition()
+        {
+            return new Vector2(0, 0);
         }
 
         public virtual void Update(GameTime gameTime)
