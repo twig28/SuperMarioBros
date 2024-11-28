@@ -50,7 +50,7 @@ namespace MarioGame
         {
             this.Initialize();
             this.LoadContent();
-
+            levelColor = -1;
             offset = new Vector2(0, 0);
         }
 
@@ -60,6 +60,7 @@ namespace MarioGame
             offset = new Vector2(0, 0);
         }
 
+        int levelColor = 1;
         Color backgroundColor;
         public void SetBackgroundColor(int palette)
         {
@@ -118,7 +119,7 @@ namespace MarioGame
             items = new List<IItem>();
             scenery = new List<IScenery>();
 
-            LoadLevels.LoadLevel(this, blocks, enemies, items, scenery, player_sprite, this.CurrLevel, _spriteBatch, -1);
+            LoadLevels.LoadLevel(this, blocks, enemies, items, scenery, player_sprite, this.CurrLevel, _spriteBatch, levelColor);
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
         }
         protected override void Update(GameTime gameTime)
@@ -154,6 +155,12 @@ namespace MarioGame
             BallCollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime, false);
 
             base.Update(gameTime);
+        }
+
+        public void CustomColorLoad(int color)
+        {
+            levelColor = color;
+            LoadContent();
         }
 
         public SoundLib GetSoundLib()

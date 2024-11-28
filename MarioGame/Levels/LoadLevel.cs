@@ -32,10 +32,9 @@ namespace MarioGame.Levels
             Texture2D sceneryTextures = game.Content.Load<Texture2D>("smb1_scenery_sprites");
             Texture2D signTexture = game.Content.Load<Texture2D>("Super_Mario_Bros._NES_Logo");
             Texture2D stairBlockTexture = game.Content.Load<Texture2D>("Hard_Block_SMB");
-            string filePath = "";
 
             //In this game Level 0-1 corresponds to 1-1 cells and Level2-4 corresponds to 1-2 cells, Level5 is custom final level
-            filePath = Path.Combine("..", "..", "..", "Levels", $"Level{level}.csv");
+            string filePath = Path.Combine("..", "..", "..", "Levels", $"Level{level}.csv");
 
             var (colorPalette, marioPosition, world, entities, pipeDestinations) = LoadEntitiesFromCSV(filePath);
 
@@ -46,8 +45,7 @@ namespace MarioGame.Levels
             {
                 color = customColor;
             }
-            int parsedColorPalette = int.Parse(colorPalette);
-            Game1.Instance.SetBackgroundColor(parsedColorPalette);
+            Game1.Instance.SetBackgroundColor(color);
 
             mario.setPosition((int)(marioPosition.X), (int)(marioPosition.Y));
 

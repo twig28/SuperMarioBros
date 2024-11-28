@@ -186,6 +186,15 @@ public class KeyboardController : IController
             {
                 mario.crouched = false;
             }
+
+            if (IsKeyPressed(Keys.O, currentKeyState))
+            {
+                Game1.Instance.CustomColorLoad(1);
+            }
+            if (IsKeyPressed(Keys.P, currentKeyState))
+            {
+                Game1.Instance.CustomColorLoad(2);
+            }
         }
     }
 }
