@@ -31,11 +31,24 @@ namespace MarioGame
 
         public int CurrLevel { get; set; }
         public int CurrWorld { get; set; }
+        int levelColor = -1;
+        Color backgroundColor;
         private SoundLib soundLib;
         public void SetLevel(int level)
         {
             this.CurrLevel = level;
             ResetLevel();
+        }
+        public void SetBackgroundColor(int palette)
+        {
+            if (palette == 1)
+            {
+                backgroundColor = Color.CornflowerBlue;
+            }
+            else
+            {
+                backgroundColor = Color.Black;
+            }
         }
 
         private List<IEnemy> enemies;
@@ -53,25 +66,10 @@ namespace MarioGame
             levelColor = -1;
             offset = new Vector2(0, 0);
         }
-
         public void ResetLevel()
         {
             this.LoadContent();
             offset = new Vector2(0, 0);
-        }
-
-        int levelColor = 1;
-        Color backgroundColor;
-        public void SetBackgroundColor(int palette)
-        {
-            if (palette == 1)
-            {
-                backgroundColor = Color.CornflowerBlue;
-            }
-            else
-            {
-                backgroundColor = Color.Black;
-            }
         }
         public Game1()
         {

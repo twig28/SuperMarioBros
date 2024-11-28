@@ -33,7 +33,8 @@ namespace MarioGame.Levels
             Texture2D signTexture = game.Content.Load<Texture2D>("Super_Mario_Bros._NES_Logo");
             Texture2D stairBlockTexture = game.Content.Load<Texture2D>("Hard_Block_SMB");
 
-            //In this game Level 0-1 corresponds to 1-1 cells and Level2-4 corresponds to 1-2 cells, Level5 is custom final level
+            //In this game Level 0-1 corresponds to 1-1 cells and Level2-4 corresponds to 1-2 cells, Level5 is custom final level,
+            //Level6/7 are warp zone test worlds
             string filePath = Path.Combine("..", "..", "..", "Levels", $"Level{level}.csv");
 
             var (colorPalette, marioPosition, world, entities, pipeDestinations) = LoadEntitiesFromCSV(filePath);
@@ -56,16 +57,31 @@ namespace MarioGame.Levels
                 switch (entity.ObjectType)
                 {
                     case "BaseBlock":
+                        if(color == 1)
                         blocks.Add(new GroundBlock(position, groundBlockTexture));
+                        else
+                        {
+                            //add Blue Base Block
+                        }
                         break;
                     case "MysteryBlock":
                         blocks.Add(new MysteryBlock(position, multipleBlockTextures));
                         break;
                     case "BrickBlock":
+                        if(color == 1)
                         blocks.Add(new Block(position, blockTexture));
+                        else
+                        {
+                            //add Blue Bricks
+                        }
                         break;
                     case "StairBlock":
+                        if(color == 1)
                         blocks.Add(new StairBlock(position, stairBlockTexture));
+                        else
+                        {
+                            //add blue stair block
+                        }
                         break;
                     case "PipeDestination":
                         var pipe = new Pipe(position, sceneryTextures);
