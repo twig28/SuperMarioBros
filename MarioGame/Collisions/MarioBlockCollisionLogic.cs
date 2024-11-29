@@ -217,7 +217,13 @@ namespace MarioGame.Collisions
             if (!pole.IsCollided)
             {
                 pole.OnCollide();
-                mario.score += (int)((1.0 / mario.GetDestinationRectangle().Y) * 325000) - 586;
+                Rectangle flagpoleRect = pole.GetDestinationRectangle();
+                int flagpoleHeight = flagpoleRect.Bottom - flagpoleRect.Top; // Total height of the flagpole
+                int marioPositionOnPole = flagpoleRect.Bottom - mario.GetDestinationRectangle().Center.Y; // Mario's position from the bottom
+                marioPositionOnPole = Math.Clamp(marioPositionOnPole, 0, flagpoleHeight); // Ensure the value stays within bounds
+
+                float scoreProportion = (float)marioPositionOnPole / flagpoleHeight; // Proportion of the flagpole height
+                mario.score += (int)(scoreProportion * 5000);
                 pole.setMarioStartY((int)mario.UPlayerPosition.Y);
                 mario.isFalling = false;
                 mario.isGrounded = true;
