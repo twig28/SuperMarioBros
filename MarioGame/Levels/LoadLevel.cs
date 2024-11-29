@@ -32,6 +32,7 @@ namespace MarioGame.Levels
             Texture2D sceneryTextures = game.Content.Load<Texture2D>("smb1_scenery_sprites");
             Texture2D signTexture = game.Content.Load<Texture2D>("Super_Mario_Bros._NES_Logo");
             Texture2D stairBlockTexture = game.Content.Load<Texture2D>("Hard_Block_SMB");
+            Texture2D poletexture = game.Content.Load<Texture2D>("BareFlagpole");
 
             //In this game Level 0-1 corresponds to 1-1 cells and Level2-4 corresponds to 1-2 cells, Level5 is custom final level,
             //Level6/7 are warp zone test worlds
@@ -61,7 +62,8 @@ namespace MarioGame.Levels
                         blocks.Add(new GroundBlock(position, groundBlockTexture));
                         else
                         {
-                            //add Blue Base Block
+                            //TODO add Blue Base Block
+                            blocks.Add(new GroundBlock(position, groundBlockTexture));
                         }
                         break;
                     case "MysteryBlock":
@@ -72,7 +74,8 @@ namespace MarioGame.Levels
                         blocks.Add(new Block(position, blockTexture));
                         else
                         {
-                            //add Blue Bricks
+                            //TODO add Blue Bricks
+                            blocks.Add(new Block(position, blockTexture));
                         }
                         break;
                     case "StairBlock":
@@ -80,7 +83,8 @@ namespace MarioGame.Levels
                         blocks.Add(new StairBlock(position, stairBlockTexture));
                         else
                         {
-                            //add blue stair block
+                            //TODO add blue stair block
+                            blocks.Add(new StairBlock(position, stairBlockTexture));
                         }
                         break;
                     case "PipeDestination":
@@ -158,7 +162,7 @@ namespace MarioGame.Levels
                         scenery.Add(new Castle(sceneryTextures, entity.X, entity.Y));
                         break;
                     case "Flag":
-                        blocks.Add(new Flagpole(position, sceneryTextures));
+                        blocks.Add(new Flagpole(position, sceneryTextures, poletexture));
                         break;
                     case "LPipe":
                         blocks.Add(new LPipe(position, sceneryTextures));

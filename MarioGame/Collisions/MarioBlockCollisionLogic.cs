@@ -24,7 +24,7 @@ namespace MarioGame.Collisions
             {
                 Rectangle blockRect = block.GetDestinationRectangle();
                 Rectangle marioRect = mario.GetDestinationRectangle();
-                if (block is Flagpole f && CollisionLogic.GetCollisionDirection(blockRect, marioRect) != CollisionLogic.CollisionDirection.None)
+                if (blockRect.Intersects(marioRect) && block is Flagpole f)
                 {
                     HandleFlagpoleCollision(f, mario);
                     continue;
@@ -45,8 +45,7 @@ namespace MarioGame.Collisions
                     mario.setPosition((int)destination.X, (int)destination.Y);
                     continue;
                 }
-
-                if (marioRect.Intersects(blockRect))
+                else if (marioRect.Intersects(blockRect))
                 {
                     if (IsStandingOnBlock(mario, blockRect))
                     {
@@ -215,14 +214,19 @@ namespace MarioGame.Collisions
 
         private static void HandleFlagpoleCollision(Flagpole pole, PlayerSprite mario)
         {
-            if(!pole.IsCollided)
+            if (!pole.IsCollided)
             {
                 pole.OnCollide();
-                mario.score += (1 / (mario.GetDestinationRectangle().Y)) * 1000;
+                mario.score += (int)((1.0 / mario.GetDestinationRectangle().Y) * 325000) - 586;
+                pole.setMarioStartY((int)mario.UPlayerPosition.Y);
+                mario.isFalling = false;
+                mario.isGrounded = true;
+                return;
             }
-            else if (!pole.isFinished)
+            if (!pole.isFinished)
             {
-
+                Vector2 marioPosition = pole.getMarioPosition();
+                mario.setPosition((int)marioPosition.X, (int)marioPosition.Y);
             }
         }
 
