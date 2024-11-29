@@ -24,7 +24,7 @@ public class Flagpole : IBlock
     protected Rectangle DestinationRectangle;
     protected Rectangle FlagDestinationRectangle;
 
-    private int marioStartingY; 
+    private Vector2 marioStartingPosition; 
     private int marioEndingY; 
 
     public Flagpole(Vector2 position, Texture2D flagTexture, Texture2D poleTexture)
@@ -46,9 +46,9 @@ public class Flagpole : IBlock
         }
     }
 
-    public void setMarioStartY(int y)
+    public void setMarioStartPosition(Vector2 position)
     {
-        marioStartingY = y;
+        marioStartingPosition = position;
     }
 
     private int CalculateLinearYPosition(double elapsedTime, int startingY, int finalY)
@@ -65,7 +65,7 @@ public class Flagpole : IBlock
 
     public Vector2 getMarioPosition()
     {
-        return Position;
+        return marioStartingPosition;
     }
 
     public void Update(GameTime gameTime)
@@ -73,9 +73,6 @@ public class Flagpole : IBlock
         if (!IsCollided || isFinished) return;
 
         timeElapsed += gameTime.ElapsedGameTime.TotalSeconds;
-
-        int marioY = marioStartingY;
-        Position = new Vector2(Position.X, marioY);
 
         int flagY = CalculateLinearYPosition(timeElapsed, flagInitialY, flagFinalY);
         if(flagY < 125)
