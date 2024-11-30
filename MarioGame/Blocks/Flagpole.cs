@@ -66,7 +66,7 @@ public class Flagpole : IBlock
 
     public Vector2 getMarioPosition()
     {
-        return new Vector2(marioStartingPosition.X, marioY);
+        return new Vector2(marioStartingPosition.X, marioStartingPosition.Y);
     }
 
     public void Update(GameTime gameTime)
@@ -74,8 +74,6 @@ public class Flagpole : IBlock
         if (!IsCollided || isFinished) return;
 
         timeElapsed += gameTime.ElapsedGameTime.TotalSeconds;
-
-        marioY = CalculateLinearYPosition(timeElapsed, (int)marioStartingPosition.Y, marioEndingY);
 
         int flagY = CalculateLinearYPosition(timeElapsed, flagInitialY, flagFinalY);
         if(flagY < 125)

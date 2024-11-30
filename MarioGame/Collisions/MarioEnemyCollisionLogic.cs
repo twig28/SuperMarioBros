@@ -87,11 +87,22 @@ namespace MarioGame.Collisions
             {
                 StartKoopaShell(shell, mario);
             }
+            else if (enemy is KoopaShell s && s.getIsMoving() && (s.DefaultMoveMentDirection && IsLeft(mario.GetDestinationRectangle(), s.GetDestinationRectangle()) || !s.DefaultMoveMentDirection && !IsLeft(mario.GetDestinationRectangle(), s.GetDestinationRectangle()))){
+                //nothing for now if moving right and mario is left or moving left and mario is right bug fix
+            }
             else
             {
                 toDie = true;
-               // mario.score += 100;
             }
+        }
+
+        public static bool IsLeft(Rectangle a, Rectangle b)
+        {
+            if (a.Right <= b.Right)
+            {
+                return true; // `a` is to the left of `b`
+            }
+            return false;
         }
 
         private static void HandleMarioDamage(PlayerSprite mario)
