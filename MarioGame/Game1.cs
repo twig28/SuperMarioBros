@@ -119,7 +119,7 @@ namespace MarioGame
 
             LoadLevels.LoadLevel(this, blocks, enemies, items, scenery, player_sprite, this.CurrLevel, _spriteBatch, levelColor);
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
-            player_sprite.setPosition(3000, 400);
+            player_sprite.setPosition(5000, 400);
         }
         protected override void Update(GameTime gameTime)
         {
@@ -188,6 +188,12 @@ namespace MarioGame
                 scene.Draw(_spriteBatch);
             }
 
+            foreach (IEnemy enemy in enemies)
+            {
+                if (enemy is Piranha)
+                    enemy.Draw();
+            }
+
             foreach (var block in blocks)
             {
                 block.Draw(_spriteBatch);
@@ -200,6 +206,7 @@ namespace MarioGame
 
             foreach (IEnemy enemy in enemies)
             {
+                if(enemy is not Piranha)
                 enemy.Draw();
             }
 

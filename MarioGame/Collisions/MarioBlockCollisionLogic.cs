@@ -228,6 +228,7 @@ namespace MarioGame.Collisions
                 pole.setMarioStartPosition(mario.UPlayerPosition);
                 mario.isFalling = false;
                 mario.isGrounded = true;
+                mario.velocity = 0;
                 return;
             }
             if (!pole.isFinished)

@@ -1,6 +1,6 @@
-ColorPallete,2
+ColorPallete,1
 MarioPosition,50,0
-World,4
+World,999
 -------------------- Custom Warp Zone Level
 BaseBlock,0,700
 BaseBlock,0,650

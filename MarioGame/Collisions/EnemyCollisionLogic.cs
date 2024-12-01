@@ -39,10 +39,8 @@ namespace MarioGame.Collisions
             }
             // Handle side collision only if the enemy is near the block's top
             else if (collisionDirection == CollisionDirection.Side)
-            {
-                // Check that the enemy's bottom is close to the block's top (within a small tolerance)
-                int bottomTolerance = 50;
-                if (Math.Abs(enemy.GetDestinationRectangle().Bottom - block.GetDestinationRectangle().Top) >= bottomTolerance)
+            {;
+                if (Math.Abs(enemy.GetDestinationRectangle().Bottom - block.GetDestinationRectangle().Top) >= 60)
                 {
                     enemy.DefaultMoveMentDirection = !enemy.DefaultMoveMentDirection;
                 }
