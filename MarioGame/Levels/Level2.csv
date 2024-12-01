@@ -310,7 +310,7 @@ BrickBlock,8900,250
 BrickBlock,8900,200
 BrickBlock,8900,150
 BrickBlock,8900,100
-PipeDestination,9200,400,6,200,500
+PipeDestination,9200,400,6,400,500
 BrickBlock,9750,100
 BrickBlock,9750,150
 BrickBlock,9750,200

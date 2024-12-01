@@ -119,7 +119,6 @@ namespace MarioGame
 
             LoadLevels.LoadLevel(this, blocks, enemies, items, scenery, player_sprite, this.CurrLevel, _spriteBatch, levelColor);
             BallSprite.LoadContent(Content.Load<Texture2D>("smb_enemies_sheet"));
-            player_sprite.setPosition(5000, 400);
         }
         protected override void Update(GameTime gameTime)
         {
