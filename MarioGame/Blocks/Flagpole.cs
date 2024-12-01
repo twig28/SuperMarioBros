@@ -25,8 +25,6 @@ public class Flagpole : IBlock
     protected Rectangle FlagDestinationRectangle;
 
     private Vector2 marioStartingPosition; 
-    private int marioEndingY;
-    private int marioY;
 
     public Flagpole(Vector2 position, Texture2D flagTexture, Texture2D poleTexture)
     {
@@ -36,7 +34,6 @@ public class Flagpole : IBlock
         DestinationRectangle = new Rectangle((int)position.X, (int)position.Y, 75, 500);
         FlagDestinationRectangle = new Rectangle((int)position.X - 30, (int)position.Y + 30, 50, 50);
         IsCollided = false;
-        marioEndingY = 450;
     }
 
     public void OnCollide()
