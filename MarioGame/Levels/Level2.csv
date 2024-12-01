@@ -20,9 +20,8 @@ MysteryBlock,750,400
 MysteryBlock,800,400
 Piranha,5265,475
 Piranha,5515,425
-Piranha,5760,525
 Goomba,900,550
-Goomba,950,500
+Goomba,975,500
 StairBlock,950,550
 StairBlock,1050,550
 StairBlock,1050,500
@@ -224,7 +223,7 @@ BrickBlock,7500,350
 BrickBlock,7550,350
 UpPlatform,7850,200
 UpPlatform,7850,550
-LongPipeDestination,8500,50,4,50,500
+LongPipeDestination,8500,50,4,400,400
 BrickBlock,8150,450
 BrickBlock,8150,500
 BrickBlock,8150,550

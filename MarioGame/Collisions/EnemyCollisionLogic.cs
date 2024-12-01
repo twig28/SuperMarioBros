@@ -39,8 +39,11 @@ namespace MarioGame.Collisions
             }
             // Handle side collision only if the enemy is near the block's top
             else if (collisionDirection == CollisionDirection.Side)
-            {;
-                if (Math.Abs(enemy.GetDestinationRectangle().Bottom - block.GetDestinationRectangle().Top) >= 60)
+            {
+                int denom;
+                if(enemy is Koopa) { denom = 60; }
+                else { denom = 50; }
+                if (Math.Abs(enemy.GetDestinationRectangle().Bottom - block.GetDestinationRectangle().Top) >= denom)
                 {
                     enemy.DefaultMoveMentDirection = !enemy.DefaultMoveMentDirection;
                 }
