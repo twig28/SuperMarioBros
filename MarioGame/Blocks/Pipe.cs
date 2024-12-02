@@ -35,8 +35,8 @@ namespace MarioGame
         public void makePipeLong()
         {
             isLong = true;
-            width = 240;
-            height = 575;
+            width = 202;
+            height = 400;
             SourceRectangle = new Rectangle(83, 318, 62, 132);
             DestinationRectangle = new Rectangle((int)Position.X, (int)Position.Y, width, height);
         }

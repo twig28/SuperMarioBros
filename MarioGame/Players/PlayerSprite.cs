@@ -9,9 +9,6 @@ using System.Collections.Generic;
 using MarioGame.Sprites;
 namespace MarioGame
 {
-   
-
-    //would have texture, position, state, and more properties
     public class PlayerSprite : IPlayer
     {
         public enum SpriteType
@@ -165,13 +162,11 @@ namespace MarioGame
            
             if(Fire || Big || Star)
             {
-                rectangle = new Rectangle((int)(UPlayerPosition.X - 27), (int)(UPlayerPosition.Y - 71), 54, 96);
+                rectangle = new Rectangle((int)(UPlayerPosition.X - 20), (int)(UPlayerPosition.Y - 71), 42, 96);
             }
             else
             {
-               
                 rectangle = new Rectangle((int)(UPlayerPosition.X - 21), (int)(UPlayerPosition.Y - 24), 42,48);
-
             }
             return rectangle;
         }

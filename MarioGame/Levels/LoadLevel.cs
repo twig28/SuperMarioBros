@@ -21,9 +21,8 @@ namespace MarioGame.Levels
     List<IItem> items,
     List<IScenery> scenery,
     PlayerSprite mario,
-    int level)
+    int level, SpriteBatch _spriteBatch, int customColor)
         {
-            // Load resources
             SpriteFont font = game.Content.Load<SpriteFont>("File");
             Texture2D enemyTextures = game.Content.Load<Texture2D>("smb_enemies_sheet");
             Texture2D itemTextures = game.Content.Load<Texture2D>("smb_items_sheet");
@@ -33,22 +32,23 @@ namespace MarioGame.Levels
             Texture2D sceneryTextures = game.Content.Load<Texture2D>("smb1_scenery_sprites");
             Texture2D signTexture = game.Content.Load<Texture2D>("Super_Mario_Bros._NES_Logo");
             Texture2D stairBlockTexture = game.Content.Load<Texture2D>("Hard_Block_SMB");
-            string filePath = "";
+            Texture2D poletexture = game.Content.Load<Texture2D>("BareFlagpole");
 
-            //In this game Level 0-1 corresponds to 1-1 cells and Level2-4 corresponds to 1-2 cells
-            filePath = Path.Combine("..", "..", "..", "Levels", $"Level{level}.csv");
+            //In this game Level 0-1 corresponds to 1-1 cells and Level2-4 corresponds to 1-2 cells, Level5 is custom final level,
+            //Level6/7 are warp zone test worlds
+            string filePath = Path.Combine("..", "..", "..", "Levels", $"Level{level}.csv");
 
             var (colorPalette, marioPosition, world, entities, pipeDestinations) = LoadEntitiesFromCSV(filePath);
 
-            Game1.Instance.SetWorld(world);
+            Game1.Instance.CurrWorld = world;
 
             int color = int.Parse(colorPalette);
+            if(customColor > -1)
+            {
+                color = customColor;
+            }
+            Game1.Instance.SetBackgroundColor(color);
 
-            // Ensure colorPalette is parsed as an integer and used correctly
-            int parsedColorPalette = int.Parse(colorPalette);
-            Game1.Instance.SetBackgroundColor(parsedColorPalette);
-
-            // Set Mario's starting position when loading
             mario.setPosition((int)(marioPosition.X), (int)(marioPosition.Y));
 
             foreach (var entity in entities)
@@ -58,19 +58,34 @@ namespace MarioGame.Levels
                 switch (entity.ObjectType)
                 {
                     case "BaseBlock":
+                        if(color == 1)
                         blocks.Add(new GroundBlock(position, groundBlockTexture));
+                        else
+                        {
+                            //TODO add Blue Base Block
+                            blocks.Add(new GroundBlock(position, groundBlockTexture));
+                        }
                         break;
                     case "MysteryBlock":
                         blocks.Add(new MysteryBlock(position, multipleBlockTextures));
                         break;
                     case "BrickBlock":
+                        if(color == 1)
                         blocks.Add(new Block(position, blockTexture));
+                        else
+                        {
+                            //TODO add Blue Bricks
+                            blocks.Add(new Block(position, blockTexture));
+                        }
                         break;
-                    /*                    case "BrickFragmentBlock":
-                                            blocks.Add(new BrickFragment(multipleBlockTextures, position));
-                                            break;*/
                     case "StairBlock":
+                        if(color == 1)
                         blocks.Add(new StairBlock(position, stairBlockTexture));
+                        else
+                        {
+                            //TODO add blue stair block
+                            blocks.Add(new StairBlock(position, stairBlockTexture));
+                        }
                         break;
                     case "PipeDestination":
                         var pipe = new Pipe(position, sceneryTextures);
@@ -102,14 +117,13 @@ namespace MarioGame.Levels
                         blocks.Add(longPipeD);
                         break;
                     case "Goomba":
-
-                        enemies.Add(new Goomba(enemyTextures, game._spriteBatch, entity.X, entity.Y, color));
+                        enemies.Add(new Goomba(enemyTextures, _spriteBatch, entity.X, entity.Y, color));
                         break;
                     case "Koopa":
-                        enemies.Add(new Koopa(enemyTextures, game._spriteBatch, entity.X, entity.Y, color));
+                        enemies.Add(new Koopa(enemyTextures, _spriteBatch, entity.X, entity.Y, color));
                         break;
                     case "Piranha":
-                        enemies.Add(new Piranha(enemyTextures, game._spriteBatch, entity.X, entity.Y));
+                        enemies.Add(new Piranha(enemyTextures, _spriteBatch, entity.X, entity.Y));
                         break;
                     case "Coin":
                         items.Add(new Coin(itemTextures, position));
@@ -148,10 +162,18 @@ namespace MarioGame.Levels
                         scenery.Add(new Castle(sceneryTextures, entity.X, entity.Y));
                         break;
                     case "Flag":
-                        blocks.Add(new Flagpole(position, sceneryTextures));
+                        blocks.Add(new Flagpole(position, sceneryTextures, poletexture));
                         break;
                     case "LPipe":
                         blocks.Add(new LPipe(position, sceneryTextures));
+                        break;
+                    case "UpPlatform":
+                        blocks.Add(new Platform(position, itemTextures));
+                        break;
+                    case "DownPlatform":
+                        var p = new Platform(position, itemTextures);
+                        blocks.Add(p);
+                        p.ReverseDirection();
                         break;
                 }
             }
@@ -161,7 +183,7 @@ namespace MarioGame.Levels
         {
             string colorPalette = "";
             Vector2 marioPosition = Vector2.Zero;
-            int world = 0; // Default world value
+            int world = 0;
             var entities = new List<(string, int, int)>();
             var pipeDestinations = new List<(int LevelDest, int X, int Y)>();
 
@@ -202,10 +224,8 @@ namespace MarioGame.Levels
                     }
                 }
 
-                // Skip the separator line
+                //separator line
                 reader.ReadLine();
-
-                // Read remaining lines for entities
                 while (!reader.EndOfStream)
                 {
                     var line = reader.ReadLine();
@@ -239,6 +259,5 @@ namespace MarioGame.Levels
 
             return (colorPalette, marioPosition, world, entities, pipeDestinations);
         }
-
     }
 }

@@ -1,53 +1,91 @@
-﻿using Microsoft.Xna.Framework;
+﻿using MarioGame.Interfaces;
 using Microsoft.Xna.Framework.Graphics;
-using MarioGame.Interfaces;
+using Microsoft.Xna.Framework;
 
-namespace MarioGame.Blocks
+public class Flagpole : IBlock
 {
-    public class Flagpole : IBlock
+    public Vector2 Position { get; set; }
+    public bool IsSolid { get; }
+    public bool IsBreakable { get; }
+    public bool IsCollided { get; set; }
+
+    public bool isFinished = false;
+
+    private double timeElapsed = 0;
+
+    private const double totalLoweringTime = 5.0;
+    private const int flagInitialY = 0; 
+    private const int flagFinalY = 500; 
+
+    protected Texture2D PoleTexture { get; set; }
+    protected Texture2D FlagTexture { get; set; }
+    private Rectangle sourceRectangle = new Rectangle(38, 0, 90, 539);
+    private Rectangle FlagsourceRectangle = new Rectangle(117, 707, 15, 16);
+    protected Rectangle DestinationRectangle;
+    protected Rectangle FlagDestinationRectangle;
+
+    private Vector2 marioStartingPosition; 
+
+    public Flagpole(Vector2 position, Texture2D flagTexture, Texture2D poleTexture)
     {
-        public Vector2 Position { get; set; }
-        public bool IsSolid { get; }
-        public bool IsBreakable { get; }
-        public bool IsCollided { get; set; }
+        Position = position;
+        PoleTexture = poleTexture;
+        FlagTexture = flagTexture;
+        DestinationRectangle = new Rectangle((int)position.X, (int)position.Y, 75, 500);
+        FlagDestinationRectangle = new Rectangle((int)position.X - 30, (int)position.Y + 30, 50, 50);
+        IsCollided = false;
+    }
 
-        public const double animInterval = 0;
-        public const int spriteInterval = 0;
-        public int currSprite = 0;
-        private double timeElapsed = 0;
-        private double timeElapsedSinceUpdate = 0;
-
-        protected Texture2D Texture { get; set; }
-        Rectangle sourceRectangle = new Rectangle(248, 592, 25, 170);
-        protected Rectangle DestinationRectangle;
-        // private ISprite sprite;
-
-        public Flagpole(Vector2 position, Texture2D texture)
-        {
-            Position = position;
-            Texture = texture;
-            DestinationRectangle = new Rectangle((int)position.X, (int)position.Y, 75, 500);
-            IsCollided = false;
-        }
-
-        public void OnCollide()
+    public void OnCollide()
+    {
+        if (!IsCollided)
         {
             IsCollided = true;
         }
+    }
 
-        public virtual void Update(GameTime gameTime)
+    public void setMarioStartPosition(Vector2 position)
+    {
+        marioStartingPosition = position;
+    }
+
+    private int CalculateLinearYPosition(double elapsedTime, int startingY, int finalY)
+    {
+        if (elapsedTime >= totalLoweringTime)
         {
-            if (IsCollided)
-            {
-                //to be implemented
-            }
+            isFinished = true;
         }
 
-        public Rectangle GetDestinationRectangle() { return DestinationRectangle; }
+        double t = elapsedTime / totalLoweringTime; // Normalized time [0, 1]
+        int result = (int)(startingY + t * (finalY - startingY));
+        return result;
+    }
 
-        public virtual void Draw(SpriteBatch spriteBatch)
+    public Vector2 getMarioPosition()
+    {
+        return new Vector2(marioStartingPosition.X, marioStartingPosition.Y);
+    }
+
+    public void Update(GameTime gameTime)
+    {
+        if (!IsCollided || isFinished) return;
+
+        timeElapsed += gameTime.ElapsedGameTime.TotalSeconds;
+
+        int flagY = CalculateLinearYPosition(timeElapsed, flagInitialY, flagFinalY);
+        if(flagY < 125)
         {
-            spriteBatch.Draw(Texture, DestinationRectangle, sourceRectangle, Color.White);
+            flagY = 125;
         }
+        FlagDestinationRectangle = new Rectangle(FlagDestinationRectangle.X, flagY, FlagDestinationRectangle.Width, FlagDestinationRectangle.Height);
+    }
+
+    public Rectangle GetDestinationRectangle() { return DestinationRectangle; }
+
+    public virtual void Draw(SpriteBatch spriteBatch)
+    {
+        // Draw the flagpole and the flag
+        spriteBatch.Draw(PoleTexture, DestinationRectangle, sourceRectangle, Color.White);
+        spriteBatch.Draw(FlagTexture, FlagDestinationRectangle, FlagsourceRectangle, Color.White);
     }
 }

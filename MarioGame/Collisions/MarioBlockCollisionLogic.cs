@@ -20,13 +20,13 @@ namespace MarioGame.Collisions
             List<IBlock> blocksToRemove = new List<IBlock>();
             List<IBlock> standingBlocks = new List<IBlock>();
 
-            foreach (IBlock block in blocks)
+            foreach (IBlock block in blocks )
             {
                 Rectangle blockRect = block.GetDestinationRectangle();
                 Rectangle marioRect = mario.GetDestinationRectangle();
-                if (block is Flagpole)
+                if (blockRect.Intersects(marioRect) && block is Flagpole f)
                 {
-                    //WHICH IS FLAGPOLE
+                    HandleFlagpoleCollision(f, mario);
                     continue;
                 }
                 //Pipe that occurs after castles
@@ -45,8 +45,7 @@ namespace MarioGame.Collisions
                     mario.setPosition((int)destination.X, (int)destination.Y);
                     continue;
                 }
-
-                if (marioRect.Intersects(blockRect))
+                else if (marioRect.Intersects(blockRect))
                 {
                     if (IsStandingOnBlock(mario, blockRect, marioRect))
                     {
@@ -133,6 +132,7 @@ namespace MarioGame.Collisions
             {
                 if (block.IsBreakable)
                 {
+                    block.OnCollide();
                     blocksToRemove.Add(block);
                 }
                 mario.UPlayerPosition.Y = block.GetDestinationRectangle().Bottom + mario.GetDestinationRectangle().Height / 2 + 24;
@@ -195,7 +195,14 @@ namespace MarioGame.Collisions
         {
             foreach (IBlock blockToRemove in blocksToRemove)
             {
-                blocks.Remove(blockToRemove);
+                if(blockToRemove is Block b && b.IsDestroyed)
+                {
+                    blocks.Remove(blockToRemove);
+                }
+                else if (blockToRemove is not Block)
+                {
+                    blocks.Remove(blockToRemove);
+                }
 
                 Texture2D brickFragmentTexture = Game1.Instance.Content.Load<Texture2D>("blocks");
                 float xOffset = blockToRemove.GetDestinationRectangle().Width / 2 - 16;
@@ -211,6 +218,32 @@ namespace MarioGame.Collisions
 
                     items.Add(brickFragment);
                 }
+            }
+        }
+
+        private static void HandleFlagpoleCollision(Flagpole pole, PlayerSprite mario)
+        {
+            if (!pole.IsCollided)
+            {
+                pole.OnCollide();
+                Rectangle flagpoleRect = pole.GetDestinationRectangle();
+                int flagpoleHeight = flagpoleRect.Bottom - flagpoleRect.Top; 
+                int marioPositionOnPole = flagpoleRect.Bottom - mario.GetDestinationRectangle().Center.Y;
+                marioPositionOnPole = Math.Clamp(marioPositionOnPole, 0, flagpoleHeight);
+
+                float scoreProportion = (float)marioPositionOnPole / flagpoleHeight;
+                mario.score += (int)(scoreProportion * 5000);
+                mario.UPlayerPosition.X += 20;
+                pole.setMarioStartPosition(mario.UPlayerPosition);
+                mario.isFalling = false;
+                mario.isGrounded = true;
+                mario.velocity = 0;
+                return;
+            }
+            if (!pole.isFinished)
+            {
+                Vector2 marioPosition = pole.getMarioPosition();
+                mario.setPosition((int)marioPosition.X, (int)marioPosition.Y);
             }
         }
 
