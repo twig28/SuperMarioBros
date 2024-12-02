@@ -141,7 +141,7 @@ namespace MarioGame
             }
             else if (invincible)
             {
-                width = 16;
+                width = 14;
                 height = 16;
                 pos_difference = 0;
                 c = Color.SteelBlue;
@@ -149,7 +149,7 @@ namespace MarioGame
             }
             else
             {
-                width = 16;
+                width = 14;
                 height = 16;
                 pos_difference = 0;
                 c= Color.White;

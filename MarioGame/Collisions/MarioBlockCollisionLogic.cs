@@ -48,11 +48,11 @@ namespace MarioGame.Collisions
 
                 if (marioRect.Intersects(blockRect))
                 {
-                    if (IsStandingOnBlock(mario, blockRect))
+                    if (IsStandingOnBlock(mario, blockRect, marioRect))
                     {
                         HandleStandingOnBlock(mario, block, standingBlocks);
                     }
-                    else if (IsBelowBlock(mario, blockRect))
+                    else if (IsBelowBlock(mario, blockRect,marioRect))
                     {
                         HandleBelowBlockCollision(mario, block, items, blocksToRemove);
                     }
@@ -71,17 +71,26 @@ namespace MarioGame.Collisions
             RemoveBreakableBlocks(blocks, blocksToRemove, items);
         }
 
-        private static bool IsStandingOnBlock(PlayerSprite mario, Rectangle blockRect)
+        private static bool IsStandingOnBlock(PlayerSprite mario, Rectangle blockRect, Rectangle marioRect)
         {
-            return mario.UPlayerPosition.Y < blockRect.Top;
+            bool isStanding = false;
+            if(mario.UPlayerPosition.Y < blockRect.Top)
+            {
+                if (marioRect.Right > blockRect.Left && marioRect.Left < blockRect.Right)
+                {
+                    isStanding = true;
+                }    
+            }
+            return isStanding;
+                
+
         }
 
-        private static bool IsBelowBlock(PlayerSprite mario, Rectangle blockRect)
+        private static bool IsBelowBlock(PlayerSprite mario, Rectangle blockRect, Rectangle marioRect)
         {
             return mario.UPlayerPosition.Y > blockRect.Bottom &&
                    !mario.isGrounded &&
-                   mario.UPlayerPosition.X < blockRect.Right &&
-                   mario.UPlayerPosition.X > blockRect.Left;
+                   (marioRect.Right > blockRect.Left && marioRect.Left < blockRect.Right);
         }
 
         private static void HandleStandingOnBlock(PlayerSprite mario, IBlock block, List<IBlock> standingBlocks)

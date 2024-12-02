@@ -105,16 +105,16 @@ namespace MarioGame.Collisions
             else if (!mario.invincible && mario.lives <= 1)
             {
                 mario.lives = 0;
-                Game1.Instance.ResetLevel();
                 mario.current = PlayerSprite.SpriteType.Damaged;
+                Game1.Instance.ResetLevel();
 
             }
             else if(!mario.invincible && mario.lives > 1)
             {
                 mario.lives -= 1;
-                Game1.Instance.ResetLevel();
                 mario.UPlayerPosition = new Vector2(100, 500);
-                mario.current = PlayerSprite.SpriteType.Static;
+                mario.current = PlayerSprite.SpriteType.Falling;
+                Game1.Instance.ResetLevel();
             }
         }
 
