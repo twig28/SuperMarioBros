@@ -23,6 +23,11 @@ namespace MarioGame
         {
         }
 
+        public void makeBlue()
+        {
+            base.SourceRectanlge = new Rectangle(272, 127, 16, 16);
+        }
+
         public override void OnCollide()
         {
             isBumped = true;

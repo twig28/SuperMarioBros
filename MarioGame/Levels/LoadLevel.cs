@@ -33,6 +33,8 @@ namespace MarioGame.Levels
             Texture2D signTexture = game.Content.Load<Texture2D>("Super_Mario_Bros._NES_Logo");
             Texture2D stairBlockTexture = game.Content.Load<Texture2D>("Hard_Block_SMB");
             Texture2D poletexture = game.Content.Load<Texture2D>("BareFlagpole");
+            Texture2D blueBaseBlockTexture = game.Content.Load<Texture2D>("32675005a8e11ad");
+            Texture2D blueStairTexture = game.Content.Load<Texture2D>("image");
 
             //In this game Level 0-1 corresponds to 1-1 cells and Level2-4 corresponds to 1-2 cells, Level5 is custom final level,
             //Level6 are warp zone test worlds
@@ -62,8 +64,9 @@ namespace MarioGame.Levels
                         blocks.Add(new GroundBlock(position, groundBlockTexture));
                         else
                         {
-                            //TODO add Blue Base Block
-                            blocks.Add(new GroundBlock(position, groundBlockTexture));
+                            GroundBlock Block = new GroundBlock(position, blueBaseBlockTexture);
+                            Block.makeBlue();
+                            blocks.Add(Block);
                         }
                         break;
                     case "MysteryBlock":
@@ -74,8 +77,9 @@ namespace MarioGame.Levels
                         blocks.Add(new Block(position, blockTexture));
                         else
                         {
-                            //TODO add Blue Bricks
-                            blocks.Add(new Block(position, blockTexture));
+                            Block b = new Block(position, multipleBlockTextures);
+                            b.makeBlue();
+                            blocks.Add(b);
                         }
                         break;
                     case "StairBlock":
@@ -83,8 +87,9 @@ namespace MarioGame.Levels
                         blocks.Add(new StairBlock(position, stairBlockTexture));
                         else
                         {
-                            //TODO add blue stair block
-                            blocks.Add(new StairBlock(position, stairBlockTexture));
+                            StairBlock stair = new StairBlock(position, blueStairTexture);
+                            stair.makeBlue();
+                            blocks.Add(stair);
                         }
                         break;
                     case "PipeDestination":

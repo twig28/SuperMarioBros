@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-internal class Bowser : IEnemy
+internal class Goomba : IEnemy
 {
     private double animInterval = 0.2;
     private GoombaSprite sprite;
@@ -36,7 +36,7 @@ internal class Bowser : IEnemy
     public double getdeathStartTime => deathStartTime;
 
 
-    public Bowser(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y, int pallette)
+    public Goomba(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y, int pallette)
     {
         posX = X; posY = Y;
         sprite = new GoombaSprite(Texture, SpriteBatch, posX, posY, pallette);

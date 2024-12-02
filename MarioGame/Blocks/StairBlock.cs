@@ -13,6 +13,11 @@ namespace MarioGame.Blocks
         {
         }
 
+        public void makeBlue()
+        {
+            base.SourceRectanlge = new Rectangle(0, 0, 197, 197);
+        }
+
         public override void OnCollide()
         {
             //do nothing

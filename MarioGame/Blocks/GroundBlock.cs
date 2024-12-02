@@ -14,6 +14,11 @@ namespace MarioGame.Blocks
         {
         }
 
+        public void makeBlue()
+        {
+            base.SourceRectanlge = new Rectangle(0, 0, 1198, 1198);
+        }
+
         public override void OnCollide()
         {
             // Ground blocks do nothing when Collide
