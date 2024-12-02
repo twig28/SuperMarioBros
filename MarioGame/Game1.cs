@@ -223,7 +223,6 @@ namespace MarioGame
                 TextDraw.Draw(font, spriteBatchText, player_sprite);
                 // text.DrawGameOver(font, spriteBatchText, player_sprite);
             }
-            spriteBatchText.DrawString(font, "Debug Mario Pos: " + player_sprite.UPlayerPosition, new Vector2(20, 600), Color.Yellow);
 
             spriteBatchText.End();
             
