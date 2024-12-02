@@ -35,7 +35,7 @@ namespace MarioGame.Levels
             Texture2D poletexture = game.Content.Load<Texture2D>("BareFlagpole");
 
             //In this game Level 0-1 corresponds to 1-1 cells and Level2-4 corresponds to 1-2 cells, Level5 is custom final level,
-            //Level6/7 are warp zone test worlds
+            //Level6 are warp zone test worlds
             string filePath = Path.Combine("..", "..", "..", "Levels", $"Level{level}.csv");
 
             var (colorPalette, marioPosition, world, entities, pipeDestinations) = LoadEntitiesFromCSV(filePath);
