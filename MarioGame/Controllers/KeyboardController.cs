@@ -162,6 +162,11 @@ public class KeyboardController : IController
                 keyboardPermitN = true;
             }
 
+            if (IsKeyPressed(Keys.D3, currentKeyState))
+            {
+                Game.SetLevel(5);
+            }
+
             if (IsKeyPressed(Keys.D2, currentKeyState))
             {
                 Game.SetLevel(2);

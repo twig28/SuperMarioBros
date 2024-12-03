@@ -124,32 +124,9 @@ namespace MarioGame
             keyControl.HandleInputs(player_sprite);
             mouseControl.HandleInputs(player_sprite);
 
-            EnemyCollisionLogic.CheckEnemyBlockCollisions(enemies, blocks, gameTime, player_sprite);
-            MarioBlockCollisionLogic.CheckMarioBlockCollision(player_sprite, blocks, items);
-            EnemyCollisionLogic.CheckEnemyEnemyCollision(enemies, gameTime, player_sprite);
-            MarioEnemyCollisionLogic.CheckMarioEnemyCollision(player_sprite, ref enemies, gameTime);
-            CollisionLogic.CheckMarioItemCollision(player_sprite, items, gameTime);
-            CollisionLogic.CheckItemBlockCollision(blocks, items);
-            PositionChecks.checkDeathByFalling(player_sprite, GraphicsDevice.Viewport.Height);
-            blocks.RemoveAll(block => block is Block b && b.IsDestroyed);
+            GameHelper.checkAllCollisions(enemies, blocks, items, player_sprite, gameTime, GraphicsDevice.Viewport.Height);
 
-            player_sprite.Update(gameTime, player_sprite);
-
-            foreach (var block in blocks)
-            {
-                block.Update(gameTime);
-            }
-
-            foreach (IItem item in items)
-            {
-                item.Update(gameTime);
-            }
-
-            items.RemoveAll(item => item.GetLifeTime() < 0.0f);
-
-            Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl, soundLib);
-            Ball.UpdateAll(gameTime, GraphicsDevice.Viewport.Width, blocks);
-            BallCollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime, false);
+            GameHelper.updateAll(enemies, blocks, items, player_sprite, gameTime, GraphicsDevice, soundLib, keyControl, ballSpeed);
 
             base.Update(gameTime);
         }
@@ -182,46 +159,8 @@ namespace MarioGame
             offset = PositionChecks.GetCameraOffset(player_sprite.GetDestinationRectangle(), GraphicsDevice.Viewport.Width);
             Matrix transform = Matrix.CreateTranslation(new Vector3(offset, 0));
             _spriteBatch.Begin(transformMatrix: transform);
-            foreach (IEnemy enemy in enemies)
-            {
-                if (PositionChecks.renderEnemy(enemy, offset, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height) || enemy is KoopaShell)
-                {
-                    enemy.Update(gameTime);
-                }
-            }
 
-            foreach (IScenery scene in scenery)
-            {
-                scene.Draw(_spriteBatch);
-            }
-
-            foreach (IEnemy enemy in enemies)
-            {
-                if (enemy is Piranha)
-                    enemy.Draw();
-            }
-
-            foreach (var block in blocks)
-            {
-                block.Draw(_spriteBatch);
-            }
-
-            foreach (IItem item in items)
-            {
-                item.Draw(_spriteBatch);
-            }
-
-            foreach (IEnemy enemy in enemies)
-            {
-                if(enemy is not Piranha)
-                enemy.Draw();
-            }
-
-            Ball.DrawAll(_spriteBatch);
-            DrawCollisionRectangles(_spriteBatch);
-            player_sprite.Draw(_spriteBatch, 14, 16, 3f, new List<Rectangle>(), 0, Color.White);
-
-            _spriteBatch.End();
+            GameHelper.drawAll(enemies, blocks, items, scenery, player_sprite, _spriteBatch, offset, GraphicsDevice, gameTime);
 
             spriteBatchText.Begin();
 
@@ -231,7 +170,6 @@ namespace MarioGame
                 TextDraw.Draw(font, spriteBatchText, player_sprite);
                 // text.DrawGameOver(font, spriteBatchText, player_sprite);
             }
-            spriteBatchText.DrawString(font, "Debug Mario Pos: " + player_sprite.UPlayerPosition, new Vector2(20, 600), Color.Yellow);
 
             spriteBatchText.End();
             

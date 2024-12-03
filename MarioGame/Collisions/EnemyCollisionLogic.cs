@@ -31,6 +31,7 @@ namespace MarioGame.Collisions
             if (collisionDirection == CollisionDirection.Above)
             {
                 enemy.setPosY = (int)block.Position.Y - enemy.GetDestinationRectangle().Height;
+                if(enemy is Bowser bow) { bow.ground(); }
                 if(block is Block b && b.getIsBumped() || block is MysteryBlock b2 && b2.getIsBumped())
                 {
                     enemy.TriggerDeath(gt, false);
@@ -38,7 +39,7 @@ namespace MarioGame.Collisions
                 }
             }
             // Handle side collision only if the enemy is near the block's top
-            else if (collisionDirection == CollisionDirection.Side)
+            else if (collisionDirection == CollisionDirection.Side && enemy is not Bowser)
             {
                 int denom;
                 if(enemy is Koopa) { denom = 60; }
