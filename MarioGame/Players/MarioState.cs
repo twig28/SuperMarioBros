@@ -29,15 +29,15 @@ namespace MarioGame
             Game = game;
 
         }
-        public void intialize_player(PlayerSprite mario)
+        public void intialize_player(PlayerSprite mario,Vector2 PlayerPosition)
         {
             //Player initialize
             //move toward right
-            MRplayer = new MotionPlayer(marioTexture, mario.PlayerPosition, PlayerSpeed, _graphics, Game);
-            Staplayer = new Static(marioTexture, mario.PlayerPosition, Game);
-            Jumpplayer = new Jump(marioTexture, mario.PlayerPosition, Game);
-            Damagedplayer = new Damaged(marioTexture, mario.PlayerPosition, PlayerSpeed, _graphics); 
-            Fallplayer = new Fall(marioTexture, mario.PlayerPosition, PlayerSpeed, _graphics, Game);
+            MRplayer = new MotionPlayer(marioTexture, PlayerPosition, PlayerSpeed, _graphics, Game);
+            Staplayer = new Static(marioTexture, PlayerPosition, Game);
+            Jumpplayer = new Jump(marioTexture, PlayerPosition, Game);
+            Damagedplayer = new Damaged(marioTexture, PlayerPosition, PlayerSpeed, _graphics); 
+            Fallplayer = new Fall(marioTexture, PlayerPosition, PlayerSpeed, _graphics, Game);
             Mario_state = new MarioController(Game);
 
         }

@@ -49,12 +49,12 @@ public class KeyboardController : IController
             if (mario.current == PlayerSprite.SpriteType.MotionL)
             {
                 mario.current = PlayerSprite.SpriteType.StaticL;
-                mario.left = true;
+                mario.direction = true;
             }
             else if (mario.current == PlayerSprite.SpriteType.Motion)
             {
                 mario.current = PlayerSprite.SpriteType.Static;
-                mario.left = false;
+                mario.direction = false;
             }
             if (currentKeyState.IsKeyDown(Keys.Right) || currentKeyState.IsKeyDown(Keys.D))
             {
@@ -70,7 +70,7 @@ public class KeyboardController : IController
                 {
                     mario.current = PlayerSprite.SpriteType.Motion;
                 }
-                mario.left = false;
+                mario.direction = false;
             }
 
             if (currentKeyState.IsKeyDown(Keys.Left) || currentKeyState.IsKeyDown(Keys.A))
@@ -89,7 +89,7 @@ public class KeyboardController : IController
                     mario.current = PlayerSprite.SpriteType.MotionL;
                 }
 
-                mario.left = true;
+                mario.direction = true;
 
             }
             if (currentKeyState.IsKeyDown(Keys.W) || currentKeyState.IsKeyDown(Keys.Up))
@@ -99,12 +99,12 @@ public class KeyboardController : IController
                 {
                     mario.current = PlayerSprite.SpriteType.JumpL;
                     Game1.Instance.GetSoundLib().PlaySound("jump");
-                    mario.left = true;
+                    mario.direction = true;
                 }
                 else if (mario.current == PlayerSprite.SpriteType.Motion || mario.current == PlayerSprite.SpriteType.Static)
                 {
                     mario.current = PlayerSprite.SpriteType.Jump;
-                    mario.left = false;
+                    mario.direction = false;
                     Game1.Instance.GetSoundLib().PlaySound("jump");
 
                 }
@@ -115,38 +115,33 @@ public class KeyboardController : IController
             //        mario.current = PlayerSprite.SpriteType.Damaged;
             //    }
             //}
-            //    if (currentKeyState.IsKeyDown(Keys.X))
-            //    {
-            //    mario.Big = false;
-            //    mario.Fire = false;
-            //    mario.Star = true;
+                if (currentKeyState.IsKeyDown(Keys.X))
+                {
+                mario.mode = PlayerSprite.Mode.Star;
 
-            //    }
-            //if (currentKeyState.IsKeyDown(Keys.V))
-            //{
-            //    if (!mario.Star && !mario.Fire)
-            //    {
-            //        mario.Big = true;
-            //    }
+                }
+            if (currentKeyState.IsKeyDown(Keys.V))
+            {
+                if (mario.mode != PlayerSprite.Mode.Fire && mario.mode != PlayerSprite.Mode.Star)
+                {
+                    mario.mode = PlayerSprite.Mode.Big;
+                }
 
-            //}
+            }
 
-            //if (currentKeyState.IsKeyDown(Keys.M))
-            //    {
-            //    if (!mario.Star)
-            //    {
-            //        mario.Big = false;
-            //        mario.Fire = true;
-            //    }
-            //    }
+            if (currentKeyState.IsKeyDown(Keys.M))
+                {
+                if (mario.mode != PlayerSprite.Mode.Star)
+                {
+                    mario.mode = PlayerSprite.Mode.Fire;
+                }
+                }
 
-            //    if (currentKeyState.IsKeyDown(Keys.J))
-            //    {
+                if (currentKeyState.IsKeyDown(Keys.J))
+                {
 
-            //    mario.Fire = false;
-            //    mario.Big = false;
-            //    mario.Star = false;
-            //    }
+                mario.mode = PlayerSprite.Mode.None;
+               }
 
             if (currentKeyState.IsKeyDown(Keys.R))
             {
@@ -156,13 +151,13 @@ public class KeyboardController : IController
 
             // Control the fireball
             // To the left
-            if (IsKeyPressed(Keys.Z, currentKeyState) && mario.Fire == true)
+            if (IsKeyPressed(Keys.Z, currentKeyState) && mario.mode == PlayerSprite.Mode.Fire == true)
             {
                 keyboardPermitZ = true;
             }
 
             // To the right
-            if (IsKeyPressed(Keys.N, currentKeyState) && mario.Fire == true)
+            if (IsKeyPressed(Keys.N, currentKeyState) && mario.mode == PlayerSprite.Mode.Fire == true)
             {
                 keyboardPermitN = true;
             }
@@ -180,12 +175,9 @@ public class KeyboardController : IController
 
             if (currentKeyState.IsKeyDown(Keys.S) || currentKeyState.IsKeyDown(Keys.Down))
             {
-                mario.crouched = true;
+                //
             }
-            else
-            {
-                mario.crouched = false;
-            }
+           
 
             if (IsKeyPressed(Keys.O, currentKeyState))
             {

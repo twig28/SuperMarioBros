@@ -122,23 +122,22 @@ namespace MarioGame
 
         private static void ActivateStarPower(PlayerSprite mario)
         {
-            mario.Star = true;
+            mario.mode = PlayerSprite.Mode.Star;
         }
 
         private static void ActivateFirePower(PlayerSprite mario)
         {
-            if (!mario.Star)
+            if(mario.mode != PlayerSprite.Mode.Star)
             {
-                mario.Big = false;
-                mario.Fire = true;
+                mario.mode = PlayerSprite.Mode.Fire;
             }
         }
 
         private static void GrowMario(PlayerSprite mario)
         {
-            if (!mario.Fire && !mario.Star)
+            if (mario.mode != PlayerSprite.Mode.Star && mario.mode != PlayerSprite.Mode.Big)
             {
-                mario.Big = true;
+                mario.mode = PlayerSprite.Mode.Big;
             }
         }
 

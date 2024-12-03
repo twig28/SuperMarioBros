@@ -79,7 +79,7 @@ namespace MarioGame.Collisions
 
         private static void HandleSideOrAboveCollision(PlayerSprite mario, IEnemy enemy, GameTime gt, ref bool toDie)
         {
-            if (mario.Star)
+            if (mario.mode == PlayerSprite.Mode.Star)
             {
                 enemy.TriggerDeath(gt, false);
             }
@@ -107,20 +107,18 @@ namespace MarioGame.Collisions
 
         private static void HandleMarioDamage(PlayerSprite mario)
         {
-            if (mario.Big || mario.Fire)
+            if (mario.mode == PlayerSprite.Mode.Big || mario.mode == PlayerSprite.Mode.Fire)
             {
-                mario.Big = false;
-                mario.Fire = false;
-                mario.invincible = true;
+                mario.mode = PlayerSprite.Mode.invincible;
             }
-            else if (!mario.invincible && mario.lives <= 1)
+            else if (mario.mode != PlayerSprite.Mode.invincible && mario.lives <= 1)
             {
                 mario.lives = 0;
                 mario.current = PlayerSprite.SpriteType.Damaged;
                 Game1.Instance.ResetLevel();
 
             }
-            else if(!mario.invincible && mario.lives > 1)
+            else if(mario.mode != PlayerSprite.Mode.invincible && mario.lives > 1)
             {
                 mario.lives -= 1;
                 mario.UPlayerPosition = new Vector2(100, 500);

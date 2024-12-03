@@ -56,7 +56,6 @@ namespace MarioGame
         private List<IItem> items;
         private List<IScenery> scenery;
         SpriteFont font;
-
         public static Game1 Instance { get; private set; }
 
         public void ResetGame()
@@ -83,7 +82,7 @@ namespace MarioGame
             _graphics.ApplyChanges();
             Instance = this;
         }
-
+        
         protected override void Initialize()
         {
             keyControl = new KeyboardController(this);
@@ -165,6 +164,16 @@ namespace MarioGame
         {
             return soundLib;
         }
+        //For Sprint 3 Debug Only
+        private void DrawCollisionRectangles(SpriteBatch spriteBatch)
+        {
+            Texture2D rectTexture = new Texture2D(GraphicsDevice, 1, 1);
+            rectTexture.SetData(new[] { Color.White });
+
+            // Draw Mario's collision rectangle
+            Rectangle marioRect = player_sprite.GetDestinationRectangle();
+            spriteBatch.Draw(rectTexture, marioRect, Color.Red * 0.5f);
+        }
 
         protected override void Draw(GameTime gameTime)
         {
@@ -173,7 +182,6 @@ namespace MarioGame
             offset = PositionChecks.GetCameraOffset(player_sprite.GetDestinationRectangle(), GraphicsDevice.Viewport.Width);
             Matrix transform = Matrix.CreateTranslation(new Vector3(offset, 0));
             _spriteBatch.Begin(transformMatrix: transform);
-
             foreach (IEnemy enemy in enemies)
             {
                 if (PositionChecks.renderEnemy(enemy, offset, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height) || enemy is KoopaShell)
@@ -210,7 +218,7 @@ namespace MarioGame
             }
 
             Ball.DrawAll(_spriteBatch);
-
+            DrawCollisionRectangles(_spriteBatch);
             player_sprite.Draw(_spriteBatch, 14, 16, 3f, new List<Rectangle>(), 0, Color.White);
 
             _spriteBatch.End();

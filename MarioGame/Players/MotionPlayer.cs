@@ -72,10 +72,10 @@ public class MotionPlayer : IPlayer
                 }
             }
             */
-            if(mario.left)
+            if(mario.direction)
             {
                 //move for differnet status
-                if (!mario.Big && !mario.Fire)
+                if (mario.mode == PlayerSprite.Mode.None || mario.mode == PlayerSprite.Mode.invincible)
                 {
                     if (Position.X > 14 * Scale / 2) //check if reach to the top edge
                     {
@@ -85,7 +85,7 @@ public class MotionPlayer : IPlayer
 
                     }
                 }
-                else if (mario.Fire)
+                else if (mario.mode == PlayerSprite.Mode.Fire)
                 {
                     if (Position.X > 18 * Scale / 2) //check if reach to the top edge
                     {
@@ -95,7 +95,7 @@ public class MotionPlayer : IPlayer
 
                     }
                 }
-                else if (!mario.Fire && (mario.Big || mario.Star))
+                else if (mario.mode == PlayerSprite.Mode.Big || mario.mode == PlayerSprite.Mode.Star)
                 {
                     if (Position.X > 18 * Scale / 2) //check if reach to the top edge
                     {

@@ -13,6 +13,7 @@ namespace MarioGame.Collisions
 {
     internal class MarioBlockCollisionLogic
     {
+
         public static void CheckMarioBlockCollision(PlayerSprite mario, List<IBlock> blocks, List<IItem> items)
         {
             if (mario.current == PlayerSprite.SpriteType.Damaged) return;
@@ -37,7 +38,7 @@ namespace MarioGame.Collisions
                     continue;
                 }
                 //Pipes that go places
-                else if (block is Pipe p && (p.getIsEntrance() && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Above && mario.crouched ||
+                else if (block is Pipe p && (p.getIsEntrance() && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Above && mario.current == PlayerSprite.SpriteType.Crounch ||
                     p.getIsLong() && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Side))
                 {
                     (Vector2 destination, int level) = p.GetDestination();
@@ -51,19 +52,22 @@ namespace MarioGame.Collisions
                     {
                         HandleStandingOnBlock(mario, block, standingBlocks);
                     }
-                    else if (IsBelowBlock(mario, blockRect,marioRect))
-                    {
-                        HandleBelowBlockCollision(mario, block, items, blocksToRemove);
-                    }
-                    else
-                    {
-                        HandleSideCollision(mario, block);
+                    else {
+                        if (standingBlocks.Contains(block))
+                        {
+                            standingBlocks.Remove(block); 
+                        }
+                        else if (IsBelowBlock(mario, blockRect, marioRect))
+                        {
+                            HandleBelowBlockCollision(mario, block, items, blocksToRemove);
+                        }
+                        else
+                        {
+                            HandleSideCollision(mario, block);
+                        }
                     }
                 }
-                else
-                {
-                    standingBlocks.Remove(block);
-                }
+              
             }
 
             CheckIfFalling(mario, standingBlocks);
@@ -73,12 +77,10 @@ namespace MarioGame.Collisions
         private static bool IsStandingOnBlock(PlayerSprite mario, Rectangle blockRect, Rectangle marioRect)
         {
             bool isStanding = false;
-            if(mario.UPlayerPosition.Y < blockRect.Top)
+            if(mario.UPlayerPosition.Y < blockRect.Top && marioRect.Right  > blockRect.Left 
+                && marioRect.Left < blockRect.Right)
             {
-                if (marioRect.Right > blockRect.Left && marioRect.Left < blockRect.Right)
-                {
-                    isStanding = true;
-                }    
+                isStanding = true;
             }
             return isStanding;
                 
@@ -94,14 +96,14 @@ namespace MarioGame.Collisions
 
         private static void HandleStandingOnBlock(PlayerSprite mario, IBlock block, List<IBlock> standingBlocks)
         {
-            standingBlocks.Add(block);
+            if (!standingBlocks.Contains(block)) { standingBlocks.Add(block); }
 
             if (!mario.isGrounded)
             {
                 mario.isGrounded = true;
                 mario.isJumping = false;
                 mario.velocity = 0f;
-                mario.current = mario.left ? PlayerSprite.SpriteType.StaticL : PlayerSprite.SpriteType.Static;
+                mario.current = mario.direction ? PlayerSprite.SpriteType.StaticL : PlayerSprite.SpriteType.Static;
             }
 
             AdjustMarioYPosition(mario, block.GetDestinationRectangle().Top);
@@ -109,7 +111,7 @@ namespace MarioGame.Collisions
 
         private static void AdjustMarioYPosition(PlayerSprite mario, int blockTop)
         {
-            if (mario.Big || mario.Fire || mario.Star)
+            if (mario.mode == PlayerSprite.Mode.Big || mario.mode == PlayerSprite.Mode.Fire || mario.mode == PlayerSprite.Mode.Star)
             {
                 mario.UPlayerPosition.Y = blockTop - mario.GetDestinationRectangle().Height / 2 + 26;
             }
@@ -128,7 +130,7 @@ namespace MarioGame.Collisions
                 OpenMysteryBlock(mystery, items, block);
             }
 
-            if (mario.Big || mario.Fire || mario.Star)
+            if (mario.mode == PlayerSprite.Mode.Big || mario.mode == PlayerSprite.Mode.Fire|| mario.mode == PlayerSprite.Mode.Star)
             {
                 if (block.IsBreakable)
                 {
@@ -167,7 +169,7 @@ namespace MarioGame.Collisions
             Rectangle blockRect = block.GetDestinationRectangle();
             Rectangle marioRect = mario.GetDestinationRectangle();
 
-            if (mario.Star && block.IsBreakable)
+            if (mario.mode == PlayerSprite.Mode.Star && block.IsBreakable)
             {
                 block.OnCollide(); // Break the block if Mario has a star
             }
