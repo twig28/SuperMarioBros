@@ -180,7 +180,7 @@ public class KeyboardController : IController
 
             if (currentKeyState.IsKeyDown(Keys.S) || currentKeyState.IsKeyDown(Keys.Down))
             {
-                //
+                mario.current = PlayerSprite.SpriteType.Crounch;
             }
            
 
