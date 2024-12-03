@@ -13,7 +13,6 @@ internal class Bowser : IEnemy
 
     private bool _alive = true;
     private double deathStartTime = 0;
-    private const double DeathDuration = 2.0;
 
     private bool _DefaultMoveMentDirection = false;
 
@@ -56,36 +55,6 @@ internal class Bowser : IEnemy
 
     public void Update(GameTime gm)
     {
-        if (deathStartTime > 0)
-        {
-            if (isInvertedDeath)
-            {
-                // Check if 3 seconds have passed since the death animation started
-                if (gm.TotalGameTime.TotalSeconds - deathStartTime < 3.0)
-                {
-                    posY += 10; 
-                    sprite.posX = posX;
-                    sprite.posY = posY;
-                }
-                else
-                {
-                    // End the death animation after 3 seconds
-                    Alive = false;
-                    sprite.Invert = false; // Reset inversion after animation ends
-                    isInvertedDeath = false;
-                }
-            }
-            else
-            {
-                // Stomped death behavior remains in place
-                if (gm.TotalGameTime.TotalSeconds - deathStartTime >= DeathDuration)
-                {
-                    Alive = false;
-                    return;
-                }
-            }
-        }
-        else
         {
             // Regular movement and animation logic
             timeElapsed = gm.TotalGameTime.TotalSeconds;
