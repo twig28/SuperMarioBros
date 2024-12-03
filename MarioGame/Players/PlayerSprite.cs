@@ -46,10 +46,7 @@ namespace MarioGame
         public int coin = 0;
         public int score = 0;
         public int lives = 5;
-
-
-
-
+        public bool downSignal = false;
 
         public PlayerSprite(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics, Game1 game)
         {

@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using MarioGame.Items;
@@ -179,6 +180,14 @@ public class KeyboardController : IController
                 {
                     mario.current = PlayerSprite.SpriteType.Crouch;
                 }
+                else
+                {
+                    mario.downSignal = true;
+                }
+            }
+            else
+            {
+                mario.downSignal = false;
             }
            
 
