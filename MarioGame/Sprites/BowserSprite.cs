@@ -4,12 +4,12 @@ using Microsoft.Xna.Framework;
 
 internal class BowserSprite : ISprite
 {
-    private const int SpriteWidth = 200;
-    private const int SpriteHeight = 150;
+    private const int SpriteWidth = 150;
+    private const int SpriteHeight = 100;
     private int SourceX = 80;
     private int SourceY = 210;
     private const int SourceWidth = 35;
-    private const int SourceHeight = 35;
+    private const int SourceHeight = 32;
     private SpriteBatch sb;
     private Texture2D texture;
     private Rectangle DestinationRectangle;
@@ -29,7 +29,7 @@ internal class BowserSprite : ISprite
     public BowserSprite(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
     {
         sb = SpriteBatch;
-        posX = X;
+        posX = X; 
         posY = Y;
         texture = Texture;
         DestinationRectangle = new Rectangle(posX, posY, SpriteWidth, SpriteHeight);

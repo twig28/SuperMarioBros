@@ -57,6 +57,7 @@ namespace MarioGame
                 if (PositionChecks.renderEnemy(enemy, offset, g.Viewport.Width, g.Viewport.Height) || enemy is KoopaShell)
                 {
                     enemy.Update(gameTime);
+                    if (enemy is Bowser b) { b.detectMarioChange(player_sprite.GetDestinationRectangle()); }
                 }
             }
 

@@ -16,6 +16,12 @@ internal class Bowser : IEnemy
 
     private bool _DefaultMoveMentDirection = false;
 
+    private double jumpTimer = 0;
+    private bool isJumping = false;
+    private float verticalVelocity = 0;
+    private const float gravity = 6f;
+    private const float initialJumpVelocity = -10f;
+
     public int setPosX { set { posX = value; } }
     public int setPosY { set { posY = value; } }
 
@@ -30,14 +36,14 @@ internal class Bowser : IEnemy
         get { return _alive; }
         set { _alive = value; }
     }
+    public Rectangle GetDestinationRectangle() => sprite.GetDestinationRectangle();
 
-    public Rectangle GetDestinationRectangle() { return sprite.GetDestinationRectangle(); }
     public double getdeathStartTime => deathStartTime;
-
 
     public Bowser(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
     {
-        posX = X; posY = Y;
+        posX = X;
+        posY = Y;
         sprite = new BowserSprite(Texture, SpriteBatch, posX, posY);
     }
 
@@ -46,29 +52,60 @@ internal class Bowser : IEnemy
         if (Alive) sprite.Draw();
     }
 
-    private bool isInvertedDeath = false; // Flag for inverted death animation
+    public void ground()
+    {
+        verticalVelocity = 0;
+        isJumping = false;
+        jumpTimer = 0;
+    }
 
     public void TriggerDeath(GameTime gm, bool stomped)
-    {
+    { }
 
+    public void changeDirection()
+    {
+        _DefaultMoveMentDirection = !_DefaultMoveMentDirection;
+        sprite.ToggleInversion();
+    }
+
+    public void detectMarioChange(Rectangle marioRect)
+    {
+        if (marioRect.X < this.sprite.GetDestinationRectangle().X && _DefaultMoveMentDirection)
+        {
+            changeDirection();
+        }
+        else if (marioRect.X > this.sprite.GetDestinationRectangle().X && !_DefaultMoveMentDirection)
+        {
+            changeDirection();
+        }
     }
 
     public void Update(GameTime gm)
     {
+        timeElapsed = gm.TotalGameTime.TotalSeconds;
+
+        jumpTimer += gm.ElapsedGameTime.TotalSeconds;
+        if (jumpTimer >= 3 && !isJumping)
         {
-            // Regular movement and animation logic
-            timeElapsed = gm.TotalGameTime.TotalSeconds;
-            posX += _DefaultMoveMentDirection ? 1 : -1;
-            posY += 6;  // Gravity for normal movement
+            isJumping = true;
+            verticalVelocity = initialJumpVelocity;
+            jumpTimer = 0;
+        }
 
-            sprite.posX = posX;
-            sprite.posY = posY;
+        if (isJumping)
+        {
+            verticalVelocity += gravity * (float)gm.ElapsedGameTime.TotalSeconds;
+            posY += (int)verticalVelocity;
+        }
 
-            if (timeElapsed - timeElapsedSinceUpdate > animInterval)
-            {
-                timeElapsedSinceUpdate = timeElapsed;
-                sprite.Update(gm);
-            }
+        posX += _DefaultMoveMentDirection ? 1 : -1;
+        sprite.posX = posX;
+        sprite.posY = posY;
+
+        if (timeElapsed - timeElapsedSinceUpdate > animInterval)
+        {
+            timeElapsedSinceUpdate = timeElapsed;
+            sprite.Update(gm);
         }
     }
 }
