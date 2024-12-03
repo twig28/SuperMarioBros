@@ -116,6 +116,7 @@ namespace MarioGame
 
                 case "Coin":
                     IncreaseScore(mario);
+                    Game1.Instance.GetSoundLib().PlaySound("coin");
                     break;
             }
         }

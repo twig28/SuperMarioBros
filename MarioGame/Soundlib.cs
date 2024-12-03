@@ -22,6 +22,7 @@ public class SoundLib
         soundEffects["gameOver"] = content.Load<SoundEffect>("gameOver");
         soundEffects["theme"] = content.Load<SoundEffect>("theme");
         soundEffects["pipe"] = content.Load<SoundEffect>("pipe");
+        soundEffects["block_break"] = content.Load<SoundEffect>("block_break");
         var theme = content.Load<SoundEffect>("theme");
         themeInstance = theme.CreateInstance();
         themeInstance.IsLooped = true;

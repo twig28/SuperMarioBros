@@ -135,6 +135,7 @@ namespace MarioGame.Collisions
                 if (block.IsBreakable)
                 {
                     block.OnCollide();
+                    
                     blocksToRemove.Add(block);
                 }
                 mario.UPlayerPosition.Y = block.GetDestinationRectangle().Bottom + mario.GetDestinationRectangle().Height / 2 + 24;

@@ -49,6 +49,12 @@
 /processorParam:TextureFormat=Color
 /build:Resource/BareFlagpole.png
 
+#begin Resource/block_break.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Resource/block_break.wav
+
 #begin Resource/blocks.png
 /importer:TextureImporter
 /processor:TextureProcessor
