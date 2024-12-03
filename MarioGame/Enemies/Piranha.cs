@@ -17,7 +17,7 @@ namespace MarioGame
         private double deathStartTime = -1;
 
         private PiranhaSprite sprite;
-        private bool isMovingUp = true;
+        private bool isMovingUp = false;
         private bool _alive = true;
 
         public bool DefaultMoveMentDirection

@@ -5,13 +5,11 @@ using Microsoft.Xna.Framework.Content;
 public class SoundLib
 {
     private Dictionary<string, SoundEffect> soundEffects;
-    private SoundEffectInstance themeInstance;
-    private bool isThemePlaying;
-
+    public SoundEffectInstance themeInstance;
+    public bool isThemePlaying = false;
     public SoundLib()
     {
         soundEffects = new Dictionary<string, SoundEffect>();
-        isThemePlaying = false;
     }
 
     public void LoadContent(ContentManager content)
@@ -35,13 +33,15 @@ public class SoundLib
         {
             soundEffects[soundName].Play();
         }
+
     }
     public void PlayTheme()
     {
-        DisposeTheme(); 
-        themeInstance = soundEffects["theme"].CreateInstance();
-        themeInstance.IsLooped = true;
+       
         themeInstance.Play();
+        isThemePlaying = true;
+
+
     }
 
 
@@ -63,6 +63,7 @@ public class SoundLib
         }
     }
 
+    
 
 
 }

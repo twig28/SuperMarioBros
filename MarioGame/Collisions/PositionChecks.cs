@@ -24,11 +24,19 @@ namespace MarioGame
             return offset;
         }
 
-        public static bool checkDeathByFalling(Rectangle marioRect, float screenHeight)
+        public static bool checkDeathByFalling(PlayerSprite mario, float screenHeight)
         {
-            if (marioRect.Y > screenHeight)
+            if (mario.GetDestinationRectangle().Y > screenHeight)
             {
-                return true;
+                if(mario.lives > 0)
+                {
+                    mario.lives--;
+                    Game1.Instance.ResetLevel();
+                }
+                else
+                {
+                    mario.current = PlayerSprite.SpriteType.Damaged;
+                }
             }
             return false;
         }

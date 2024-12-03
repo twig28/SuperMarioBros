@@ -49,7 +49,7 @@ namespace MarioGame.Collisions
 
         private static void HandleBelowCollision(PlayerSprite mario, IEnemy enemy, GameTime gt, ref IEnemy enemyToAdd)
         {
-            if (enemy is Piranha)
+            if (enemy is Piranha || enemy is Bowser)
             {
                 mario.velocity = 0f;
                 mario.current = PlayerSprite.SpriteType.Damaged;
@@ -79,7 +79,7 @@ namespace MarioGame.Collisions
 
         private static void HandleSideOrAboveCollision(PlayerSprite mario, IEnemy enemy, GameTime gt, ref bool toDie)
         {
-            if (mario.Star)
+            if (mario.mode == PlayerSprite.Mode.Star)
             {
                 enemy.TriggerDeath(gt, false);
             }
@@ -87,32 +87,43 @@ namespace MarioGame.Collisions
             {
                 StartKoopaShell(shell, mario);
             }
+            else if (enemy is KoopaShell s && s.getIsMoving() && (s.DefaultMoveMentDirection && IsLeft(mario.GetDestinationRectangle(), s.GetDestinationRectangle()) || !s.DefaultMoveMentDirection && !IsLeft(mario.GetDestinationRectangle(), s.GetDestinationRectangle()))){
+                //nothing for now if moving right and mario is left or moving left and mario is right bug fix
+            }
             else
             {
                 toDie = true;
-               // mario.score += 100;
             }
+        }
+
+        public static bool IsLeft(Rectangle a, Rectangle b)
+        {
+            if (a.Right <= b.Right)
+            {
+                return true; // `a` is to the left of `b`
+            }
+            return false;
         }
 
         private static void HandleMarioDamage(PlayerSprite mario)
         {
-            if (mario.Big || mario.Fire)
+            if (mario.mode == PlayerSprite.Mode.Big || mario.mode == PlayerSprite.Mode.Fire)
             {
-                mario.Big = false;
-                mario.Fire = false;
-                mario.invincible = true;
+                mario.mode = PlayerSprite.Mode.invincible;
             }
-            else if (!mario.invincible && mario.lives <= 1)
+            else if (mario.mode != PlayerSprite.Mode.invincible && mario.lives <= 1)
             {
                 mario.lives = 0;
                 mario.current = PlayerSprite.SpriteType.Damaged;
+                Game1.Instance.ResetLevel();
 
             }
-            else if(!mario.invincible && mario.lives > 1)
+            else if(mario.mode != PlayerSprite.Mode.invincible && mario.lives > 1)
             {
                 mario.lives -= 1;
                 mario.UPlayerPosition = new Vector2(100, 500);
-                mario.current = PlayerSprite.SpriteType.Static;
+                mario.current = PlayerSprite.SpriteType.Falling;
+                Game1.Instance.ResetLevel();
             }
         }
 

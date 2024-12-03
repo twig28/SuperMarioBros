@@ -66,18 +66,18 @@ namespace MarioGame
             }
             else
             {
+                if (changeSpriteDirection)
+                {
+                    sprite.ChangeDirection = true;
+                    changeSpriteDirection = false;
+                }
+
                 timeElapsed = gm.TotalGameTime.TotalSeconds;
                 posX += _DefaultMoveMentDirection ? -1 : 1;
                 posY += 5;
 
                 sprite.posX = posX;
                 sprite.posY = posY;
-
-                if (changeSpriteDirection)
-                {
-                    sprite.ChangeDirection = true;
-                    changeSpriteDirection = false;
-                }
 
                 if (timeElapsed - timeElapsedSinceUpdate > animInterval)
                 {

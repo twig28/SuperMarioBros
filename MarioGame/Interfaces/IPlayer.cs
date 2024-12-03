@@ -9,8 +9,6 @@ using Microsoft.Xna.Framework;
 
 namespace MarioGame
 {
-
-    //would have texture, position, state, and more properties
     public interface IPlayer
     {
         void Update(GameTime gm, PlayerSprite mario);

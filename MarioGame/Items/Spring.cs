@@ -62,5 +62,15 @@ namespace MarioGame.Items
         {
 
         }
+
+        public bool HasCollision()
+        {
+            return true;
+        }
+
+        public float GetLifeTime()
+        {
+            return float.MaxValue;
+        }
     }
 }

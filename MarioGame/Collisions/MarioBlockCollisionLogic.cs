@@ -13,6 +13,7 @@ namespace MarioGame.Collisions
 {
     internal class MarioBlockCollisionLogic
     {
+
         public static void CheckMarioBlockCollision(PlayerSprite mario, List<IBlock> blocks, List<IItem> items)
         {
             if (mario.current == PlayerSprite.SpriteType.Damaged) return;
@@ -20,81 +21,89 @@ namespace MarioGame.Collisions
             List<IBlock> blocksToRemove = new List<IBlock>();
             List<IBlock> standingBlocks = new List<IBlock>();
 
-            foreach (IBlock block in blocks)
+            foreach (IBlock block in blocks )
             {
                 Rectangle blockRect = block.GetDestinationRectangle();
                 Rectangle marioRect = mario.GetDestinationRectangle();
-                if (block is Flagpole)
+                if (blockRect.Intersects(marioRect) && block is Flagpole f)
                 {
-                    //TODO to be implemented, move mario down to ground and add score
+                    HandleFlagpoleCollision(f, mario);
                     continue;
                 }
                 //Pipe that occurs after castles
-                else if (block is LPipe lpipe && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Side)
+                else if (block is LPipe lpipe && CollisionLogic.GetCollisionDirection(blockRect, marioRect) != CollisionLogic.CollisionDirection.None)
                 {
-                    //TODO move mario animation optional
-                    Game1.Instance.SetLevel(Game1.Instance.GetLevel() + 1);
+                    //TODO move mario animation (optional)
+                    Game1.Instance.SetLevel(Game1.Instance.CurrLevel + 1);
                     continue;
                 }
                 //Pipes that go places
-                else if (block is Pipe p && (p.getIsEntrance() && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Above && mario.crouched || 
+                else if (block is Pipe p && (p.getIsEntrance() && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Above && mario.current == PlayerSprite.SpriteType.Crounch ||
                     p.getIsLong() && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Side))
                 {
                     (Vector2 destination, int level) = p.GetDestination();
                     Game1.Instance.SetLevel(level);
-                    //TODO move mario to destination spot
                     mario.setPosition((int)destination.X, (int)destination.Y);
                     continue;
                 }
-
-                if (marioRect.Intersects(blockRect))
+                else if (marioRect.Intersects(blockRect))
                 {
-                    if (IsStandingOnBlock(mario, blockRect))
+                    if (IsStandingOnBlock(mario, blockRect, marioRect))
                     {
                         HandleStandingOnBlock(mario, block, standingBlocks);
                     }
-                    else if (IsBelowBlock(mario, blockRect))
-                    {
-                        HandleBelowBlockCollision(mario, block, items, blocksToRemove);
-                    }
-                    else
-                    {
-                        HandleSideCollision(mario, block);
+                    else {
+                        if (standingBlocks.Contains(block))
+                        {
+                            standingBlocks.Remove(block); 
+                        }
+                        else if (IsBelowBlock(mario, blockRect, marioRect))
+                        {
+                            HandleBelowBlockCollision(mario, block, items, blocksToRemove);
+                        }
+                        else
+                        {
+                            HandleSideCollision(mario, block);
+                        }
                     }
                 }
-                else
-                {
-                    standingBlocks.Remove(block);
-                }
+              
             }
 
             CheckIfFalling(mario, standingBlocks);
-            RemoveBreakableBlocks(blocks, blocksToRemove);
+            RemoveBreakableBlocks(blocks, blocksToRemove, items);
         }
 
-        private static bool IsStandingOnBlock(PlayerSprite mario, Rectangle blockRect)
+        private static bool IsStandingOnBlock(PlayerSprite mario, Rectangle blockRect, Rectangle marioRect)
         {
-            return mario.UPlayerPosition.Y < blockRect.Top;
+            bool isStanding = false;
+            if(mario.UPlayerPosition.Y < blockRect.Top && marioRect.Right  > blockRect.Left 
+                && marioRect.Left < blockRect.Right)
+            {
+                isStanding = true;
+            }
+            return isStanding;
+                
+
         }
 
-        private static bool IsBelowBlock(PlayerSprite mario, Rectangle blockRect)
+        private static bool IsBelowBlock(PlayerSprite mario, Rectangle blockRect, Rectangle marioRect)
         {
             return mario.UPlayerPosition.Y > blockRect.Bottom &&
                    !mario.isGrounded &&
-                   mario.UPlayerPosition.X < blockRect.Right &&
-                   mario.UPlayerPosition.X > blockRect.Left;
+                   (marioRect.Right > blockRect.Left && marioRect.Left < blockRect.Right);
         }
 
         private static void HandleStandingOnBlock(PlayerSprite mario, IBlock block, List<IBlock> standingBlocks)
         {
-            standingBlocks.Add(block);
+            if (!standingBlocks.Contains(block)) { standingBlocks.Add(block); }
 
             if (!mario.isGrounded)
             {
                 mario.isGrounded = true;
                 mario.isJumping = false;
                 mario.velocity = 0f;
-                mario.current = mario.left ? PlayerSprite.SpriteType.StaticL : PlayerSprite.SpriteType.Static;
+                mario.current = mario.direction ? PlayerSprite.SpriteType.StaticL : PlayerSprite.SpriteType.Static;
             }
 
             AdjustMarioYPosition(mario, block.GetDestinationRectangle().Top);
@@ -102,7 +111,7 @@ namespace MarioGame.Collisions
 
         private static void AdjustMarioYPosition(PlayerSprite mario, int blockTop)
         {
-            if (mario.Big || mario.Fire || mario.Star)
+            if (mario.mode == PlayerSprite.Mode.Big || mario.mode == PlayerSprite.Mode.Fire || mario.mode == PlayerSprite.Mode.Star)
             {
                 mario.UPlayerPosition.Y = blockTop - mario.GetDestinationRectangle().Height / 2 + 26;
             }
@@ -121,10 +130,11 @@ namespace MarioGame.Collisions
                 OpenMysteryBlock(mystery, items, block);
             }
 
-            if (mario.Big || mario.Fire || mario.Star)
+            if (mario.mode == PlayerSprite.Mode.Big || mario.mode == PlayerSprite.Mode.Fire|| mario.mode == PlayerSprite.Mode.Star)
             {
                 if (block.IsBreakable)
                 {
+                    block.OnCollide();
                     blocksToRemove.Add(block);
                 }
                 mario.UPlayerPosition.Y = block.GetDestinationRectangle().Bottom + mario.GetDestinationRectangle().Height / 2 + 24;
@@ -132,7 +142,7 @@ namespace MarioGame.Collisions
             else
             {
                 mario.UPlayerPosition.Y = block.GetDestinationRectangle().Bottom + mario.GetDestinationRectangle().Height / 2 + 2;
-                if(block is Block b)
+                if (block is Block b)
                 {
                     b.Bump();
                 }
@@ -159,7 +169,7 @@ namespace MarioGame.Collisions
             Rectangle blockRect = block.GetDestinationRectangle();
             Rectangle marioRect = mario.GetDestinationRectangle();
 
-            if (mario.Star && block.IsBreakable)
+            if (mario.mode == PlayerSprite.Mode.Star && block.IsBreakable)
             {
                 block.OnCollide(); // Break the block if Mario has a star
             }
@@ -183,11 +193,59 @@ namespace MarioGame.Collisions
             }
         }
 
-        private static void RemoveBreakableBlocks(List<IBlock> blocks, List<IBlock> blocksToRemove)
+        private static void RemoveBreakableBlocks(List<IBlock> blocks, List<IBlock> blocksToRemove, List<IItem> items)
         {
-            foreach (IBlock block in blocksToRemove)
+            foreach (IBlock blockToRemove in blocksToRemove)
             {
-                blocks.Remove(block);
+                if(blockToRemove is Block b && b.IsDestroyed)
+                {
+                    blocks.Remove(blockToRemove);
+                }
+                else if (blockToRemove is not Block)
+                {
+                    blocks.Remove(blockToRemove);
+                }
+
+                Texture2D brickFragmentTexture = Game1.Instance.Content.Load<Texture2D>("blocks");
+                float xOffset = blockToRemove.GetDestinationRectangle().Width / 2 - 16;
+                for (int i = 0; i < 4; ++i)
+                {
+                    float dir = i % 2 == 0 ? 1 : -1;
+                    float yoffset = i < 2 ? 0 : -50;
+                    var brickFragment = new BrickFragment(brickFragmentTexture, blockToRemove.Position - new Vector2(-xOffset, blockToRemove.GetDestinationRectangle().Height + yoffset));
+                    brickFragment.Velocity = new Vector2(dir, -3.0f) * 30f;
+                    brickFragment.GravityScale = 50.0f;
+                    brickFragment.EnableGravity = true;
+                    brickFragment.MaxLifeTime = 2f;
+
+                    items.Add(brickFragment);
+                }
+            }
+        }
+
+        private static void HandleFlagpoleCollision(Flagpole pole, PlayerSprite mario)
+        {
+            if (!pole.IsCollided)
+            {
+                pole.OnCollide();
+                Rectangle flagpoleRect = pole.GetDestinationRectangle();
+                int flagpoleHeight = flagpoleRect.Bottom - flagpoleRect.Top; 
+                int marioPositionOnPole = flagpoleRect.Bottom - mario.GetDestinationRectangle().Center.Y;
+                marioPositionOnPole = Math.Clamp(marioPositionOnPole, 0, flagpoleHeight);
+
+                float scoreProportion = (float)marioPositionOnPole / flagpoleHeight;
+                mario.score += (int)(scoreProportion * 5000);
+                mario.UPlayerPosition.X += 20;
+                pole.setMarioStartPosition(mario.UPlayerPosition);
+                mario.isFalling = false;
+                mario.isGrounded = true;
+                mario.velocity = 0;
+                return;
+            }
+            if (!pole.isFinished)
+            {
+                Vector2 marioPosition = pole.getMarioPosition();
+                mario.setPosition((int)marioPosition.X, (int)marioPosition.Y);
             }
         }
 

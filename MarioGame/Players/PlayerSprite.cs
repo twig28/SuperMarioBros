@@ -9,9 +9,6 @@ using System.Collections.Generic;
 using MarioGame.Sprites;
 namespace MarioGame
 {
-   
-
-    //would have texture, position, state, and more properties
     public class PlayerSprite : IPlayer
     {
         public enum SpriteType
@@ -23,37 +20,32 @@ namespace MarioGame
             Jump,
             JumpL,
             Falling,
+            Crounch,
             Damaged// moving sprite
         }
-        public bool left = false;
-        public bool Fire = false;
-        public bool Big = false;
+        public enum Mode
+        {
+            None = 0,
+            Fire = 1,
+            Big  = 2,
+            Star = 3,
+            invincible = 4
+        }
+
+        public bool direction = false;
+        public Mode mode = Mode.None;
+        public bool isGrounded = true;  
+        public bool isFalling = false;
         public bool isJumping = false;
-        public bool isGrounded = true;
-        public bool isFalling= false;
-        public bool invincible = false;
-        public bool Star = false;
-        public bool crouched = false;
+        public SpriteType current = SpriteType.Static;
+        public float velocity = 0f;
+        public Vector2 UPlayerPosition;
+        private MarioState state;
+        private int invincibletime = -1;
+        private int Startime = -1;
         public int coin = 0;
         public int score = 0;
         public int lives = 5;
-        public SpriteType current = SpriteType.Static;
-        public Texture2D marioTexture { get; set; }
-        public Vector2 UPlayerPosition;
-        public float velocity = 0f;
-
-        private float PlayerSpeed;
-        public Vector2 PlayerPosition;
-        private GraphicsDeviceManager _graphics;
-        private Game1 Game;
-        private MotionPlayer MRplayer;
-        private Static Staplayer;
-        private Jump Jumpplayer;
-        private Damaged Damagedplayer;
-        private Fall Fallplayer;
-        private MarioController Mario_state;
-        private int invincibletime = -1;
-        private int Startime = -1;
 
 
 
@@ -61,29 +53,19 @@ namespace MarioGame
 
         public PlayerSprite(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics, Game1 game)
         {
-            marioTexture = texture;
-            PlayerPosition = position;
             UPlayerPosition = position;
-            PlayerSpeed = speed;
-            _graphics = Graphics;
-            Game = game;
+            state = new MarioState(texture, speed, Graphics, game);
+            
         }
 
         public void setPosition(int x, int y)
         {
-            this.UPlayerPosition = new Vector2(x, y);
+            UPlayerPosition = new Vector2(x, y);
         }
 
         public void intialize_player()
         {
-            //Player initialize
-            //move toward right
-            MRplayer = new MotionPlayer(marioTexture, PlayerPosition, PlayerSpeed, _graphics, Game);
-            Staplayer = new Static(marioTexture, PlayerPosition,Game);
-            Jumpplayer = new Jump(marioTexture, PlayerPosition, Game);
-            Damagedplayer = new Damaged(marioTexture, PlayerPosition, PlayerSpeed, _graphics);            Fallplayer = new Fall(marioTexture, PlayerPosition, PlayerSpeed, _graphics, Game);
-            Mario_state = new MarioController(Game);
-
+            state.intialize_player(this, new Vector2(100, 500));
         }
 
 
@@ -91,26 +73,25 @@ namespace MarioGame
         {
             // update based on current sprite type
             //below for checking current state of mario
-            if(Star || invincible)
+            if(mode == PlayerSprite.Mode.Star || mode == PlayerSprite.Mode.invincible)
             {
-                if(Startime == -1 && Star)
+                if(Startime == -1 && mode == PlayerSprite.Mode.Star)
                 {
                     Startime = 1000;
-                    invincible = false;
                     invincibletime = -1;
                 }
-                else if (invincibletime == -1 && invincible)
+                else if (invincibletime == -1 && mode == PlayerSprite.Mode.invincible)
                 {
                     invincibletime = 100;
                 }
                 else if(Startime == 0)
                 {
-                    Star = false;
+                    mode = PlayerSprite.Mode.None;
                     Startime = -1;
                 }
                 else if (invincibletime == 0)
                 {
-                    invincible = false;
+                    mode = PlayerSprite.Mode.None;
                     invincibletime = -1;
                 }
 
@@ -123,42 +104,8 @@ namespace MarioGame
                     invincibletime--;
                 }
             }
-            if (current == SpriteType.Motion || current == SpriteType.MotionL)
-            {
-                MRplayer.Position = UPlayerPosition; //U means upated
-                MRplayer.Update(gameTime,this);
-                UPlayerPosition = MRplayer.Position;
-            }
-            
-            else if (current == SpriteType.Jump || current == SpriteType.JumpL)
-            {
-                Jumpplayer.Position = UPlayerPosition;
-                Jumpplayer.Update(gameTime,this);
-                UPlayerPosition = Jumpplayer.Position;
-            }
            
-            else if (current == SpriteType.Damaged)
-            {
-                Damagedplayer.Position = UPlayerPosition;
-                Damagedplayer.Update(gameTime,this);
-                UPlayerPosition = Damagedplayer.Position;
-            }
-            else if (current == SpriteType.Falling)
-            {
-                Fallplayer.Position = UPlayerPosition;
-                Fallplayer.Update(gameTime,this);
-                UPlayerPosition = Fallplayer.Position;
-
-            }
-
-            else
-            {
-               
-                    Staplayer.Position = UPlayerPosition;
-              
-               
-
-            }
+            state.Update(gameTime, this);
 
         }
 
@@ -168,7 +115,7 @@ namespace MarioGame
 
         public void Draw(SpriteBatch _spriteBatch, int width, int height, float Scale, List<Rectangle> sourceRectangle, int pos_difference, Color c)
         {
-            if(Star)
+            if(mode == PlayerSprite.Mode.Star)
             {
                 width = 18;
                 height = 32;
@@ -177,7 +124,7 @@ namespace MarioGame
 
             }
             //check sprint type for draw
-            else if(Fire)
+            else if(mode == PlayerSprite.Mode.Fire)
             {
                 width = 18;
                 height = 32;
@@ -185,16 +132,16 @@ namespace MarioGame
                 c= Color.White;
                // Game.Fire = true;
             }
-            else if(Big)
+            else if(mode == PlayerSprite.Mode.Big)
             {
                 width = 18;
                 height = 32;
                 pos_difference = 24;
                 c=Color.White;
             }
-            else if (invincible)
+            else if (mode == PlayerSprite.Mode.invincible)
             {
-                width = 16;
+                width = 14;
                 height = 16;
                 pos_difference = 0;
                 c = Color.SteelBlue;
@@ -202,35 +149,13 @@ namespace MarioGame
             }
             else
             {
-                width = 16;
+                width = 14;
                 height = 16;
                 pos_difference = 0;
                 c= Color.White;
             }
-            sourceRectangle = Mario_state.Switch(current,this);
-            if (current == PlayerSprite.SpriteType.Static || current == PlayerSprite.SpriteType.StaticL)
-            {
-                Staplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle,pos_difference,c);
-            }
-            if (current == PlayerSprite.SpriteType.Motion || current == PlayerSprite.SpriteType.MotionL)
-            {
-               
-                MRplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle, pos_difference,c);
-            }
-            if (current == PlayerSprite.SpriteType.Jump || current == PlayerSprite.SpriteType.JumpL)
-            {
-              
-                Jumpplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle, pos_difference,c);
-            }
-            if (current == PlayerSprite.SpriteType.Damaged)
-            {
-              
-                Damagedplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle, pos_difference,c);
-            }
-            if (current == PlayerSprite.SpriteType.Falling)
-            {
-                Fallplayer.Draw(_spriteBatch,width,height,Scale,sourceRectangle, pos_difference,c);
-            }
+            state.Draw(_spriteBatch, width, height, Scale, sourceRectangle, pos_difference, c, this);
+           
         }
 
         // Added GetDestinationRectangle method
@@ -238,35 +163,34 @@ namespace MarioGame
         {
             Rectangle rectangle = new Rectangle();
            
-            if(Fire || Big || Star)
+            if(mode == PlayerSprite.Mode.Big || mode == PlayerSprite.Mode.Fire || mode == PlayerSprite.Mode.Star)
             {
-                rectangle = new Rectangle((int)(UPlayerPosition.X - 27), (int)(UPlayerPosition.Y - 71), 54, 96);
+                rectangle = new Rectangle((int)(UPlayerPosition.X - 20), (int)(UPlayerPosition.Y - 71), 42, 96);
             }
             else
             {
-               
+                //rectangle = new Rectangle((int)(UPlayerPosition.X), (int)(UPlayerPosition.Y), 14, 16);
                 rectangle = new Rectangle((int)(UPlayerPosition.X - 21), (int)(UPlayerPosition.Y - 24), 42,48);
-
             }
             return rectangle;
         }
 
        public void Reset()
         {
-         left = false;
-            Fire = false;
-         Big = false;
+         direction = false;
+          
         isJumping = false;
          isGrounded = true;
         isFalling = false;
-         invincible = false;
-        current = PlayerSprite.SpriteType.Static;
-        crouched = false;
+            mode = PlayerSprite.Mode.None;
+            current = PlayerSprite.SpriteType.Falling;
          UPlayerPosition = new Vector2(100, 500);
             coin = 0;
             score = 0;
             lives = 5;
         }
+       
+        
 
     }
 }

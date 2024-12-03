@@ -1,15 +1,14 @@
 # Mario-Game
-Currently on Sprint3
+Currently on Sprint5
 
 Jira: https://csegroup5.atlassian.net
 This:
 https://www.youtube.com/watch?v=cWOkHQXw0JQ&t=37s
 
-Controls For Sprint2:
+Controls For Sprint5:
 WAS: Change Mario Position and Jump
-X/M: Change Mario Big/Fire Manually
-J: Make Mario origin State Manually
-Z/N: Throw Fireball (first change mario to fire by pressing M)
+Z/N: Throw Fireball
 Q: Quit Game
 R: Reset Level
-1/2 Change Between leveles
+O/P Custom Feature: Restart Level and Switch Between color palletes for above and underground in any level
+1/2/3 Start level 1-1 1-2 and Bowser Fight respectively

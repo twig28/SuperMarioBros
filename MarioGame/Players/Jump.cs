@@ -34,15 +34,6 @@ namespace MarioGame
                 mario.isJumping = true;
                 mario.isGrounded = false;
                 mario.velocity = jumpSpeed;
-                if(mario.left)
-                {
-                    mario.current = PlayerSprite.SpriteType.StaticL;
-                }
-                else
-                {
-                    mario.current = PlayerSprite.SpriteType.Static;
-
-                }
             }
 
 
