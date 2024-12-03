@@ -20,7 +20,7 @@ namespace MarioGame
             Jump,
             JumpL,
             Falling,
-            Crounch,
+            Crouch,
             Damaged// moving sprite
         }
         public enum Mode
@@ -115,30 +115,45 @@ namespace MarioGame
 
         public void Draw(SpriteBatch _spriteBatch, int width, int height, float Scale, List<Rectangle> sourceRectangle, int pos_difference, Color c)
         {
-            if(mode == PlayerSprite.Mode.Star)
+            if (mode == PlayerSprite.Mode.Star || mode == PlayerSprite.Mode.Fire || mode == PlayerSprite.Mode.Big)
             {
-                width = 18;
-                height = 32;
-                pos_difference = 24;
-                c = Color.SteelBlue;
+               
+                if (mode == PlayerSprite.Mode.Star)
+                {
+                   
+                    pos_difference = 24;
+                    c = Color.SteelBlue;
 
+                }
+                //check sprint type for draw
+                else if (mode == PlayerSprite.Mode.Fire)
+                {
+                   
+                    pos_difference = 22;
+                    c = Color.White;
+                    // Game.Fire = true;
+                }
+                else if (mode == PlayerSprite.Mode.Big)
+                {
+                    pos_difference = 24;
+                    c = Color.White;
+                }
+
+
+                if (current == SpriteType.Crouch)
+                {
+                    width = 17;
+                    height = 22;
+                    pos_difference = 30;
+                }
+                else
+                {
+                    width = 18;
+                    height = 32;
+                }
+                
             }
-            //check sprint type for draw
-            else if(mode == PlayerSprite.Mode.Fire)
-            {
-                width = 18;
-                height = 32;
-                pos_difference = 22;
-                c= Color.White;
-               // Game.Fire = true;
-            }
-            else if(mode == PlayerSprite.Mode.Big)
-            {
-                width = 18;
-                height = 32;
-                pos_difference = 24;
-                c=Color.White;
-            }
+            
             else if (mode == PlayerSprite.Mode.invincible)
             {
                 width = 14;
@@ -165,7 +180,14 @@ namespace MarioGame
            
             if(mode == PlayerSprite.Mode.Big || mode == PlayerSprite.Mode.Fire || mode == PlayerSprite.Mode.Star)
             {
-                rectangle = new Rectangle((int)(UPlayerPosition.X - 20), (int)(UPlayerPosition.Y - 71), 42, 96);
+                if (current == PlayerSprite.SpriteType.Crouch)
+                {
+                    rectangle = new Rectangle((int)(UPlayerPosition.X - 25), (int)(UPlayerPosition.Y), 51, 68);
+                }
+                else
+                {
+                    rectangle = new Rectangle((int)(UPlayerPosition.X - 20), (int)(UPlayerPosition.Y - 71), 42, 96);
+                }
             }
             else
             {

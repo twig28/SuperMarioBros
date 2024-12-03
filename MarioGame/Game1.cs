@@ -28,6 +28,8 @@ namespace MarioGame
         private IController keyControl;
         private IController mouseControl;
         private float ballSpeed = 300f;
+        private double damagedTimer = 0;
+        private const double damagedDelay = 3; 
 
         public int CurrLevel { get; set; }
         public int CurrWorld { get; set; }
@@ -64,11 +66,14 @@ namespace MarioGame
             this.LoadContent();
             levelColor = -1;
             offset = new Vector2(0, 0);
+            damagedTimer = 0;
         }
         public void ResetLevel()
         {
             this.LoadContent();
             offset = new Vector2(0, 0);
+            player_sprite.current = PlayerSprite.SpriteType.Falling;
+            damagedTimer = 0;
         }
         public Game1()
         {
@@ -121,11 +126,21 @@ namespace MarioGame
         }
         protected override void Update(GameTime gameTime)
         {
+            // Handle input controls
             keyControl.HandleInputs(player_sprite);
             mouseControl.HandleInputs(player_sprite);
 
-            GameHelper.checkAllCollisions(enemies, blocks, items, player_sprite, gameTime, GraphicsDevice.Viewport.Height);
+            if (player_sprite.current == PlayerSprite.SpriteType.Damaged)
+            {
+                damagedTimer += gameTime.ElapsedGameTime.TotalSeconds;
 
+                if (damagedTimer >= damagedDelay)
+                {
+                    damagedTimer = 0; 
+                    Game1.Instance.ResetLevel(); 
+                }
+            }
+            GameHelper.checkAllCollisions(enemies, blocks, items, player_sprite, gameTime, GraphicsDevice.Viewport.Height, player_sprite.current == PlayerSprite.SpriteType.Damaged);
             GameHelper.updateAll(enemies, blocks, items, player_sprite, gameTime, GraphicsDevice, soundLib, keyControl, ballSpeed);
 
             base.Update(gameTime);
@@ -141,16 +156,6 @@ namespace MarioGame
         {
             return soundLib;
         }
-        //For Sprint 3 Debug Only
-        private void DrawCollisionRectangles(SpriteBatch spriteBatch)
-        {
-            Texture2D rectTexture = new Texture2D(GraphicsDevice, 1, 1);
-            rectTexture.SetData(new[] { Color.White });
-
-            // Draw Mario's collision rectangle
-            Rectangle marioRect = player_sprite.GetDestinationRectangle();
-            spriteBatch.Draw(rectTexture, marioRect, Color.Red * 0.5f);
-        }
 
         protected override void Draw(GameTime gameTime)
         {
@@ -159,16 +164,14 @@ namespace MarioGame
             offset = PositionChecks.GetCameraOffset(player_sprite.GetDestinationRectangle(), GraphicsDevice.Viewport.Width);
             Matrix transform = Matrix.CreateTranslation(new Vector3(offset, 0));
             _spriteBatch.Begin(transformMatrix: transform);
-
             GameHelper.drawAll(enemies, blocks, items, scenery, player_sprite, _spriteBatch, offset, GraphicsDevice, gameTime);
 
             spriteBatchText.Begin();
 
             TextDraw.DrawText(font, spriteBatchText, player_sprite, this.CurrWorld);
-            if (player_sprite.current == PlayerSprite.SpriteType.Damaged)
+            if (player_sprite.lives < 1)
             {
                 TextDraw.Draw(font, spriteBatchText, player_sprite);
-                // text.DrawGameOver(font, spriteBatchText, player_sprite);
             }
 
             spriteBatchText.End();

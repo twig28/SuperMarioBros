@@ -38,7 +38,7 @@ namespace MarioGame.Collisions
                     continue;
                 }
                 //Pipes that go places
-                else if (block is Pipe p && (p.getIsEntrance() && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Above && mario.current == PlayerSprite.SpriteType.Crounch ||
+                else if (block is Pipe p && (p.getIsEntrance() && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Above && mario.current == PlayerSprite.SpriteType.Crouch ||
                     p.getIsLong() && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Side))
                 {
                     (Vector2 destination, int level) = p.GetDestination();
@@ -78,7 +78,7 @@ namespace MarioGame.Collisions
         {
             bool isStanding = false;
             if(mario.UPlayerPosition.Y < blockRect.Top && marioRect.Right  > blockRect.Left 
-                && marioRect.Left < blockRect.Right)
+                && marioRect.Left  < blockRect.Right )
             {
                 isStanding = true;
             }
@@ -113,7 +113,15 @@ namespace MarioGame.Collisions
         {
             if (mario.mode == PlayerSprite.Mode.Big || mario.mode == PlayerSprite.Mode.Fire || mario.mode == PlayerSprite.Mode.Star)
             {
-                mario.UPlayerPosition.Y = blockTop - mario.GetDestinationRectangle().Height / 2 + 26;
+                if (mario.current == PlayerSprite.SpriteType.Crouch)
+                {
+                    mario.UPlayerPosition.Y = blockTop - mario.GetDestinationRectangle().Height / 2 - 25;
+
+                }
+                else
+                {
+                    mario.UPlayerPosition.Y = blockTop - mario.GetDestinationRectangle().Height / 2 + 26;
+                }
             }
             else
             {

@@ -16,15 +16,18 @@ namespace MarioGame
 {
     internal class GameHelper
     {
-        public static void checkAllCollisions(List<IEnemy> enemies, List<IBlock> blocks, List<IItem> items, PlayerSprite player_sprite, GameTime gameTime, int height)
+        public static void checkAllCollisions(List<IEnemy> enemies, List<IBlock> blocks, List<IItem> items, PlayerSprite player_sprite, GameTime gameTime, int height, bool dead)
         {
             EnemyCollisionLogic.CheckEnemyBlockCollisions(enemies, blocks, gameTime, player_sprite);
-            MarioBlockCollisionLogic.CheckMarioBlockCollision(player_sprite, blocks, items);
+            if (!dead)
+            {
+                MarioBlockCollisionLogic.CheckMarioBlockCollision(player_sprite, blocks, items);
+                MarioEnemyCollisionLogic.CheckMarioEnemyCollision(player_sprite, ref enemies, gameTime);
+                PositionChecks.checkDeathByFalling(player_sprite, height);
+            }
             EnemyCollisionLogic.CheckEnemyEnemyCollision(enemies, gameTime, player_sprite);
-            MarioEnemyCollisionLogic.CheckMarioEnemyCollision(player_sprite, ref enemies, gameTime);
             CollisionLogic.CheckMarioItemCollision(player_sprite, items, gameTime);
             CollisionLogic.CheckItemBlockCollision(blocks, items);
-            PositionChecks.checkDeathByFalling(player_sprite, height);
             blocks.RemoveAll(block => block is Block b && b.IsDestroyed);
         }
 

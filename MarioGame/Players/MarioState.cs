@@ -20,6 +20,7 @@ namespace MarioGame
         private Jump Jumpplayer;
         private Damaged Damagedplayer;
         private Fall Fallplayer;
+        private Crouch Crouchplayer;
         private MarioController Mario_state;
         public MarioState(Texture2D texture, float speed, GraphicsDeviceManager Graphics, Game1 game)
         {
@@ -38,6 +39,7 @@ namespace MarioGame
             Jumpplayer = new Jump(marioTexture, PlayerPosition, Game);
             Damagedplayer = new Damaged(marioTexture, PlayerPosition, PlayerSpeed, _graphics); 
             Fallplayer = new Fall(marioTexture, PlayerPosition, PlayerSpeed, _graphics, Game);
+            Crouchplayer = new Crouch(marioTexture, PlayerPosition, Game);
             Mario_state = new MarioController(Game);
 
         }
@@ -71,7 +73,10 @@ namespace MarioGame
                 mario.UPlayerPosition = Fallplayer.Position;
 
             }
-
+            else if (mario.current == PlayerSprite.SpriteType.Crouch)
+            {
+                Crouchplayer.Position = mario.UPlayerPosition;
+            }
             else
             {
 
@@ -82,32 +87,45 @@ namespace MarioGame
             }
         }
 
-        public void Draw(SpriteBatch _spriteBatch, int width, int height, float Scale, List<Rectangle> sourceRectangle, int pos_difference, Color c, PlayerSprite mario)
+        public IPlayer getPlayer(PlayerSprite mario)
         {
-            sourceRectangle = Mario_state.Switch(mario.current, mario);
-            if (mario.current == PlayerSprite.SpriteType.Static || mario.current == PlayerSprite.SpriteType.StaticL)
-            {
-                Staplayer.Draw(_spriteBatch, width, height, Scale, sourceRectangle, pos_difference, c);
-            }
+            
+           
             if (mario.current == PlayerSprite.SpriteType.Motion || mario.current == PlayerSprite.SpriteType.MotionL)
             {
 
-                MRplayer.Draw(_spriteBatch, width, height, Scale, sourceRectangle, pos_difference, c);
+                return MRplayer;
             }
-            if (mario.current == PlayerSprite.SpriteType.Jump || mario.current == PlayerSprite.SpriteType.JumpL)
+            else if (mario.current == PlayerSprite.SpriteType.Jump || mario.current == PlayerSprite.SpriteType.JumpL)
             {
 
-                Jumpplayer.Draw(_spriteBatch, width, height, Scale, sourceRectangle, pos_difference, c);
+                return Jumpplayer;
             }
-            if (mario.current == PlayerSprite.SpriteType.Damaged)
+            else if (mario.current == PlayerSprite.SpriteType.Damaged)
             {
 
-                Damagedplayer.Draw(_spriteBatch, width, height, Scale, sourceRectangle, pos_difference, c);
+                return Damagedplayer;
             }
-            if (mario.current == PlayerSprite.SpriteType.Falling)
+            else if (mario.current == PlayerSprite.SpriteType.Falling)
             {
-                Fallplayer.Draw(_spriteBatch, width, height, Scale, sourceRectangle, pos_difference, c);
+                return Fallplayer;
             }
+            else if (mario.current == PlayerSprite.SpriteType.Crouch)
+            {
+                return Crouchplayer;
+            }
+            else
+            {
+                return Staplayer;
+            }
+        }
+
+
+        public void Draw(SpriteBatch _spriteBatch, int width, int height, float Scale, List<Rectangle> sourceRectangle, int pos_difference, Color c, PlayerSprite mario)
+        {
+            sourceRectangle = Mario_state.Switch(mario.current, mario);
+            
+            getPlayer(mario).Draw(_spriteBatch, width, height, Scale, sourceRectangle, pos_difference, c);
         }
 
     }

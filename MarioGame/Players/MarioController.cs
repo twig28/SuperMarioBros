@@ -20,9 +20,74 @@ namespace MarioGame
         public List<Rectangle> Switch(PlayerSprite.SpriteType current, PlayerSprite mario)
         {
             List<Rectangle> sourceRectangle = new List<Rectangle>();
-            if (current == PlayerSprite.SpriteType.Static)
+            if (current == PlayerSprite.SpriteType.Static || current == PlayerSprite.SpriteType.StaticL)
+            {
+                sourceRectangle =  TextureforStatic(current, mario);
+            }
+            else if (current == PlayerSprite.SpriteType.Motion || current == PlayerSprite.SpriteType.MotionL)
+            {
+                sourceRectangle = TextureforMotion(current, mario);
+            }
+            else if (current == PlayerSprite.SpriteType.Jump || current == PlayerSprite.SpriteType.JumpL)
+            {
+
+                sourceRectangle = TextureforJumping(current, mario);
+            }
+            else if (current == PlayerSprite.SpriteType.Damaged)
+            {
+                sourceRectangle = TextureforDamge(current, mario);
+
+            }
+
+
+            else if (current == PlayerSprite.SpriteType.Falling)
+            {
+                sourceRectangle = TextureforFallinging(current, mario);
+            }
+            else if(current == PlayerSprite.SpriteType.Crouch)
+            {
+                sourceRectangle = TextureforCrounch(current, mario);
+            }
+            return sourceRectangle; 
+        }
+
+
+
+
+
+
+        public List<Rectangle> TextureforStatic(PlayerSprite.SpriteType current, PlayerSprite mario)
+        {
+            List<Rectangle> sourceRectangle = new List<Rectangle>();
+            sourceRectangle.Clear();
+            if (mario.direction)
             {
                 sourceRectangle.Clear();
+                if (mario.mode == PlayerSprite.Mode.Star)
+                {
+                    sourceRectangle.Clear();
+                    sourceRectangle.Add(new Rectangle(179, 52, 18, 32));
+                }
+                else if (mario.mode == PlayerSprite.Mode.Fire)
+                {
+                    sourceRectangle.Clear();
+                    sourceRectangle.Add(new Rectangle(180, 122, 18, 32));
+                }
+
+                else if (mario.mode == PlayerSprite.Mode.Big)
+                {
+                    sourceRectangle.Clear();
+                    sourceRectangle.Add(new Rectangle(179, 52, 18, 32));
+                }
+
+                else
+                {
+                    sourceRectangle.Clear();
+                    sourceRectangle.Add(new Rectangle(181, 0, 14, 16));
+                }
+            }
+            else
+            {
                 if (mario.mode == PlayerSprite.Mode.Star)
                 {
                     sourceRectangle.Clear();
@@ -45,36 +110,16 @@ namespace MarioGame
 
                 }
             }
+            return sourceRectangle;
+        }
 
-            if (current == PlayerSprite.SpriteType.StaticL)
-            {
-                sourceRectangle.Clear();
-                if (mario.mode == PlayerSprite.Mode.Star)
-                {
-                    sourceRectangle.Clear();
-                    sourceRectangle.Add(new Rectangle(179, 52, 18, 32));
-                }
-                else if (mario.mode == PlayerSprite.Mode.Fire)
-                {
-                    sourceRectangle.Clear();
-                    sourceRectangle.Add(new Rectangle(180, 122, 18, 32));
-                }
-                
-                else if (mario.mode == PlayerSprite.Mode.Big)
-               {
-                    sourceRectangle.Clear();
-                    sourceRectangle.Add(new Rectangle(179, 52, 18, 32));
-               }
-                
-                else
-                {
-                    sourceRectangle.Clear();
-                    sourceRectangle.Add(new Rectangle(181, 0, 14, 16));
-                }
-                
-                
-            }
 
+
+
+
+        public List<Rectangle> TextureforMotion(PlayerSprite.SpriteType current, PlayerSprite mario)
+        {
+            List<Rectangle> sourceRectangle = new List<Rectangle>();
             if (current == PlayerSprite.SpriteType.Motion)
             {
                 sourceRectangle.Clear();
@@ -114,7 +159,7 @@ namespace MarioGame
             }
 
 
-            if (current == PlayerSprite.SpriteType.MotionL)
+            else if (current == PlayerSprite.SpriteType.MotionL)
             {
                 sourceRectangle.Clear();
                 if (mario.mode == PlayerSprite.Mode.Star)
@@ -154,12 +199,22 @@ namespace MarioGame
 
                 }
             }
+            return sourceRectangle;
+        }
 
 
 
+
+
+
+
+
+        public List<Rectangle> TextureforJumping(PlayerSprite.SpriteType current, PlayerSprite mario)
+        {
+            List<Rectangle> sourceRectangle = new List<Rectangle>();
             if (current == PlayerSprite.SpriteType.Jump)
             {
-                 
+
                 sourceRectangle.Clear();
 
                 if (mario.mode == PlayerSprite.Mode.Star)
@@ -185,15 +240,16 @@ namespace MarioGame
                     sourceRectangle.Add(new Rectangle(358, 0, 17, 17));
 
                 }
+                return sourceRectangle;
 
             }
 
 
 
-            if (current == PlayerSprite.SpriteType.JumpL)
+            else if (current == PlayerSprite.SpriteType.JumpL)
             {
                 sourceRectangle.Clear();
-                 if (mario.mode == PlayerSprite.Mode.Star)
+                if (mario.mode == PlayerSprite.Mode.Star)
                 {
                     sourceRectangle.Clear();
                     sourceRectangle.Add(new Rectangle(29, 52, 18, 32));
@@ -217,84 +273,149 @@ namespace MarioGame
                     sourceRectangle.Add(new Rectangle(29, 0, 17, 17));
                 }
             }
+            return sourceRectangle;
+
+        }
 
 
-            if (current == PlayerSprite.SpriteType.Damaged)
+
+
+
+        public List<Rectangle> TextureforFallinging(PlayerSprite.SpriteType current, PlayerSprite mario)
+        {
+            List<Rectangle> sourceRectangle = new List<Rectangle>();
+
+            sourceRectangle.Clear();
+
+
+            if (mario.direction)
             {
-                sourceRectangle.Clear();
-                sourceRectangle.Add(new Rectangle(0, 16, 14, 16));
-
-            }
-
-
-            if (current == PlayerSprite.SpriteType.Falling)
-            {
-                sourceRectangle.Clear();
-
-
-                if (mario.direction)
+                if (mario.mode == PlayerSprite.Mode.Star)
                 {
-                    if (mario.mode == PlayerSprite.Mode.Star)
-                    {
-                        sourceRectangle.Clear();
+                    sourceRectangle.Clear();
 
-                        sourceRectangle.Add(new Rectangle(29, 52, 18, 32));
-                    }
-                   else if (mario.mode == PlayerSprite.Mode.Fire)
-                    {
-                        sourceRectangle.Clear();
-                        sourceRectangle.Add(new Rectangle(25, 122, 18, 32));
-                    }
-                    else if (mario.mode == PlayerSprite.Mode.Big)
-                    {
-                        sourceRectangle.Clear();
+                    sourceRectangle.Add(new Rectangle(29, 52, 18, 32));
+                }
+                else if (mario.mode == PlayerSprite.Mode.Fire)
+                {
+                    sourceRectangle.Clear();
+                    sourceRectangle.Add(new Rectangle(25, 122, 18, 32));
+                }
+                else if (mario.mode == PlayerSprite.Mode.Big)
+                {
+                    sourceRectangle.Clear();
 
-                        sourceRectangle.Add(new Rectangle(29, 52, 18, 32));
+                    sourceRectangle.Add(new Rectangle(29, 52, 18, 32));
 
-                    }
-                    else
-                    {
-                        sourceRectangle.Clear();
-
-                        sourceRectangle.Add(new Rectangle(29, 0, 17, 17));
-
-                    }
                 }
                 else
                 {
-                    //check status
-                    if (mario.mode == PlayerSprite.Mode.Star)
-                    {
-                        sourceRectangle.Clear();
+                    sourceRectangle.Clear();
 
-                        sourceRectangle.Add(new Rectangle(358, 52, 18, 32));
-                    }
+                    sourceRectangle.Add(new Rectangle(29, 0, 17, 17));
 
-                   else if (mario.mode == PlayerSprite.Mode.Fire)
-                    {
-                        sourceRectangle.Clear();
+                }
+            }
+            else
+            {
+                //check status
+                if (mario.mode == PlayerSprite.Mode.Star)
+                {
+                    sourceRectangle.Clear();
 
-                        sourceRectangle.Add(new Rectangle(361, 122, 18, 32));
-
-                    }
-                    else if (mario.mode == PlayerSprite.Mode.Big)
-                    {
-                        sourceRectangle.Clear();
-
-                        sourceRectangle.Add(new Rectangle(358, 52, 18, 32));
-
-                    }
-                    else
-                    {
-                        sourceRectangle.Clear();
-
-                        sourceRectangle.Add(new Rectangle(358, 0, 17, 17));
-                    }
+                    sourceRectangle.Add(new Rectangle(358, 52, 18, 32));
                 }
 
+                else if (mario.mode == PlayerSprite.Mode.Fire)
+                {
+                    sourceRectangle.Clear();
+
+                    sourceRectangle.Add(new Rectangle(361, 122, 18, 32));
+
+                }
+                else if (mario.mode == PlayerSprite.Mode.Big)
+                {
+                    sourceRectangle.Clear();
+
+                    sourceRectangle.Add(new Rectangle(358, 52, 18, 32));
+
+                }
+                else
+                {
+                    sourceRectangle.Clear();
+
+                    sourceRectangle.Add(new Rectangle(358, 0, 17, 17));
+                }
+            }
+            return sourceRectangle;
+
+        }
+
+        public List<Rectangle> TextureforCrounch(PlayerSprite.SpriteType current, PlayerSprite mario)
+        {
+            List<Rectangle> sourceRectangle = new List<Rectangle>();
+            sourceRectangle.Clear();
+            //check status
+            if (mario.direction)
+            {
+                if (mario.mode == PlayerSprite.Mode.Star)
+                {
+                    sourceRectangle.Clear();
+
+                    sourceRectangle.Add(new Rectangle(0, 57, 17, 22));
+                }
+
+                else if (mario.mode == PlayerSprite.Mode.Fire)
+                {
+                    sourceRectangle.Clear();
+
+                    sourceRectangle.Add(new Rectangle(0, 127, 17, 22));
+
+                }
+                else if (mario.mode == PlayerSprite.Mode.Big)
+                {
+                    sourceRectangle.Clear();
+
+                    sourceRectangle.Add(new Rectangle(0, 57, 17, 22));
+
+                }
+                
+            }
+            else
+            {
+                if (mario.mode == PlayerSprite.Mode.Star)
+                {
+                    sourceRectangle.Clear();
+
+                    sourceRectangle.Add(new Rectangle(388, 57, 17, 22));
+                }
+
+                else if (mario.mode == PlayerSprite.Mode.Fire)
+                {
+                    sourceRectangle.Clear();
+
+                    sourceRectangle.Add(new Rectangle(388, 127, 17, 22));
+
+                }
+                else if (mario.mode == PlayerSprite.Mode.Big)
+                {
+                    sourceRectangle.Clear();
+
+                    sourceRectangle.Add(new Rectangle(388, 57, 17, 22));
+
+                }
             }
             return sourceRectangle;
         }
 
+
+        public List<Rectangle> TextureforDamge(PlayerSprite.SpriteType current, PlayerSprite mario)
+        {
+            List<Rectangle> sourceRectangle = new List<Rectangle>();
+            sourceRectangle.Clear();
+            sourceRectangle.Add(new Rectangle(0, 16, 14, 16));
+            return sourceRectangle;
+        }
     }
+    
 }

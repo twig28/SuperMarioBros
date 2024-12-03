@@ -22,7 +22,7 @@ namespace MarioGame
 			Position = position;
 			Texture = texture;
 			SourceRectanlge = sourceRectangle;
-			DestinationRectangle = new Rectangle((int)Position.X, (int)Position.Y, dimension, dimension); ;
+			DestinationRectangle = new Rectangle((int)Position.X, (int)Position.Y, dimension, dimension);
         }
 
         public abstract void OnCollide();
@@ -31,8 +31,8 @@ namespace MarioGame
 
         public virtual void Update(GameTime gameTime)
 		{
-			// Base update logic
-		}
+            DestinationRectangle = new Rectangle((int)Position.X, (int)Position.Y, dimension, dimension);
+        }
 
 		public virtual void Draw(SpriteBatch spriteBatch)
 		{
