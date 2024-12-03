@@ -140,7 +140,7 @@ namespace MarioGame
                     Game1.Instance.ResetLevel(); 
                 }
             }
-            else{GameHelper.checkAllCollisions(enemies, blocks, items, player_sprite, gameTime, GraphicsDevice.Viewport.Height);}
+            GameHelper.checkAllCollisions(enemies, blocks, items, player_sprite, gameTime, GraphicsDevice.Viewport.Height, player_sprite.current == PlayerSprite.SpriteType.Damaged);
             GameHelper.updateAll(enemies, blocks, items, player_sprite, gameTime, GraphicsDevice, soundLib, keyControl, ballSpeed);
 
             base.Update(gameTime);
