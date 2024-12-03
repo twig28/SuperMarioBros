@@ -36,10 +36,10 @@ internal class Bowser : IEnemy
     public double getdeathStartTime => deathStartTime;
 
 
-    public Bowser(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y, int pallette)
+    public Bowser(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y)
     {
         posX = X; posY = Y;
-        sprite = new BowserSprite(Texture, SpriteBatch, posX, posY, pallette);
+        sprite = new BowserSprite(Texture, SpriteBatch, posX, posY);
     }
 
     public void Draw()
@@ -51,20 +51,7 @@ internal class Bowser : IEnemy
 
     public void TriggerDeath(GameTime gm, bool stomped)
     {
-        if (stomped)
-        {
-            // Stomped death behavior (remain in the same place)
-            deathStartTime = gm.TotalGameTime.TotalSeconds;
-            sprite.posY = posY + 40;
-            sprite.SetDeathFrame();
-        }
-        else
-        {
-            // Fireball death behavior (inverted fall animation)
-            deathStartTime = gm.TotalGameTime.TotalSeconds;
-            isInvertedDeath = true;      // Enable inverted fall
-            sprite.Invert = true;         // Invert the sprite to show it flipped
-        }
+
     }
 
     public void Update(GameTime gm)

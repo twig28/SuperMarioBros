@@ -49,7 +49,7 @@ namespace MarioGame.Collisions
 
         private static void HandleBelowCollision(PlayerSprite mario, IEnemy enemy, GameTime gt, ref IEnemy enemyToAdd)
         {
-            if (enemy is Piranha)
+            if (enemy is Piranha || enemy is Bowser)
             {
                 mario.velocity = 0f;
                 mario.current = PlayerSprite.SpriteType.Damaged;

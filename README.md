@@ -10,4 +10,5 @@ WAS: Change Mario Position and Jump
 Z/N: Throw Fireball
 Q: Quit Game
 R: Reset Level
-O/P Custom Feature Restart Level and Switch Between color palletes for above and underground in any level
+O/P Custom Feature: Restart Level and Switch Between color palletes for above and underground in any level
+1/2/3 Start level 1-1 1-2 and Bowser Fight respectively

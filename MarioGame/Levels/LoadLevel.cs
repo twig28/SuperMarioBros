@@ -180,6 +180,9 @@ namespace MarioGame.Levels
                         blocks.Add(p);
                         p.ReverseDirection();
                         break;
+                    case "Bowser":
+                        enemies.Add(new Bowser(enemyTextures, _spriteBatch, entity.X, entity.Y));
+                        break;
                 }
             }
         }
