@@ -123,9 +123,7 @@ namespace MarioGame
         {
             keyControl.HandleInputs(player_sprite);
             mouseControl.HandleInputs(player_sprite);
-
             GameHelper.checkAllCollisions(enemies, blocks, items, player_sprite, gameTime, GraphicsDevice.Viewport.Height);
-
             GameHelper.updateAll(enemies, blocks, items, player_sprite, gameTime, GraphicsDevice, soundLib, keyControl, ballSpeed);
 
             base.Update(gameTime);
@@ -136,21 +134,12 @@ namespace MarioGame
             levelColor = color;
             LoadContent();
         }
-
-        public SoundLib GetSoundLib()
+        //SSSSSSSSSSSSSSSSDSSSSSSSSS
+       public SoundLib GetSoundLib()
         {
             return soundLib;
         }
-        //For Sprint 3 Debug Only
-        private void DrawCollisionRectangles(SpriteBatch spriteBatch)
-        {
-            Texture2D rectTexture = new Texture2D(GraphicsDevice, 1, 1);
-            rectTexture.SetData(new[] { Color.White });
-
-            // Draw Mario's collision rectangle
-            Rectangle marioRect = player_sprite.GetDestinationRectangle();
-            spriteBatch.Draw(rectTexture, marioRect, Color.Red * 0.5f);
-        }
+      
 
         protected override void Draw(GameTime gameTime)
         {
@@ -159,7 +148,6 @@ namespace MarioGame
             offset = PositionChecks.GetCameraOffset(player_sprite.GetDestinationRectangle(), GraphicsDevice.Viewport.Width);
             Matrix transform = Matrix.CreateTranslation(new Vector3(offset, 0));
             _spriteBatch.Begin(transformMatrix: transform);
-
             GameHelper.drawAll(enemies, blocks, items, scenery, player_sprite, _spriteBatch, offset, GraphicsDevice, gameTime);
 
             spriteBatchText.Begin();

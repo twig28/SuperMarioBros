@@ -46,32 +46,7 @@ public class MotionPlayer : IPlayer
                 timeCounter -= timePerFrame;
             }
 
-            //for running with different status
-            /*
-            if (!Game.player_sprite.Big && !Game.player_sprite.Fire)
-            {
-                if (Position.X < graphics.PreferredBackBufferWidth - (14 * Scale / 2))//check if reach to the bottom edge
-                {
-
-                }
-            }
-            else if (Game.player_sprite.Fire)
-            {
-                if (Position.X < graphics.PreferredBackBufferWidth - (18 * Scale / 2))//check if reach to the bottom edge
-                {
-                    Position.X += updatedSpeed;
-
-                }
-            }
-            else if (!Game.player_sprite.Fire && Game.player_sprite.Big)
-            {
-                if (Position.X < graphics.PreferredBackBufferWidth - (18 * Scale / 2))//check if reach to the bottom edge
-                {
-                    Position.X += updatedSpeed;
-
-                }
-            }
-            */
+           
             if(mario.direction)
             {
                 //move for differnet status

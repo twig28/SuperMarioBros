@@ -61,10 +61,9 @@ public class KeyboardController : IController
 
                 if (mario.current == PlayerSprite.SpriteType.Jump || mario.current == PlayerSprite.SpriteType.JumpL || mario.current == PlayerSprite.SpriteType.Falling)
                 {
-                    //  if (Game.player_sprite.UPlayerPosition.X < 1280 - (14 * 3f / 2) )
-                    //  {
+                   
                     mario.UPlayerPosition.X += 5f;
-                    // }
+                   
                 }
                 else
                 {
@@ -95,13 +94,13 @@ public class KeyboardController : IController
             if (currentKeyState.IsKeyDown(Keys.W) || currentKeyState.IsKeyDown(Keys.Up))
             {
 
-                if (mario.current == PlayerSprite.SpriteType.MotionL || mario.current == PlayerSprite.SpriteType.StaticL)
+                if (mario.current == PlayerSprite.SpriteType.MotionL || mario.current == PlayerSprite.SpriteType.StaticL || (mario.current == PlayerSprite.SpriteType.Crouch && mario.direction))
                 {
                     mario.current = PlayerSprite.SpriteType.JumpL;
                     Game1.Instance.GetSoundLib().PlaySound("jump");
                     mario.direction = true;
                 }
-                else if (mario.current == PlayerSprite.SpriteType.Motion || mario.current == PlayerSprite.SpriteType.Static)
+                else if (mario.current == PlayerSprite.SpriteType.Motion || mario.current == PlayerSprite.SpriteType.Static || (mario.current == PlayerSprite.SpriteType.Crouch && !mario.direction))
                 {
                     mario.current = PlayerSprite.SpriteType.Jump;
                     mario.direction = false;
@@ -110,11 +109,7 @@ public class KeyboardController : IController
                 }
             }
 
-            //    if (currentKeyState.IsKeyDown(Keys.E))
-            //    {
-            //        mario.current = PlayerSprite.SpriteType.Damaged;
-            //    }
-            //}
+            
                 if (currentKeyState.IsKeyDown(Keys.X))
                 {
                 mario.mode = PlayerSprite.Mode.Star;
@@ -180,7 +175,10 @@ public class KeyboardController : IController
 
             if (currentKeyState.IsKeyDown(Keys.S) || currentKeyState.IsKeyDown(Keys.Down))
             {
-                //
+                if(mario.mode != PlayerSprite.Mode.None && mario.mode != PlayerSprite.Mode.invincible && mario.isGrounded)
+                {
+                    mario.current = PlayerSprite.SpriteType.Crouch;
+                }
             }
            
 
