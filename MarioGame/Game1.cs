@@ -58,6 +58,7 @@ namespace MarioGame
 
         public void ResetGame()
         {
+            this.soundLib.DisposeTheme();
             this.Initialize();
             this.LoadContent();
             offset = new Vector2(0, 0);
@@ -170,6 +171,7 @@ namespace MarioGame
             Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl,soundLib);
             Ball.UpdateAll(gameTime, GraphicsDevice.Viewport.Width, blocks);
             BallCollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime, false);
+
 
             base.Update(gameTime);
         }

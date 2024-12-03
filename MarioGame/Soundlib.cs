@@ -20,9 +20,10 @@ public class SoundLib
         soundEffects["fireball"] = content.Load<SoundEffect>("fireball");
         soundEffects["coin"] = content.Load<SoundEffect>("coin");
         soundEffects["killEnemy"] = content.Load<SoundEffect>("killEnemy");
-        soundEffects["dokey"] = content.Load<SoundEffect>("dokey");
+        soundEffects["hitflag"] = content.Load<SoundEffect>("dokey");
         soundEffects["gameOver"] = content.Load<SoundEffect>("gameOver");
         soundEffects["theme"] = content.Load<SoundEffect>("theme");
+        soundEffects["pipe"] = content.Load<SoundEffect>("pipe");
         var theme = content.Load<SoundEffect>("theme");
         themeInstance = theme.CreateInstance();
         themeInstance.IsLooped = true;

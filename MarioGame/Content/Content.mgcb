@@ -146,6 +146,12 @@
 /processorParam:TextureFormat=Color
 /build:Resource/marioStatic.png
 
+#begin Resource/pipe.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Resource/pipe.wav
+
 #begin Resource/resizedGroundBlock.png
 /importer:TextureImporter
 /processor:TextureProcessor
