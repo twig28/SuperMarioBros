@@ -11,7 +11,7 @@ namespace MarioGame
         private bool isBumped = false;
         private bool isBreaking = false;
         private float bumpTimer = 0f;
-        private const float bumpDuration = 0.2f;
+        private const float bumpDuration = 0.18f;
         private float breakDelay = 0.05f;
         private float breakTimer = 0f;
 
@@ -57,6 +57,14 @@ namespace MarioGame
                 {
                     isBumped = false;
                     bumpTimer = 0f;
+                }
+                else if (bumpTimer > 0.5 * bumpDuration)
+                {
+                    base.DestinationRectangle.Y += 1;
+                }
+                else
+                {
+                    base.DestinationRectangle.Y -= 1;
                 }
             }
 

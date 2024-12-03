@@ -51,8 +51,7 @@ namespace MarioGame.Collisions
         {
             if (enemy is Piranha || enemy is Bowser)
             {
-                mario.velocity = 0f;
-                mario.current = PlayerSprite.SpriteType.Damaged;
+                HandleMarioDamage(mario);
             }
             else if (enemy is Koopa koopa && koopa.getdeathStartTime <= 0)
             {
@@ -115,15 +114,13 @@ namespace MarioGame.Collisions
             {
                 mario.lives = 0;
                 mario.current = PlayerSprite.SpriteType.Damaged;
-                Game1.Instance.ResetLevel();
-
             }
             else if(mario.mode != PlayerSprite.Mode.invincible && mario.lives > 1)
             {
                 mario.lives -= 1;
-                mario.UPlayerPosition = new Vector2(100, 500);
-                mario.current = PlayerSprite.SpriteType.Falling;
-                Game1.Instance.ResetLevel();
+                //mario.UPlayerPosition = new Vector2(100, 500);
+                mario.current = PlayerSprite.SpriteType.Damaged;
+                //Game1.Instance.ResetLevel();
             }
         }
 

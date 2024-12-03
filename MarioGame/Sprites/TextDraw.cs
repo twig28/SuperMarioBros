@@ -16,11 +16,11 @@ namespace MarioGame.Sprites
         }
         public static void Draw(SpriteFont font, SpriteBatch spriteBatch, PlayerSprite mario)
         {
-            string text = "Game Over\n" +
-                          "Press R to retry";
+            string text = "Game Over!\n" +
+                          "Press R To Retry";
             Vector2 textSize = font.MeasureString(text);
             
-            spriteBatch.DrawString(font, text, new Vector2(400, 300), Color.Black);
+            spriteBatch.DrawString(font, text, new Vector2(400, 300), Color.White);
         }
         public static void DrawText(SpriteFont font, SpriteBatch spriteBatch, PlayerSprite mario, int level)
         {
