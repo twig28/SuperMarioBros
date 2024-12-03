@@ -72,7 +72,7 @@ namespace MarioGame
         {
             this.LoadContent();
             offset = new Vector2(0, 0);
-            player_sprite.current = PlayerSprite.SpriteType.Static;
+            player_sprite.current = PlayerSprite.SpriteType.Falling;
             damagedTimer = 0;
         }
         public Game1()
