@@ -67,14 +67,17 @@ namespace MarioGame
             switch (item.GetName())
             {
                 case "Star":
+                    IncreaseScore(mario);
                     ActivateStarPower(mario);
                     break;
 
                 case "FireFlower":
+                    IncreaseScore(mario);
                     ActivateFirePower(mario);
                     break;
 
                 case "Mushroom":
+                    IncreaseScore(mario);
                     GrowMario(mario);
                     break;
 
