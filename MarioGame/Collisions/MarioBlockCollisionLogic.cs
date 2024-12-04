@@ -75,8 +75,10 @@ namespace MarioGame.Collisions
         private static bool IsStandingOnBlock(PlayerSprite mario, Rectangle blockRect, Rectangle marioRect)
         {
             bool isStanding = false;
-            if(mario.UPlayerPosition.Y < blockRect.Top && marioRect.Right  > blockRect.Left 
-                && marioRect.Left  < blockRect.Right )
+            //if(mario.UPlayerPosition.Y < blockRect.Top && marioRect.Right  > blockRect.Left 
+            //   && marioRect.Left  < blockRect.Right )
+            if (marioRect.Bottom >= blockRect.Top && marioRect.Right > blockRect.Left
+              && marioRect.Left < blockRect.Right && marioRect.Top < blockRect.Top)
             {
                 isStanding = true;
             }
@@ -123,7 +125,9 @@ namespace MarioGame.Collisions
             }
             else
             {
-                mario.UPlayerPosition.Y = blockTop - mario.GetDestinationRectangle().Height / 2 + 2;
+                // mario.UPlayerPosition.Y = blockTop - mario.GetDestinationRectangle().Height / 2 + 2;
+                 mario.UPlayerPosition.Y = blockTop - mario.GetDestinationRectangle().Height / 2 + 2;
+
             }
         }
 
@@ -266,7 +270,7 @@ namespace MarioGame.Collisions
                 marioPositionOnPole = Math.Clamp(marioPositionOnPole, 0, flagpoleHeight);
 
                 float scoreProportion = (float)marioPositionOnPole / flagpoleHeight;
-                mario.score += (int)(scoreProportion * 5000);
+                mario.SetScore((int)(scoreProportion * 5000));
                 mario.UPlayerPosition.X += 20;
                 pole.setMarioStartPosition(mario.UPlayerPosition);
                 mario.isFalling = false;

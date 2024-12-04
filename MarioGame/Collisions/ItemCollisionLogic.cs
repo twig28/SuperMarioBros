@@ -112,8 +112,9 @@ namespace MarioGame
 
         private static void IncreaseScore(PlayerSprite mario)
         {
-            mario.score += 200;
-            mario.coin += 1;
+            mario.SetScore(200);
+            mario.SetCoin(1);
+            
         }
 
 

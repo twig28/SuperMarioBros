@@ -156,7 +156,7 @@ namespace MarioGame
         {
             return soundLib;
         }
-
+        //sssSSSS
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(backgroundColor);
@@ -169,7 +169,7 @@ namespace MarioGame
             spriteBatchText.Begin();
 
             TextDraw.DrawText(font, spriteBatchText, player_sprite, this.CurrWorld);
-            if (player_sprite.lives < 1)
+            if (player_sprite.getCoinScoreLives()[2] < 1)
             {
                 TextDraw.Draw(font, spriteBatchText, player_sprite);
             }

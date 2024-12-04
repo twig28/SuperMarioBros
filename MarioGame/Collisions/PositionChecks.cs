@@ -28,9 +28,9 @@ namespace MarioGame
         {
             if (mario.GetDestinationRectangle().Y > screenHeight)
             {
-                if(mario.lives > 0)
+                if (mario.getCoinScoreLives()[2] > 0)
                 {
-                    mario.lives--;
+                    mario.SetLives(1);
                     Game1.Instance.ResetLevel();
                 }
                 else
