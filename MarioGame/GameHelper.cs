@@ -9,6 +9,7 @@ namespace MarioGame
 {
     internal class GameHelper
     {
+        
         public static void checkAllCollisions(List<IEnemy> enemies, List<IBlock> blocks, List<IItem> items, PlayerSprite player_sprite, GameTime gameTime, int height, bool dead)
         {
             EnemyCollisionLogic.CheckEnemyBlockCollisions(enemies, blocks, gameTime, player_sprite);

@@ -43,7 +43,7 @@ namespace MarioGame
         private MarioState state;
         private int invincibletime = -1;
         private int Startime = -1;
-        public int coin = 0;
+        private int coin = 0;
         private int score = 0;
         private int lives = 5;
         private bool DownSignal = false;
