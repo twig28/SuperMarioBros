@@ -33,6 +33,7 @@ namespace MarioGame.Collisions
                 {
                     //TODO move mario animation (optional)
                     Game1.Instance.SetLevel(Game1.Instance.CurrLevel + 1);
+                    Game1.Instance.GetSoundLib().PlaySound("pipe");
                     continue;
                 }
                 //Pipes that go places
@@ -42,6 +43,7 @@ namespace MarioGame.Collisions
                     (Vector2 destination, int level) = p.GetDestination();
                     Game1.Instance.SetLevel(level);
                     mario.setPosition((int)destination.X, (int)destination.Y);
+                    Game1.Instance.GetSoundLib().PlaySound("pipe");
                     continue;
                 }
                 else if (marioRect.Intersects(blockRect))
