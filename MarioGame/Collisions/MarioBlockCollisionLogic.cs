@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace MarioGame.Collisions
 {
@@ -157,22 +158,42 @@ namespace MarioGame.Collisions
 
         private static void OpenMysteryBlock(MysteryBlock mystery, List<IItem> items, IBlock block)
         {
-            mystery.OnCollide();
+                mystery.OnCollide();
 
-            Texture2D itemTexture = Game1.Instance.Content.Load<Texture2D>("smb_items_sheet");
-            float xOffset = block.GetDestinationRectangle().Width / 2 - 16;
-            Vector2 itemPosition = block.Position - new Vector2(-xOffset, block.GetDestinationRectangle().Height);
+                Random random = new Random();
+                Texture2D itemTexture = Game1.Instance.Content.Load<Texture2D>("smb_items_sheet");
+                float xOffset = block.GetDestinationRectangle().Width / 2 - 16;
+                Vector2 itemPosition = block.Position - new Vector2(-xOffset, block.GetDestinationRectangle().Height);
 
-            Random rnd = new Random();
-            int itemType = rnd.Next((int)(ItemType.CNT));
+                // Define weights for each item type
+                var weights = new[] { 70, 15, 10, 5 }; // Adjust weights as needed
+                var totalWeight = weights.Sum();
+                var randomValue = random.Next(0, totalWeight);
 
-            ItemBase newItem = ItemFactory.CreateInstance((ItemType)itemType, itemTexture, itemPosition);
+                // Determine the selected item type based on weights
+                int cumulativeWeight = 0;
+                ItemType selectedType = ItemType.Coin; // Default fallback
 
-            newItem.Velocity = new Vector2(0f, -1f) * 30f;
-            newItem.GravityScale = 20.0f;
-            newItem.bUseGravity = true;
+                for (int i = 0; i < weights.Length; i++)
+                {
+                    cumulativeWeight += weights[i];
+                    if (randomValue < cumulativeWeight)
+                    {
+                        selectedType = (ItemType)i;
+                        break;
+                    }
+                }
 
-            items.Add(newItem);
+                // Create the item instance
+                ItemBase newItem = ItemFactory.CreateInstance(selectedType, itemTexture, itemPosition);
+
+                // Set item properties
+                newItem.Velocity = new Vector2(0f, -1f) * 30f;
+                newItem.GravityScale = 20.0f;
+                newItem.bUseGravity = true;
+
+                // Add the new item to the list
+                items.Add(newItem);
         }
 
         private static void HandleSideCollision(PlayerSprite mario, IBlock block)

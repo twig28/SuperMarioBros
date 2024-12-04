@@ -2,15 +2,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Linq;
 
 namespace MarioGame.Items
 {
-    enum ItemType
+    public enum ItemType
     {
         Coin,
         FireFlower,
         Mushroom,
-        Spring,
         Star,
 
         CNT // count
@@ -26,8 +26,6 @@ namespace MarioGame.Items
                     return new Coin(texture, position);
                 case ItemType.FireFlower:
                     return new FireFlower(texture, position);
-                case ItemType.Spring:
-                    return new Spring(texture, position);
                 case ItemType.Mushroom:
                     return new Mushroom(texture, position);
                 case ItemType.Star:

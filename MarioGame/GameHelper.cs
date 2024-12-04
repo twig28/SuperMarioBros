@@ -19,8 +19,8 @@ namespace MarioGame
                 PositionChecks.checkDeathByFalling(player_sprite, height);
             }
             EnemyCollisionLogic.CheckEnemyEnemyCollision(enemies, gameTime, player_sprite);
-            CollisionLogic.CheckMarioItemCollision(player_sprite, items, gameTime);
-            CollisionLogic.CheckItemBlockCollision(blocks, items);
+            ItemCollisionLogic.CheckMarioItemCollision(player_sprite, items, gameTime);
+            ItemCollisionLogic.CheckItemBlockCollision(blocks, items);
             blocks.RemoveAll(block => block is Block b && b.IsDestroyed);
         }
 
