@@ -1,13 +1,10 @@
 ﻿using MarioGame.Blocks;
 using MarioGame.Interfaces;
 using MarioGame.Items;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
 namespace MarioGame.Collisions
 {
@@ -162,15 +159,20 @@ namespace MarioGame.Collisions
         {
             mystery.OnCollide();
 
-            // Example Coin creation (may need refactoring to use a CoinFactory pattern)
-            Texture2D coinTexture = Game1.Instance.Content.Load<Texture2D>("smb_items_sheet");
+            Texture2D itemTexture = Game1.Instance.Content.Load<Texture2D>("smb_items_sheet");
             float xOffset = block.GetDestinationRectangle().Width / 2 - 16;
-            var coin = new Coin(coinTexture, block.Position - new Vector2(-xOffset, block.GetDestinationRectangle().Height));
-            coin.Velocity = new Vector2(0f, -3f) * 30f;
-            coin.GravityScale = 15.0f;
-            coin.bUseGravity = true;
+            Vector2 itemPosition = block.Position - new Vector2(-xOffset, block.GetDestinationRectangle().Height);
 
-            items.Add(coin);
+            Random rnd = new Random();
+            int itemType = rnd.Next((int)(ItemType.CNT));
+
+            ItemBase newItem = ItemFactory.CreateInstance((ItemType)itemType, itemTexture, itemPosition);
+
+            newItem.Velocity = new Vector2(0f, -3f) * 30f;
+            newItem.GravityScale = 15.0f;
+            newItem.bUseGravity = true;
+
+            items.Add(newItem);
         }
 
         private static void HandleSideCollision(PlayerSprite mario, IBlock block)
