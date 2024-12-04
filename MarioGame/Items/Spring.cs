@@ -11,12 +11,11 @@ namespace MarioGame.Items
             sourceRectangle.Add(new Rectangle(124, 0, 16, 24));
             sourceRectangle.Add(new Rectangle(154, 0, 16, 24));
 
-            maxFrameCnt = 3;
             timePerFrame = 100;
             bHasCollision = true;
         }
 
-        public override string getName()
+        public override string GetName()
         {
             return "Spring";
         }

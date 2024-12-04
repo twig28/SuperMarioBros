@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MarioGame.Items;
-using MarioGame.Blocks;
-using MarioGame.Sprites;
-using MarioGame.Collisions;
-using MarioGame.Interfaces;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using MarioGame.Collisions;
 using MarioGame.Controllers;
+using MarioGame.Interfaces;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace MarioGame
 {
@@ -45,7 +38,7 @@ namespace MarioGame
                 item.Update(gameTime);
             }
 
-            items.RemoveAll(item => item.GetLifeTime() < 0.0f);
+            items.RemoveAll(item => item.GetLifeTime() <= 0.0f);
 
             Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl, soundLib);
             Ball.UpdateAll(gameTime, g.Viewport.Width, blocks);

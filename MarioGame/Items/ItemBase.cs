@@ -1,7 +1,8 @@
-﻿using MarioGame.Interfaces;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
+using MarioGame.Interfaces;
 
 namespace MarioGame.Items
 {
@@ -13,7 +14,6 @@ namespace MarioGame.Items
         protected Vector2 position;
 
         protected int currentFrame = 0;
-        protected int maxFrameCnt = 1;
         protected int timePerFrame = 200; // Milliseconds
 
         protected double itemTime = 0;
@@ -29,6 +29,8 @@ namespace MarioGame.Items
         public bool bUseGravity { get; set; }
         public Vector2 Velocity { get; set; }
         public bool bHasCollision { get; set; }
+        public float MaxLifeTime {  get; set; }
+        public bool bCanCollect { get; set; }
 
         public ItemBase(Texture2D _texture, Vector2 _position)
         {
@@ -39,14 +41,18 @@ namespace MarioGame.Items
 
             bUseGravity = false;
             bHasCollision = false;
+
+            MaxLifeTime = float.MaxValue;
+
+            bCanCollect = true;
         }
 
-        public Rectangle getDestinationRectangle()
+        public Rectangle GetDestinationRectangle()
         {
             return destinationRectangle;
         }
 
-        public virtual string getName()
+        public virtual string GetName()
         {
             return "ItemBase";
         }
@@ -58,7 +64,7 @@ namespace MarioGame.Items
             itemTime += gameTime.ElapsedGameTime.TotalMilliseconds;
             if(itemTime - lastUpdateTime >= timePerFrame)
             {
-                currentFrame = (currentFrame++) % maxFrameCnt;
+                currentFrame = (currentFrame++) % sourceRectangle.Count;
                 lastUpdateTime = itemTime;
             }
         }
@@ -80,12 +86,12 @@ namespace MarioGame.Items
             spriteBatch.Draw(texture, destinationRectangle, sourceRectangle[currentFrame], Color.White);
         }
 
-        public void moveX(int x)
+        public void MoveX(int x)
         {
             xOffset += x;
         }
 
-        public void moveY(int y)
+        public void MoveY(int y)
         {
             yOffset += y;
         }
@@ -102,9 +108,18 @@ namespace MarioGame.Items
             return bHasCollision;
         }
 
-        public virtual float GetLifeTime()
+        public bool CanBeCollect()
         {
-            return float.MaxValue;
+            return bCanCollect;
+        }
+
+        public virtual double GetLifeTime()
+        {
+            if(MaxLifeTime >= double.MaxValue)
+            {
+                return double.MaxValue;
+            }
+            return Math.Max(0.0, MaxLifeTime - itemTime);
         }
     }
 }

@@ -7,11 +7,13 @@ public interface IItem
 {
     void Draw(SpriteBatch spriteBatch);
     void Update(GameTime gameTime);
-    public Rectangle getDestinationRectangle();
-    public string getName();
-    public void moveY(int y);
+    public Rectangle GetDestinationRectangle();
+    public string GetName();
+    public void MoveX(int x);
+    public void MoveY(int y);
     public void OnCollide();
     public bool HasCollision();
-    public float GetLifeTime();
+    public double GetLifeTime();
+    public bool CanBeCollect();
 }
 

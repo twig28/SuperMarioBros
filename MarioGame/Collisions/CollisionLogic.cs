@@ -56,10 +56,10 @@ namespace MarioGame
                 {
                     continue;
                 }
-                String itemName = item.getName();
+                String itemName = item.GetName();
                 // if (itemName.Equals("Mushroom") || itemName.Equals("Star"))
                 {
-                    itemRectangle = item.getDestinationRectangle();
+                    itemRectangle = item.GetDestinationRectangle();
                     foreach (IBlock block in blocks)
                     {
                         blockRectangle = block.GetDestinationRectangle();
@@ -69,7 +69,7 @@ namespace MarioGame
                             if (intersection.Width >= intersection.Height)
                             {
                                 if (itemName.Equals("Mushroom") || itemName.Equals("Star"))
-                                    item.moveY(-intersection.Height);
+                                    item.MoveY(-intersection.Height);
                                 item.OnCollide();
                                 block.OnCollide();
                             }
@@ -85,7 +85,7 @@ namespace MarioGame
 
             foreach (IItem item in items)
             {
-                if (mario.GetDestinationRectangle().Intersects(item.getDestinationRectangle()))
+                if (item.CanBeCollect() && mario.GetDestinationRectangle().Intersects(item.GetDestinationRectangle()))
                 {
                     itemToRemove = item;
                     ApplyItemEffect(mario, item);
@@ -100,7 +100,7 @@ namespace MarioGame
 
         private static void ApplyItemEffect(PlayerSprite mario, IItem item)
         {
-            switch (item.getName())
+            switch (item.GetName())
             {
                 case "Star":
                     ActivateStarPower(mario);

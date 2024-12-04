@@ -168,8 +168,8 @@ namespace MarioGame.Collisions
 
             ItemBase newItem = ItemFactory.CreateInstance((ItemType)itemType, itemTexture, itemPosition);
 
-            newItem.Velocity = new Vector2(0f, -3f) * 30f;
-            newItem.GravityScale = 15.0f;
+            newItem.Velocity = new Vector2(0f, -1f) * 30f;
+            newItem.GravityScale = 20.0f;
             newItem.bUseGravity = true;
 
             items.Add(newItem);
@@ -226,8 +226,8 @@ namespace MarioGame.Collisions
                     var brickFragment = new BrickFragment(brickFragmentTexture, blockToRemove.Position - new Vector2(-xOffset, blockToRemove.GetDestinationRectangle().Height + yoffset));
                     brickFragment.Velocity = new Vector2(dir, -3.0f) * 30f;
                     brickFragment.GravityScale = 50.0f;
-                    brickFragment.EnableGravity = true;
-                    brickFragment.MaxLifeTime = 2f;
+                    brickFragment.bUseGravity = true;
+                    brickFragment.MaxLifeTime = 2000f;
 
                     items.Add(brickFragment);
                 }

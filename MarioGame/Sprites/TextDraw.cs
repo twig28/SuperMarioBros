@@ -10,7 +10,6 @@ namespace MarioGame.Sprites
 {
     internal class TextDraw
     {
-        private static SpriteFont font;
         private  TextDraw()
         {
         }

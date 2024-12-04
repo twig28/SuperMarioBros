@@ -12,13 +12,12 @@ namespace MarioGame.Items
             sourceRectangle.Add(new Rectangle(64, 64, 16, 16));
             sourceRectangle.Add(new Rectangle(94, 64, 16, 16));
 
-            maxFrameCnt = 4;
             timePerFrame = 100; // Milliseconds
             bHasCollision = true;
         }
 
 
-        public override string getName()
+        public override string GetName()
         {
             return "FireFlower";
         }

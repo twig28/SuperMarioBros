@@ -16,7 +16,7 @@ namespace MarioGame.Items
             xOffset += 1;
         }
 
-        public override string getName()
+        public override string GetName()
         {
             return "Mushroom";
         }

@@ -44,7 +44,7 @@ internal class Bowser : IEnemy
     {
         posX = X;
         posY = Y;
-        sprite = new BowserSprite(Texture, SpriteBatch, posX, posY);
+        sprite = new BowserSprite(Texture, SpriteBatch, new Vector2(posX, posY));
     }
 
     public void Draw()
@@ -65,7 +65,7 @@ internal class Bowser : IEnemy
     public void changeDirection()
     {
         _DefaultMoveMentDirection = !_DefaultMoveMentDirection;
-        sprite.ToggleInversion();
+        sprite.bInvert = !sprite.bInvert;
     }
 
     public void detectMarioChange(Rectangle marioRect)
@@ -99,8 +99,7 @@ internal class Bowser : IEnemy
         }
 
         posX += _DefaultMoveMentDirection ? 1 : -1;
-        sprite.posX = posX;
-        sprite.posY = posY;
+        sprite.position = new Vector2(posX, posY);
 
         if (timeElapsed - timeElapsedSinceUpdate > animInterval)
         {

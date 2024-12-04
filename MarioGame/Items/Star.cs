@@ -12,7 +12,6 @@ namespace MarioGame.Items
             sourceRectangle.Add(new Rectangle(65, 94, 14, 16));
             sourceRectangle.Add(new Rectangle(95, 94, 14, 16));
 
-            maxFrameCnt = 4;
             timePerFrame = 100;
             bHasCollision = true;
         }
@@ -25,7 +24,7 @@ namespace MarioGame.Items
             base.Update(gameTime);
         }
 
-        public override string getName()
+        public override string GetName()
         {
             return "Star";
         }
