@@ -156,7 +156,6 @@ namespace MarioGame
         {
             return soundLib;
         }
-        //sssSSSS
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(backgroundColor);
