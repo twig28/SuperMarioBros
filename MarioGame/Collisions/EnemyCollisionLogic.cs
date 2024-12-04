@@ -35,7 +35,7 @@ namespace MarioGame.Collisions
                 if(block is Block b && b.getIsBumped() || block is MysteryBlock b2 && b2.getIsBumped())
                 {
                     enemy.TriggerDeath(gt, false);
-                    mario.score += 100;
+                    mario.SetScore(100);
                 }
             }
             // Handle side collision only if the enemy is near the block's top
@@ -73,7 +73,7 @@ namespace MarioGame.Collisions
             {
                 enemy2.TriggerDeath(gt, false);
                 enemy.DefaultMoveMentDirection = !enemy.DefaultMoveMentDirection;
-                mario.score += 100;
+                mario.SetScore(100);
             }
         }
     }

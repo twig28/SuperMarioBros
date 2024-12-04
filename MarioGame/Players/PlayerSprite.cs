@@ -32,21 +32,22 @@ namespace MarioGame
             invincible = 4
         }
 
-        public bool direction = false;
+        private bool Direction = false;
         public Mode mode = Mode.None;
-        public bool isGrounded = true;  
-        public bool isFalling = false;
-        public bool isJumping = false;
+        private bool isgrounded = true;  
+        private bool isfalling = false;
+        private bool isjumping = false;
         public SpriteType current = SpriteType.Static;
-        public float velocity = 0f;
+        private float Velocity = 0f;
         public Vector2 UPlayerPosition;
         private MarioState state;
         private int invincibletime = -1;
         private int Startime = -1;
         public int coin = 0;
-        public int score = 0;
-        public int lives = 5;
-        public bool downSignal = false;
+        private int score = 0;
+        private int lives = 5;
+        private bool DownSignal = false;
+        
 
         public PlayerSprite(Texture2D texture, Vector2 position, float speed, GraphicsDeviceManager Graphics, Game1 game)
         {
@@ -199,17 +200,117 @@ namespace MarioGame
          direction = false;
           
         isJumping = false;
-         isGrounded = true;
+        isGrounded = true;
         isFalling = false;
-            mode = PlayerSprite.Mode.None;
-            current = PlayerSprite.SpriteType.Falling;
+        mode = PlayerSprite.Mode.None;
+        current = PlayerSprite.SpriteType.Falling;
          UPlayerPosition = new Vector2(100, 500);
             coin = 0;
             score = 0;
             lives = 5;
         }
-       
-        
 
+        public List<int> getCoinScoreLives()
+        {
+            List<int> source = new List<int>();
+            source.Add(coin); 
+            source.Add(score);
+            source.Add(lives);
+            return source;
+        }
+
+        public void SetCoin(int value)
+        {
+            coin += value;
+        }
+
+        public void SetScore(int value)
+        {
+            score += value;
+        }
+
+        public void SetLives(int value)
+        {
+            lives -= value;
+        }
+
+        public bool downSignal
+        { get 
+            { 
+                return DownSignal; 
+            } 
+            set 
+            { 
+                DownSignal = value; 
+            } 
+        }
+
+        public float velocity
+        {
+            get
+            {
+                return Velocity;
+;
+            }
+            set
+            {
+                Velocity = value;
+            }
+        }
+
+        public  bool direction
+        {
+            get
+            {
+                return Direction;
+                
+            }
+            set
+            {
+                Direction = value;
+            }
+        }
+
+
+        public bool isGrounded
+        {
+            get
+            {
+                return isgrounded;
+
+            }
+            set
+            {
+                isgrounded = value;
+            }
+        }
+
+        public bool isFalling
+        {
+            get
+            {
+                return isfalling;
+
+            }
+            set
+            {
+                isfalling = value;
+            }
+        }
+
+        public bool isJumping
+
+        {
+            get
+            {
+                return isjumping
+;
+
+    }
+            set
+            {
+                isjumping = value;
+            }
+        }
     }
 }

@@ -58,7 +58,7 @@ namespace MarioGame.Collisions
                 koopa.TriggerDeath(gt, true);
                 enemyToAdd = koopa.SpawnKoopa(gt);
                 mario.velocity = -10f;
-                mario.score += 100;
+                mario.SetScore(100);
             }
             else if (enemy is KoopaShell shell && !shell.getIsMoving())
             {
@@ -71,7 +71,7 @@ namespace MarioGame.Collisions
                 if (enemy is not KoopaShell)
                 {
                     enemy.TriggerDeath(gt, true);
-                    mario.score += 100;
+                    mario.SetScore(100);
                 }
             }
         }
@@ -110,17 +110,15 @@ namespace MarioGame.Collisions
             {
                 mario.mode = PlayerSprite.Mode.invincible;
             }
-            else if (mario.mode != PlayerSprite.Mode.invincible && mario.lives <= 1)
+            else if (mario.mode != PlayerSprite.Mode.invincible && mario.getCoinScoreLives()[2] <= 1)
             {
-                mario.lives = 0;
+                mario.getCoinScoreLives()[3] = 0;
                 mario.current = PlayerSprite.SpriteType.Damaged;
             }
-            else if(mario.mode != PlayerSprite.Mode.invincible && mario.lives > 1)
+            else if(mario.mode != PlayerSprite.Mode.invincible && mario.getCoinScoreLives()[2] > 1)
             {
-                mario.lives -= 1;
-                //mario.UPlayerPosition = new Vector2(100, 500);
+                mario.SetLives(1);
                 mario.current = PlayerSprite.SpriteType.Damaged;
-                //Game1.Instance.ResetLevel();
             }
         }
 

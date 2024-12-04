@@ -25,9 +25,9 @@ namespace MarioGame.Sprites
         {
 
             spriteBatch.DrawString(font, "Coins: \n" 
-                                 + "    " + mario.coin, new Vector2(40, 0), Color.White);
-            spriteBatch.DrawString(font, "Score:\n " + "    " + mario.score, new Vector2(240, 0), Color.White);
-            spriteBatch.DrawString(font, "Lives:\n " + "    "+ mario.lives, new Vector2(440, 0), Color.White);
+                                 + "    " + mario.getCoinScoreLives()[0], new Vector2(40, 0), Color.White);
+            spriteBatch.DrawString(font, "Score:\n " + "    " + mario.getCoinScoreLives()[1], new Vector2(240, 0), Color.White);
+            spriteBatch.DrawString(font, "Lives:\n " + "    " + mario.getCoinScoreLives()[2], new Vector2(440, 0), Color.White);
             spriteBatch.DrawString(font, "World:\n " + "    "+ level, new Vector2(640, 0), Color.White);
 
 

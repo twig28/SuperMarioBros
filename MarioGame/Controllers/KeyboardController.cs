@@ -204,17 +204,20 @@ public class KeyboardController : IController
         }
         if (IsKeyPressed(Keys.D3, currentKeyState))
         {
+            mario.current = PlayerSprite.SpriteType.Static;
             Game.SetLevel(5);
         }
 
         if (IsKeyPressed(Keys.D2, currentKeyState))
         {
+            mario.current = PlayerSprite.SpriteType.Static;
             Game.SetLevel(2);
 
         }
 
         if (IsKeyPressed(Keys.D1, currentKeyState))
         {
+            mario.current = PlayerSprite.SpriteType.Static;
             Game.SetLevel(1);
         }
 
