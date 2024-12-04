@@ -20,7 +20,6 @@ namespace MarioGame.Items
     {
         public static ItemBase CreateInstance(ItemType itemType, Texture2D texture, Vector2 position)
         {
-            return new Coin(texture, position);
             switch (itemType)
             {
                 case ItemType.Coin:
