@@ -39,7 +39,7 @@ internal class Goomba : IEnemy
     public Goomba(Texture2D Texture, SpriteBatch SpriteBatch, int X, int Y, int pallette)
     {
         posX = X; posY = Y;
-        sprite = new GoombaSprite(Texture, SpriteBatch, posX, posY, pallette);
+        sprite = new GoombaSprite(Texture, SpriteBatch, new Vector2(posX, posY), pallette);
     }
 
     public void Draw()
@@ -55,7 +55,7 @@ internal class Goomba : IEnemy
         {
             // Stomped death behavior (remain in the same place)
             deathStartTime = gm.TotalGameTime.TotalSeconds;
-            sprite.posY = posY + 40;
+            sprite.position += new Vector2(0, 40);
             sprite.SetDeathFrame();
         }
         else
@@ -63,7 +63,7 @@ internal class Goomba : IEnemy
             // Fireball death behavior (inverted fall animation)
             deathStartTime = gm.TotalGameTime.TotalSeconds;
             isInvertedDeath = true;      // Enable inverted fall
-            sprite.Invert = true;         // Invert the sprite to show it flipped
+            sprite.bInvert = true;         // Invert the sprite to show it flipped
         }
     }
 
@@ -77,14 +77,13 @@ internal class Goomba : IEnemy
                 if (gm.TotalGameTime.TotalSeconds - deathStartTime < 3.0)
                 {
                     posY += 10; 
-                    sprite.posX = posX;
-                    sprite.posY = posY;
+                    sprite.position = new Vector2(posX, posY);
                 }
                 else
                 {
                     // End the death animation after 3 seconds
                     Alive = false;
-                    sprite.Invert = false; // Reset inversion after animation ends
+                    sprite.bInvert = false; // Reset inversion after animation ends
                     isInvertedDeath = false;
                 }
             }
@@ -105,8 +104,7 @@ internal class Goomba : IEnemy
             posX += _DefaultMoveMentDirection ? 1 : -1;
             posY += 6;  // Gravity for normal movement
 
-            sprite.posX = posX;
-            sprite.posY = posY;
+            sprite.position = new Vector2(posX, posY);
 
             if (timeElapsed - timeElapsedSinceUpdate > animInterval)
             {

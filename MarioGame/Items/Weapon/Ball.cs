@@ -19,7 +19,7 @@ namespace MarioGame
         private bool isAscending;         // Flag to track if the fireball is in the ascending phase
 
         private const float Gravity = 500f; // Gravity effect for fireball arc
-        private const int MaxFireballs = 2; // Maximum number of active fireballs allowed at once
+        private const int MaxFireballs = 100; // Maximum number of active fireballs allowed at once
 
         private static List<IBall> balls = new List<IBall>(); // Static list to store all active fireball instances
 

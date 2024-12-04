@@ -1,13 +1,11 @@
 ﻿using MarioGame.Blocks;
 using MarioGame.Interfaces;
 using MarioGame.Items;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MarioGame.Collisions
 {
@@ -38,7 +36,7 @@ namespace MarioGame.Collisions
                     continue;
                 }
                 //Pipes that go places
-                else if (block is Pipe p && (p.getIsEntrance() && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Above && mario.current == PlayerSprite.SpriteType.Crouch ||
+                else if (block is Pipe p && (p.getIsEntrance() && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Above && mario.downSignal||
                     p.getIsLong() && CollisionLogic.GetCollisionDirection(blockRect, marioRect) == CollisionLogic.CollisionDirection.Side))
                 {
                     (Vector2 destination, int level) = p.GetDestination();
@@ -143,6 +141,7 @@ namespace MarioGame.Collisions
                 if (block.IsBreakable)
                 {
                     block.OnCollide();
+                    
                     blocksToRemove.Add(block);
                 }
                 mario.UPlayerPosition.Y = block.GetDestinationRectangle().Bottom + mario.GetDestinationRectangle().Height / 2 + 24;
@@ -159,17 +158,42 @@ namespace MarioGame.Collisions
 
         private static void OpenMysteryBlock(MysteryBlock mystery, List<IItem> items, IBlock block)
         {
-            mystery.OnCollide();
+                mystery.OnCollide();
 
-            // Example Coin creation (may need refactoring to use a CoinFactory pattern)
-            Texture2D coinTexture = Game1.Instance.Content.Load<Texture2D>("smb_items_sheet");
-            float xOffset = block.GetDestinationRectangle().Width / 2 - 16;
-            var coin = new Coin(coinTexture, block.Position - new Vector2(-xOffset, block.GetDestinationRectangle().Height));
-            coin.Velocity = new Vector2(0f, -3f) * 30f;
-            coin.GravityScale = 15.0f;
-            coin.EnableGravity = true;
+                Random random = new Random();
+                Texture2D itemTexture = Game1.Instance.Content.Load<Texture2D>("smb_items_sheet");
+                float xOffset = block.GetDestinationRectangle().Width / 2 - 16;
+                Vector2 itemPosition = block.Position - new Vector2(-xOffset, block.GetDestinationRectangle().Height);
 
-            items.Add(coin);
+                // Define weights for each item type
+                var weights = new[] { 70, 15, 10, 5 }; // Adjust weights as needed
+                var totalWeight = weights.Sum();
+                var randomValue = random.Next(0, totalWeight);
+
+                // Determine the selected item type based on weights
+                int cumulativeWeight = 0;
+                ItemType selectedType = ItemType.Coin; // Default fallback
+
+                for (int i = 0; i < weights.Length; i++)
+                {
+                    cumulativeWeight += weights[i];
+                    if (randomValue < cumulativeWeight)
+                    {
+                        selectedType = (ItemType)i;
+                        break;
+                    }
+                }
+
+                // Create the item instance
+                ItemBase newItem = ItemFactory.CreateInstance(selectedType, itemTexture, itemPosition);
+
+                // Set item properties
+                newItem.Velocity = new Vector2(0f, -1f) * 30f;
+                newItem.GravityScale = 20.0f;
+                newItem.bUseGravity = true;
+
+                // Add the new item to the list
+                items.Add(newItem);
         }
 
         private static void HandleSideCollision(PlayerSprite mario, IBlock block)
@@ -223,8 +247,8 @@ namespace MarioGame.Collisions
                     var brickFragment = new BrickFragment(brickFragmentTexture, blockToRemove.Position - new Vector2(-xOffset, blockToRemove.GetDestinationRectangle().Height + yoffset));
                     brickFragment.Velocity = new Vector2(dir, -3.0f) * 30f;
                     brickFragment.GravityScale = 50.0f;
-                    brickFragment.EnableGravity = true;
-                    brickFragment.MaxLifeTime = 2f;
+                    brickFragment.bUseGravity = true;
+                    brickFragment.MaxLifeTime = 2000f;
 
                     items.Add(brickFragment);
                 }

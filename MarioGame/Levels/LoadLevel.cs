@@ -1,27 +1,17 @@
-﻿using MarioGame.Interfaces;
+﻿using MarioGame.Blocks;
+using MarioGame.Interfaces;
 using MarioGame.Items;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using MarioGame.Blocks;
-using System.IO;
-using System;
 using MarioGame.Scenery;
-using System.Reflection.PortableExecutable;
-using System.Diagnostics;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using System.IO;
 
 namespace MarioGame.Levels
 {
     internal class LoadLevels
     {
-        public static void LoadLevel(
-    Game1 game,
-    List<IBlock> blocks,
-    List<IEnemy> enemies,
-    List<IItem> items,
-    List<IScenery> scenery,
-    PlayerSprite mario,
-    int level, SpriteBatch _spriteBatch, int customColor)
+        public static void LoadLevel(Game1 game, List<IBlock> blocks, List<IEnemy> enemies, List<IItem> items, List<IScenery> scenery, PlayerSprite mario, int level, SpriteBatch _spriteBatch, int customColor)
         {
             SpriteFont font = game.Content.Load<SpriteFont>("File");
             Texture2D enemyTextures = game.Content.Load<Texture2D>("smb_enemies_sheet");
@@ -45,7 +35,7 @@ namespace MarioGame.Levels
             Game1.Instance.CurrWorld = world;
 
             int color = int.Parse(colorPalette);
-            if(customColor > -1)
+            if (customColor > -1)
             {
                 color = customColor;
             }
@@ -60,8 +50,8 @@ namespace MarioGame.Levels
                 switch (entity.ObjectType)
                 {
                     case "BaseBlock":
-                        if(color == 1)
-                        blocks.Add(new GroundBlock(position, groundBlockTexture));
+                        if (color == 1)
+                            blocks.Add(new GroundBlock(position, groundBlockTexture));
                         else
                         {
                             GroundBlock Block = new GroundBlock(position, blueBaseBlockTexture);
@@ -73,8 +63,8 @@ namespace MarioGame.Levels
                         blocks.Add(new MysteryBlock(position, multipleBlockTextures));
                         break;
                     case "BrickBlock":
-                        if(color == 1)
-                        blocks.Add(new Block(position, blockTexture));
+                        if (color == 1)
+                            blocks.Add(new Block(position, blockTexture));
                         else
                         {
                             Block b = new Block(position, multipleBlockTextures);
@@ -83,8 +73,8 @@ namespace MarioGame.Levels
                         }
                         break;
                     case "StairBlock":
-                        if(color == 1)
-                        blocks.Add(new StairBlock(position, stairBlockTexture));
+                        if (color == 1)
+                            blocks.Add(new StairBlock(position, stairBlockTexture));
                         else
                         {
                             StairBlock stair = new StairBlock(position, blueStairTexture);
