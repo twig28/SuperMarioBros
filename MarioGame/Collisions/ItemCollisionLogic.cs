@@ -32,15 +32,11 @@ namespace MarioGame
                     {
                         blockRectangle = block.GetDestinationRectangle();
                         intersection = Rectangle.Intersect(itemRectangle, blockRectangle);
-                        if (!intersection.IsEmpty)
+                        if (!intersection.IsEmpty && intersection.Width >= intersection.Height)
                         {
-                            if (intersection.Width >= intersection.Height)
-                            {
-                                if (itemName.Equals("Mushroom") || itemName.Equals("Star"))
-                                    item.MoveY(-intersection.Height);
-                                item.OnCollide();
-                                block.OnCollide();
-                            }
+                           if (item is Mushroom || item is Star || item is Coin)
+                              item.MoveY(-intersection.Height);
+                              item.OnCollide();
                         }
                     }
                 }

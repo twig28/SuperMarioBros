@@ -170,7 +170,7 @@ namespace MarioGame.Collisions
                 Vector2 itemPosition = block.Position - new Vector2(-xOffset, block.GetDestinationRectangle().Height);
 
                 // Define weights for each item type
-                var weights = new[] { 70, 15, 10, 5 }; // Adjust weights as needed
+                var weights = new[] { 50, 20, 20, 10 }; // Adjust weights as needed
                 var totalWeight = weights.Sum();
                 var randomValue = random.Next(0, totalWeight);
 

@@ -120,10 +120,15 @@ public class KeyboardController : IController
         }
         if (currentKeyState.IsKeyDown(Keys.S) || currentKeyState.IsKeyDown(Keys.Down))
         {
+            mario.downSignal = true;
             if (mario.mode != PlayerSprite.Mode.None && mario.mode != PlayerSprite.Mode.invincible && mario.isGrounded)
             {
                 mario.current = PlayerSprite.SpriteType.Crouch;
             }
+        }
+        else
+        {
+            mario.downSignal = false;
         }
     }
 
