@@ -81,6 +81,7 @@ namespace MarioGame
 
         public void TriggerDeath(GameTime gameTime, bool stomped)
         {
+             Game1.Instance.GetSoundLib().PlaySound("killEnemy");
             Alive = false;
         }
     }

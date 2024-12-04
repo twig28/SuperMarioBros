@@ -270,7 +270,7 @@ namespace MarioGame.Collisions
                 int flagpoleHeight = flagpoleRect.Bottom - flagpoleRect.Top; 
                 int marioPositionOnPole = flagpoleRect.Bottom - mario.GetDestinationRectangle().Center.Y;
                 marioPositionOnPole = Math.Clamp(marioPositionOnPole, 0, flagpoleHeight);
-
+                  Game1.Instance.GetSoundLib().PlaySound("hitflag");
                 float scoreProportion = (float)marioPositionOnPole / flagpoleHeight;
                 mario.SetScore((int)(scoreProportion * 5000));
                 mario.UPlayerPosition.X += 20;

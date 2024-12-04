@@ -99,6 +99,7 @@ namespace MarioGame
 
         public void TriggerDeath(GameTime gameTime, bool stomped)
         {
+             Game1.Instance.GetSoundLib().PlaySound("killEnemy");
             Alive = false;  // Use the new property
             sprite.Update(gameTime);  // Optional: freeze or animate on death
         }
