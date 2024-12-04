@@ -79,7 +79,7 @@ namespace MarioGame.Collisions
             bool isStanding = false;
             //if(mario.UPlayerPosition.Y < blockRect.Top && marioRect.Right  > blockRect.Left 
             //   && marioRect.Left  < blockRect.Right )
-            if (marioRect.Bottom >= blockRect.Top && marioRect.Right > blockRect.Left
+            if (marioRect.Bottom >= blockRect.Top && marioRect.Right > blockRect.Left + 2
               && marioRect.Left < blockRect.Right && marioRect.Top < blockRect.Top)
             {
                 isStanding = true;
@@ -213,11 +213,11 @@ namespace MarioGame.Collisions
             }
             else if (marioRect.Right >= blockRect.Left && marioRect.Left < blockRect.Left)
             {
-                mario.UPlayerPosition.X = blockRect.Left - marioRect.Width / 2;
+                mario.UPlayerPosition.X = blockRect.Left - marioRect.Width / 2 - 5;
             }
             else if (marioRect.Left <= blockRect.Right && marioRect.Right > blockRect.Right)
             {
-                mario.UPlayerPosition.X = blockRect.Right + marioRect.Width / 2;
+                mario.UPlayerPosition.X = blockRect.Right + marioRect.Width / 2 + 5;
             }
         }
 
