@@ -168,7 +168,7 @@ namespace MarioGame.Collisions
             var coin = new Coin(coinTexture, block.Position - new Vector2(-xOffset, block.GetDestinationRectangle().Height));
             coin.Velocity = new Vector2(0f, -3f) * 30f;
             coin.GravityScale = 15.0f;
-            coin.EnableGravity = true;
+            coin.bUseGravity = true;
 
             items.Add(coin);
         }
