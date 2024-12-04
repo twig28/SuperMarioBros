@@ -43,6 +43,9 @@ namespace MarioGame
             Ball.CreateFireballs(player_sprite.UPlayerPosition, ballSpeed, (KeyboardController)keyControl, soundLib);
             Ball.UpdateAll(gameTime, g.Viewport.Width, blocks);
             BallCollisionLogic.CheckFireballEnemyCollision(Ball.GetBalls(), ref enemies, gameTime, false);
+            DropFireball.UpdateAll(gameTime, blocks);
+
+
         }
 
         public static void drawAll(List<IEnemy> enemies, List<IBlock> blocks, List<IItem> items, List<IScenery> scenery, PlayerSprite player_sprite, SpriteBatch _spriteBatch, Vector2 offset, GraphicsDevice g, GameTime gameTime)
@@ -85,6 +88,7 @@ namespace MarioGame
             }
 
             Ball.DrawAll(_spriteBatch);
+            DropFireball.DrawAll(_spriteBatch);
 
             player_sprite.Draw(_spriteBatch, 14, 16, 3f, new List<Rectangle>(), 0, Color.White);
 

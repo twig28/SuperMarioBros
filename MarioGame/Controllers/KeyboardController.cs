@@ -164,7 +164,8 @@ public class KeyboardController : IController
         }
 
     }
-
+    
+    private bool canDropFireball = true;
     private void Handleinputforfireball(PlayerSprite mario)
     {
         // Control the fireball
@@ -178,6 +179,15 @@ public class KeyboardController : IController
         if (IsKeyPressed(Keys.N, currentKeyState) && mario.mode == PlayerSprite.Mode.Fire == true)
         {
             keyboardPermitN = true;
+        }
+        if (currentKeyState.IsKeyDown(Keys.T) && canDropFireball && mario.mode == PlayerSprite.Mode.Fire)
+        {
+            DropFireball.CreateDropFireball(new Vector2(mario.UPlayerPosition.X, 0)); 
+            canDropFireball = false; 
+        }
+        else if (currentKeyState.IsKeyUp(Keys.T)) 
+        {
+            canDropFireball = true;
         }
     }
 
@@ -216,6 +226,7 @@ public class KeyboardController : IController
         {
             Game1.Instance.CustomColorLoad(2);
         }
+        
     }
 
 }
