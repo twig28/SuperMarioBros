@@ -14,6 +14,7 @@ namespace MarioGame.Items
         {
             yOffset += 2;
             xOffset += 1;
+            base.Update(gameTime);
         }
 
         public override string GetName()

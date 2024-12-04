@@ -13,7 +13,7 @@ namespace MarioGame.Items
             sourceRectangle.Add(new Rectangle(188, 95, 8, 14));
             sourceRectangle.Add(new Rectangle(218, 95, 8, 14));
 
-            //bUseGravity = true;
+            bUseGravity = true;
             //SetAutoCollect(true);
         }
 
