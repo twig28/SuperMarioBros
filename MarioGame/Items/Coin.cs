@@ -13,8 +13,8 @@ namespace MarioGame.Items
             sourceRectangle.Add(new Rectangle(188, 95, 8, 14));
             sourceRectangle.Add(new Rectangle(218, 95, 8, 14));
 
-            bUseGravity = true;
-            SetAutoCollect(true);
+            //bUseGravity = true;
+            //SetAutoCollect(true);
         }
 
         public override string GetName()
@@ -26,10 +26,10 @@ namespace MarioGame.Items
         {
             base.Update(gameTime);
 
-            if (GetLifeTime() <= 500.0f) // Milliseconds
-            {
-                TeleportToTarget(new Vector2(40, 0));
-            }
+            //if (GetLifeTime() <= 500.0f) // Milliseconds
+            //{
+            //    TeleportToTarget(new Vector2(40, 0));
+            //}
         }
 
         public void SetAutoCollect(bool value)
