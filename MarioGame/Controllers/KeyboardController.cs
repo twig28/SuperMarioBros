@@ -72,7 +72,7 @@ public class KeyboardController : IController
             if (mario.current == PlayerSprite.SpriteType.Jump || mario.current == PlayerSprite.SpriteType.JumpL || mario.current == PlayerSprite.SpriteType.Falling)
             {
 
-                mario.UPlayerPosition.X += 3f;
+                mario.UPlayerPosition.X += 5f;
 
             }
             else
@@ -90,7 +90,7 @@ public class KeyboardController : IController
                 if (mario.UPlayerPosition.X > 18 * 3f / 2)
                 {
 
-                    mario.UPlayerPosition.X -= 3f;
+                    mario.UPlayerPosition.X -= 5f;
                 }
             }
             else
@@ -183,11 +183,13 @@ public class KeyboardController : IController
         if (currentKeyState.IsKeyDown(Keys.T) && canDropFireball && mario.mode == PlayerSprite.Mode.Fire)
         {
             DropFireball.CreateDropFireball(new Vector2(mario.UPlayerPosition.X, 0)); 
+             Game1.Instance.GetSoundLib().PlaySound("blaster");
             canDropFireball = false; 
         }
         else if (currentKeyState.IsKeyUp(Keys.T)) 
         {
             canDropFireball = true;
+            
         }
     }
 

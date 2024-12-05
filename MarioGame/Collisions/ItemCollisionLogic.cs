@@ -20,12 +20,7 @@ namespace MarioGame
             Rectangle intersection;
             foreach (IItem item in items)
             {
-                if (item.HasCollision() == false)
-                {
-                    continue;
-                }
                 String itemName = item.GetName();
-                // if (itemName.Equals("Mushroom") || itemName.Equals("Star"))
                 {
                     itemRectangle = item.GetDestinationRectangle();
                     foreach (IBlock block in blocks)
@@ -34,7 +29,6 @@ namespace MarioGame
                         intersection = Rectangle.Intersect(itemRectangle, blockRectangle);
                         if (!intersection.IsEmpty && intersection.Width >= intersection.Height)
                         {
-                           if (item is Mushroom || item is Star || item is Coin)
                               item.MoveY(-intersection.Height);
                               item.OnCollide();
                         }
@@ -67,15 +61,21 @@ namespace MarioGame
             switch (item.GetName())
             {
                 case "Star":
+                    IncreaseScore(mario);
                     ActivateStarPower(mario);
+                    Game1.Instance.GetSoundLib().PlaySound("star");
                     break;
 
                 case "FireFlower":
+                    IncreaseScore(mario);
                     ActivateFirePower(mario);
+                    Game1.Instance.GetSoundLib().PlaySound("mushroom");
                     break;
 
                 case "Mushroom":
+                    IncreaseScore(mario);
                     GrowMario(mario);
+                     Game1.Instance.GetSoundLib().PlaySound("mushroom");
                     break;
 
                 case "Coin":

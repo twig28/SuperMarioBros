@@ -51,6 +51,8 @@ internal class Goomba : IEnemy
 
     public void TriggerDeath(GameTime gm, bool stomped)
     {
+        Game1.Instance.GetSoundLib().PlaySound("killEnemy");
+    
         if (stomped)
         {
             // Stomped death behavior (remain in the same place)

@@ -189,7 +189,7 @@ BrickBlock,4500,300
 BrickBlock,4550,350
 BrickBlock,4550,300
 Coin,4550,175
-PipeDestination,5250,450,3,50,50
+PipeDestination,5250,450,3,150,50
 Pipe,5500,375
 Pipe,5750,500
 BrickBlock,6100,500

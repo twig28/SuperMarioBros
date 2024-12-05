@@ -22,7 +22,7 @@ Pipe, 1700, 400
 SmallBush,1800,540
 Pipe, 2100, 370
 LargeHill,2150,460
-PipeDestination,2700,370,0,50,0
+PipeDestination,2700,370,0,150,0
 SmallCloud,3100,75
 LargeBush,2800,535
 SmallHill,3050,530

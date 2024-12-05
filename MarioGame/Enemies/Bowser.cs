@@ -60,7 +60,10 @@ internal class Bowser : IEnemy
     }
 
     public void TriggerDeath(GameTime gm, bool stomped)
-    { }
+    { 
+          Game1.Instance.GetSoundLib().PlaySound("killEnemy");
+    }
+
 
     public void changeDirection()
     {
