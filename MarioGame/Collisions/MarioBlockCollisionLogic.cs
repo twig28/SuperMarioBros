@@ -63,7 +63,7 @@ namespace MarioGame.Collisions
                         }
                         else
                         {
-                            HandleSideCollision(mario, block);
+                            HandleSideCollision(mario, block, blocksToRemove,Game);
                         }
                     }
                 }
@@ -78,7 +78,8 @@ namespace MarioGame.Collisions
         {
             bool isStanding = false;
             int offset = 0;
-            if (!mario.isGrounded) { offset = 7; }
+            if (!mario.isGrounded && !mario.direction) { offset = 7; }
+            else if(!mario.isGrounded && mario.direction) { offset = -7; }
             if (marioRect.Bottom >= blockRect.Top && marioRect.Right > blockRect.Left + offset
               && marioRect.Left < blockRect.Right && marioRect.Top < blockRect.Top)
             {
@@ -202,7 +203,7 @@ namespace MarioGame.Collisions
                 items.Add(newItem);
         }
 
-        private static void HandleSideCollision(PlayerSprite mario, IBlock block)
+        private static void HandleSideCollision(PlayerSprite mario, IBlock block, List<IBlock> blocksToRemove,Game1 Game)
         {
             Rectangle blockRect = block.GetDestinationRectangle();
             Rectangle marioRect = mario.GetDestinationRectangle();
@@ -210,6 +211,8 @@ namespace MarioGame.Collisions
             if (mario.mode == PlayerSprite.Mode.Star && block.IsBreakable)
             {
                 block.OnCollide(); // Break the block if Mario has a star
+                blocksToRemove.Add(block);
+                Game.GetSoundLib().PlaySound("block_break");
             }
             else if (marioRect.Right >= blockRect.Left && marioRect.Left < blockRect.Left)
             {

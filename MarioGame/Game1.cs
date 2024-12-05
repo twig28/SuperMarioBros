@@ -12,7 +12,7 @@ using MarioGame.Sprites;
 using MarioGame.Collisions;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework.Audio;
-
+//SPRINT 5
 namespace MarioGame
 {
     public class Game1 : Game
@@ -20,7 +20,7 @@ namespace MarioGame
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private SpriteBatch spriteBatchText;
-        //S
+        //SSsS
         private PlayerSprite player_sprite;
         private bool isThemePlaying = false;
         private Vector2 offset;
