@@ -183,11 +183,13 @@ public class KeyboardController : IController
         if (currentKeyState.IsKeyDown(Keys.T) && canDropFireball && mario.mode == PlayerSprite.Mode.Fire)
         {
             DropFireball.CreateDropFireball(new Vector2(mario.UPlayerPosition.X, 0)); 
+             Game1.Instance.GetSoundLib().PlaySound("blaster");
             canDropFireball = false; 
         }
         else if (currentKeyState.IsKeyUp(Keys.T)) 
         {
             canDropFireball = true;
+            
         }
     }
 

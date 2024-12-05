@@ -68,14 +68,17 @@ namespace MarioGame
             {
                 case "Star":
                     ActivateStarPower(mario);
+                    Game1.Instance.GetSoundLib().PlaySound("star");
                     break;
 
                 case "FireFlower":
                     ActivateFirePower(mario);
+                    Game1.Instance.GetSoundLib().PlaySound("mushroom");
                     break;
 
                 case "Mushroom":
                     GrowMario(mario);
+                     Game1.Instance.GetSoundLib().PlaySound("mushroom");
                     break;
 
                 case "Coin":

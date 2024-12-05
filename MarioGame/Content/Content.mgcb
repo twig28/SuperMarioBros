@@ -25,6 +25,12 @@
 /processorParam:TextureFormat=Color
 /build:BareFlagpole.png
 
+#begin mushroom.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:mushroom.wav
+
 #begin Resource/32675005a8e11ad.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -48,6 +54,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Resource/BareFlagpole.png
+
+#begin Resource/blaster.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Resource/blaster.wav
 
 #begin Resource/block_break.wav
 /importer:WavImporter
@@ -199,6 +211,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Resource/marioStatic.png
+
+#begin Resource/mushroom.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Resource/mushroom.wav
+
+#begin Resource/mushroom.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Resource/mushroom.wav
 
 #begin Resource/pipe.wav
 /importer:WavImporter
