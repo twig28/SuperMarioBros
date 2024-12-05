@@ -25,7 +25,7 @@ public class SoundLib
         soundEffects["block_break"] = content.Load<SoundEffect>("block_break");
         soundEffects["mushroom"] = content.Load<SoundEffect>("mushroom");
         soundEffects["blaster"] = content.Load<SoundEffect>("blaster");
-        soundEffects["star"] = content.Load<SoundEffect>("star");
+        //soundEffects["star"] = content.Load<SoundEffect>("star");
         var theme = content.Load<SoundEffect>("theme");
         themeInstance = theme.CreateInstance();
         themeInstance.IsLooped = true;

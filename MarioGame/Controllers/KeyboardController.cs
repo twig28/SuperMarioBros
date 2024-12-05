@@ -72,7 +72,7 @@ public class KeyboardController : IController
             if (mario.current == PlayerSprite.SpriteType.Jump || mario.current == PlayerSprite.SpriteType.JumpL || mario.current == PlayerSprite.SpriteType.Falling)
             {
 
-                mario.UPlayerPosition.X += 4f;
+                mario.UPlayerPosition.X += 5f;
 
             }
             else
@@ -90,7 +90,7 @@ public class KeyboardController : IController
                 if (mario.UPlayerPosition.X > 18 * 3f / 2)
                 {
 
-                    mario.UPlayerPosition.X -= 4f;
+                    mario.UPlayerPosition.X -= 5f;
                 }
             }
             else
