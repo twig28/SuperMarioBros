@@ -136,6 +136,10 @@ namespace MarioGame
 
                 if (damagedTimer >= damagedDelay)
                 {
+                    if (player_sprite.getCoinScoreLives()[2] < 1)
+                    {
+                        Game1.Instance.ResetGame();
+                    }
                     damagedTimer = 0; 
                     Game1.Instance.ResetLevel(); 
                 }

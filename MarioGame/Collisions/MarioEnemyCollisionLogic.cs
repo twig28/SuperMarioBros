@@ -110,12 +110,7 @@ namespace MarioGame.Collisions
             {
                 mario.mode = PlayerSprite.Mode.invincible;
             }
-            else if (mario.mode != PlayerSprite.Mode.invincible && mario.getCoinScoreLives()[2] <= 1)
-            {
-                Game1.Instance.ResetGame();
-                mario.current = PlayerSprite.SpriteType.Damaged;
-            }
-            else if(mario.mode != PlayerSprite.Mode.invincible && mario.getCoinScoreLives()[2] > 1)
+            else if(mario.mode != PlayerSprite.Mode.invincible && mario.getCoinScoreLives()[2] >= 1)
             {
                 mario.SetLives(1);
                 mario.current = PlayerSprite.SpriteType.Damaged;
