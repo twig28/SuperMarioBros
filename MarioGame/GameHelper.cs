@@ -10,12 +10,12 @@ namespace MarioGame
     internal class GameHelper
     {
         
-        public static void checkAllCollisions(List<IEnemy> enemies, List<IBlock> blocks, List<IItem> items, PlayerSprite player_sprite, GameTime gameTime, int height, bool dead)
+        public static void checkAllCollisions(List<IEnemy> enemies, List<IBlock> blocks, List<IItem> items, PlayerSprite player_sprite, GameTime gameTime, int height, bool dead,Game1 Game)
         {
             EnemyCollisionLogic.CheckEnemyBlockCollisions(enemies, blocks, gameTime, player_sprite);
             if (!dead)
             {
-                MarioBlockCollisionLogic.CheckMarioBlockCollision(player_sprite, blocks, items);
+                MarioBlockCollisionLogic.CheckMarioBlockCollision(player_sprite, blocks, items,Game);
                 MarioEnemyCollisionLogic.CheckMarioEnemyCollision(player_sprite, ref enemies, gameTime);
                 PositionChecks.checkDeathByFalling(player_sprite, height);
             }

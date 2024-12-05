@@ -12,7 +12,7 @@ namespace MarioGame.Collisions
     internal class MarioBlockCollisionLogic
     {
 
-        public static void CheckMarioBlockCollision(PlayerSprite mario, List<IBlock> blocks, List<IItem> items)
+        public static void CheckMarioBlockCollision(PlayerSprite mario, List<IBlock> blocks, List<IItem> items,Game1 Game)
         {
             if (mario.current == PlayerSprite.SpriteType.Damaged) return;
 
@@ -59,7 +59,7 @@ namespace MarioGame.Collisions
                         }
                         else if (IsBelowBlock(mario, blockRect, marioRect))
                         {
-                            HandleBelowBlockCollision(mario, block, items, blocksToRemove);
+                            HandleBelowBlockCollision(mario, block, items, blocksToRemove,Game);
                         }
                         else
                         {
@@ -133,7 +133,7 @@ namespace MarioGame.Collisions
             }
         }
 
-        private static void HandleBelowBlockCollision(PlayerSprite mario, IBlock block, List<IItem> items, List<IBlock> blocksToRemove)
+        private static void HandleBelowBlockCollision(PlayerSprite mario, IBlock block, List<IItem> items, List<IBlock> blocksToRemove,Game1 Game)
         {
             mario.velocity = 0f;
 
@@ -147,8 +147,8 @@ namespace MarioGame.Collisions
                 if (block.IsBreakable)
                 {
                     block.OnCollide();
-                    
                     blocksToRemove.Add(block);
+                    Game.GetSoundLib().PlaySound("block_break");
                 }
                 mario.UPlayerPosition.Y = block.GetDestinationRectangle().Bottom + mario.GetDestinationRectangle().Height / 2 + 24;
             }

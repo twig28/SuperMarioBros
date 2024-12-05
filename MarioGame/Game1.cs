@@ -20,7 +20,7 @@ namespace MarioGame
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private SpriteBatch spriteBatchText;
-
+        //S
         private PlayerSprite player_sprite;
         private bool isThemePlaying = false;
         private Vector2 offset;
@@ -140,7 +140,7 @@ namespace MarioGame
                     Game1.Instance.ResetLevel(); 
                 }
             }
-            GameHelper.checkAllCollisions(enemies, blocks, items, player_sprite, gameTime, GraphicsDevice.Viewport.Height, player_sprite.current == PlayerSprite.SpriteType.Damaged);
+            GameHelper.checkAllCollisions(enemies, blocks, items, player_sprite, gameTime, GraphicsDevice.Viewport.Height, player_sprite.current == PlayerSprite.SpriteType.Damaged,this);
             GameHelper.updateAll(enemies, blocks, items, player_sprite, gameTime, GraphicsDevice, soundLib, keyControl, ballSpeed);
 
             base.Update(gameTime);
