@@ -93,7 +93,7 @@ namespace MarioGame
             keyControl = new KeyboardController(this);
             mouseControl = new MouseController(this);
 
-            player_sprite = new PlayerSprite(Content.Load<Texture2D>("smb_mario_sheet"), new Vector2(100, 500), 100f, _graphics, this);
+            player_sprite = new PlayerSprite(Content.Load<Texture2D>("smb_mario_sheet"), new Vector2(100, 500), 200f, _graphics, this);
             player_sprite.intialize_player();
             font = Content.Load<SpriteFont>("text");
 
