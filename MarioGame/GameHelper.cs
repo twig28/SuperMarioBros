@@ -19,6 +19,7 @@ namespace MarioGame
                 MarioEnemyCollisionLogic.CheckMarioEnemyCollision(player_sprite, ref enemies, gameTime);
                 PositionChecks.checkDeathByFalling(player_sprite, height);
             }
+            FireballCollisionLogic.CheckFireballCollisions(enemies, blocks, player_sprite);
             EnemyCollisionLogic.CheckEnemyEnemyCollision(enemies, gameTime, player_sprite);
             ItemCollisionLogic.CheckMarioItemCollision(player_sprite, items, gameTime);
             ItemCollisionLogic.CheckItemBlockCollision(blocks, items);
@@ -84,10 +85,24 @@ namespace MarioGame
 
             foreach (IEnemy enemy in enemies)
             {
+                
                 if (enemy is not Piranha)
                     enemy.Draw();
             }
+            foreach (var enemy in enemies)
+            {
+                if (enemy is Bowser bowser)
+                {
+                    bowser.Draw();
+                    bowser.DrawFireballs(_spriteBatch);
+                }
+                else
+                {
+                    enemy.Draw();
+                }
+            }
 
+            
             Ball.DrawAll(_spriteBatch);
             DropFireball.DrawAll(_spriteBatch);
 

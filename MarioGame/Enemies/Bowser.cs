@@ -1,6 +1,8 @@
 ﻿using MarioGame;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using MarioGame.Collisions;
 
 internal class Bowser : IEnemy
 {
@@ -24,6 +26,9 @@ internal class Bowser : IEnemy
 
     public int setPosX { set { posX = value; } }
     public int setPosY { set { posY = value; } }
+    private double fireballCooldown = 1; 
+    private double fireballTimer = 0;
+    private List<Fireball> fireballs = new List<Fireball>();
 
     public bool DefaultMoveMentDirection
     {
@@ -50,6 +55,7 @@ internal class Bowser : IEnemy
     public void Draw()
     {
         if (Alive) sprite.Draw();
+       
     }
 
     public void ground()
@@ -85,6 +91,7 @@ internal class Bowser : IEnemy
 
     public void Update(GameTime gm)
     {
+        
         timeElapsed = gm.TotalGameTime.TotalSeconds;
 
         jumpTimer += gm.ElapsedGameTime.TotalSeconds;
@@ -110,5 +117,46 @@ internal class Bowser : IEnemy
             timeElapsedSinceUpdate = timeElapsed;
             sprite.Update(gm);
         }
+
+        fireballTimer += gm.ElapsedGameTime.TotalSeconds;
+
+        if (fireballTimer >= fireballCooldown)
+        {
+            fireballTimer = 0; 
+            Vector2 fireballPosition = new Vector2(
+                this.sprite.GetDestinationRectangle().X,
+                this.sprite.GetDestinationRectangle().Y + 10 
+            );
+            Fireball fireball = new Fireball(fireballPosition, !DefaultMoveMentDirection);
+            fireballs.Add(fireball);
+             Game1.Instance.GetSoundLib().PlaySound("blaster");
+        }
+
+   
+        foreach (var ball in fireballs)
+        {
+            ball.Update(gm);
+             
+        }
+    
+   
+        fireballs.RemoveAll(f => !f.Alive);
+
+    }
+
+  
+    public void DrawFireballs(SpriteBatch spriteBatch)
+{
+    foreach (var fireball in fireballs)
+    {
+        fireball.Draw(spriteBatch);
     }
 }
+public List<Fireball> GetFireballs()
+{
+    return fireballs;
+}
+
+   
+}
+
