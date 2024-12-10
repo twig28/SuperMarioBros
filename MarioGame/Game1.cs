@@ -20,7 +20,6 @@ namespace MarioGame
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private SpriteBatch spriteBatchText;
-        //SSsS
         private PlayerSprite player_sprite;
         private bool isThemePlaying = false;
         private Vector2 offset;

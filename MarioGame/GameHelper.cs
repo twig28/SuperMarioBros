@@ -53,6 +53,19 @@ namespace MarioGame
         public static void drawAll(List<IEnemy> enemies, List<IBlock> blocks, List<IItem> items, List<IScenery> scenery, PlayerSprite player_sprite, SpriteBatch _spriteBatch, Vector2 offset, GraphicsDevice g, GameTime gameTime)
         {
 
+            foreach (var enemy in enemies)
+            {
+                if (enemy is Bowser bowser)
+                {
+                    bowser.Draw();
+                    bowser.DrawFireballs(_spriteBatch);
+                }
+                else if (enemy is Piranha)
+                {
+                    enemy.Draw();
+                }
+            }
+
             foreach (IEnemy enemy in enemies)
             {
                 if (PositionChecks.renderEnemy(enemy, offset, g.Viewport.Width, g.Viewport.Height) || enemy is KoopaShell)
@@ -65,12 +78,6 @@ namespace MarioGame
             foreach (IScenery scene in scenery)
             {
                 scene.Draw(_spriteBatch);
-            }
-
-            foreach (IEnemy enemy in enemies)
-            {
-                if (enemy is Piranha)
-                    enemy.Draw();
             }
 
             foreach (var block in blocks)
@@ -88,18 +95,6 @@ namespace MarioGame
                 
                 if (enemy is not Piranha)
                     enemy.Draw();
-            }
-            foreach (var enemy in enemies)
-            {
-                if (enemy is Bowser bowser)
-                {
-                    bowser.Draw();
-                    bowser.DrawFireballs(_spriteBatch);
-                }
-                else
-                {
-                    enemy.Draw();
-                }
             }
 
             
