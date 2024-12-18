@@ -1,4 +1,4 @@
-# Mario-Game
+# Super Mario Bros
 An emulation of The Original Super Mario Bros using C# Monogame with changed features.
 
 Controls:
