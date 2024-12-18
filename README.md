@@ -1,11 +1,7 @@
 # Mario-Game
-Currently on Sprint5
+An emulation of The Original Super Mario Bros using C# Monogame with changed features.
 
-Jira: https://csegroup5.atlassian.net
-This:
-https://www.youtube.com/watch?v=cWOkHQXw0JQ&t=37s
-
-Controls For Sprint5:
+Controls:
 WASD or Arrow Keys: Change Mario Position and Jump or Crouch
 Z/N: Throw Fireball
 Q: Quit Game
